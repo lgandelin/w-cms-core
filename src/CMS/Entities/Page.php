@@ -5,9 +5,10 @@ namespace CMS\Entities;
 class Page {
 
     private $name;
-    private $slug;
-    private $website;
+    private $identifier;
+    private $uri;
     private $text;
+    private $website;
 
     public function setName($name)
     {
@@ -19,14 +20,24 @@ class Page {
         return $this->name;
     }
 
-    public function setSlug($slug)
+    public function setUri($uri)
     {
-        $this->slug = $slug;
+        $this->uri = $uri;
     }
 
-    public function getSlug()
+    public function getUri()
     {
-        return $this->slug;
+        return $this->uri;
+    }
+
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    public function getText()
+    {
+        return $this->text;
     }
 
     public function setWebsite(\CMS\Entities\Website $website)
@@ -39,14 +50,14 @@ class Page {
         return $this->website;
     }
 
-    public function setText($text)
+    public function setIdentifier($identifier)
     {
-        $this->text = $text;
+        $this->identifier = $identifier;
     }
 
-    public function getText()
+    public function getIdentifier()
     {
-        return $this->text;
+        return $this->identifier;
     }
 
 } 
