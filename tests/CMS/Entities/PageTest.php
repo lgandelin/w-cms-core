@@ -51,4 +51,27 @@ class PageTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($website, $page->getWebsite());
     }
 
+    public function testGetMetaTitle()
+    {
+        $page = new \CMS\Entities\Page();
+        $page->setMetaTitle('Home | Webaccess');
+
+        $this->assertEquals('Home | Webaccess', $page->getMetaTitle());
+    }
+
+    public function testGetMetaDescription()
+    {
+        $page = new \CMS\Entities\Page();
+        $page->setMetaDescription('<p>Quisque id tellus ac velit tincidunt varius ut sit amet metus. Curabitur tempor condimentum ante ut interdum. Integer vel diam ultrices erat rhoncus faucibus in venenatis lectus. Nam id erat nulla. Duis sit amet magna id odio dignissim rutrum a sit amet nibh. Ut vulputate mauris malesuada enim eleifend ullamcorper.</p>');
+
+        $this->assertEquals('<p>Quisque id tellus ac velit tincidunt varius ut sit amet metus. Curabitur tempor condimentum ante ut interdum. Integer vel diam ultrices erat rhoncus faucibus in venenatis lectus. Nam id erat nulla. Duis sit amet magna id odio dignissim rutrum a sit amet nibh. Ut vulputate mauris malesuada enim eleifend ullamcorper.</p>', $page->getMetaDescription());
+    }
+
+    public function testGetMetaKeywords()
+    {
+        $page = new \CMS\Entities\Page();
+        $page->setMetaKeywords('Quisque id tellus ac velit');
+
+        $this->assertEquals('Quisque id tellus ac velit', $page->getMetaKeywords());
+    }
 }

@@ -9,6 +9,9 @@ class Page {
     private $uri;
     private $text;
     private $website;
+    private $meta_title;
+    private $meta_description;
+    private $meta_keywords;
 
     public function setName($name)
     {
@@ -18,6 +21,16 @@ class Page {
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    public function getIdentifier()
+    {
+        return $this->identifier;
     }
 
     public function setUri($uri)
@@ -50,14 +63,33 @@ class Page {
         return $this->website;
     }
 
-    public function setIdentifier($identifier)
+    public function setMetaTitle($meta_title)
     {
-        $this->identifier = $identifier;
+        $this->meta_title = $meta_title;
     }
 
-    public function getIdentifier()
+    public function getMetaTitle()
     {
-        return $this->identifier;
+        return $this->meta_title;
     }
 
+    public function setMetaDescription($meta_description)
+    {
+        $this->meta_description = $meta_description;
+    }
+
+    public function getMetaDescription()
+    {
+        return $this->meta_description;
+    }
+
+    public function setMetaKeywords($meta_keywords)
+    {
+        $this->meta_keywords = $meta_keywords;
+    }
+
+    public function getMetaKeywords()
+    {
+        return $this->meta_keywords;
+    }
 } 
