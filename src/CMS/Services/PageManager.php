@@ -4,74 +4,116 @@ namespace CMS\Services;
 
 class PageManager {
 
-    public function __construct($pageMapper = null)
+    public function __construct($pageRepository = null)
     {
-        $this->pageMapper = $pageMapper;
+        $this->pageRepository = $pageRepository;
     }
 
     public function getByIdentifier($identifier)
     {
-        return $this->pageMapper->findByIdentifier($identifier);
+        $page = $this->pageRepository->findByIdentifier($identifier);
+
+        if (!$page)
+            throw new \Exception('The page was not found');
+
+        return  new \CMS\Structures\PageStructure([
+            'name' => $page->getName(),
+            'uri' => $page->getUri(),
+            'identifier' => $page->getIdentifier(),
+            'text' => $page->getText(),
+            'meta_title' => $page->getMetaTitle(),
+            'meta_description' => $page->getMetaDescription(),
+            'meta_keywords' => $page->getMetaKeywords(),
+       ]);
     }
 
     public function getByUri($uri)
     {
-        return $this->pageMapper->findByUri($uri);
+        $page = $this->pageRepository->findByUri($uri);
+
+        if (!$page)
+            throw new \Exception('The page was not found');
+
+        return  new \CMS\Structures\PageStructure([
+            'name' => $page->getName(),
+            'uri' => $page->getUri(),
+            'identifier' => $page->getIdentifier(),
+            'text' => $page->getText(),
+            'meta_title' => $page->getMetaTitle(),
+            'meta_description' => $page->getMetaDescription(),
+            'meta_keywords' => $page->getMetaKeywords(),
+        ]);
     }
 
     public function getAll()
     {
-        return $this->pageMapper->findAll();
+        return $this->pageRepository->findAll();
     }
 
-    static public function createPageObject($name, $uri, $identifier = '', $text = '')
+    public function createPage(\CMS\Structures\PageStructure $pageStructure)
     {
-        if (!$name) throw new \InvalidArgumentException('You must provide a name for a page');
-        if (!$uri) throw new \InvalidArgumentException('You must provide a Uri for a page');
-        if (!$identifier) $identifier = str_replace('/', '-', ltrim($uri, '/'));
+        if (!$pageStructure->name) throw new \InvalidArgumentException('You must provide a name for a page');
+        if (!$pageStructure->uri) throw new \InvalidArgumentException('You must provide a Uri for a page');
 
-        $page = new \CMS\Entities\Page();
-        $page->setName($name);
-        $page->setIdentifier($identifier);
-        $page->setUri($uri);
-        $page->setText($text);
+        if (!$pageStructure->identifier)
+            $pageStructure->identifier = str_replace('/', '-', ltrim($pageStructure->uri, '/'));
 
-        return $page;
-    }
-
-    static public function duplicatePageObject(\CMS\Entities\Page $page)
-    {
-        return self::createPageObject($page->getName() . ' COPY', $page->getUri() . '-copy', $page->getIdentifier() . '-copy', $page->getText());
-    }
-
-    public function createPage(\CMS\Entities\Page $page)
-    {
-        if ($this->pageMapper->findByUri($page->getUri()))
+        if ($this->pageRepository->findByUri($pageStructure->uri))
             throw new \Exception('There is already a page with the same uri');
 
-        if ($this->pageMapper->findByIdentifier($page->getIdentifier()))
+        if ($this->pageRepository->findByIdentifier($pageStructure->identifier))
             throw new \Exception('There is already a page with the same identifier');
 
-        return $this->pageMapper->createPage($page);
+        $page = new \CMS\Entities\Page();
+        $page->setName($pageStructure->name);
+        $page->setUri($pageStructure->uri);
+        $page->setIdentifier($pageStructure->identifier);
+        $page->setText($pageStructure->text);
+        $page->setMetaTitle($pageStructure->meta_title);
+        $page->setMetaDescription($pageStructure->meta_description);
+        $page->setMetaKeywords($pageStructure->meta_keywords);
+
+        return $this->pageRepository->createPage($page);
     }
 
-    public function updatePage(\CMS\Entities\Page $page)
+    public function updatePage(\CMS\Structures\PageStructure $pageStructure)
     {
-        $existingPage = $this->pageMapper->findByUri($page->getUri());
-        if ($existingPage != null && $existingPage->getIdentifier() != $page->getIdentifier())
+        if (!$page = $this->pageRepository->findByIdentifier($pageStructure->identifier))
+            throw new \Exception('The page was not found');
+
+        $existingPage = $this->pageRepository->findByUri($page->getUri());
+
+        if ($existingPage != null && $existingPage->getIdentifier() != $pageStructure->identifier)
             throw new \Exception('There is already a page with the same uri');
 
-        if (!$this->pageMapper->findByIdentifier($page->getIdentifier()))
-            throw new \Exception('The page was not found');
+        $page->setName($pageStructure->name);
+        $page->setUri($pageStructure->uri);
+        $page->setText($pageStructure->text);
+        $page->setMetaTitle($pageStructure->meta_title);
+        $page->setMetaDescription($pageStructure->meta_description);
+        $page->setMetaKeywords($pageStructure->meta_keywords);
 
-        return $this->pageMapper->updatePage($page);
+        return $this->pageRepository->updatePage($page);
     }
 
-    public function deletePage(\CMS\Entities\Page $page)
+    public function deletePage($identifier)
     {
-        if (!$this->pageMapper->findByIdentifier($page->getIdentifier()))
+        if (!$page = $this->pageRepository->findByIdentifier($identifier))
             throw new \Exception('The page was not found');
 
-        return $this->pageMapper->deletePage($page);
+        return $this->pageRepository->deletePage($page);
+    }
+
+    public function duplicatePage($identifier)
+    {
+        if (!$page = $this->pageRepository->findByIdentifier($identifier))
+            throw new \Exception('The page was not found');
+
+        $pageS = $this->getByIdentifier($identifier);
+        $pageS->name .= ' COPY';
+        $pageS->uri .= '-copy';
+        $pageS->identifier .= '-copy';
+
+        return $this->createPage($pageS);
     }
 }

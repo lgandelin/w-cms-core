@@ -4,93 +4,110 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->pageMapper = Phake::mock('\CMS\Mappers\PageMapperInterface');
+        $this->pageRepository = Phake::mock('\CMS\Repositories\PageRepositoryInterface');
     }
 
-    public function getPageManager()
+    private function _getPageManager()
     {
-        return new \CMS\Services\PageManager($this->pageMapper);
+        return new \CMS\Services\PageManager($this->pageRepository);
+    }
+    
+    private function _createPageObject($name, $uri, $identifier = null, $text = null, $meta_title = null, $meta_description = null, $meta_keywords = null)
+    {
+        if (!$name) throw new \InvalidArgumentException('You must provide a name for a page');
+        if (!$uri) throw new \InvalidArgumentException('You must provide a Uri for a page');
+        if (!$identifier) $identifier = str_replace('/', '-', ltrim($uri, '/'));
+
+        $page = new \CMS\Entities\Page();
+        $page->setName($name);
+        $page->setUri($uri);
+        $page->setIdentifier($identifier);
+        $page->setText($text);
+        $page->setMetaTitle($meta_title);
+        $page->setMetaDescription($meta_description);
+        $page->setMetaKeywords($meta_keywords);
+
+        return $page;
     }
 
     public function testConstruct()
     {
-        $this->assertInstanceOf('\CMS\Services\PageManager', $this->getPageManager());
+        $this->assertInstanceOf('\CMS\Services\PageManager', $this->_getPageManager());
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException Exception
      */
-    public function testCreateInvalidPageObject()
-    {
-        \CMS\Services\PageManager::createPageObject('Page 1', '');
-    }
-
-    public function testCreatePageObject()
-    {
-        $page = \CMS\Services\PageManager::createPageObject('My Page', '/my-page', '', '<p>This is a test</p>');
-
-        $this->assertInstanceOf('\CMS\Entities\Page', $page);
-        $this->assertEquals('My Page', $page->getName());
-        $this->assertEquals('/my-page', $page->getUri());
-        $this->assertEquals('my-page', $page->getIdentifier());
-        $this->assertEquals('<p>This is a test</p>', $page->getText());
-    }
-
-    public function testDuplicatePageObject()
-    {
-        $page = \CMS\Services\PageManager::createPageObject('My Page', '/my-page', 'my-page', '<p>This is some random text</p>');
-        $pageCopyExpected = \CMS\Services\PageManager::createPageObject('My Page COPY', '/my-page-copy', 'my-page-copy', '<p>This is some random text</p>');
-
-        $this->assertEquals($pageCopyExpected, \CMS\Services\PageManager::duplicatePageObject($page));
-    }
-
     public function testGetByIdentifierNonExisting()
     {
-        Phake::when($this->pageMapper)->findByIdentifier('my-page')->thenReturn(null);
-
-        $this->assertEquals(null, $this->getPageManager()->getByIdentifier('my-page'));
+        $page = $this->_getPageManager()->getByIdentifier('my-page');
     }
 
     public function testGetByIdentifier()
     {
-        $page = \CMS\Services\PageManager::createPageObject('My Page', '/my-page', 'my-page');
-        Phake::when($this->pageMapper)->findByIdentifier('my-page')->thenReturn($page);
+        $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
+        $pageS = new \CMS\Structures\PageStructure([
+           'name' => 'My Page',
+            'uri' => '/my-page',
+            'identifier' => 'my-page'
+        ]);
+        Phake::when($this->pageRepository)->findByIdentifier('my-page')->thenReturn($page);
 
-        $this->assertEquals($page, $this->getPageManager()->getByIdentifier('my-page'));
+        $this->assertInstanceOf('\CMS\Structures\PageStructure', $this->_getPageManager()->getByIdentifier('my-page'));
+        $this->assertEquals($pageS, $this->_getPageManager()->getByIdentifier('my-page'));
     }
 
+    /**
+     * @expectedException Exception
+     */
     public function testGetByUriNonExisting()
     {
-        Phake::when($this->pageMapper)->findByUri('/non-existing-page')->thenReturn(null);
-
-        $this->assertEquals(null, $this->getPageManager()->getByUri('/non-existing-page'));
+        $this->assertEquals(null, $this->_getPageManager()->getByUri('/non-existing-page'));
     }
 
     public function testGetByUri()
     {
-        $page = \CMS\Services\PageManager::createPageObject('My Page', '/my-page', 'my-page');
-        Phake::when($this->pageMapper)->findByUri('/my-page')->thenReturn($page);
+        $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
+        Phake::when($this->pageRepository)->findByUri('/my-page')->thenReturn($page);
+        $pageS = new \CMS\Structures\PageStructure([
+            'name' => 'My Page',
+            'uri' => '/my-page',
+            'identifier' => 'my-page'
+        ]);
 
-        $this->assertEquals($page, $this->getPageManager()->getByUri('/my-page'));
+        $this->assertEquals($pageS, $this->_getPageManager()->getByUri('/my-page'));
     }
 
     public function testGetAllWithoutPage()
     {
-        Phake::when($this->pageMapper)->findAll()->thenReturn(null);
+        Phake::when($this->pageRepository)->findAll()->thenReturn(null);
 
-        $this->assertEquals(null, $this->getPageManager()->getAll());
+        $this->assertEquals(null, $this->_getPageManager()->getAll());
     }
 
     public function testGetAll()
     {
         $pages = array(
-            \CMS\Services\PageManager::createPageObject('Page 1', '/page-1', 'page-1'),
-            \CMS\Services\PageManager::createPageObject('Page 2', '/page-2', 'page-2')
+            $this->_createPageObject('Page 1', '/page-1', 'page-1'),
+            $this->_createPageObject('Page 2', '/page-2', 'page-2')
         );
 
-        Phake::when($this->pageMapper)->findAll()->thenReturn($pages);
+        Phake::when($this->pageRepository)->findAll()->thenReturn($pages);
 
-        $this->assertEquals($pages, $this->getPageManager()->getAll());
+        $this->assertEquals($pages, $this->_getPageManager()->getAll());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCreatePageWithInvalidArguments()
+    {
+        $invalidPageS = new \CMS\Structures\PageStructure([
+            'name' => 'Page 3',
+            'identifier' => 'page-3'
+        ]);
+
+        $this->_getPageManager()->createPage($invalidPageS);
     }
 
     /**
@@ -98,32 +115,43 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testCreatePageWithAlreadyExistingUri()
     {
-        $page1 = \CMS\Services\PageManager::createPageObject('Page 1', '/my-page', 'page-1');
-        $page2 = \CMS\Services\PageManager::createPageObject('Page 2', '/my-page', 'page-2');
+        $page1 = $this->_createPageObject('Page 1', '/my-page', 'page-1');
+        $page2S = new \CMS\Structures\PageStructure([
+            'name' => 'Page 2',
+            'uri' => '/my-page',
+            'identifier' => 'page-2'
+        ]);
 
-        Phake::when($this->pageMapper)->findByUri('/my-page')->thenReturn($page1);
+        Phake::when($this->pageRepository)->findByUri('/my-page')->thenReturn($page1);
+        Phake::when($this->pageRepository)->findByIdentifier('page-1')->thenReturn($page1);
 
-        $this->getPageManager()->createPage($page2);
+        $this->_getPageManager()->createPage($page2S);
     }
 
     public function testCreatePage()
     {
-        $page1 = \CMS\Services\PageManager::createPageObject('Page 1', '/page-1', 'page-1');
-        $page2 = \CMS\Services\PageManager::createPageObject('Page 2', '/page-2', 'page-2');
-        $page3 = \CMS\Services\PageManager::createPageObject('Page 3', '/page-3', 'page-3');
+        $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
+        $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
+        $page3S = new \CMS\Structures\PageStructure([
+            'name' => 'Page 3',
+            'uri' => '/page-3',
+            'identifier' => 'page-3'
+        ]);
 
-        Phake::when($this->pageMapper)->findAll()
-            ->thenReturn(array($page1, $page2))
-            ->thenReturn(array($page1, $page2, $page3));
+        Phake::when($this->pageRepository)->findAll()
+            ->thenReturn(array($page1, $page2));
 
         //Before create
-        $this->assertEquals(array($page1, $page2), $this->getPageManager()->getAll());
+        $this->assertEquals(array($page1, $page2), $this->_getPageManager()->getAll());
 
         //Create
-        $this->getPageManager()->createPage($page3);
+        $page3 = $this->_getPageManager()->createPage($page3S);
+
+        Phake::when($this->pageRepository)->findAll()
+            ->thenReturn(array($page1, $page2, $page3));
 
         //After create
-        $this->assertEquals(array($page1, $page2, $page3), $this->getPageManager()->getAll());
+        $this->assertEquals(array($page1, $page2, $page3), $this->_getPageManager()->getAll());
     }
 
     /**
@@ -131,8 +159,13 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdateNonExistingPage()
     {
-        $page = \CMS\Services\PageManager::createPageObject('Test Page', '/test');
-        $this->getPageManager()->updatePage($page);
+        $pageS = new \CMS\Structures\PageStructure([
+            'name' => 'Page',
+            'uri' => '/page',
+            'identifier' => 'page'
+        ]);
+
+        $this->_getPageManager()->updatePage($pageS);
     }
 
     /**
@@ -140,35 +173,47 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdatePageWithAlreadyExistingUri()
     {
-        $page1 = \CMS\Services\PageManager::createPageObject('Page 1', '/page-1', 'page-1');
-        $page2 = \CMS\Services\PageManager::createPageObject('Page 2', '/page-2', 'page-2');
+        $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
+        $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
 
-        Phake::when($this->pageMapper)->findByUri('/page-1')->thenReturn($page1);
-        Phake::when($this->pageMapper)->findByUri('/page-2')->thenReturn($page2);
-        Phake::when($this->pageMapper)->findByIdentifier('page-2')->thenReturn($page2);
+        Phake::when($this->pageRepository)->findByUri('/page-1')->thenReturn($page1);
 
-        $page2->setUri('/page-1');
+        $page2S = new \CMS\Structures\PageStructure([
+            'name' => 'Page 2',
+            'uri' => '/page-1',
+            'identifier' => 'page-2'
+        ]);
 
-        $this->getPageManager()->updatePage($page2);
+        $this->_getPageManager()->updatePage($page2S);
     }
 
     public function testUpdatePage()
     {
-        $page = \CMS\Services\PageManager::createPageObject('Page', '/page', 'page');
+        $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
+        $pageS = new \CMS\Structures\PageStructure([
+            'name' => 'My Page',
+            'uri' => '/my-page',
+            'identifier' => 'my-page'
+        ]);
 
-        Phake::when($this->pageMapper)->findByUri('/page')->thenReturn($page);
-        Phake::when($this->pageMapper)->findByIdentifier('page')->thenReturn($page);
+        $pageUpdated = $this->_createPageObject('New Page', '/my-page', 'my-page');
+        $pageUpdatedS = new \CMS\Structures\PageStructure([
+            'name' => 'New Page',
+            'uri' => '/my-page',
+            'identifier' => 'my-page'
+        ]);
+
+        Phake::when($this->pageRepository)->findByIdentifier('my-page')->thenReturn($page)->thenReturn($pageUpdated);
+        //Phake::when($this->pageRepository)->findByUri('/my-page')->thenReturn($page);
 
         //Before update
-        $this->assertEquals($page, $this->getPageManager()->getByIdentifier('page'));
+        $this->assertEquals($pageS, $this->_getPageManager()->getByIdentifier('my-page'));
 
         //Update
-        $page->setName('New Page');
-        $page->setUri('/page');
-        $this->getPageManager()->updatePage($page);
+        $this->_getPageManager()->updatePage($pageUpdatedS);
 
         //After update
-        $this->assertEquals('New Page', $this->getPageManager()->getByIdentifier('page')->getName());
+        $this->assertEquals($pageUpdatedS, $this->_getPageManager()->getByIdentifier('my-page'));
     }
 
     /**
@@ -176,27 +221,55 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testDeleteNonExistingPage()
     {
-        $page = \CMS\Services\PageManager::createPageObject('Test Page', '/test');
-        $this->getPageManager()->deletePage($page);
+        $this->_getPageManager()->deletePage('my-page');
     }
 
     public function testDeletePage()
     {
-        $page1 = \CMS\Services\PageManager::createPageObject('Page 1', '/page-1', 'page-1');
-        $page2 = \CMS\Services\PageManager::createPageObject('Page 2', '/page-2', 'page-2');
+        $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
+        $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
 
-        Phake::when($this->pageMapper)->findAll()
+        Phake::when($this->pageRepository)->findAll()
             ->thenReturn(array($page1, $page2))
             ->thenReturn(array($page2));
-        Phake::when($this->pageMapper)->findByIdentifier('page-1')->thenReturn($page1);
+        Phake::when($this->pageRepository)->findByIdentifier('page-1')->thenReturn($page1);
 
         //Before delete
-        $this->assertEquals(array($page1, $page2), $this->getPageManager()->getAll());
+        $this->assertEquals(array($page1, $page2), $this->_getPageManager()->getAll());
 
         //Delete
-        $this->getPageManager()->deletePage($page1);
+        $this->_getPageManager()->deletePage('page-1');
 
         //After delete
-        $this->assertEquals(array($page2), $this->getPageManager()->getAll());
+        $this->assertEquals(array($page2), $this->_getPageManager()->getAll());
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testDuplicateNonExistingPage()
+    {
+        $this->_getPageManager()->duplicatePage('my-page');
+    }
+
+    public function testDuplicatePage()
+    {
+        $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
+        $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
+        $page2Duplicate = $this->_createPageObject('Page 3 - COPY', '/page-2-copy', 'page-2-copy');
+
+        Phake::when($this->pageRepository)->findByIdentifier('page-2')->thenReturn($page2);
+        Phake::when($this->pageRepository)->findAll()
+            ->thenReturn(array($page1, $page2))
+            ->thenReturn(array($page1, $page2, $page2Duplicate));
+
+        //Before duplicate
+        $this->assertEquals(array($page1, $page2), $this->_getPageManager()->getAll());
+
+        //Duplicate
+        $this->_getPageManager()->duplicatePage('page-2');
+
+        //After duplicate
+        $this->assertEquals(array($page1, $page2, $page2Duplicate), $this->_getPageManager()->getAll());
     }
 }

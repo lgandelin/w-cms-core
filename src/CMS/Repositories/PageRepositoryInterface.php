@@ -1,8 +1,8 @@
 <?php
 
-namespace CMS\Mappers;
+namespace CMS\Repositories;
 
-interface PageMapperInterface {
+interface PageRepositoryInterface {
 
     public function findByIdentifier($identifier);
     public function findByUri($uri);
