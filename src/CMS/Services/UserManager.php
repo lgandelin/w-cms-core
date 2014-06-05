@@ -40,7 +40,7 @@ class UserManager {
 
         $user = new \CMS\Entities\User();
         $user->setLogin($userStructure->login);
-        $user->setPassword(sha1($userStructure->password));
+        $user->setPassword($userStructure->password);
         $user->setLastName($userStructure->last_name);
         $user->setFirstName($userStructure->first_name);
         $user->setEmail($userStructure->email);
@@ -58,8 +58,8 @@ class UserManager {
         if ($existingUser != null && $existingUser->getLogin() != $userStructure->login)
             throw new \Exception('There is already a user with the same login');
 
-        if ($userStructure->password != null && sha1($userStructure->password) != $user->getPassword())
-            $user->setPassword(sha1($userStructure->password));
+        if ($userStructure->password != null && $userStructure->password != $user->getPassword())
+            $user->setPassword($userStructure->password);
 
         $user->setLastName($userStructure->last_name);
         $user->setFirstName($userStructure->first_name);

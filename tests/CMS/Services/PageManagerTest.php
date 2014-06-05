@@ -14,10 +14,6 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     
     private function _createPageObject($name, $uri, $identifier = null, $text = null, $meta_title = null, $meta_description = null, $meta_keywords = null)
     {
-        if (!$name) throw new \InvalidArgumentException('You must provide a name for a page');
-        if (!$uri) throw new \InvalidArgumentException('You must provide a Uri for a page');
-        if (!$identifier) $identifier = str_replace('/', '-', ltrim($uri, '/'));
-
         $page = new \CMS\Entities\Page();
         $page->setName($name);
         $page->setUri($uri);
@@ -87,14 +83,12 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
 
     public function testGetAll()
     {
-        $pages = array(
-            $this->_createPageObject('Page 1', '/page-1', 'page-1'),
-            $this->_createPageObject('Page 2', '/page-2', 'page-2')
-        );
+        $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
+        $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
 
-        Phake::when($this->pageRepository)->findAll()->thenReturn($pages);
+        Phake::when($this->pageRepository)->findAll()->thenReturn([$page1, $page2]);
 
-        $this->assertEquals($pages, $this->_getPageManager()->getAll());
+        $this->assertEquals([$page1, $page2], $this->_getPageManager()->getAll());
     }
 
     /**
@@ -139,19 +133,19 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
         ]);
 
         Phake::when($this->pageRepository)->findAll()
-            ->thenReturn(array($page1, $page2));
+            ->thenReturn([$page1, $page2]);
 
         //Before create
-        $this->assertEquals(array($page1, $page2), $this->_getPageManager()->getAll());
+        $this->assertEquals([$page1, $page2], $this->_getPageManager()->getAll());
 
         //Create
         $page3 = $this->_getPageManager()->createPage($page3S);
 
         Phake::when($this->pageRepository)->findAll()
-            ->thenReturn(array($page1, $page2, $page3));
+            ->thenReturn([$page1, $page2, $page3]);
 
         //After create
-        $this->assertEquals(array($page1, $page2, $page3), $this->_getPageManager()->getAll());
+        $this->assertEquals([$page1, $page2, $page3], $this->_getPageManager()->getAll());
     }
 
     /**
@@ -204,7 +198,6 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
         ]);
 
         Phake::when($this->pageRepository)->findByIdentifier('my-page')->thenReturn($page)->thenReturn($pageUpdated);
-        //Phake::when($this->pageRepository)->findByUri('/my-page')->thenReturn($page);
 
         //Before update
         $this->assertEquals($pageS, $this->_getPageManager()->getByIdentifier('my-page'));
@@ -230,18 +223,18 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
         $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
 
         Phake::when($this->pageRepository)->findAll()
-            ->thenReturn(array($page1, $page2))
-            ->thenReturn(array($page2));
+            ->thenReturn([$page1, $page2])
+            ->thenReturn([$page2]);
         Phake::when($this->pageRepository)->findByIdentifier('page-1')->thenReturn($page1);
 
         //Before delete
-        $this->assertEquals(array($page1, $page2), $this->_getPageManager()->getAll());
+        $this->assertEquals([$page1, $page2], $this->_getPageManager()->getAll());
 
         //Delete
         $this->_getPageManager()->deletePage('page-1');
 
         //After delete
-        $this->assertEquals(array($page2), $this->_getPageManager()->getAll());
+        $this->assertEquals([$page2], $this->_getPageManager()->getAll());
     }
 
     /**
@@ -260,16 +253,16 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
 
         Phake::when($this->pageRepository)->findByIdentifier('page-2')->thenReturn($page2);
         Phake::when($this->pageRepository)->findAll()
-            ->thenReturn(array($page1, $page2))
-            ->thenReturn(array($page1, $page2, $page2Duplicate));
+            ->thenReturn([$page1, $page2])
+            ->thenReturn([$page1, $page2, $page2Duplicate]);
 
         //Before duplicate
-        $this->assertEquals(array($page1, $page2), $this->_getPageManager()->getAll());
+        $this->assertEquals([$page1, $page2], $this->_getPageManager()->getAll());
 
         //Duplicate
         $this->_getPageManager()->duplicatePage('page-2');
 
         //After duplicate
-        $this->assertEquals(array($page1, $page2, $page2Duplicate), $this->_getPageManager()->getAll());
+        $this->assertEquals([$page1, $page2, $page2Duplicate], $this->_getPageManager()->getAll());
     }
 }

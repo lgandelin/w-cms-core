@@ -23,7 +23,7 @@ class PageManager {
             'text' => $page->getText(),
             'meta_title' => $page->getMetaTitle(),
             'meta_description' => $page->getMetaDescription(),
-            'meta_keywords' => $page->getMetaKeywords(),
+            'meta_keywords' => $page->getMetaKeywords()
        ]);
     }
 
@@ -41,7 +41,7 @@ class PageManager {
             'text' => $page->getText(),
             'meta_title' => $page->getMetaTitle(),
             'meta_description' => $page->getMetaDescription(),
-            'meta_keywords' => $page->getMetaKeywords(),
+            'meta_keywords' => $page->getMetaKeywords()
         ]);
     }
 
@@ -52,14 +52,14 @@ class PageManager {
 
     public function createPage(\CMS\Structures\PageStructure $pageStructure)
     {
-        if (!$pageStructure->name) throw new \InvalidArgumentException('You must provide a name for a page');
-        if (!$pageStructure->uri) throw new \InvalidArgumentException('You must provide a Uri for a page');
+        if (!$pageStructure->name)
+            throw new \InvalidArgumentException('You must provide a name for a page');
 
-        if (!$pageStructure->identifier)
-            $pageStructure->identifier = str_replace('/', '-', ltrim($pageStructure->uri, '/'));
+        if (!$pageStructure->uri)
+            throw new \InvalidArgumentException('You must provide a URI for a page');
 
         if ($this->pageRepository->findByUri($pageStructure->uri))
-            throw new \Exception('There is already a page with the same uri');
+            throw new \Exception('There is already a page with the same URI');
 
         if ($this->pageRepository->findByIdentifier($pageStructure->identifier))
             throw new \Exception('There is already a page with the same identifier');
@@ -83,8 +83,8 @@ class PageManager {
 
         $existingPage = $this->pageRepository->findByUri($page->getUri());
 
-        if ($existingPage != null && $existingPage->getIdentifier() != $pageStructure->identifier)
-            throw new \Exception('There is already a page with the same uri');
+        if ($existingPage != null && $existingPage->getUri() != $pageStructure->uri)
+            throw new \Exception('There is already a page with the same URI');
 
         $page->setName($pageStructure->name);
         $page->setUri($pageStructure->uri);

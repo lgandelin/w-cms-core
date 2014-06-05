@@ -6,8 +6,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user = new \CMS\Entities\User();
         $user->setLogin($login);
-        if ($password)
-            $user->setPassword(sha1($password));
+        if ($password) $user->setPassword($password);
         $user->setLastName($last_name);
         $user->setFirstName($first_name);
         $user->setEmail($email);
@@ -144,12 +143,12 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
         $user = $this->_createUserObject('pmartin', '111aaa', 'Martin', 'Paul');
         $userS = new \CMS\Structures\UserStructure([
             'login' => 'pmartin',
-            'password' => 'e1ad01def90c966cf10dd6cfda9b36a42e7446a9',
+            'password' => '111aaa',
             'last_name' => 'Martin',
             'first_name' => 'Paul'
         ]);
 
-        $userUpdated = $this->_createUserObject('pmartin', 'd940fa386986d50e8ba01f98317dec8331941b3e', 'Martin', 'Paul');
+        $userUpdated = $this->_createUserObject('pmartin', '222bbb', 'Martin', 'Paul');
         $userUpdatedS = new \CMS\Structures\UserStructure([
             'login' => 'pmartin',
             'password' => '222bbb',
@@ -158,7 +157,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
         ]);
         $userUpdatedWithPasswordS = new \CMS\Structures\UserStructure([
             'login' => 'pmartin',
-            'password' => 'd940fa386986d50e8ba01f98317dec8331941b3e',
+            'password' => '222bbb',
             'last_name' => 'Smith',
             'first_name' => 'Paul'
         ]);
