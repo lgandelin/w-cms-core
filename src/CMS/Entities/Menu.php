@@ -10,7 +10,7 @@ class Menu {
 
     public function __construct()
     {
-        $this->items = array();
+        $this->items = [];
     }
 
     public function setIdentifier($identifier)
@@ -31,6 +31,11 @@ class Menu {
     public function getItems()
     {
         return $this->items;
+    }
+
+    public function deleteItems()
+    {
+        $this->items = [];
     }
 
     public function setName($name)

@@ -43,7 +43,7 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     {
         $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
         $pageS = new \CMS\Structures\PageStructure([
-           'name' => 'My Page',
+            'name' => 'My Page',
             'uri' => '/my-page',
             'identifier' => 'my-page'
         ]);

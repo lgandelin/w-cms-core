@@ -52,17 +52,17 @@ class PageManager {
 
     public function createPage(\CMS\Structures\PageStructure $pageStructure)
     {
-        if (!$pageStructure->name)
-            throw new \InvalidArgumentException('You must provide a name for a page');
+        if (!$pageStructure->identifier)
+            throw new \InvalidArgumentException('You must provide an identifier for a page');
 
         if (!$pageStructure->uri)
             throw new \InvalidArgumentException('You must provide a URI for a page');
 
-        if ($this->pageRepository->findByUri($pageStructure->uri))
-            throw new \Exception('There is already a page with the same URI');
-
         if ($this->pageRepository->findByIdentifier($pageStructure->identifier))
             throw new \Exception('There is already a page with the same identifier');
+
+        if ($this->pageRepository->findByUri($pageStructure->uri))
+            throw new \Exception('There is already a page with the same URI');
 
         $page = new \CMS\Entities\Page();
         $page->setName($pageStructure->name);

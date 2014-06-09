@@ -4,9 +4,10 @@ namespace CMS\Services;
 
 class MenuManager {
 
-    public function __construct($menuRepository = null)
+    public function __construct($menuRepository = null, $pageRepository = null)
     {
         $this->menuRepository = $menuRepository;
+        $this->pageRepository = $pageRepository;
     }
 
     public function getByIdentifier($identifier)
@@ -19,10 +20,16 @@ class MenuManager {
             $items = [];
             if (is_array($menu->getItems())) {
                 foreach ($menu->getItems() as $item) {
+                    $pageS = ($item->getPage()) ? new \CMS\Structures\PageStructure([
+                        'name' => $item->getPage()->getName(),
+                        'uri' => $item->getPage()->getUri(),
+                        'identifier' => $item->getPage()->getIdentifier()
+                    ]) : null;
+
                     $items[]= new \CMS\Structures\MenuItemStructure([
                         'label' => $item->getLabel(),
                         'order' => $item->getOrder(),
-                        'page' => $item->getPage()
+                        'page' => $pageS
                     ]);
                 }
             }
@@ -73,11 +80,22 @@ class MenuManager {
         $menu->setName($menuStructure->name);
 
         if (is_array($menuStructure->items)) {
+            $menu->deleteItems();
+
             foreach ($menuStructure->items as $itemS) {
                 $item = new \CMS\Entities\MenuItem();
                 $item->setLabel($itemS->label);
                 $item->setOrder($itemS->order);
-                if ($itemS->page) $item->setPage($itemS->page);
+                if ($itemS->page) {
+                    try {
+                        $page = $this->pageRepository->findByIdentifier($itemS->page);
+                        $item->setPage($page);
+                    } catch (\Exception $e) {
+
+                    }
+
+                }
+                $menu->addItem($item);
             }
         }
 
