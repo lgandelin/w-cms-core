@@ -81,9 +81,9 @@ class PageManager {
         if (!$page = $this->pageRepository->findByIdentifier($pageStructure->identifier))
             throw new \Exception('The page was not found');
 
-        $existingPage = $this->pageRepository->findByUri($page->getUri());
+        $existingPage = $this->pageRepository->findByUri($pageStructure->uri);
 
-        if ($existingPage != null && $existingPage->getUri() != $pageStructure->uri)
+        if ($existingPage != null && $existingPage->getIdentifier() != $pageStructure->identifier)
             throw new \Exception('There is already a page with the same URI');
 
         $page->setName($pageStructure->name);
