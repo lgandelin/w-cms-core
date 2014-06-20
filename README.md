@@ -1,9 +1,9 @@
-##CMS Core
-[![Build Status](https://travis-ci.org/lgandelin/cms-core.png)](https://travis-ci.org/lgandelin/cms-core)
+##W CMS - Core package
+[![Build Status](https://travis-ci.org/lgandelin/w-cms-core.png)](https://travis-ci.org/lgandelin/w-cms-core)
 
-CMS is a web application created to provide a complete and easy to use content management system to help people writing their content.
+W CMS is a web application created to provide a complete and easy to use content management system to help people writing their content.
 
-**This repository is the core package and can not be used as is. You must get a package that uses it, for exemple the [CMS Laravel Package](https://github.com/lgandelin/cms-laravel-package).**
+**This repository is the core package and can not be used as is. You must get a package that uses it, for exemple the [W CMS - Laravel package](https://github.com/lgandelin/w-cms-laravel).**
 
 
 ##Features
@@ -17,8 +17,8 @@ CMS is a web application created to provide a complete and easy to use content m
 
 
 ##Roadmap
-See [ROADMAP.md](https://github.com/lgandelin/cms-core/blob/master/ROADMAP.md).
+See [ROADMAP.md](https://github.com/lgandelin/w-cms-core/blob/master/ROADMAP.md).
 
 
 ##License
-The CMS is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+W CMS is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
