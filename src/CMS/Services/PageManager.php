@@ -34,7 +34,7 @@ class PageManager {
         if (!$page)
             throw new \Exception('The page was not found');
 
-        return  new \CMS\Structures\PageStructure([
+        return new \CMS\Structures\PageStructure([
             'name' => $page->getName(),
             'uri' => $page->getUri(),
             'identifier' => $page->getIdentifier(),
@@ -47,7 +47,25 @@ class PageManager {
 
     public function getAll()
     {
-        return $this->pageRepository->findAll();
+        $pages = $this->pageRepository->findAll();
+
+        $pagesS = [];
+        if (is_array($pages) && sizeof($pages) > 0) {
+            foreach ($pages as $i => $page) {
+                $pagesS[]= new \CMS\Structures\PageStructure([
+                    'name' => $page->getName(),
+                    'uri' => $page->getUri(),
+                    'identifier' => $page->getIdentifier(),
+                    'text' => $page->getText(),
+                    'meta_title' => $page->getMetaTitle(),
+                    'meta_description' => $page->getMetaDescription(),
+                    'meta_keywords' => $page->getMetaKeywords()
+                ]);
+            }
+            return $pagesS;
+        }
+
+        return false;
     }
 
     public function createPage(\CMS\Structures\PageStructure $pageStructure)
