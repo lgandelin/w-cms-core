@@ -2,9 +2,17 @@
 
 namespace CMS\Services;
 
+use CMS\Entities\Menu;
+use CMS\Entities\MenuItem;
+use CMS\Structures\PageStructure;
+use CMS\Structures\MenuStructure;
+use CMS\Structures\MenuItemStructure;
+use CMS\Repositories\MenuRepositoryInterface;
+use CMS\Repositories\PageRepositoryInterface;
+
 class MenuManager {
 
-    public function __construct($menuRepository = null, $pageRepository = null)
+    public function __construct(MenuRepositoryInterface $menuRepository, PageRepositoryInterface $pageRepository)
     {
         $this->menuRepository = $menuRepository;
         $this->pageRepository = $pageRepository;
@@ -17,23 +25,24 @@ class MenuManager {
         if (!$menu)
             throw new \Exception('The menu was not found');
 
-            $items = [];
-            if (is_array($menu->getItems())) {
-                foreach ($menu->getItems() as $item) {
-                    $pageS = ($item->getPage()) ? new \CMS\Structures\PageStructure([
-                        'name' => $item->getPage()->getName(),
-                        'uri' => $item->getPage()->getUri(),
-                        'identifier' => $item->getPage()->getIdentifier()
-                    ]) : null;
+        $items = [];
+        if (is_array($menu->getItems())) {
+            foreach ($menu->getItems() as $item) {
+                $pageS = ($item->getPage()) ? new PageStructure([
+                    'name' => $item->getPage()->getName(),
+                    'uri' => $item->getPage()->getUri(),
+                    'identifier' => $item->getPage()->getIdentifier()
+                ]) : null;
 
-                    $items[]= new \CMS\Structures\MenuItemStructure([
-                        'label' => $item->getLabel(),
-                        'order' => $item->getOrder(),
-                        'page' => $pageS
-                    ]);
-                }
+                $items[]= new MenuItemStructure([
+                    'label' => $item->getLabel(),
+                    'order' => $item->getOrder(),
+                    'page' => $pageS
+                ]);
             }
-        return  new \CMS\Structures\MenuStructure([
+        }
+            
+        return new MenuStructure([
             'identifier' => $menu->getIdentifier(),
             'items' => $items,
             'name' => $menu->getName()
@@ -45,7 +54,7 @@ class MenuManager {
         return $this->menuRepository->findAll();
     }
 
-    public function createMenu(\CMS\Structures\MenuStructure $menuStructure)
+    public function createMenu(MenuStructure $menuStructure)
     {
         if (!$menuStructure->identifier)
             throw new \InvalidArgumentException('You must provide an identifier for a menu');
@@ -53,13 +62,13 @@ class MenuManager {
         if ($this->menuRepository->findByIdentifier($menuStructure->identifier))
             throw new \Exception('There is already a menu with the same identifier');
 
-        $menu = new \CMS\Entities\Menu();
+        $menu = new Menu();
         $menu->setIdentifier($menuStructure->identifier);
         $menu->setName($menuStructure->name);
 
         if (is_array($menuStructure->items)) {
             foreach ($menuStructure->items as $itemS) {
-                $item = new \CMS\Entities\MenuItem();
+                $item = new MenuItem();
                 $item->setLabel($itemS->label);
                 $item->setOrder($itemS->order);
                 if ($itemS->page) $item->setPage($itemS->page);
@@ -69,7 +78,7 @@ class MenuManager {
         return $this->menuRepository->createMenu($menu);
     }
 
-    public function updateMenu(\CMS\Structures\MenuStructure $menuStructure)
+    public function updateMenu(MenuStructure $menuStructure)
     {
         if (!$menu = $this->menuRepository->findByIdentifier($menuStructure->identifier))
             throw new \Exception('The menu was not found');
@@ -83,7 +92,7 @@ class MenuManager {
             $menu->deleteItems();
 
             foreach ($menuStructure->items as $itemS) {
-                $item = new \CMS\Entities\MenuItem();
+                $item = new MenuItem();
                 $item->setLabel($itemS->label);
                 $item->setOrder($itemS->order);
                 if ($itemS->page) {

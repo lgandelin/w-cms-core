@@ -2,9 +2,13 @@
 
 namespace CMS\Services;
 
+use CMS\Entities\Page;
+use CMS\Structures\PageStructure;
+use CMS\Repositories\PageRepositoryInterface;
+
 class PageManager {
 
-    public function __construct($pageRepository = null)
+    public function __construct(PageRepositoryInterface $pageRepository)
     {
         $this->pageRepository = $pageRepository;
     }
@@ -16,7 +20,7 @@ class PageManager {
         if (!$page)
             throw new \Exception('The page was not found');
 
-        return  new \CMS\Structures\PageStructure([
+        return new PageStructure([
             'name' => $page->getName(),
             'uri' => $page->getUri(),
             'identifier' => $page->getIdentifier(),
@@ -34,7 +38,7 @@ class PageManager {
         if (!$page)
             throw new \Exception('The page was not found');
 
-        return new \CMS\Structures\PageStructure([
+        return new PageStructure([
             'name' => $page->getName(),
             'uri' => $page->getUri(),
             'identifier' => $page->getIdentifier(),
@@ -52,7 +56,7 @@ class PageManager {
         $pagesS = [];
         if (is_array($pages) && sizeof($pages) > 0) {
             foreach ($pages as $i => $page) {
-                $pagesS[]= new \CMS\Structures\PageStructure([
+                $pagesS[]= new PageStructure([
                     'name' => $page->getName(),
                     'uri' => $page->getUri(),
                     'identifier' => $page->getIdentifier(),
@@ -62,13 +66,14 @@ class PageManager {
                     'meta_keywords' => $page->getMetaKeywords()
                 ]);
             }
+
             return $pagesS;
         }
 
         return false;
     }
 
-    public function createPage(\CMS\Structures\PageStructure $pageStructure)
+    public function createPage(PageStructure $pageStructure)
     {
         if (!$pageStructure->identifier)
             throw new \InvalidArgumentException('You must provide an identifier for a page');
@@ -82,7 +87,7 @@ class PageManager {
         if ($this->pageRepository->findByUri($pageStructure->uri))
             throw new \Exception('There is already a page with the same URI');
 
-        $page = new \CMS\Entities\Page();
+        $page = new Page();
         $page->setName($pageStructure->name);
         $page->setUri($pageStructure->uri);
         $page->setIdentifier($pageStructure->identifier);
@@ -94,7 +99,7 @@ class PageManager {
         return $this->pageRepository->createPage($page);
     }
 
-    public function updatePage(\CMS\Structures\PageStructure $pageStructure)
+    public function updatePage(PageStructure $pageStructure)
     {
         if (!$page = $this->pageRepository->findByIdentifier($pageStructure->identifier))
             throw new \Exception('The page was not found');

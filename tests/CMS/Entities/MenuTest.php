@@ -1,17 +1,20 @@
 <?php
 
+use CMS\Entities\Menu;
+use CMS\Entities\MenuItem;
+
 class MenuTest extends PHPUnit_Framework_TestCase {
 
     public function testConstruct()
     {
-        $menu = new \CMS\Entities\Menu();
+        $menu = new Menu();
 
-        $this->assertInstanceOf('\CMS\Entities\Menu', $menu);
+        $this->assertInstanceOf('CMS\Entities\Menu', $menu);
     }
 
     public function testGetIdentifier()
     {
-        $menu = new \CMS\Entities\Menu();
+        $menu = new Menu();
         $menu->setIdentifier('main-menu');
 
         $this->assertEquals('main-menu', $menu->getIdentifier());
@@ -19,7 +22,7 @@ class MenuTest extends PHPUnit_Framework_TestCase {
 
     public function testGetName()
     {
-        $menu = new \CMS\Entities\Menu();
+        $menu = new Menu();
         $menu->setName('My Menu');
 
         $this->assertEquals('My Menu', $menu->getName());
@@ -27,10 +30,10 @@ class MenuTest extends PHPUnit_Framework_TestCase {
 
     public function testGetItems()
     {
-        $menu = new \CMS\Entities\Menu();
+        $menu = new Menu();
         $this->assertEquals([], $menu->getItems());
 
-        $item = new \CMS\Entities\MenuItem();
+        $item = new MenuItem();
         $menu->addItem($item);
         $this->assertEquals([$item], $menu->getItems());
     }

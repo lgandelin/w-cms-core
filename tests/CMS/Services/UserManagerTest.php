@@ -1,10 +1,14 @@
 <?php
 
+use CMS\Entities\User;
+use CMS\Services\UserManager;
+use CMS\Structures\UserStructure;
+    
 class UserManagerTest extends PHPUnit_Framework_TestCase {
 
     private function _createUserObject($login, $password = null, $last_name = null, $first_name = null, $email = null)
     {
-        $user = new \CMS\Entities\User();
+        $user = new User();
         $user->setLogin($login);
         if ($password) $user->setPassword($password);
         $user->setLastName($last_name);
@@ -21,12 +25,12 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
 
     private function _getUserManager()
     {
-        return new \CMS\Services\UserManager($this->userRepository);
+        return new UserManager($this->userRepository);
     }
 
     public function testConstruct()
     {
-        $this->assertInstanceOf('\CMS\Services\UserManager', $this->_getUserManager());
+        $this->assertInstanceOf('CMS\Services\UserManager', $this->_getUserManager());
     }
 
     /**
@@ -40,14 +44,14 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByLogin()
     {
         $user = $this->_createUserObject('jdoe', '', 'Doe', 'John');
-        $userS = new \CMS\Structures\UserStructure([
+        $userS = new UserStructure([
             'login' => 'jdoe',
             'last_name' => 'Doe',
             'first_name' => 'John'
         ]);
         Phake::when($this->userRepository)->findByLogin('jdoe')->thenReturn($user);
 
-        $this->assertInstanceOf('\CMS\Structures\UserStructure', $this->_getUserManager()->getByLogin('jdoe'));
+        $this->assertInstanceOf('CMS\Structures\UserStructure', $this->_getUserManager()->getByLogin('jdoe'));
         $this->assertEquals($userS, $this->_getUserManager()->getByLogin('jdoe'));
     }
     
@@ -73,7 +77,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testCreateUserWithInvalidArguments()
     {
-        $invalidUserS = new \CMS\Structures\UserStructure([
+        $invalidUserS = new UserStructure([
             'last_name' => 'Doe',
             'first_name' => 'John'
         ]);
@@ -87,7 +91,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testCreateUserWithAlreadyExistingLogin()
     {
         $user1 = $this->_createUserObject('jdoe', '', 'Doe', 'John');
-        $user2S = new \CMS\Structures\UserStructure([
+        $user2S = new UserStructure([
             'login' => 'jdoe',
             'last_name' => 'Doe',
             'first_name' => 'John'
@@ -102,7 +106,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user1 = $this->_createUserObject('jdoe', '', 'Doe', 'John');
         $user2 = $this->_createUserObject('asmith', '', 'Smith', 'Albert');
-        $user3S = new \CMS\Structures\UserStructure([
+        $user3S = new UserStructure([
             'login' => 'pmartin',
             'last_name' => 'Martin',
             'first_name' => 'Paul'
@@ -129,7 +133,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdateNonExistingUser()
     {
-        $userS = new \CMS\Structures\UserStructure([
+        $userS = new UserStructure([
             'login' => 'pmartin',
             'last_name' => 'Martin',
             'first_name' => 'Paul'
@@ -141,7 +145,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testUpdateUser()
     {
         $user = $this->_createUserObject('pmartin', '111aaa', 'Martin', 'Paul');
-        $userS = new \CMS\Structures\UserStructure([
+        $userS = new UserStructure([
             'login' => 'pmartin',
             'password' => '111aaa',
             'last_name' => 'Martin',
@@ -149,13 +153,13 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
         ]);
 
         $userUpdated = $this->_createUserObject('pmartin', '222bbb', 'Martin', 'Paul');
-        $userUpdatedS = new \CMS\Structures\UserStructure([
+        $userUpdatedS = new UserStructure([
             'login' => 'pmartin',
             'password' => '222bbb',
             'last_name' => 'Smith',
             'first_name' => 'Paul'
         ]);
-        $userUpdatedWithPasswordS = new \CMS\Structures\UserStructure([
+        $userUpdatedWithPasswordS = new UserStructure([
             'login' => 'pmartin',
             'password' => '222bbb',
             'last_name' => 'Smith',

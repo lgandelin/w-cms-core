@@ -2,6 +2,8 @@
 
 namespace CMS\Entities;
 
+use CMS\Entities\Website;
+
 class Page {
 
     private $name;
@@ -53,7 +55,7 @@ class Page {
         return $this->text;
     }
 
-    public function setWebsite(\CMS\Entities\Website $website)
+    public function setWebsite(Website $website)
     {
         $this->website = $website;
     }
@@ -92,4 +94,5 @@ class Page {
     {
         return $this->meta_keywords;
     }
+    
 } 

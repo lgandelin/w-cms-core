@@ -1,20 +1,27 @@
 <?php
 
+use CMS\Entities\Menu;
+use CMS\Entities\MenuItem;
+use CMS\Services\MenuManager;
+use CMS\Structures\MenuStructure;
+use CMS\Structures\MenuItemStructure;
+
 class MenuManagerTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
         $this->menuRepository = Phake::mock('\CMS\Repositories\MenuRepositoryInterface');
+        $this->pageRepository = Phake::mock('\CMS\Repositories\PageRepositoryInterface');
     }
 
     private function _getMenuManager()
     {
-        return new \CMS\Services\MenuManager($this->menuRepository);
+        return new MenuManager($this->menuRepository, $this->pageRepository);
     }
 
     private function _createMenuObject($identifier, $items = [], $name = null)
     {
-        $menu = new \CMS\Entities\Menu();
+        $menu = new Menu();
         $menu->setIdentifier($identifier);
         foreach ($items as $item)
             $menu->addItem($item);
@@ -25,7 +32,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
 
     private function _createMenuItemObject($label = '', $order = 0, $page = null)
     {
-        $item = new \CMS\Entities\MenuItem();
+        $item = new MenuItem();
         if ($label) $item->setLabel($label);
         if ($order) $item->setOrder($order);
         if ($page) $item->setPage($page);
@@ -35,7 +42,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
 
     public function testConstruct()
     {
-        $this->assertInstanceOf('\CMS\Services\MenuManager', $this->_getMenuManager());
+        $this->assertInstanceOf('CMS\Services\MenuManager', $this->_getMenuManager());
     }
 
     /**
@@ -49,14 +56,14 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByIdentifier()
     {
         $menu = $this->_createMenuObject('main-menu', [], 'Main menu');
-        $menuS = new \CMS\Structures\MenuStructure([
+        $menuS = new MenuStructure([
             'identifier' => 'main-menu',
             'items' => [],
             'name' => 'Main menu'
         ]);
         Phake::when($this->menuRepository)->findByIdentifier('main-menu')->thenReturn($menu);
 
-        $this->assertInstanceOf('\CMS\Structures\MenuStructure', $this->_getMenuManager()->getByIdentifier('main-menu'));
+        $this->assertInstanceOf('CMS\Structures\MenuStructure', $this->_getMenuManager()->getByIdentifier('main-menu'));
         $this->assertEquals($menuS, $this->_getMenuManager()->getByIdentifier('main-menu'));
     }
 
@@ -82,7 +89,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testCreateMenuWithInvalidArguments()
     {
-        $invalidMenuS = new \CMS\Structures\MenuStructure([
+        $invalidMenuS = new MenuStructure([
             'name' => 'Menu',
         ]);
 
@@ -95,7 +102,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
     public function testCreateMenuWithAlreadyExistingIdentifier()
     {
         $menu1 = $this->_createMenuObject('main-menu', [], 'Menu 1');
-        $menu2S = new \CMS\Structures\MenuStructure([
+        $menu2S = new MenuStructure([
             'identifier' => 'main-menu',
             'name' => 'Menu 2'
         ]);
@@ -112,9 +119,9 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
 
         $menu1 = $this->_createMenuObject('menu-1', [$item1, $item2], 'Menu 1');
         $menu2 = $this->_createMenuObject('menu-2', [], 'Menu 2');
-        $menu3S = new \CMS\Structures\MenuStructure([
+        $menu3S = new MenuStructure([
             'identifier' => 'menu-3',
-            'items' => [new \CMS\Structures\MenuItemStructure(['label' => 'Item 1']), new \CMS\Structures\MenuItemStructure(['label' => 'Item 2'])],
+            'items' => [new MenuItemStructure(['label' => 'Item 1']), new MenuItemStructure(['label' => 'Item 2'])],
             'name' => 'Menu 3',
         ]);
 
@@ -139,7 +146,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdateNonExistingMenu()
     {
-        $menuS = new \CMS\Structures\MenuStructure([
+        $menuS = new MenuStructure([
             'identifier' => 'main-menu',
             'items' => array(),
             'name' => 'Main menu',
@@ -155,18 +162,18 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
         $item2 = $this->_createMenuItemObject('Item 2');
         
         $menu = $this->_createMenuObject('main-menu', [$item1, $item2], 'Main menu');
-        $menuS = new \CMS\Structures\MenuStructure([
+        $menuS = new MenuStructure([
             'identifier' => 'main-menu',
-            'items' => [new \CMS\Structures\MenuItemStructure(['label' => 'Item 1']), new \CMS\Structures\MenuItemStructure(['label' => 'Item 2'])],
+            'items' => [new MenuItemStructure(['label' => 'Item 1']), new MenuItemStructure(['label' => 'Item 2'])],
             'name' => 'Main menu',
         ]);
 
         $item1Updated = $this->_createMenuItemObject('Item 1 updated');
 
         $menuUpdated = $this->_createMenuObject('main-menu', [$item1Updated, $item2], 'Main menu updated');
-        $menuUpdatedS = new \CMS\Structures\MenuStructure([
+        $menuUpdatedS = new MenuStructure([
             'identifier' => 'main-menu',
-            'items' => [new \CMS\Structures\MenuItemStructure(['label' => 'Item 1 updated']), new \CMS\Structures\MenuItemStructure(['label' => 'Item 2'])],
+            'items' => [new MenuItemStructure(['label' => 'Item 1 updated']), new MenuItemStructure(['label' => 'Item 2'])],
             'name' => 'Main menu updated',
         ]);
 
