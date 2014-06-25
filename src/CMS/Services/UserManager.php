@@ -20,18 +20,23 @@ class UserManager {
         if (!$user)
             throw new \Exception('The user was not found');
 
-        return new UserStructure([
-            'login' => $user->getLogin(),
-            'password' => $user->getPassword(),
-            'last_name' => $user->getLastName(),
-            'first_name' => $user->getFirstName(),
-            'email' => $user->getEmail()
-        ]);
+        return UserStructure::convertUserToUserStructure($user);
     }
     
     public function getAll()
     {
-        return $this->userRepository->findAll();
+        $users = $this->userRepository->findAll();
+
+        $usersS = [];
+        if (is_array($users) && sizeof($users) > 0) {
+            foreach ($users as $i => $user) {
+                $usersS[]= UserStructure::convertUserToUserStructure($user);
+            }
+
+            return $usersS;
+        }
+
+        return false;
     }
 
     public function createUser(UserStructure $userStructure)
@@ -42,12 +47,7 @@ class UserManager {
         if ($this->userRepository->findByLogin($userStructure->login))
             throw new \Exception('There is already a user with the same login');
 
-        $user = new User();
-        $user->setLogin($userStructure->login);
-        $user->setPassword($userStructure->password);
-        $user->setLastName($userStructure->last_name);
-        $user->setFirstName($userStructure->first_name);
-        $user->setEmail($userStructure->email);
+        $user = UserStructure::convertUserStructureToUser($userStructure);
 
         return $this->userRepository->createUser($user);
     }
@@ -62,12 +62,7 @@ class UserManager {
         if ($existingUser != null && $existingUser->getLogin() != $userStructure->login)
             throw new \Exception('There is already a user with the same login');
 
-        if ($userStructure->password != null && $userStructure->password != $user->getPassword())
-            $user->setPassword($userStructure->password);
-
-        $user->setLastName($userStructure->last_name);
-        $user->setFirstName($userStructure->first_name);
-        $user->setEmail($userStructure->email);
+        $user = UserStructure::convertUserStructureToUser($userStructure);
 
         return $this->userRepository->updateUser($user);
     }

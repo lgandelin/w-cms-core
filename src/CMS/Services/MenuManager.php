@@ -20,9 +20,7 @@ class MenuManager {
 
     public function getByIdentifier($identifier)
     {
-        $menu = $this->menuRepository->findByIdentifier($identifier);
-
-        if (!$menu)
+        if (!$menu = $this->menuRepository->findByIdentifier($identifier))
             throw new \Exception('The menu was not found');
 
         $items = [];

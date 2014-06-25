@@ -15,38 +15,18 @@ class PageManager {
 
     public function getByIdentifier($identifier)
     {
-        $page = $this->pageRepository->findByIdentifier($identifier);
-
-        if (!$page)
+        if (!$page = $this->pageRepository->findByIdentifier($identifier))
             throw new \Exception('The page was not found');
 
-        return new PageStructure([
-            'name' => $page->getName(),
-            'uri' => $page->getUri(),
-            'identifier' => $page->getIdentifier(),
-            'text' => $page->getText(),
-            'meta_title' => $page->getMetaTitle(),
-            'meta_description' => $page->getMetaDescription(),
-            'meta_keywords' => $page->getMetaKeywords()
-       ]);
+        return PageStructure::convertPageToPageStructure($page);
     }
 
     public function getByUri($uri)
     {
-        $page = $this->pageRepository->findByUri($uri);
-
-        if (!$page)
+        if (!$page = $this->pageRepository->findByUri($uri))
             throw new \Exception('The page was not found');
 
-        return new PageStructure([
-            'name' => $page->getName(),
-            'uri' => $page->getUri(),
-            'identifier' => $page->getIdentifier(),
-            'text' => $page->getText(),
-            'meta_title' => $page->getMetaTitle(),
-            'meta_description' => $page->getMetaDescription(),
-            'meta_keywords' => $page->getMetaKeywords()
-        ]);
+        return PageStructure::convertPageToPageStructure($page);
     }
 
     public function getAll()
@@ -56,15 +36,7 @@ class PageManager {
         $pagesS = [];
         if (is_array($pages) && sizeof($pages) > 0) {
             foreach ($pages as $i => $page) {
-                $pagesS[]= new PageStructure([
-                    'name' => $page->getName(),
-                    'uri' => $page->getUri(),
-                    'identifier' => $page->getIdentifier(),
-                    'text' => $page->getText(),
-                    'meta_title' => $page->getMetaTitle(),
-                    'meta_description' => $page->getMetaDescription(),
-                    'meta_keywords' => $page->getMetaKeywords()
-                ]);
+                $pagesS[]= PageStructure::convertPageToPageStructure($page);
             }
 
             return $pagesS;
@@ -87,14 +59,7 @@ class PageManager {
         if ($this->pageRepository->findByUri($pageStructure->uri))
             throw new \Exception('There is already a page with the same URI');
 
-        $page = new Page();
-        $page->setName($pageStructure->name);
-        $page->setUri($pageStructure->uri);
-        $page->setIdentifier($pageStructure->identifier);
-        $page->setText($pageStructure->text);
-        $page->setMetaTitle($pageStructure->meta_title);
-        $page->setMetaDescription($pageStructure->meta_description);
-        $page->setMetaKeywords($pageStructure->meta_keywords);
+        $page = PageStructure::convertPageStructureToPage($pageStructure);
 
         return $this->pageRepository->createPage($page);
     }
@@ -109,12 +74,7 @@ class PageManager {
         if ($existingPage != null && $existingPage->getIdentifier() != $pageStructure->identifier)
             throw new \Exception('There is already a page with the same URI');
 
-        $page->setName($pageStructure->name);
-        $page->setUri($pageStructure->uri);
-        $page->setText($pageStructure->text);
-        $page->setMetaTitle($pageStructure->meta_title);
-        $page->setMetaDescription($pageStructure->meta_description);
-        $page->setMetaKeywords($pageStructure->meta_keywords);
+        $page = PageStructure::convertPageStructureToPage($pageStructure);
 
         return $this->pageRepository->updatePage($page);
     }
