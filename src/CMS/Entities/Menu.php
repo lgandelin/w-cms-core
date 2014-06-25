@@ -2,6 +2,8 @@
 
 namespace CMS\Entities;
 
+use CMS\Entities\MenuItem;
+
 class Menu {
 
     private $identifier;
@@ -23,7 +25,7 @@ class Menu {
         return $this->identifier;
     }
 
-    public function addItem(\CMS\Entities\MenuItem $item)
+    public function addItem(MenuItem $item)
     {
         $this->items[]= $item;
     }

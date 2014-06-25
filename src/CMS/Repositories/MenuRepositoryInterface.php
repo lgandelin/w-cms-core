@@ -2,11 +2,14 @@
 
 namespace CMS\Repositories;
 
+use CMS\Entities\Menu;
+
 interface MenuRepositoryInterface {
 
     public function findByIdentifier($identifier);
     public function findAll();
-    public function createMenu(\CMS\Entities\Menu $menu);
-    public function updateMenu(\CMS\Entities\Menu $menu);
-    public function deleteMenu(\CMS\Entities\Menu $menu);
+    public function createMenu(Menu $menu);
+    public function updateMenu(Menu $menu);
+    public function deleteMenu(Menu $menu);
+    
 }

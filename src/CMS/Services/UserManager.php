@@ -2,9 +2,13 @@
 
 namespace CMS\Services;
 
+use CMS\Entities\User;
+use CMS\Structures\UserStructure;
+use CMS\Repositories\UserRepositoryInterface;
+
 class UserManager {
 
-    public function __construct($userRepository = null)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -16,7 +20,7 @@ class UserManager {
         if (!$user)
             throw new \Exception('The user was not found');
 
-        return  new \CMS\Structures\UserStructure([
+        return new UserStructure([
             'login' => $user->getLogin(),
             'password' => $user->getPassword(),
             'last_name' => $user->getLastName(),
@@ -30,7 +34,7 @@ class UserManager {
         return $this->userRepository->findAll();
     }
 
-    public function createUser(\CMS\Structures\UserStructure $userStructure)
+    public function createUser(UserStructure $userStructure)
     {
         if (!$userStructure->login)
             throw new \InvalidArgumentException('You must provide a login for a user');
@@ -38,7 +42,7 @@ class UserManager {
         if ($this->userRepository->findByLogin($userStructure->login))
             throw new \Exception('There is already a user with the same login');
 
-        $user = new \CMS\Entities\User();
+        $user = new User();
         $user->setLogin($userStructure->login);
         $user->setPassword($userStructure->password);
         $user->setLastName($userStructure->last_name);
@@ -48,7 +52,7 @@ class UserManager {
         return $this->userRepository->createUser($user);
     }
 
-    public function updateUser(\CMS\Structures\UserStructure $userStructure)
+    public function updateUser(UserStructure $userStructure)
     {
         if (!$user = $this->userRepository->findByLogin($userStructure->login))
             throw new \Exception('The user was not found');

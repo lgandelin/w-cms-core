@@ -1,18 +1,19 @@
 <?php
 
+use CMS\Entities\Website;
 
 class WebsiteTest extends PHPUnit_Framework_TestCase {
 
     public function testConstruct()
     {
-        $website = new \CMS\Entities\Website();
+        $website = new Website();
 
-        $this->assertInstanceOf('\CMS\Entities\Website', $website);
+        $this->assertInstanceOf('CMS\Entities\Website', $website);
     }
 
     public function testGetName()
     {
-        $website = new \CMS\Entities\Website();
+        $website = new Website();
         $website->setName('My Website');
 
         $this->assertEquals('My Website', $website->getName());
@@ -20,7 +21,7 @@ class WebsiteTest extends PHPUnit_Framework_TestCase {
 
     public function testGetUrl()
     {
-        $website = new \CMS\Entities\Website();
+        $website = new Website();
         $website->setUrl('http://my-website.fr');
 
         $this->assertEquals('http://my-website.fr', $website->getUrl());

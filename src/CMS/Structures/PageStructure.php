@@ -2,7 +2,9 @@
 
 namespace CMS\Structures;
 
-class PageStructure {
+use CMS\Structures\DataStructure;
+
+class PageStructure extends DataStructure {
 
     public $name;
     public $uri;
@@ -13,11 +15,4 @@ class PageStructure {
     public $meta_description;
     public $meta_keywords;
 
-    public function __construct($parameters = array())
-    {
-        foreach ($parameters as $key => $value) {
-            if (property_exists($this, $key))
-               $this->$key = $value;
-        }
-    }
 } 

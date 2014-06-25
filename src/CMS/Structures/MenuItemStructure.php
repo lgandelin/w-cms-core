@@ -2,17 +2,12 @@
 
 namespace CMS\Structures;
 
-class MenuItemStructure {
+use CMS\Structures\DataStructure;
+
+class MenuItemStructure extends DataStructure {
 
     public $label;
     public $page;
     public $order;
-
-    public function __construct($parameters = array())
-    {
-        foreach ($parameters as $key => $value) {
-            if (property_exists($this, $key))
-                $this->$key = $value;
-        }
-    }
+    
 } 

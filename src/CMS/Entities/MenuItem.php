@@ -2,6 +2,8 @@
 
 namespace CMS\Entities;
 
+use CMS\Entities\Page;
+
 class MenuItem {
 
     private $label;
@@ -18,7 +20,7 @@ class MenuItem {
         return $this->label;
     }
 
-    public function setPage(\CMS\Entities\Page $page)
+    public function setPage(Page $page)
     {
         $this->page = $page;
     }
@@ -37,4 +39,5 @@ class MenuItem {
     {
         return $this->order;
     }
+    
 }

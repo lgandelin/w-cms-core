@@ -2,7 +2,9 @@
 
 namespace CMS\Structures;
 
-class UserStructure {
+use CMS\Structures\DataStructure;
+
+class UserStructure extends DataStructure {
 
     public $login;
     public $password;
@@ -10,11 +12,4 @@ class UserStructure {
     public $first_name;
     public $email;
 
-    public function __construct($parameters = array())
-    {
-        foreach ($parameters as $key => $value) {
-            if (property_exists($this, $key))
-                $this->$key = $value;
-        }
-    }
 } 
