@@ -38,5 +38,17 @@ class MenuTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals([$item], $menu->getItems());
     }
 
+    public function testDeleteItems()
+    {
+        $menu = new Menu();
+        $item = new MenuItem();
+        $menu->addItem($item);
+        $this->assertEquals([$item], $menu->getItems());
+
+        $menu->deleteItems();
+
+        $this->assertEquals([], $menu->getItems());
+    }
+
 }
  

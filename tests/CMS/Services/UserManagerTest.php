@@ -1,5 +1,6 @@
 <?php
 
+use CMS\Converters\UserConverter;
 use CMS\Entities\User;
 use CMS\Services\UserManager;
 use CMS\Structures\UserStructure;
@@ -21,6 +22,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->userRepository = Phake::mock('\CMS\Repositories\UserRepositoryInterface');
+        $this->userConverter = new UserConverter();
     }
 
     private function _getUserManager()
@@ -44,7 +46,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByLogin()
     {
         $user = $this->_createUserObject('jdoe', '', 'Doe', 'John');
-        $userS = UserStructure::convertUserToUserStructure($user);
+        $userS = $this->userConverter->convertUserToUserStructure($user);
 
         Phake::when($this->userRepository)->findByLogin('jdoe')->thenReturn($user);
 
@@ -63,8 +65,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user1 = $this->_createUserObject('jdoe');
         $user2 = $this->_createUserObject('asmith');
-        $user1S = UserStructure::convertUserToUserStructure($user1);
-        $user2S = UserStructure::convertUserToUserStructure($user2);
+        $user1S = $this->userConverter->convertUserToUserStructure($user1);
+        $user2S = $this->userConverter->convertUserToUserStructure($user2);
 
         Phake::when($this->userRepository)->findAll()->thenReturn([$user1, $user2]);
 
@@ -106,9 +108,9 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
         $user1 = $this->_createUserObject('jdoe', '', 'Doe', 'John');
         $user2 = $this->_createUserObject('asmith', '', 'Smith', 'Albert');
         $user3 = $this->_createUserObject('pmartin', '', 'Martin', 'Paul');
-        $user1S = UserStructure::convertUserToUserStructure($user1);
-        $user2S = UserStructure::convertUserToUserStructure($user2);
-        $user3S = UserStructure::convertUserToUserStructure($user3);
+        $user1S = $this->userConverter->convertUserToUserStructure($user1);
+        $user2S = $this->userConverter->convertUserToUserStructure($user2);
+        $user3S = $this->userConverter->convertUserToUserStructure($user3);
 
         Phake::when($this->userRepository)->findAll()
             ->thenReturn([$user1, $user2]);
@@ -143,9 +145,9 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testUpdateUser()
     {
         $user = $this->_createUserObject('pmartin', '111aaa', 'Martin', 'Paul');
-        $userS = UserStructure::convertUserToUserStructure($user);
+        $userS = $this->userConverter->convertUserToUserStructure($user);
         $userUpdated = $this->_createUserObject('pmartin', '222bbb', 'Martin', 'Paul');
-        $userUpdatedS = UserStructure::convertUserToUserStructure($userUpdated);
+        $userUpdatedS = $this->userConverter->convertUserToUserStructure($userUpdated);
         $userUpdatedWithPasswordS = new UserStructure([
             'login' => 'pmartin',
             'password' => '222bbb',
@@ -177,8 +179,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user1 = $this->_createUserObject('jdoe', '', 'Doe', 'John');
         $user2 = $this->_createUserObject('asmith', '', 'Smith', 'Albert');
-        $user1S = UserStructure::convertUserToUserStructure($user1);
-        $user2S = UserStructure::convertUserToUserStructure($user2);
+        $user1S = $this->userConverter->convertUserToUserStructure($user1);
+        $user2S = $this->userConverter->convertUserToUserStructure($user2);
 
         Phake::when($this->userRepository)->findAll()
             ->thenReturn([$user1, $user2])

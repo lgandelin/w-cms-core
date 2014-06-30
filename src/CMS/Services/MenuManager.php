@@ -2,11 +2,8 @@
 
 namespace CMS\Services;
 
-use CMS\Entities\Menu;
-use CMS\Entities\MenuItem;
-use CMS\Structures\PageStructure;
+use CMS\Converters\MenuConverter;
 use CMS\Structures\MenuStructure;
-use CMS\Structures\MenuItemStructure;
 use CMS\Repositories\MenuRepositoryInterface;
 use CMS\Repositories\PageRepositoryInterface;
 
@@ -16,6 +13,7 @@ class MenuManager {
     {
         $this->menuRepository = $menuRepository;
         $this->pageRepository = $pageRepository;
+        $this->menuConverter = new MenuConverter($pageRepository);
     }
 
     public function getByIdentifier($identifier)
@@ -23,7 +21,7 @@ class MenuManager {
         if (!$menu = $this->menuRepository->findByIdentifier($identifier))
             throw new \Exception('The menu was not found');
 
-        return MenuStructure::convertMenuToMenuStructure($menu);
+        return $this->menuConverter->convertMenuToMenuStructure($menu);
     }
 
     public function getAll()
@@ -33,7 +31,7 @@ class MenuManager {
         $menusS = [];
         if (is_array($menus) && sizeof($menus) > 0) {
             foreach ($menus as $i => $menu) {
-                $menusS[]= MenuStructure::convertMenuToMenuStructure($menu);
+                $menusS[]= $this->menuConverter->convertMenuToMenuStructure($menu);
             }
 
             return $menusS;
@@ -50,7 +48,7 @@ class MenuManager {
         if ($this->menuRepository->findByIdentifier($menuStructure->identifier))
             throw new \Exception('There is already a menu with the same identifier');
 
-        $menu = MenuStructure::convertMenuStructureToMenu($menuStructure);
+        $menu = $this->menuConverter->convertMenuStructureToMenu($menuStructure);
 
         return $this->menuRepository->createMenu($menu);
     }
@@ -63,7 +61,7 @@ class MenuManager {
         if ($menu != null && $menu->getIdentifier() != $menuStructure->identifier)
             throw new \Exception('There is already a menu with the same identifier');
 
-        $menu = MenuStructure::convertMenuStructureToMenu($menuStructure);
+        $menu = $this->menuConverter->convertMenuStructureToMenu($menuStructure);
 
         return $this->menuRepository->updateMenu($menu);
     }

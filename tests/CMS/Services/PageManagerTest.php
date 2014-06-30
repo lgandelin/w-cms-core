@@ -1,5 +1,6 @@
 <?php
 
+use CMS\Converters\PageConverter;
 use CMS\Entities\Page;
 use CMS\Services\PageManager;
 use CMS\Structures\PageStructure;
@@ -9,6 +10,7 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->pageRepository = Phake::mock('\CMS\Repositories\PageRepositoryInterface');
+        $this->pageConverter = new PageConverter();
     }
 
     private function _getPageManager()
@@ -46,7 +48,7 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByIdentifier()
     {
         $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
-        $pageS = PageStructure::convertPageToPageStructure($page);
+        $pageS = $this->pageConverter->convertPageToPageStructure($page);
 
         Phake::when($this->pageRepository)->findByIdentifier('my-page')->thenReturn($page);
 
@@ -65,7 +67,7 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByUri()
     {
         $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
-        $pageS = PageStructure::convertPageToPageStructure($page);
+        $pageS = $this->pageConverter->convertPageToPageStructure($page);
 
         Phake::when($this->pageRepository)->findByUri('/my-page')->thenReturn($page);
 
@@ -83,8 +85,8 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     {
         $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
         $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
-        $page1S = PageStructure::convertPageToPageStructure($page1);
-        $page2S = PageStructure::convertPageToPageStructure($page2);
+        $page1S = $this->pageConverter->convertPageToPageStructure($page1);
+        $page2S = $this->pageConverter->convertPageToPageStructure($page2);
 
         Phake::when($this->pageRepository)->findAll()->thenReturn([$page1, $page2]);
 
@@ -127,9 +129,9 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
         $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
         $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
         $page3 = $this->_createPageObject('Page 3', '/page-3', 'page-3');
-        $page1S = PageStructure::convertPageToPageStructure($page1);
-        $page2S = PageStructure::convertPageToPageStructure($page2);
-        $page3S = PageStructure::convertPageToPageStructure($page3);
+        $page1S = $this->pageConverter->convertPageToPageStructure($page1);
+        $page2S = $this->pageConverter->convertPageToPageStructure($page2);
+        $page3S = $this->pageConverter->convertPageToPageStructure($page3);
 
         Phake::when($this->pageRepository)->findAll()->thenReturn([$page1, $page2]);
 
@@ -166,7 +168,7 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     {
         $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
         $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
-        $page2S = PageStructure::convertPageToPageStructure($page2);
+        $page2S = $this->pageConverter->convertPageToPageStructure($page2);
 
         Phake::when($this->pageRepository)->findByUri('/page-1')->thenReturn($page1);
 
@@ -176,9 +178,9 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     public function testUpdatePage()
     {
         $page = $this->_createPageObject('My Page', '/my-page', 'my-page');
-        $pageS = PageStructure::convertPageToPageStructure($page);
+        $pageS = $this->pageConverter->convertPageToPageStructure($page);
         $pageUpdated = $this->_createPageObject('New Page', '/my-page', 'my-page');
-        $pageUpdatedS = PageStructure::convertPageToPageStructure($pageUpdated);
+        $pageUpdatedS = $this->pageConverter->convertPageToPageStructure($pageUpdated);
 
         Phake::when($this->pageRepository)->findByIdentifier('my-page')->thenReturn($page)->thenReturn($pageUpdated);
 
@@ -204,8 +206,8 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
     {
         $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
         $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
-        $page1S = PageStructure::convertPageToPageStructure($page1);
-        $page2S = PageStructure::convertPageToPageStructure($page2);
+        $page1S = $this->pageConverter->convertPageToPageStructure($page1);
+        $page2S = $this->pageConverter->convertPageToPageStructure($page2);
 
 
         Phake::when($this->pageRepository)->findAll()
@@ -236,9 +238,9 @@ class PageManagerTest extends PHPUnit_Framework_TestCase {
         $page1 = $this->_createPageObject('Page 1', '/page-1', 'page-1');
         $page2 = $this->_createPageObject('Page 2', '/page-2', 'page-2');
         $page2Duplicate = $this->_createPageObject('Page 2 - COPY', '/page-2-copy', 'page-2-copy');
-        $page1S = PageStructure::convertPageToPageStructure($page1);
-        $page2S = PageStructure::convertPageToPageStructure($page2);
-        $page2DuplicateS = PageStructure::convertPageToPageStructure($page2Duplicate);
+        $page1S = $this->pageConverter->convertPageToPageStructure($page1);
+        $page2S = $this->pageConverter->convertPageToPageStructure($page2);
+        $page2DuplicateS = $this->pageConverter->convertPageToPageStructure($page2Duplicate);
 
         Phake::when($this->pageRepository)->findByIdentifier('page-2')->thenReturn($page2);
         Phake::when($this->pageRepository)->findAll()

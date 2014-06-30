@@ -2,6 +2,7 @@
 
 namespace CMS\Services;
 
+use CMS\Converters\UserConverter;
 use CMS\Entities\User;
 use CMS\Structures\UserStructure;
 use CMS\Repositories\UserRepositoryInterface;
@@ -11,6 +12,7 @@ class UserManager {
     public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
+        $this->userConverter = new UserConverter();
     }
 
     public function getByLogin($login)
@@ -20,7 +22,7 @@ class UserManager {
         if (!$user)
             throw new \Exception('The user was not found');
 
-        return UserStructure::convertUserToUserStructure($user);
+        return $this->userConverter->convertUserToUserStructure($user);
     }
     
     public function getAll()
@@ -30,7 +32,7 @@ class UserManager {
         $usersS = [];
         if (is_array($users) && sizeof($users) > 0) {
             foreach ($users as $i => $user) {
-                $usersS[]= UserStructure::convertUserToUserStructure($user);
+                $usersS[]= $this->userConverter->convertUserToUserStructure($user);
             }
 
             return $usersS;
@@ -47,7 +49,7 @@ class UserManager {
         if ($this->userRepository->findByLogin($userStructure->login))
             throw new \Exception('There is already a user with the same login');
 
-        $user = UserStructure::convertUserStructureToUser($userStructure);
+        $user = $this->userConverter->convertUserStructureToUser($userStructure);
 
         return $this->userRepository->createUser($user);
     }
@@ -62,7 +64,7 @@ class UserManager {
         if ($existingUser != null && $existingUser->getLogin() != $userStructure->login)
             throw new \Exception('There is already a user with the same login');
 
-        $user = UserStructure::convertUserStructureToUser($userStructure);
+        $user = $this->userConverter->convertUserStructureToUser($userStructure);
 
         return $this->userRepository->updateUser($user);
     }

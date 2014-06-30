@@ -2,6 +2,7 @@
 
 namespace CMS\Services;
 
+use CMS\Converters\PageConverter;
 use CMS\Entities\Page;
 use CMS\Structures\PageStructure;
 use CMS\Repositories\PageRepositoryInterface;
@@ -11,6 +12,7 @@ class PageManager {
     public function __construct(PageRepositoryInterface $pageRepository)
     {
         $this->pageRepository = $pageRepository;
+        $this->pageConverter = new PageConverter();
     }
 
     public function getByIdentifier($identifier)
@@ -18,7 +20,7 @@ class PageManager {
         if (!$page = $this->pageRepository->findByIdentifier($identifier))
             throw new \Exception('The page was not found');
 
-        return PageStructure::convertPageToPageStructure($page);
+        return $this->pageConverter->convertPageToPageStructure($page);
     }
 
     public function getByUri($uri)
@@ -26,7 +28,7 @@ class PageManager {
         if (!$page = $this->pageRepository->findByUri($uri))
             throw new \Exception('The page was not found');
 
-        return PageStructure::convertPageToPageStructure($page);
+        return $this->pageConverter->convertPageToPageStructure($page);
     }
 
     public function getAll()
@@ -36,7 +38,7 @@ class PageManager {
         $pagesS = [];
         if (is_array($pages) && sizeof($pages) > 0) {
             foreach ($pages as $i => $page) {
-                $pagesS[]= PageStructure::convertPageToPageStructure($page);
+                $pagesS[]= $this->pageConverter->convertPageToPageStructure($page);
             }
 
             return $pagesS;
@@ -59,7 +61,7 @@ class PageManager {
         if ($this->pageRepository->findByUri($pageStructure->uri))
             throw new \Exception('There is already a page with the same URI');
 
-        $page = PageStructure::convertPageStructureToPage($pageStructure);
+        $page = $this->pageConverter->convertPageStructureToPage($pageStructure);
 
         return $this->pageRepository->createPage($page);
     }
@@ -74,7 +76,7 @@ class PageManager {
         if ($existingPage != null && $existingPage->getIdentifier() != $pageStructure->identifier)
             throw new \Exception('There is already a page with the same URI');
 
-        $page = PageStructure::convertPageStructureToPage($pageStructure);
+        $page = $this->pageConverter->convertPageStructureToPage($pageStructure);
 
         return $this->pageRepository->updatePage($page);
     }

@@ -1,7 +1,9 @@
 <?php
 
+use CMS\Converters\MenuConverter;
 use CMS\Entities\Menu;
 use CMS\Entities\MenuItem;
+use CMS\Entities\Page;
 use CMS\Services\MenuManager;
 use CMS\Structures\MenuStructure;
 use CMS\Structures\MenuItemStructure;
@@ -12,6 +14,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
     {
         $this->menuRepository = Phake::mock('\CMS\Repositories\MenuRepositoryInterface');
         $this->pageRepository = Phake::mock('\CMS\Repositories\PageRepositoryInterface');
+        $this->menuConverter = new MenuConverter($this->pageRepository);
     }
 
     private function _getMenuManager()
@@ -40,6 +43,15 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
         return $item;
     }
 
+    private function _createPageObject($identifier, $name)
+    {
+        $page = new Page();
+        $page->setIdentifier($identifier);
+        $page->setName($name);
+
+        return $page;
+    }
+
     public function testConstruct()
     {
         $this->assertInstanceOf('CMS\Services\MenuManager', $this->_getMenuManager());
@@ -56,7 +68,7 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByIdentifier()
     {
         $menu = $this->_createMenuObject('main-menu', [], 'Main menu');
-        $menuS = MenuStructure::convertMenuToMenuStructure($menu);
+        $menuS = $this->menuConverter->convertMenuToMenuStructure($menu);
 
         Phake::when($this->menuRepository)->findByIdentifier('main-menu')->thenReturn($menu);
 
@@ -75,8 +87,8 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
     {
         $menu1 = $this->_createMenuObject('menu-1', [], 'Menu 1');
         $menu2 = $this->_createMenuObject('menu-2', [], 'Menu 2');
-        $menu1S = MenuStructure::convertMenuToMenuStructure($menu1);
-        $menu2S = MenuStructure::convertMenuToMenuStructure($menu2);
+        $menu1S = $this->menuConverter->convertMenuToMenuStructure($menu1);
+        $menu2S = $this->menuConverter->convertMenuToMenuStructure($menu2);
 
         Phake::when($this->menuRepository)->findAll()->thenReturn([$menu1, $menu2]);
 
@@ -113,14 +125,16 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
 
     public function testCreateMenu()
     {
-        $item1 = $this->_createMenuItemObject('Item 1');
-        $item2 = $this->_createMenuItemObject('Item 2');
+        $page1 = $this->_createPageObject('page-1', 'Page 1');
+        $page2 = $this->_createPageObject('page-2', 'Page 2');
+        $item1 = $this->_createMenuItemObject('Item 1', 1, $page1);
+        $item2 = $this->_createMenuItemObject('Item 2', 2, $page2);
         $menu1 = $this->_createMenuObject('menu-1', [$item1, $item2], 'Menu 1');
         $menu2 = $this->_createMenuObject('menu-2', [], 'Menu 2');
         $menu3 = $this->_createMenuObject('menu-3', [$item1, $item2], 'Menu 3');
-        $menu1S = MenuStructure::convertMenuToMenuStructure($menu1);
-        $menu2S = MenuStructure::convertMenuToMenuStructure($menu2);
-        $menu3S = MenuStructure::convertMenuToMenuStructure($menu3);
+        $menu1S = $this->menuConverter->convertMenuToMenuStructure($menu1);
+        $menu2S = $this->menuConverter->convertMenuToMenuStructure($menu2);
+        $menu3S = $this->menuConverter->convertMenuToMenuStructure($menu3);
 
         Phake::when($this->menuRepository)->findAll()->thenReturn([$menu1, $menu2]);
 
@@ -156,10 +170,10 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
         $item1 = $this->_createMenuItemObject('Item 1');
         $item2 = $this->_createMenuItemObject('Item 2');
         $menu = $this->_createMenuObject('main-menu', [$item1, $item2], 'Main menu');
-        $menuS = MenuStructure::convertMenuToMenuStructure($menu);
+        $menuS = $this->menuConverter->convertMenuToMenuStructure($menu);
         $item1Updated = $this->_createMenuItemObject('Item 1 updated');
         $menuUpdated = $this->_createMenuObject('main-menu', [$item1Updated, $item2], 'Main menu updated');
-        $menuUpdatedS = MenuStructure::convertMenuToMenuStructure($menuUpdated);
+        $menuUpdatedS = $this->menuConverter->convertMenuToMenuStructure($menuUpdated);
 
         Phake::when($this->menuRepository)->findByIdentifier('main-menu')->thenReturn($menu)->thenReturn($menuUpdated);
 
@@ -185,8 +199,8 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
     {
         $menu1 = $this->_createMenuObject('menu-1', [], 'Menu 1');
         $menu2 = $this->_createMenuObject('menu-2', [], 'Menu 2');
-        $menu1S = MenuStructure::convertMenuToMenuStructure($menu1);
-        $menu2S = MenuStructure::convertMenuToMenuStructure($menu2);
+        $menu1S = $this->menuConverter->convertMenuToMenuStructure($menu1);
+        $menu2S = $this->menuConverter->convertMenuToMenuStructure($menu2);
 
         Phake::when($this->menuRepository)->findAll()
             ->thenReturn([$menu1, $menu2])
@@ -216,9 +230,9 @@ class MenuManagerTest extends PHPUnit_Framework_TestCase {
         $menu1 = $this->_createMenuObject('menu-1', [], 'Menu 1');
         $menu2 = $this->_createMenuObject('menu-2', [], 'Menu 2');
         $menu2Duplicate = $this->_createMenuObject('menu-2-copy', [], 'Menu 2 COPY');
-        $menu1S = MenuStructure::convertMenuToMenuStructure($menu1);
-        $menu2S = MenuStructure::convertMenuToMenuStructure($menu2);
-        $menu2DuplicateS = MenuStructure::convertMenuToMenuStructure($menu2Duplicate);
+        $menu1S = $this->menuConverter->convertMenuToMenuStructure($menu1);
+        $menu2S = $this->menuConverter->convertMenuToMenuStructure($menu2);
+        $menu2DuplicateS = $this->menuConverter->convertMenuToMenuStructure($menu2Duplicate);
 
         Phake::when($this->menuRepository)->findByIdentifier('menu-2')->thenReturn($menu2);
         Phake::when($this->menuRepository)->findAll()
