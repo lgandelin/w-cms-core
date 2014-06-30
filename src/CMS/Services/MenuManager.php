@@ -23,33 +23,23 @@ class MenuManager {
         if (!$menu = $this->menuRepository->findByIdentifier($identifier))
             throw new \Exception('The menu was not found');
 
-        $items = [];
-        if (is_array($menu->getItems())) {
-            foreach ($menu->getItems() as $item) {
-                $pageS = ($item->getPage()) ? new PageStructure([
-                    'name' => $item->getPage()->getName(),
-                    'uri' => $item->getPage()->getUri(),
-                    'identifier' => $item->getPage()->getIdentifier()
-                ]) : null;
-
-                $items[]= new MenuItemStructure([
-                    'label' => $item->getLabel(),
-                    'order' => $item->getOrder(),
-                    'page' => $pageS
-                ]);
-            }
-        }
-            
-        return new MenuStructure([
-            'identifier' => $menu->getIdentifier(),
-            'items' => $items,
-            'name' => $menu->getName()
-        ]);
+        return MenuStructure::convertMenuToMenuStructure($menu);
     }
 
     public function getAll()
     {
-        return $this->menuRepository->findAll();
+        $menus = $this->menuRepository->findAll();
+
+        $menusS = [];
+        if (is_array($menus) && sizeof($menus) > 0) {
+            foreach ($menus as $i => $menu) {
+                $menusS[]= MenuStructure::convertMenuToMenuStructure($menu);
+            }
+
+            return $menusS;
+        }
+
+        return false;
     }
 
     public function createMenu(MenuStructure $menuStructure)
@@ -60,18 +50,7 @@ class MenuManager {
         if ($this->menuRepository->findByIdentifier($menuStructure->identifier))
             throw new \Exception('There is already a menu with the same identifier');
 
-        $menu = new Menu();
-        $menu->setIdentifier($menuStructure->identifier);
-        $menu->setName($menuStructure->name);
-
-        if (is_array($menuStructure->items)) {
-            foreach ($menuStructure->items as $itemS) {
-                $item = new MenuItem();
-                $item->setLabel($itemS->label);
-                $item->setOrder($itemS->order);
-                if ($itemS->page) $item->setPage($itemS->page);
-            }
-        }
+        $menu = MenuStructure::convertMenuStructureToMenu($menuStructure);
 
         return $this->menuRepository->createMenu($menu);
     }
@@ -84,27 +63,7 @@ class MenuManager {
         if ($menu != null && $menu->getIdentifier() != $menuStructure->identifier)
             throw new \Exception('There is already a menu with the same identifier');
 
-        $menu->setName($menuStructure->name);
-
-        if (is_array($menuStructure->items)) {
-            $menu->deleteItems();
-
-            foreach ($menuStructure->items as $itemS) {
-                $item = new MenuItem();
-                $item->setLabel($itemS->label);
-                $item->setOrder($itemS->order);
-                if ($itemS->page) {
-                    try {
-                        $page = $this->pageRepository->findByIdentifier($itemS->page);
-                        $item->setPage($page);
-                    } catch (\Exception $e) {
-
-                    }
-
-                }
-                $menu->addItem($item);
-            }
-        }
+        $menu = MenuStructure::convertMenuStructureToMenu($menuStructure);
 
         return $this->menuRepository->updateMenu($menu);
     }

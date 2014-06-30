@@ -44,11 +44,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testGetByLogin()
     {
         $user = $this->_createUserObject('jdoe', '', 'Doe', 'John');
-        $userS = new UserStructure([
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
+        $userS = UserStructure::convertUserToUserStructure($user);
+
         Phake::when($this->userRepository)->findByLogin('jdoe')->thenReturn($user);
 
         $this->assertInstanceOf('CMS\Structures\UserStructure', $this->_getUserManager()->getByLogin('jdoe'));
@@ -66,10 +63,12 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user1 = $this->_createUserObject('jdoe');
         $user2 = $this->_createUserObject('asmith');
+        $user1S = UserStructure::convertUserToUserStructure($user1);
+        $user2S = UserStructure::convertUserToUserStructure($user2);
 
         Phake::when($this->userRepository)->findAll()->thenReturn([$user1, $user2]);
 
-        $this->assertEquals([$user1, $user2], $this->_getUserManager()->getAll());
+        $this->assertEquals([$user1S, $user2S], $this->_getUserManager()->getAll());
     }
 
     /**
@@ -106,26 +105,25 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user1 = $this->_createUserObject('jdoe', '', 'Doe', 'John');
         $user2 = $this->_createUserObject('asmith', '', 'Smith', 'Albert');
-        $user3S = new UserStructure([
-            'login' => 'pmartin',
-            'last_name' => 'Martin',
-            'first_name' => 'Paul'
-        ]);
+        $user3 = $this->_createUserObject('pmartin', '', 'Martin', 'Paul');
+        $user1S = UserStructure::convertUserToUserStructure($user1);
+        $user2S = UserStructure::convertUserToUserStructure($user2);
+        $user3S = UserStructure::convertUserToUserStructure($user3);
 
         Phake::when($this->userRepository)->findAll()
             ->thenReturn([$user1, $user2]);
 
         //Before create
-        $this->assertEquals([$user1, $user2], $this->_getUserManager()->getAll());
+        $this->assertEquals([$user1S, $user2S], $this->_getUserManager()->getAll());
 
         //Create
-        $user3 = $this->_getUserManager()->createUser($user3S);
+        $this->_getUserManager()->createUser($user3S);
 
         Phake::when($this->userRepository)->findAll()
             ->thenReturn([$user1, $user2, $user3]);
 
         //After create
-        $this->assertEquals([$user1, $user2, $user3], $this->_getUserManager()->getAll());
+        $this->assertEquals([$user1S, $user2S, $user3S], $this->_getUserManager()->getAll());
     }
 
     /**
@@ -145,24 +143,13 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     public function testUpdateUser()
     {
         $user = $this->_createUserObject('pmartin', '111aaa', 'Martin', 'Paul');
-        $userS = new UserStructure([
-            'login' => 'pmartin',
-            'password' => '111aaa',
-            'last_name' => 'Martin',
-            'first_name' => 'Paul'
-        ]);
-
+        $userS = UserStructure::convertUserToUserStructure($user);
         $userUpdated = $this->_createUserObject('pmartin', '222bbb', 'Martin', 'Paul');
-        $userUpdatedS = new UserStructure([
-            'login' => 'pmartin',
-            'password' => '222bbb',
-            'last_name' => 'Smith',
-            'first_name' => 'Paul'
-        ]);
+        $userUpdatedS = UserStructure::convertUserToUserStructure($userUpdated);
         $userUpdatedWithPasswordS = new UserStructure([
             'login' => 'pmartin',
             'password' => '222bbb',
-            'last_name' => 'Smith',
+            'last_name' => 'Martin',
             'first_name' => 'Paul'
         ]);
 
@@ -190,6 +177,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
     {
         $user1 = $this->_createUserObject('jdoe', '', 'Doe', 'John');
         $user2 = $this->_createUserObject('asmith', '', 'Smith', 'Albert');
+        $user1S = UserStructure::convertUserToUserStructure($user1);
+        $user2S = UserStructure::convertUserToUserStructure($user2);
 
         Phake::when($this->userRepository)->findAll()
             ->thenReturn([$user1, $user2])
@@ -197,13 +186,13 @@ class UserManagerTest extends PHPUnit_Framework_TestCase {
         Phake::when($this->userRepository)->findByLogin('jdoe')->thenReturn($user1);
 
         //Before delete
-        $this->assertEquals([$user1, $user2], $this->_getUserManager()->getAll());
+        $this->assertEquals([$user1S, $user2S], $this->_getUserManager()->getAll());
 
         //Delete
         $this->_getUserManager()->deleteUser('jdoe');
 
         //After delete
-        $this->assertEquals([$user2], $this->_getUserManager()->getAll());
+        $this->assertEquals([$user2S], $this->_getUserManager()->getAll());
     }
 
 }
