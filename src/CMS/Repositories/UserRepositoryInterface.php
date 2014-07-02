@@ -2,14 +2,15 @@
 
 namespace CMS\Repositories;
 
-use CMS\Entities\User;
+use CMS\Structures\UserStructure;
 
 interface UserRepositoryInterface {
 
-    public function findByLogin($login);
+    public function findByID($userID);
+    public function findByLogin($userLogin);
     public function findAll();
-    public function createUser(User $user);
-    public function updateUser(User $user);
-    public function deleteUser(User $user);
+    public function createUser(UserStructure $userStructure);
+    public function updateUser($userID, UserStructure $userStructure);
+    public function deleteUser($userID);
     
 }
