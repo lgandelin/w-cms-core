@@ -2,7 +2,6 @@
 
 namespace CMS\Repositories\InMemory;
 
-use CMS\Converters\UserConverter;
 use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
 
@@ -47,12 +46,13 @@ class InMemoryUserRepository implements UserRepositoryInterface {
 
     public function updateUser($userID, UserStructure $userStructure)
     {
-        foreach ($this->users as $user) {
+        foreach ($this->users as $i => $user) {
             if ($user->ID == $userID) {
+                if ($userStructure->login) $user->login = $userStructure->login;
                 if ($userStructure->password) $user->password = $userStructure->password;
                 $user->last_name = $userStructure->last_name;
                 $user->first_name = $userStructure->first_name;
-                $user->email= $userStructure->email;
+                $user->email = $userStructure->email;
             }
         }
     }

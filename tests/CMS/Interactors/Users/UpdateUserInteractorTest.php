@@ -39,10 +39,13 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
             'ID' => 1,
             'login' => 'jdoe',
             'last_name' => 'Doe',
-            'first_name' => 'John'
+            'first_name' => 'John',
+            'email' => 'john.doe@gmail.com',
         ]);
 
         $this->userRepository->createUser($userStructure);
+
+        $userStructure = $this->userRepository->findByID(1);
 
         $userStructureUpdated = new UserStructure([
             'first_name' => 'Jack'
@@ -53,7 +56,10 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
         $userStructure = $this->userRepository->findByID(1);
         $user = UserConverter::convertUserStructureToUser($userStructure);
 
+        $this->assertEquals('jdoe', $user->getLogin());
+        $this->assertEquals('Doe', $user->getLastName());
         $this->assertEquals('Jack', $user->getFirstName());
+        $this->assertEquals('john.doe@gmail.com', $user->getEmail());
     }
 
     /**
@@ -72,6 +78,37 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
         $userStructureUpdated = new UserStructure([
             'login' => ''
+        ]);
+
+        $this->interactor->run(1, $userStructureUpdated);
+    }
+
+
+    /**
+     * @expectedException Exception
+     */
+    public function testUpdateUserWithAnotherUserExistingWithSameLogin()
+    {
+        $userStructure = new UserStructure([
+            'ID' => 1,
+            'login' => 'pmartin',
+            'last_name' => 'Doe',
+            'first_name' => 'John'
+        ]);
+
+        $this->userRepository->createUser($userStructure);
+
+        $userStructure = new UserStructure([
+            'ID' => 2,
+            'login' => 'jdoe',
+            'last_name' => 'Doe',
+            'first_name' => 'Jane'
+        ]);
+
+        $this->userRepository->createUser($userStructure);
+
+        $userStructureUpdated = new UserStructure([
+            'login' => 'jdoe'
         ]);
 
         $this->interactor->run(1, $userStructureUpdated);

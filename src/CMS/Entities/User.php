@@ -60,4 +60,12 @@ class User {
         return $this->email;
     }
 
+    public function valid()
+    {
+        if (!$this->getLogin())
+            throw new \Exception('You must provide a login for a user');
+
+        return true;
+    }
+
 }
