@@ -20,15 +20,8 @@ class GetUserInteractorTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Exception
      */
-    public function testGetNonExistingUserByLogin()
+    public function testGetNonExistingUser()
     {
-        $userStructure = new UserStructure([
-            'ID' => 1,
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
-
         $this->interactor->getByID(1);
     }
 

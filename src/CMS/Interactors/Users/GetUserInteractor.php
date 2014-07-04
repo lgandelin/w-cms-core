@@ -7,7 +7,7 @@ use CMS\UseCases\Users\GetUserUseCase;
 
 class GetUserInteractor implements GetUserUseCase
 {
-    private $userRepository;
+    protected $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepository)
     {

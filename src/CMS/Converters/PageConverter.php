@@ -10,6 +10,7 @@ class PageConverter {
     public static function convertPageToPageStructure(Page $page)
     {
         return new PageStructure([
+            'ID' => $page->getID(),
             'identifier' => $page->getIdentifier(),
             'name' => $page->getName(),
             'uri' => $page->getUri(),
@@ -23,6 +24,7 @@ class PageConverter {
     public static function convertPageStructureToPage(PageStructure $pageStructure)
     {
         $page = new Page();
+        $page->setID($pageStructure->ID);
         $page->setIdentifier($pageStructure->identifier);
         $page->setName($pageStructure->name);
         $page->setUri($pageStructure->uri);

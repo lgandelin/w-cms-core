@@ -1,6 +1,5 @@
 <?php
 
-use CMS\Interactors\Users\CreateUserInteractor;
 use CMS\Interactors\Users\GetAllUsersInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 use CMS\Structures\UserStructure;
@@ -37,11 +36,8 @@ class GetAllUsersInteractorTest extends PHPUnit_Framework_TestCase {
             'first_name' => 'Paul'
         ]);
 
-        $createUserInteractor = new CreateUserInteractor($this->userRepository);
-        $createUserInteractor->run($userStructure);
-
-        $createUserInteractor = new CreateUserInteractor($this->userRepository);
-        $createUserInteractor->run($userStructure2);
+        $this->userRepository->createUser($userStructure);
+        $this->userRepository->createUser($userStructure2);
 
         $this->assertCount(2, $this->interactor->getAll());
     }

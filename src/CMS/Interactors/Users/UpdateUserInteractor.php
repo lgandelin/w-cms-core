@@ -3,20 +3,11 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Converters\UserConverter;
-use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
 use CMS\UseCases\Users\UpdateUserUseCase;
 
 class UpdateUserInteractor extends GetUserInteractor implements UpdateUserUseCase
 {
-    private $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-        parent::__construct($userRepository);
-    }
-
     public function run($userID, UserStructure $userStructure)
     {
         if ($originalUserStructure = $this->getByID($userID)) {
@@ -48,7 +39,8 @@ class UpdateUserInteractor extends GetUserInteractor implements UpdateUserUseCas
     public function anotherUserExistsWithSameLogin($userID, $userLogin)
     {
         $existingUserStructure = $this->userRepository->findByLogin($userLogin);
-        return $existingUserStructure->ID != $userID;
+
+        return ($existingUserStructure && $existingUserStructure->ID != $userID);
     }
 
 }
