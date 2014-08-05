@@ -17,8 +17,7 @@ class UpdateUserInteractor extends GetUserInteractor implements UpdateUserUseCas
                 if ($this->anotherUserExistsWithSameLogin($userID, $userUpdated->getLogin()))
                     throw new \Exception('There is already a user with the same login');
 
-                $userUpdatedStructure = UserConverter::convertUserToUserStructure($userUpdated);
-                $this->userRepository->updateUser($userID, $userUpdatedStructure);
+                $this->userRepository->updateUser($userID, UserConverter::convertUserToUserStructure($userUpdated));
             }
         }
     }

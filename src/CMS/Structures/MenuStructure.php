@@ -2,10 +2,9 @@
 
 namespace CMS\Structures;
 
-use CMS\Structures\DataStructure;
-
 class MenuStructure extends DataStructure {
 
+    public $ID;
     public $identifier;
     public $name;
     public $items;

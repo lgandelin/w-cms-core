@@ -6,6 +6,7 @@ use CMS\Entities\Page;
 
 class MenuItem {
 
+    private $ID;
     private $label;
     private $page;
     private $order;
@@ -20,7 +21,7 @@ class MenuItem {
         return $this->label;
     }
 
-    public function setPage(Page $page)
+    public function setPage($page)
     {
         $this->page = $page;
     }
@@ -39,5 +40,26 @@ class MenuItem {
     {
         return $this->order;
     }
-    
+
+    public function valid()
+    {
+        if (!is_int($this->getOrder()))
+            throw new \InvalidArgumentException('You must provide an integer for the menu item order');
+
+        if (!$this->getLabel())
+            throw new \InvalidArgumentException('You must provide a label for the menu item');
+
+        return true;
+    }
+
+    public function setID($ID)
+    {
+        $this->ID = $ID;
+    }
+
+    public function getID()
+    {
+        return $this->ID;
+    }
+
 }

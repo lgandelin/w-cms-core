@@ -1,6 +1,5 @@
 <?php
 
-use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Interactors\Pages\GetAllPagesInteractor;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\PageStructure;

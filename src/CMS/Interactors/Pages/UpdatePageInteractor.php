@@ -20,8 +20,7 @@ class UpdatePageInteractor extends GetPageInteractor implements UpdatePageUseCas
                 if ($this->anotherPageExistsWithSameIdentifier($pageID, $pageUpdated->getIdentifier()))
                     throw new \Exception('There is already a page with the same identifier');
 
-                $pageUpdatedStructure = PageConverter::convertPageToPageStructure($pageUpdated);
-                $this->pageRepository->updatePage($pageID, $pageUpdatedStructure);
+                $this->pageRepository->updatePage($pageID, PageConverter::convertPageToPageStructure($pageUpdated));
             }
         }
     }

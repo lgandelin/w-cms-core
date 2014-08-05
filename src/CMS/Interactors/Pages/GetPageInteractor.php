@@ -24,4 +24,14 @@ class GetPageInteractor implements GetPageUseCase
         return $pageStructure;
     }
 
+    public function getByURI($pageURI)
+    {
+        $pageStructure = $this->pageRepository->findByUri($pageURI);
+
+        if (!$pageStructure)
+            throw new \Exception('The page was not found');
+
+        return $pageStructure;
+    }
+
 }
