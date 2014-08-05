@@ -2,10 +2,9 @@
 
 namespace CMS\Entities;
 
-use CMS\Entities\Website;
-
 class Page {
 
+    private $ID;
     private $name;
     private $identifier;
     private $uri;
@@ -14,6 +13,16 @@ class Page {
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
+
+    public function setID($ID)
+    {
+        $this->ID = $ID;
+    }
+
+    public function getID()
+    {
+        return $this->ID;
+    }
 
     public function setName($name)
     {
@@ -94,5 +103,15 @@ class Page {
     {
         return $this->meta_keywords;
     }
-    
+
+    public function valid()
+    {
+        if (!$this->getUri())
+            throw new \InvalidArgumentException('You must provide a URI for a page');
+
+        if (!$this->getIdentifier())
+            throw new \InvalidArgumentException('You must provide an identifier for a page');
+
+        return true;
+    }
 } 

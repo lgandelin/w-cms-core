@@ -9,5 +9,4 @@ class MenuItemStructure extends DataStructure {
     public $label;
     public $page;
     public $order;
-    
-} 
+}

@@ -6,6 +6,7 @@ use CMS\Structures\DataStructure;
 
 class PageStructure extends DataStructure {
 
+    public $ID;
     public $name;
     public $uri;
     public $identifier;
@@ -14,5 +15,4 @@ class PageStructure extends DataStructure {
     public $meta_title;
     public $meta_description;
     public $meta_keywords;
-
 } 

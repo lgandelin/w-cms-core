@@ -7,7 +7,6 @@ use CMS\Structures\DataStructure;
 class MenuStructure extends DataStructure {
 
     public $identifier;
-    public $items;
     public $name;
-    
-} 
+    public $items;
+}
