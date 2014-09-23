@@ -23,7 +23,21 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase {
     public function testCreatePageWithoutUri()
     {
         $pageStructure = new PageStructure([
+            'name' => 'Page',
+            'identifier' => 'page'
+        ]);
 
+        $this->interactor->run($pageStructure);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testCreatePageWithoutIdentifier()
+    {
+        $pageStructure = new PageStructure([
+            'name' => 'Page',
+            'uri' => 'page'
         ]);
 
         $this->interactor->run($pageStructure);

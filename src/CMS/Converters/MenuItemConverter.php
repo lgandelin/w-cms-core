@@ -3,38 +3,27 @@
 namespace CMS\Converters;
 
 use CMS\Entities\MenuItem;
+use CMS\Entities\Page;
 use CMS\Structures\MenuItemStructure;
-use CMS\Structures\PageStructure;
-use CMS\Repositories\PageRepositoryInterface;
 
 class MenuItemConverter {
 
-    public function __construct(PageRepositoryInterface $pageRepository)
-    {
-        $this->pageRepository = $pageRepository;
-        $this->pageConverter = new PageConverter();
-    }
-
-    public function convertMenuItemToMenuItemStructure(MenuItem $item)
+    public static function convertMenuItemToMenuItemStructure(MenuItem $item)
     {
         return new MenuItemStructure([
+            'ID' => $item->getID(),
             'label' => $item->getLabel(),
             'order' => $item->getOrder(),
-            'page' => ($item->getPage()) ? $this->pageConverter->convertPageToPageStructure($item->getPage()) : null
+            'page_id' => ($item->getPage() instanceof Page) ? $item->getPage()->getID() : null
         ]);
     }
 
-    public function convertMenuItemStructureToMenuItem($itemS)
+    public static function convertMenuItemStructureToMenuItem($itemS)
     {
         $item = new MenuItem();
+        $item->setID($itemS->ID);
         $item->setLabel($itemS->label);
         $item->setOrder($itemS->order);
-        if ($itemS->page) {
-            $page = $this->pageRepository->findByIdentifier($itemS->page);
-
-            if ($page)
-                $item->setPage($page);
-        }
 
         return $item;
     }

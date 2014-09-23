@@ -2,8 +2,6 @@
 
 namespace CMS\Structures;
 
-use CMS\Structures\DataStructure;
-
 class PageStructure extends DataStructure {
 
     public $ID;

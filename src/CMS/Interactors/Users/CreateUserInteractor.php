@@ -24,7 +24,7 @@ class CreateUserInteractor implements CreateUserUseCase
             if ($this->anotherUserExistsWithSameLogin($user->getLogin()))
                 throw new \Exception('There is already a user with the same login');
 
-            $this->userRepository->createUser($userStructure);
+            $this->userRepository->createUser(UserConverter::convertUserToUserStructure($user));
         }
     }
 

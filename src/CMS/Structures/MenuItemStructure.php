@@ -2,11 +2,11 @@
 
 namespace CMS\Structures;
 
-use CMS\Structures\DataStructure;
-
 class MenuItemStructure extends DataStructure {
 
+    public $ID;
     public $label;
     public $page;
+    public $page_id;
     public $order;
 }
