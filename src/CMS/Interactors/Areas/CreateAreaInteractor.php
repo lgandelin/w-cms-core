@@ -28,9 +28,8 @@ class CreateAreaInteractor extends GetPageInteractor {
             if ($areaStructure->class !== null) $area->setClass($areaStructure->class);
             if ($areaStructure->page_id !== null) $area->setPageID($areaStructure->page_id);
 
-            if ($area->valid()) {
+            if ($area->valid())
                 return $this->repository->createArea($area);
-            }
         }
     }
 } 

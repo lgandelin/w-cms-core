@@ -31,8 +31,7 @@ class CreateBlockInteractor
         if ($blockStructure->class !== null) $block->setClass($blockStructure->class);
         if ($blockStructure->area_id !== null) $block->setAreaID($blockStructure->area_id);
 
-        if ($block->valid()) {
+        if ($block->valid())
             return $this->repository->createBlock($block);
-        }
     }
 }
