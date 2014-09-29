@@ -21,6 +21,7 @@ class UpdateAreaInteractor {
             if ($areaStructure->width !== null && $areaStructure->width != $area->getWidth()) $area->setWidth($areaStructure->width);
             if ($areaStructure->height !== null && $areaStructure->height != $area->getHeight()) $area->setHeight($areaStructure->height);
             if ($areaStructure->class !== null && $areaStructure->class != $area->getClass()) $area->setClass($areaStructure->class);
+            if ($areaStructure->order !== null && $areaStructure->order != $area->getOrder()) $area->setOrder($areaStructure->order);
         }
 
         $this->repository->updateArea($area);

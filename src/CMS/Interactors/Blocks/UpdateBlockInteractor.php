@@ -22,7 +22,9 @@ class UpdateBlockInteractor {
             if ($blockStructure->height !== null && $blockStructure->height != $block->getHeight()) $block->setHeight($blockStructure->height);
             if ($blockStructure->type !== null && $blockStructure->type != $block->getType()) $block->setType($blockStructure->type);
             if ($blockStructure->class !== null && $blockStructure->class != $block->getClass()) $block->setClass($blockStructure->class);
+            if ($blockStructure->order !== null && $blockStructure->order != $block->getOrder()) $block->setOrder($blockStructure->order);
             if ($blockStructure->html !== null && $blockStructure->html != $block->getHTML()) $block->setHTML($blockStructure->html);
+            if ($blockStructure->area_id !== null && $blockStructure->area_id != $block->getAreaId()) $block->setAreaID($blockStructure->area_id);
         }
 
         $this->repository->updateBlock($block);
