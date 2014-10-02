@@ -9,6 +9,7 @@ class Area {
     private $width;
     private $height;
     private $class;
+    private $order;
     private $pageID;
 
     public function setID($ID)
@@ -59,6 +60,16 @@ class Area {
     public function getWidth()
     {
         return $this->width;
+    }
+
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    public function getOrder()
+    {
+        return $this->order;
     }
 
     public function setPageID($pageID)

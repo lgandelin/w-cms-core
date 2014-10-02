@@ -18,21 +18,17 @@ class CreateBlockInteractor
 
     public function run(BlockStructure $blockStructure)
     {
-        if ($blockStructure->type == 'html') {
-            $block = new HTMLBlock();
-            if ($blockStructure->html !== null && $blockStructure->html != $block->getHTML()) $block->setHTML($blockStructure->html);
-        } else
-            $block = new Block();
+        $block = new Block();
 
         if ($blockStructure->name !== null) $block->setName($blockStructure->name);
         if ($blockStructure->width !== null) $block->setWidth($blockStructure->width);
         if ($blockStructure->height !== null) $block->setHeight($blockStructure->height);
         if ($blockStructure->type !== null) $block->setType($blockStructure->type);
         if ($blockStructure->class !== null) $block->setClass($blockStructure->class);
+        if ($blockStructure->order !== null) $block->setOrder($blockStructure->order);
         if ($blockStructure->area_id !== null) $block->setAreaID($blockStructure->area_id);
 
-        if ($block->valid()) {
+        if ($block->valid())
             return $this->repository->createBlock($block);
-        }
     }
 }

@@ -17,7 +17,7 @@ class DuplicatePageInteractor extends GetPageInteractor implements DuplicatePage
             $pageStructureDuplicated->identifier .= '-copy';
 
             $createPageInteractor = new CreatePageInteractor($this->pageRepository);
-            $createPageInteractor->run($pageStructureDuplicated);
+            return $createPageInteractor->run($pageStructureDuplicated);
         }
     }
 

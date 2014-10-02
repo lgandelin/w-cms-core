@@ -24,7 +24,7 @@ class CreateMenuInteractor implements CreateMenuUseCase
             if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier()))
                 throw new \Exception('There is already a menu with the same identifier');
 
-            $this->repository->createMenu(MenuConverter::convertMenuToMenuStructure($menu));
+            return $this->repository->createMenu(MenuConverter::convertMenuToMenuStructure($menu));
         }
     }
 

@@ -9,6 +9,7 @@ class Block {
     private $width;
     private $height;
     private $class;
+    private $order;
     private $type;
     private $areaID;
 
@@ -70,6 +71,16 @@ class Block {
     public function getType()
     {
         return $this->type;
+    }
+
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    public function getOrder()
+    {
+        return $this->order;
     }
 
     public function getAreaID()

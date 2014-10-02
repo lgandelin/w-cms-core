@@ -25,6 +25,7 @@ class GetAreaInteractor
         $areaStructure->width = $area->getWidth();
         $areaStructure->height = $area->getHeight();
         $areaStructure->class = $area->getClass();
+        $areaStructure->order = $area->getOrder();
         $areaStructure->page_id = $area->getPageID();
 
         return $areaStructure;

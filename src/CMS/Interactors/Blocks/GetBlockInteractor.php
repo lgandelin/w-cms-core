@@ -25,6 +25,7 @@ class GetBlockInteractor
         $blockStructure->width = $block->getWidth();
         $blockStructure->height = $block->getHeight();
         $blockStructure->class = $block->getClass();
+        $blockStructure->order = $block->getOrder();
         $blockStructure->type = $block->getType();
 
         return $blockStructure;

@@ -27,7 +27,7 @@ class CreatePageInteractor implements CreatePageUseCase
             if ($this->anotherExistingPageWithSameIdentifier($page->getIdentifier()))
                 throw new \Exception('There is already a page with the same identifier');
 
-            $this->pageRepository->createPage(PageConverter::convertPageToPageStructure($page));
+            return $this->pageRepository->createPage(PageConverter::convertPageToPageStructure($page));
         }
     }
 
