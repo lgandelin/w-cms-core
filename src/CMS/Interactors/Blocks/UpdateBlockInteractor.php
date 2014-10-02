@@ -27,20 +27,17 @@ class UpdateBlockInteractor {
             if ($blockStructure->height !== null && $blockStructure->height != $block->getHeight()) $block->setHeight($blockStructure->height);
             if ($blockStructure->class !== null && $blockStructure->class != $block->getClass()) $block->setClass($blockStructure->class);
             if ($blockStructure->order !== null && $blockStructure->order != $block->getOrder()) $block->setOrder($blockStructure->order);
-
-            if ($block->getType() == 'html')
-                if ($blockStructure->html !== null && $blockStructure->html != $block->getHTML())
-                    $block->setHTML($blockStructure->html);
-
-            if ($block->getType() == 'menu')
-                if ($blockStructure->menu_id !== null && $blockStructure->menu_id != $block->getMenuID())
-                    $block->setMenuID($blockStructure->menu_id);
-
-            if ($block->getType() == 'view_file')
-                if ($blockStructure->view_file !== null && $blockStructure->view_file != $block->getViewFile())
-                    $block->setViewFile($blockStructure->view_file);
-
             if ($blockStructure->area_id !== null && $blockStructure->area_id != $block->getAreaId()) $block->setAreaID($blockStructure->area_id);
+            if ($blockStructure->display !== null && $blockStructure->display != $block->getDisplay()) $block->setDisplay($blockStructure->display);
+
+            if ($block->getType() == 'html' && $blockStructure->html !== null && $blockStructure->html != $block->getHTML())
+                $block->setHTML($blockStructure->html);
+
+            if ($block->getType() == 'menu' && $blockStructure->menu_id !== null && $blockStructure->menu_id != $block->getMenuID())
+                $block->setMenuID($blockStructure->menu_id);
+
+            if ($block->getType() == 'view_file' && $blockStructure->view_file !== null && $blockStructure->view_file != $block->getViewFile())
+                $block->setViewFile($blockStructure->view_file);
         }
 
         $this->repository->updateBlock($block);

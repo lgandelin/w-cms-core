@@ -3,9 +3,8 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Repositories\UserRepositoryInterface;
-use CMS\UseCases\Users\GetUserUseCase;
 
-class GetUserInteractor implements GetUserUseCase
+class GetUserInteractor
 {
     protected $userRepository;
 

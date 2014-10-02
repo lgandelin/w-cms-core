@@ -11,4 +11,5 @@ class AreaStructure extends DataStructure {
     public $class;
     public $order;
     public $page_id;
+    public $display;
 }

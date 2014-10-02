@@ -5,9 +5,8 @@ namespace CMS\Interactors\Menus;
 use CMS\Converters\MenuConverter;
 use CMS\Repositories\MenuRepositoryInterface;
 use CMS\Structures\MenuStructure;
-use CMS\UseCases\Menus\CreateMenuUseCase;
 
-class CreateMenuInteractor implements CreateMenuUseCase
+class CreateMenuInteractor
 {
     private $repository;
 

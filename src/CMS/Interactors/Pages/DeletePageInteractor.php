@@ -2,9 +2,7 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\UseCases\Pages\DeletePageUseCase;
-
-class DeletePageInteractor extends GetPageInteractor implements DeletePageUseCase
+class DeletePageInteractor extends GetPageInteractor
 {
     public function run($pageID)
     {

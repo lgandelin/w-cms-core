@@ -2,9 +2,7 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\UseCases\Pages\DuplicatePageUseCase;
-
-class DuplicatePageInteractor extends GetPageInteractor implements DuplicatePageUseCase
+class DuplicatePageInteractor extends GetPageInteractor
 {
     public function run($pageID)
     {

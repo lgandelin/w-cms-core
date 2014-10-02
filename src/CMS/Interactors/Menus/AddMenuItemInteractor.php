@@ -9,9 +9,8 @@ use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Repositories\MenuRepositoryInterface;
 use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\MenuItemStructure;
-use CMS\UseCases\Menus\AddMenuItemUseCase;
 
-class AddMenuItemInteractor extends GetMenuInteractor implements AddMenuItemUseCase
+class AddMenuItemInteractor extends GetMenuInteractor
 {
     private $pageRepository;
 

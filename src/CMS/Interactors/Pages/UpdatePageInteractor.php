@@ -3,9 +3,8 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Converters\PageConverter;
-use CMS\UseCases\Pages\UpdatePageUseCase;
 
-class UpdatePageInteractor extends GetPageInteractor implements UpdatePageUseCase
+class UpdatePageInteractor extends GetPageInteractor
 {
 
     public function run($pageID, $pageStructure)

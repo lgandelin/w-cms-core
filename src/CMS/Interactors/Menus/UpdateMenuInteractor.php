@@ -3,9 +3,8 @@
 namespace CMS\Interactors\Menus;
 
 use CMS\Converters\MenuConverter;
-use CMS\UseCases\Menus\UpdateMenuUseCase;
 
-class UpdateMenuInteractor extends GetMenuInteractor implements UpdateMenuUseCase
+class UpdateMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID, $menuStructure)
     {
