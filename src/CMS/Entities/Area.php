@@ -11,6 +11,7 @@ class Area {
     private $class;
     private $order;
     private $pageID;
+    private $display;
 
     public function setID($ID)
     {
@@ -80,6 +81,16 @@ class Area {
     public function getPageID()
     {
         return $this->pageID;
+    }
+
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+    }
+
+    public function getDisplay()
+    {
+        return $this->display;
     }
 
     public function valid()

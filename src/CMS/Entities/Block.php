@@ -12,6 +12,7 @@ class Block {
     private $order;
     private $type;
     private $areaID;
+    private $display;
 
     public function setID($ID)
     {
@@ -91,6 +92,16 @@ class Block {
     public function setAreaID($areaID)
     {
         $this->areaID = $areaID;
+    }
+
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+    }
+
+    public function getDisplay()
+    {
+        return $this->display;
     }
 
     public function valid()

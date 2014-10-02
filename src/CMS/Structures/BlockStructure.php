@@ -15,4 +15,5 @@ class BlockStructure extends DataStructure {
     public $menu_id;
     public $view_file;
     public $area_id;
+    public $display;
 }
