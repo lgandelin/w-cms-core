@@ -5,9 +5,8 @@ namespace CMS\Interactors\Users;
 use CMS\Converters\UserConverter;
 use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
-use CMS\UseCases\Users\CreateUserUseCase;
 
-class CreateUserInteractor implements CreateUserUseCase
+class CreateUserInteractor
 {
     private $userRepository;
 

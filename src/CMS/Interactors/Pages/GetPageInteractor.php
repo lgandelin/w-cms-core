@@ -3,9 +3,8 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Repositories\PageRepositoryInterface;
-use CMS\UseCases\Pages\GetPageUseCase;
 
-class GetPageInteractor implements GetPageUseCase
+class GetPageInteractor
 {
     protected $pageRepository;
 

@@ -19,4 +19,4 @@ class GetAllAreasInteractor extends GetPageInteractor {
         if ($this->getByID($pageID))
             return $this->repository->findByPageID($pageID);
     }
-} 
+}

@@ -2,9 +2,7 @@
 
 namespace CMS\Interactors\Menus;
 
-use CMS\UseCases\Menus\DuplicateMenuUseCase;
-
-class DuplicateMenuInteractor extends GetMenuInteractor implements DuplicateMenuUseCase
+class DuplicateMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID)
     {

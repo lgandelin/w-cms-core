@@ -2,7 +2,6 @@
 
 namespace CMS\Interactors\Areas;
 
-use CMS\Converters\PageConverter;
 use CMS\Entities\Area;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Repositories\AreaRepositoryInterface;

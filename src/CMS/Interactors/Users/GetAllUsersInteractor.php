@@ -3,9 +3,8 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Repositories\UserRepositoryInterface;
-use CMS\UseCases\Users\GetAllUsersUseCase;
 
-class GetAllUsersInteractor implements GetAllUsersUseCase
+class GetAllUsersInteractor
 {
     private $userRepository;
 

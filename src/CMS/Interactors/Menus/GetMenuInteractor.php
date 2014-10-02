@@ -3,9 +3,8 @@
 namespace CMS\Interactors\Menus;
 
 use CMS\Repositories\MenuRepositoryInterface;
-use CMS\UseCases\Menus\GetMenuUseCase;
 
-class GetMenuInteractor implements GetMenuUseCase
+class GetMenuInteractor
 {
     protected $repository;
 

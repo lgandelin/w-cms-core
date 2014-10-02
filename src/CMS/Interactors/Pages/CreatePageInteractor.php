@@ -5,9 +5,8 @@ namespace CMS\Interactors\Pages;
 use CMS\Converters\PageConverter;
 use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\PageStructure;
-use CMS\UseCases\Pages\CreatePageUseCase;
 
-class CreatePageInteractor implements CreatePageUseCase
+class CreatePageInteractor
 {
     protected $pageRepository;
 

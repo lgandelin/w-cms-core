@@ -2,9 +2,7 @@
 
 namespace CMS\Interactors\Users;
 
-use CMS\UseCases\Users\DeleteUserUseCase;
-
-class DeleteUserInteractor extends GetUserInteractor implements DeleteUserUseCase
+class DeleteUserInteractor extends GetUserInteractor
 {
     public function run($userID)
     {

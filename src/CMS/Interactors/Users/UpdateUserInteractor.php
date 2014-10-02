@@ -4,9 +4,8 @@ namespace CMS\Interactors\Users;
 
 use CMS\Converters\UserConverter;
 use CMS\Structures\UserStructure;
-use CMS\UseCases\Users\UpdateUserUseCase;
 
-class UpdateUserInteractor extends GetUserInteractor implements UpdateUserUseCase
+class UpdateUserInteractor extends GetUserInteractor
 {
     public function run($userID, UserStructure $userStructure)
     {

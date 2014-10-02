@@ -2,9 +2,7 @@
 
 namespace CMS\Interactors\Menus;
 
-use CMS\UseCases\Menus\DeleteMenuUseCase;
-
-class DeleteMenuInteractor extends GetMenuInteractor implements DeleteMenuUseCase
+class DeleteMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID)
     {
