@@ -4,7 +4,7 @@ namespace CMS\Interactors\Users;
 
 use CMS\Repositories\UserRepositoryInterface;
 
-class GetAllUsersInteractor
+class GetUsersInteractor
 {
     private $userRepository;
 

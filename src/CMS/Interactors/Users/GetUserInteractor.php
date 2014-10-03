@@ -6,21 +6,21 @@ use CMS\Repositories\UserRepositoryInterface;
 
 class GetUserInteractor
 {
-    protected $userRepository;
+    protected $repository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $repository)
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $repository;
     }
 
     public function getByID($userID)
     {
-        $userStructure = $this->userRepository->findByID($userID);
+        $user = $this->repository->findByID($userID);
 
-        if (!$userStructure)
+        if (!$user)
             throw new \Exception('The user was not found');
 
-        return $userStructure;
+        return $user;
     }
 
 }

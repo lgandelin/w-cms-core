@@ -4,11 +4,22 @@ namespace CMS\Entities;
 
 class User {
 
+    private $ID;
     private $login;
     private $password;
     private $last_name;
     private $first_name;
     private $email;
+
+    public function setID($ID)
+    {
+        $this->ID = $ID;
+    }
+
+    public function getID()
+    {
+        return $this->ID;
+    }
 
     public function setLogin($login)
     {

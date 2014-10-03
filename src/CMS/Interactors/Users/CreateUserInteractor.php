@@ -2,33 +2,38 @@
 
 namespace CMS\Interactors\Users;
 
-use CMS\Converters\UserConverter;
+use CMS\Entities\User;
 use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
 
 class CreateUserInteractor
 {
-    private $userRepository;
+    private $repository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $repository)
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $repository;
     }
 
     public function run(UserStructure $userStructure)
     {
-        $user = UserConverter::convertUserStructureToUser($userStructure);
+        $user = new User();
+        $user->setLogin($userStructure->login);
+        if ($userStructure->password != null && $userStructure->password != $user->getPassword()) $user->setPassword($userStructure->password);
+        $user->setLastName($userStructure->last_name);
+        $user->setFirstName($userStructure->first_name);
+        $user->setEmail($userStructure->email);
 
         if ($user->valid()) {
             if ($this->anotherUserExistsWithSameLogin($user->getLogin()))
                 throw new \Exception('There is already a user with the same login');
 
-            return $this->userRepository->createUser(UserConverter::convertUserToUserStructure($user));
+            return $this->repository->createUser($user);
         }
     }
 
     public function anotherUserExistsWithSameLogin($userLogin)
     {
-        return $this->userRepository->findByLogin($userLogin);
+        return $this->repository->findByLogin($userLogin);
     }
 } 
