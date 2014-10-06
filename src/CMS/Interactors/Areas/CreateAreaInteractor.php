@@ -27,6 +27,7 @@ class CreateAreaInteractor extends GetPageInteractor {
             if ($areaStructure->class !== null) $area->setClass($areaStructure->class);
             if ($areaStructure->order !== null) $area->setOrder($areaStructure->order);
             if ($areaStructure->page_id !== null) $area->setPageID($areaStructure->page_id);
+            if ($areaStructure->display !== null) $area->setDisplay($areaStructure->display);
 
             if ($area->valid())
                 return $this->repository->createArea($area);
