@@ -4,6 +4,9 @@ namespace CMS\Interactors\Blocks;
 
 use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\BlockStructure;
+use CMS\Structures\Blocks\MenuBlockStructure;
+use CMS\Structures\Blocks\HTMLBlockStructure;
+use CMS\Structures\Blocks\ViewFileBlockStructure;
 
 class UpdateBlockInteractor {
 
@@ -30,13 +33,13 @@ class UpdateBlockInteractor {
             if ($blockStructure->area_id !== null && $blockStructure->area_id != $block->getAreaId()) $block->setAreaID($blockStructure->area_id);
             if ($blockStructure->display !== null && $blockStructure->display != $block->getDisplay()) $block->setDisplay($blockStructure->display);
 
-            if ($block->getType() == 'html' && $blockStructure->html !== null && $blockStructure->html != $block->getHTML())
+            if ($blockStructure instanceof HTMLBlockStructure && $block->getType() == 'html' && $blockStructure->html !== null && $blockStructure->html != $block->getHTML())
                 $block->setHTML($blockStructure->html);
 
-            if ($block->getType() == 'menu' && $blockStructure->menu_id !== null && $blockStructure->menu_id != $block->getMenuID())
+            if ($blockStructure instanceof MenuBlockStructure && $block->getType() == 'menu' && $blockStructure->menu_id !== null && $blockStructure->menu_id != $block->getMenuID())
                 $block->setMenuID($blockStructure->menu_id);
 
-            if ($block->getType() == 'view_file' && $blockStructure->view_file !== null && $blockStructure->view_file != $block->getViewFile())
+            if ($blockStructure instanceof ViewFileBlockStructure && $block->getType() == 'view_file' && $blockStructure->view_file !== null && $blockStructure->view_file != $block->getViewFile())
                 $block->setViewFile($blockStructure->view_file);
         }
 

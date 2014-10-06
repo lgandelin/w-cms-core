@@ -1,4 +1,4 @@
-##v0.1 (DONE)
+##v0.1 (OK)
 
 - Création de la structure de base
 - Front-office
@@ -9,7 +9,7 @@
 - Editorial > Pages > SEO
 	- metas title, description, uri, keywords
 
-##v0.2 (DONE)
+##v0.2 (OK)
 
 - Editorial > Menus
 	- création, modification, suppression (sans drag&drop)
@@ -21,7 +21,7 @@
 	- URL de base (déplacé dans v0.5)
 - User acceptance tests (rajouté dans v0.2)
 
-##v0.3
+##v0.3 (OK)
 
 - Editorial > Pages > Structure
 	- mise en place des zones et blocs (blocs HTML uniquement, sans drag&drop)
@@ -29,7 +29,7 @@
 - Editorial > Pages > Content
 	- affichage des blocs et possibilité de les éditer
 
-##v0.4
+##v0.4 (OK)
 
 - Editorial > Pages > Structure
 	- intégration drag&drop, gestion des tailles dynamiquement

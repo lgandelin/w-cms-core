@@ -1,20 +1,20 @@
 <?php
 
-use CMS\Interactors\Users\GetAllUsersInteractor;
+use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 use CMS\Structures\UserStructure;
 
-class GetAllUsersInteractorTest extends PHPUnit_Framework_TestCase {
+class GetUsersInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
         $this->userRepository = new InMemoryUserRepository();
-        $this->interactor = new GetAllUsersInteractor($this->userRepository);
+        $this->interactor = new GetUsersInteractor($this->userRepository);
     }
 
     public function testConstruct()
     {
-        $this->assertInstanceOf('\CMS\Interactors\Users\GetAllUsersInteractor', $this->interactor);
+        $this->assertInstanceOf('\CMS\Interactors\Users\GetUsersInteractor', $this->interactor);
     }
 
     public function testGetAllWithoutUsers()
