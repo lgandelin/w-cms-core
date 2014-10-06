@@ -6,7 +6,7 @@ use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Repositories\AreaRepositoryInterface;
 use CMS\Repositories\PageRepositoryInterface;
 
-class GetAllAreasInteractor extends GetPageInteractor {
+class GetAreasInteractor extends GetPageInteractor {
 
     public function __construct(AreaRepositoryInterface $repository, PageRepositoryInterface $pageRepository)
     {
@@ -16,7 +16,7 @@ class GetAllAreasInteractor extends GetPageInteractor {
 
     public function getAll($pageID)
     {
-        if ($this->getByID($pageID))
+        if ($this->getPageByID($pageID))
             return $this->repository->findByPageID($pageID);
     }
 }

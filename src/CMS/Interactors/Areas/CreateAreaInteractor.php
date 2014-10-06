@@ -18,7 +18,7 @@ class CreateAreaInteractor extends GetPageInteractor {
 
     public function run(AreaStructure $areaStructure)
     {
-        if ($this->getByID($areaStructure->page_id)) {
+        if ($this->getPageByID($areaStructure->page_id)) {
             $area = new Area();
 
             if ($areaStructure->name !== null) $area->setName($areaStructure->name);
@@ -33,4 +33,4 @@ class CreateAreaInteractor extends GetPageInteractor {
                 return $this->repository->createArea($area);
         }
     }
-} 
+}

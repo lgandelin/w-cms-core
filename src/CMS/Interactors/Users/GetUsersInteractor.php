@@ -3,18 +3,29 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Repositories\UserRepositoryInterface;
+use CMS\Structures\UserStructure;
 
 class GetUsersInteractor
 {
-    private $userRepository;
+    private $repository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $repository)
     {
-        $this->userRepository = $userRepository;
+        $this->repository = $repository;
     }
 
-    public function getAll()
+    public function getAll($structure = false)
     {
-        return $this->userRepository->findAll();
+        $users = $this->repository->findAll();
+
+        if ($structure) {
+            $userStructures = [];
+            if (is_array($users) && sizeof($users) > 0)
+                foreach ($users as $user)
+                    $userStructures[]= UserStructure::toStructure($user);
+
+            return $userStructures;
+        } else
+            return $users;
     }
 }

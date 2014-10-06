@@ -14,7 +14,7 @@ class GetAreaInteractor
         $this->repository = $repository;
     }
 
-    public function getByID($areaID)
+    public function getAreaByID($areaID)
     {
         if (!$area = $this->repository->findByID($areaID))
             throw new \Exception('The area was not found');

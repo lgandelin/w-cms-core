@@ -6,7 +6,7 @@ use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Repositories\AreaRepositoryInterface;
 use CMS\Repositories\BlockRepositoryInterface;
 
-class GetAllBlocksInteractor {
+class GetBlocksInteractor {
 
     public function __construct(BlockRepositoryInterface $repository)
     {

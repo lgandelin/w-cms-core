@@ -6,7 +6,7 @@ class DuplicatePageInteractor extends GetPageInteractor
 {
     public function run($pageID)
     {
-        if ($pageStructure = $this->getByID($pageID)) {
+        if ($pageStructure = $this->getPageByID($pageID)) {
 
             $pageStructureDuplicated = clone $pageStructure;
             $pageStructureDuplicated->ID = null;

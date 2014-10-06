@@ -14,7 +14,6 @@ class PageConverter {
             'identifier' => $page->getIdentifier(),
             'name' => $page->getName(),
             'uri' => $page->getUri(),
-            'text' => $page->getText(),
             'meta_title' => $page->getMetaTitle(),
             'meta_description' => $page->getMetaDescription(),
             'meta_keywords' => $page->getMetaKeywords()
@@ -28,7 +27,6 @@ class PageConverter {
         $page->setIdentifier($pageStructure->identifier);
         $page->setName($pageStructure->name);
         $page->setUri($pageStructure->uri);
-        $page->setText($pageStructure->text);
         $page->setMetaTitle($pageStructure->meta_title);
         $page->setMetaDescription($pageStructure->meta_description);
         $page->setMetaKeywords($pageStructure->meta_keywords);

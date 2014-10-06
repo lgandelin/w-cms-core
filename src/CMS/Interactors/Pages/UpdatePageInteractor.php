@@ -9,7 +9,7 @@ class UpdatePageInteractor extends GetPageInteractor
 
     public function run($pageID, $pageStructure)
     {
-        if ($originalPageStructure = $this->getByID($pageID)) {
+        if ($originalPageStructure = $this->getPageByID($pageID)) {
             $pageUpdated = $this->getPageUpdated($originalPageStructure, $pageStructure);
 
             if ($pageUpdated->valid()) {

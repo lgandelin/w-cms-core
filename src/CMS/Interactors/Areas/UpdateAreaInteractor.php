@@ -25,7 +25,8 @@ class UpdateAreaInteractor {
             if ($areaStructure->display !== null && $areaStructure->display != $area->getDisplay()) $area->setDisplay($areaStructure->display);
         }
 
-        $this->repository->updateArea($area);
+        if ($area->valid())
+            $this->repository->updateArea($area);
     }
 
     public function getByID($areaID)

@@ -6,7 +6,7 @@ class DeletePageInteractor extends GetPageInteractor
 {
     public function run($pageID)
     {
-        if ($this->getByID($pageID))
+        if ($this->getPageByID($pageID))
             $this->pageRepository->deletePage($pageID);
     }
 

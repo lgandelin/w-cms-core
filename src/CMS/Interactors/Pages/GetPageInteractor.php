@@ -13,7 +13,7 @@ class GetPageInteractor
         $this->pageRepository = $pageRepository;
     }
 
-    public function getByID($pageID)
+    public function getPageByID($pageID)
     {
         $pageStructure = $this->pageRepository->findByID($pageID);
 

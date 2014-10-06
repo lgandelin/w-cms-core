@@ -1,6 +1,6 @@
 <?php
 
-use CMS\Interactors\Areas\GetAllAreasInteractor;
+use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\AreaStructure;
@@ -12,7 +12,7 @@ class GetAllAreasInteractorTest extends PHPUnit_Framework_TestCase {
     {
         $this->repository = new InMemoryAreaRepository();
         $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new GetAllAreasInteractor($this->repository, $this->pageRepository);
+        $this->interactor = new GetAreasInteractor($this->repository, $this->pageRepository);
     }
 
     /**
