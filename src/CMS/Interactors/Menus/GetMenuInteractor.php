@@ -3,6 +3,7 @@
 namespace CMS\Interactors\Menus;
 
 use CMS\Repositories\MenuRepositoryInterface;
+use CMS\Structures\MenuStructure;
 
 class GetMenuInteractor
 {
@@ -13,31 +14,19 @@ class GetMenuInteractor
         $this->repository = $repository;
     }
 
-    public function getByID($menuID)
+    public function getMenuByID($menuID, $structure = false)
     {
-        $menuStructure = $this->repository->findByID($menuID);
-
-        if (!$menuStructure)
+        if (!$menu = $this->repository->findByID($menuID))
             throw new \Exception('The menu was not found');
 
-        return $menuStructure;
+        return ($structure) ? MenuStructure::toStructure($menu) : $menu;
     }
 
-    public function getByIdentifier($menuIdentifier)
+    private function getMenuByIdentifier($menuIdentifier, $structure = false)
     {
-        $menuStructure = $this->repository->findByIdentifier($menuIdentifier);
-
-        if (!$menuStructure)
+        if (!$menu = $this->repository->findByIdentifier($menuIdentifier))
             throw new \Exception('The menu was not found');
 
-        return $menuStructure;
+        return ($structure) ? MenuStructure::toStructure($menu) : $menu;
     }
-
-    public function getMenuItemByID($menuID, $menuItemID)
-    {
-        if ($menuItem = $this->repository->findItemByID($menuID, $menuItemID))
-            return $menuItem;
-
-        throw new \Exception('The menu item was not found');
-    }
-} 
+}

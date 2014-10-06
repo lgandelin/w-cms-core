@@ -2,38 +2,28 @@
 
 namespace CMS\Interactors\Menus;
 
-use CMS\Converters\MenuConverter;
-
 class UpdateMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID, $menuStructure)
     {
-        if ($originalMenuStructure = $this->getByID($menuID)) {
-            $menuUpdated = $this->getMenuUpdated($originalMenuStructure, $menuStructure);
+        if ($menu = $this->getMenuByID($menuID)) {
 
-            if ($menuUpdated->valid()) {
-                if ($this->anotherMenuExistsWithSameIdentifier($menuID, $menuUpdated->getIdentifier()))
+            if (isset($menuStructure->name) && $menuStructure->name !== null && $menu->getName() != $menuStructure->name) $menu->setName($menuStructure->name);
+            if (isset($menuStructure->identifier) && $menuStructure->identifier !== null && $menu->getIdentifier() != $menuStructure->identifier) $menu->setIdentifier($menuStructure->identifier);
+
+            if ($menu->valid()) {
+                if ($this->anotherMenuExistsWithSameIdentifier($menuID, $menu   ->getIdentifier()))
                     throw new \Exception('There is already a menu with the same identifier');
 
-                $this->repository->updateMenu($menuID, MenuConverter::convertMenuToMenuStructure($menuUpdated));
+                $this->repository->updateMenu($menu);
             }
         }
     }
 
-    public function getMenuUpdated($originalMenuStructure, $menuStructure)
+    private function anotherMenuExistsWithSameIdentifier($menuID, $menuIdentifier)
     {
-        $menu = MenuConverter::convertMenuStructureToMenu($originalMenuStructure);
+        $existingMenu = $this->repository->findByIdentifier($menuIdentifier);
 
-        if (isset($menuStructure->name) && $menuStructure->name !== null && $menu->getName() != $menuStructure->name) $menu->setName($menuStructure->name);
-        if (isset($menuStructure->identifier) && $menuStructure->identifier !== null && $menu->getIdentifier() != $menuStructure->identifier) $menu->setIdentifier($menuStructure->identifier);
-
-        return $menu;
+        return ($existingMenu && $existingMenu->getID() != $menuID);
     }
-
-    public function anotherMenuExistsWithSameIdentifier($menuID, $menuIdentifier)
-    {
-        $existingMenuStructure = $this->repository->findByIdentifier($menuIdentifier);
-
-        return ($existingMenuStructure && $existingMenuStructure->ID != $menuID);
-    }
-} 
+}

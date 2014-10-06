@@ -6,8 +6,7 @@ class DeleteMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID)
     {
-        if ($this->getByID($menuID))
+        if ($this->getMenuByID($menuID))
             $this->repository->deleteMenu($menuID);
     }
-
 }

@@ -2,19 +2,11 @@
 
 namespace CMS\Entities;
 
-use CMS\Entities\MenuItem;
-
-class Menu {
-
+class Menu
+{
     private $ID;
     private $identifier;
-    private $items;
     private $name;
-
-    public function __construct()
-    {
-        $this->items = [];
-    }
 
     public function setID($ID)
     {
@@ -36,31 +28,6 @@ class Menu {
         return $this->identifier;
     }
 
-    public function addItem(MenuItem $item)
-    {
-        $this->items[$item->getID()]= $item;
-    }
-
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    public function updateItem($menuItemID, $menuItem)
-    {
-        $this->items[$menuItemID]= $menuItem;
-    }
-
-    public function deleteItem($menuItemID)
-    {
-        unset($this->items[$menuItemID]);
-    }
-
-    public function deleteItems()
-    {
-        $this->items = [];
-    }
-
     public function setName($name)
     {
         $this->name = $name;
@@ -78,5 +45,4 @@ class Menu {
 
         return true;
     }
-
 }

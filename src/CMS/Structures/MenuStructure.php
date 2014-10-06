@@ -2,10 +2,19 @@
 
 namespace CMS\Structures;
 
-class MenuStructure extends DataStructure {
-
+class MenuStructure extends DataStructure
+{
     public $ID;
     public $identifier;
     public $name;
-    public $items;
+
+    public static function toStructure($menu)
+    {
+        $menuStructure = new MenuStructure();
+        $menuStructure->ID = $menu->getID();
+        $menuStructure->identifier = $menu->getIdentifier();
+        $menuStructure->name = $menu->getName();
+
+        return $menuStructure;
+    }
 }

@@ -3,27 +3,22 @@
 namespace CMS\Interactors\Areas;
 
 use CMS\Entities\Area;
-use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Repositories\AreaRepositoryInterface;
-use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\AreaStructure;
 
-class CreateAreaInteractor extends GetPageInteractor
+class CreateAreaInteractor
 {
-    public function __construct(AreaRepositoryInterface $repository, PageRepositoryInterface $pageRepository)
+    public function __construct(AreaRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        $this->pageRepository = $pageRepository;
     }
 
     public function run(AreaStructure $areaStructure)
     {
-        if ($this->getPageByID($areaStructure->page_id)) {
-            $area = $this->createAreaFromStructure($areaStructure);
+        $area = $this->createAreaFromStructure($areaStructure);
 
-            if ($area->valid())
-                return $this->repository->createArea($area);
-        }
+        if ($area->valid())
+            return $this->repository->createArea($area);
     }
 
     private function createAreaFromStructure(AreaStructure $areaStructure)

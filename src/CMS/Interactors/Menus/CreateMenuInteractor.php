@@ -2,7 +2,7 @@
 
 namespace CMS\Interactors\Menus;
 
-use CMS\Converters\MenuConverter;
+use CMS\Entities\Menu;
 use CMS\Repositories\MenuRepositoryInterface;
 use CMS\Structures\MenuStructure;
 
@@ -17,18 +17,27 @@ class CreateMenuInteractor
 
     public function run(MenuStructure $menuStructure)
     {
-        $menu = MenuConverter::convertMenuStructureToMenu($menuStructure);
+        $menu = $this->createMenuFromStructure($menuStructure);
 
         if ($menu->valid()) {
             if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier()))
                 throw new \Exception('There is already a menu with the same identifier');
 
-            return $this->repository->createMenu(MenuConverter::convertMenuToMenuStructure($menu));
+            return $this->repository->createMenu($menu);
         }
     }
 
-    public function anotherExistingMenuWithSameIdentifier($identifier)
+    private function anotherExistingMenuWithSameIdentifier($identifier)
     {
         return $this->repository->findByIdentifier($identifier);
+    }
+
+    private function createMenuFromStructure(MenuStructure $menuStructure)
+    {
+        $menu = new Menu();
+        $menu->setIdentifier($menuStructure->identifier);
+        $menu->setName($menuStructure->name);
+
+        return $menu;
     }
 } 

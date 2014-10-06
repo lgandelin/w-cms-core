@@ -3,11 +3,10 @@
 namespace CMS\Interactors\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\BlockStructure;
 
-class CreateBlockInteractor extends GetAreaInteractor
+class CreateBlockInteractor
 {
     private $repository;
 
@@ -18,12 +17,10 @@ class CreateBlockInteractor extends GetAreaInteractor
 
     public function run(BlockStructure $blockStructure)
     {
-        if ($this->getAreaByID($blockStructure->area_id)) {
-            $block = $this->createBlockFromStructure($blockStructure);
+        $block = $this->createBlockFromStructure($blockStructure);
 
-            if ($block->valid())
-                return $this->repository->createBlock($block);
-        }
+        if ($block->valid())
+            return $this->repository->createBlock($block);
     }
 
     private function createBlockFromStructure(BlockStructure $blockStructure)
