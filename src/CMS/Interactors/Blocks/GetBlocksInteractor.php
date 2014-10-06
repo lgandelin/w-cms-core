@@ -9,7 +9,6 @@ use CMS\Structures\BlockStructure;
 
 class GetBlocksInteractor extends GetAreaInteractor
 {
-    private $repository;
     private $areaRepository;
 
     public function __construct(BlockRepositoryInterface $repository, AreaRepositoryInterface $areaRepository)

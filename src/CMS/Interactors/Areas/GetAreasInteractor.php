@@ -9,7 +9,6 @@ use CMS\Structures\AreaStructure;
 
 class GetAreasInteractor extends GetPageInteractor
 {
-    private $repository;
     private $pageRepository;
 
     public function __construct(AreaRepositoryInterface $repository, PageRepositoryInterface $pageRepository)
