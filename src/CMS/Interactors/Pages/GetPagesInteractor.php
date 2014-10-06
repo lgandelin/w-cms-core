@@ -14,7 +14,7 @@ class GetPagesInteractor
         $this->repository = $repository;
     }
 
-    public function getAll($structure)
+    public function getAll($structure = false)
     {
         $pages = $this->repository->findAll();
        

@@ -9,5 +9,4 @@ class DeleteUserInteractor extends GetUserInteractor
         if ($this->getUserByID($userID))
             $this->repository->deleteUser($userID);
     }
-
 }

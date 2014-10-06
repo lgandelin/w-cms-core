@@ -2,22 +2,22 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\Converters\PageConverter;
+use CMS\Entities\Page;
 use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\PageStructure;
 
 class CreatePageInteractor
 {
-    protected $pageRepository;
+    protected $repository;
 
-    public function __construct(PageRepositoryInterface $pageRepository)
+    public function __construct(PageRepositoryInterface $repository)
     {
-        $this->pageRepository = $pageRepository;
+        $this->repository = $repository;
     }
 
     public function run(PageStructure $pageStructure)
     {
-        $page = PageConverter::convertPageStructureToPage($pageStructure);
+        $page = $this->createPageFromStructure($pageStructure);
 
         if ($page->valid()) {
             if ($this->anotherExistingPageWithSameUri($page->getUri()))
@@ -26,18 +26,31 @@ class CreatePageInteractor
             if ($this->anotherExistingPageWithSameIdentifier($page->getIdentifier()))
                 throw new \Exception('There is already a page with the same identifier');
 
-            return $this->pageRepository->createPage(PageConverter::convertPageToPageStructure($page));
+            return $this->repository->createPage($page);
         }
     }
 
-    public function anotherExistingPageWithSameIdentifier($identifier)
+    private function anotherExistingPageWithSameIdentifier($identifier)
     {
-        return $this->pageRepository->findByIdentifier($identifier);
+        return $this->repository->findByIdentifier($identifier);
     }
 
-    public function anotherExistingPageWithSameUri($uri)
+    private function anotherExistingPageWithSameUri($uri)
     {
-        return $this->pageRepository->findByUri($uri);
+        return $this->repository->findByUri($uri);
     }
 
+    private function createPageFromStructure(PageStructure $pageStructure)
+    {
+        $page = new Page();
+        $page->setID($pageStructure->ID);
+        $page->setIdentifier($pageStructure->identifier);
+        $page->setName($pageStructure->name);
+        $page->setUri($pageStructure->uri);
+        $page->setMetaTitle($pageStructure->meta_title);
+        $page->setMetaDescription($pageStructure->meta_description);
+        $page->setMetaKeywords($pageStructure->meta_keywords);
+
+        return $page;
+    }
 }

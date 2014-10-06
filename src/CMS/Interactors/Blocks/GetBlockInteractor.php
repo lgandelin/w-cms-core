@@ -14,21 +14,11 @@ class GetBlockInteractor
         $this->repository = $repository;
     }
 
-    public function getByID($blockID)
+    public function getBlockByID($blockID, $structure = false)
     {
         if (!$block = $this->repository->findByID($blockID))
             throw new \Exception('The block was not found');
 
-        $blockStructure = new BlockStructure();
-        $blockStructure->ID = $block->getID();
-        $blockStructure->name = $block->getName();
-        $blockStructure->width = $block->getWidth();
-        $blockStructure->height = $block->getHeight();
-        $blockStructure->class = $block->getClass();
-        $blockStructure->order = $block->getOrder();
-        $blockStructure->type = $block->getType();
-
-        return $blockStructure;
+        return ($structure) ? BlockStructure::toStructure($block) : $block;
     }
-
 }

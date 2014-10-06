@@ -9,5 +9,4 @@ class DeletePageInteractor extends GetPageInteractor
         if ($this->getPageByID($pageID))
             $this->pageRepository->deletePage($pageID);
     }
-
 }

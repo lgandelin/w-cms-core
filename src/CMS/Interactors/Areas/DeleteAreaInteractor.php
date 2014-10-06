@@ -5,9 +5,8 @@ namespace CMS\Interactors\Areas;
 use CMS\Repositories\AreaRepositoryInterface;
 use CMS\Repositories\BlockRepositoryInterface;
 
-class DeleteAreaInteractor extends GetAreaInteractor {
-
-    private $repository;
+class DeleteAreaInteractor extends GetAreaInteractor
+{
     private $blockRepository;
 
     public function __construct(AreaRepositoryInterface $repository, BlockRepositoryInterface $blockRepository)

@@ -12,7 +12,6 @@ class Page {
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
-    private $areas;
 
     public function setID($ID)
     {
@@ -105,8 +104,4 @@ class Page {
         return true;
     }
 
-    public function addArea(Area $area)
-    {
-        $this->areas[]= $area;
-    }
 } 

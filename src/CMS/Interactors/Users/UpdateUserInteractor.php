@@ -31,5 +31,4 @@ class UpdateUserInteractor extends GetUserInteractor
 
         return ($user && $user->getID() != $userID);
     }
-
 }
