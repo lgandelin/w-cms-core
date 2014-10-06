@@ -2,8 +2,8 @@
 
 namespace CMS\Entities;
 
-class User {
-
+class User
+{
     private $ID;
     private $login;
     private $password;
@@ -78,5 +78,4 @@ class User {
 
         return true;
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace CMS\Structures;
 
-class MenuItemStructure extends DataStructure {
-
+class MenuItemStructure extends DataStructure
+{
     public $ID;
     public $label;
     public $page;

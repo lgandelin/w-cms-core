@@ -2,8 +2,8 @@
 
 namespace CMS\Structures;
 
-class DataStructure {
-
+class DataStructure
+{
     public function __construct($parameters = array())
     {
         foreach ($parameters as $key => $value) {
@@ -16,5 +16,4 @@ class DataStructure {
     {
         return get_object_vars($this);
     }
-    
 }

@@ -4,8 +4,8 @@ namespace CMS\Structures;
 
 use CMS\Entities\Page;
 
-class PageStructure extends DataStructure {
-
+class PageStructure extends DataStructure
+{
     public $ID;
     public $name;
     public $uri;
@@ -29,5 +29,4 @@ class PageStructure extends DataStructure {
 
         return $pageStructure;
     }
-
 } 

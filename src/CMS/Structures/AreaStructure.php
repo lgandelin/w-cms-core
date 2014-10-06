@@ -2,8 +2,8 @@
 
 namespace CMS\Structures;
 
-class AreaStructure extends DataStructure {
-
+class AreaStructure extends DataStructure
+{
     public $ID;
     public $name;
     public $width;

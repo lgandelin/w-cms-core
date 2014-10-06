@@ -29,15 +29,15 @@ class UpdatePageInteractor extends GetPageInteractor
 
     private function anotherPageExistsWithSameURI($pageID, $pageURI)
     {
-        $existingPageStructure = $this->pageRepository->findByUri($pageURI);
+        $existingPageStructure = $this->repository->findByUri($pageURI);
 
-        return ($existingPageStructure && $existingPageStructure->ID != $pageID);
+        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
     }
 
     private function anotherPageExistsWithSameIdentifier($pageID, $pageIdentifier)
     {
-        $existingPageStructure = $this->pageRepository->findByIdentifier($pageIdentifier);
+        $existingPageStructure = $this->repository->findByIdentifier($pageIdentifier);
 
-        return ($existingPageStructure && $existingPageStructure->ID != $pageID);
+        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
     }
 }

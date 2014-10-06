@@ -6,8 +6,8 @@ use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
 
-class BlockStructure extends DataStructure {
-
+class BlockStructure extends DataStructure
+{
     public $ID;
     public $name;
     public $width;

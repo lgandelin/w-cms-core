@@ -2,8 +2,8 @@
 
 namespace CMS\Entities;
 
-class Block {
-
+class Block
+{
     private $ID;
     private $name;
     private $width;

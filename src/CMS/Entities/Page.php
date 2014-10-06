@@ -2,8 +2,8 @@
 
 namespace CMS\Entities;
 
-class Page {
-
+class Page
+{
     private $ID;
     private $name;
     private $identifier;
@@ -103,5 +103,4 @@ class Page {
 
         return true;
     }
-
 } 
