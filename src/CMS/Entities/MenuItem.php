@@ -7,7 +7,10 @@ class MenuItem
     private $ID;
     private $label;
     private $pageID;
+    private $externalURL;
     private $order;
+    private $class;
+    private $display;
     private $menuID;
 
     public function setID($ID)
@@ -40,6 +43,16 @@ class MenuItem
         return $this->pageID;
     }
 
+    public function setExternalURL($externalURL)
+    {
+        $this->externalURL = $externalURL;
+    }
+
+    public function getExternalURL()
+    {
+        return $this->externalURL;
+    }
+
     public function setOrder($order)
     {
         $this->order = $order;
@@ -60,6 +73,26 @@ class MenuItem
         return $this->menuID;
     }
 
+    public function setClass($class)
+    {
+        $this->class = $class;
+    }
+
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    public function setDisplay($display)
+    {
+        $this->display = $display;
+    }
+
+    public function getDisplay()
+    {
+        return $this->display;
+    }
+
     public function valid()
     {
         if (!is_int($this->getOrder()))
@@ -70,4 +103,5 @@ class MenuItem
 
         return true;
     }
+
 }
