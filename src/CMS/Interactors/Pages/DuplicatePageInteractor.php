@@ -6,12 +6,12 @@ class DuplicatePageInteractor extends GetPageInteractor
 {
     public function run($pageID)
     {
-        if ($page = $this->getPageByID($pageID)) {
+        if ($page = $this->getPageByID($pageID, true)) {
             $pageDuplicated = clone $page;
-            $pageDuplicated->setID(null);
-            $pageDuplicated->setName($page->getName() . ' - COPY');
-            $pageDuplicated->setURI($page->getURI() . '-copy');
-            $pageDuplicated->setIdentifier($page->getIdentifier() . '-copy');
+            $pageDuplicated->id = null;
+            $pageDuplicated->name = $page->name . ' - COPY';
+            $pageDuplicated->uri = $page->uri . '-copy';
+            $pageDuplicated->identifier = $page->identifier . '-copy';
 
             return $this->getCreatePageInteractor()->run($pageDuplicated);
         }
