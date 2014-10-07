@@ -8,7 +8,7 @@ class UpdateUserInteractor extends GetUserInteractor
 {
     public function run($userID, UserStructure $userStructure)
     {
-        if ($user = $this->getByID($userID)) {
+        if ($user = $this->getUserByID($userID)) {
             
             if (isset($userStructure->login) && $userStructure->login !== null && $user->getLogin() != $userStructure->login) $user->setLogin($userStructure->login);
             if (isset($userStructure->password) && $userStructure->password !== null && $user->getPassword() != $userStructure->password) $user->setPassword($userStructure->password);
@@ -25,11 +25,10 @@ class UpdateUserInteractor extends GetUserInteractor
         }
     }
 
-    public function anotherUserExistsWithSameLogin($userID, $userLogin)
+    private function anotherUserExistsWithSameLogin($userID, $userLogin)
     {
         $user = $this->repository->findByLogin($userLogin);
 
         return ($user && $user->getID() != $userID);
     }
-
 }

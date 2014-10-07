@@ -4,8 +4,8 @@ namespace CMS\Structures;
 
 use CMS\Entities\User;
 
-class UserStructure extends DataStructure {
-
+class UserStructure extends DataStructure
+{
     public $ID;
     public $login;
     public $password;

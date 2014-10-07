@@ -2,18 +2,16 @@
 
 namespace CMS\Entities;
 
-class Page {
-
+class Page
+{
     private $ID;
     private $name;
     private $identifier;
     private $uri;
-    private $text;
     private $website;
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
-    private $areas;
 
     public function setID($ID)
     {
@@ -53,16 +51,6 @@ class Page {
     public function getUri()
     {
         return $this->uri;
-    }
-
-    public function setText($text)
-    {
-        $this->text = $text;
-    }
-
-    public function getText()
-    {
-        return $this->text;
     }
 
     public function setWebsite(Website $website)
@@ -114,10 +102,5 @@ class Page {
             throw new \InvalidArgumentException('You must provide an identifier for a page');
 
         return true;
-    }
-
-    public function addArea(Area $area)
-    {
-        $this->areas[]= $area;
     }
 } 

@@ -2,8 +2,8 @@
 
 namespace CMS\Entities;
 
-class Website {
-
+class Website
+{
     private $name;
     private $url;
 
@@ -26,5 +26,4 @@ class Website {
     {
         return $this->name;
     }
-
 } 

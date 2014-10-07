@@ -3,6 +3,7 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Repositories\UserRepositoryInterface;
+use CMS\Structures\UserStructure;
 
 class GetUserInteractor
 {
@@ -13,14 +14,11 @@ class GetUserInteractor
         $this->repository = $repository;
     }
 
-    public function getByID($userID)
+    public function getUserByID($userID, $structure = false)
     {
-        $user = $this->repository->findByID($userID);
-
-        if (!$user)
+        if (!$user = $this->repository->findByID($userID))
             throw new \Exception('The user was not found');
 
-        return $user;
+        return  ($structure) ? UserStructure::toStructure($user) : $user;
     }
-
 }

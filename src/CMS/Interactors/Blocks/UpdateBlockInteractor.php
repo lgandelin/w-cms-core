@@ -2,29 +2,21 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
 
-class UpdateBlockInteractor {
-
-    private $repository;
-
-    public function __construct(BlockRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
+class UpdateBlockInteractor extends GetBlockInteractor
+{
     public function run($blockID, BlockStructure $blockStructure)
     {
-        if ($block = $this->getByID($blockID)) {
+        if ($block = $this->getBlockByID($blockID)) {
             if ($blockStructure->type !== null && $blockStructure->type != $block->getType()) $block->setType($blockStructure->type);
             $this->repository->updateBlockType($block);
         }
 
-        if ($block = $this->getByID($blockID)) {
+        if ($block = $this->getBlockByID($blockID)) {
             if ($blockStructure->name !== null && $blockStructure->name != $block->getName()) $block->setName($blockStructure->name);
             if ($blockStructure->width !== null && $blockStructure->width != $block->getWidth()) $block->setWidth($blockStructure->width);
             if ($blockStructure->height !== null && $blockStructure->height != $block->getHeight()) $block->setHeight($blockStructure->height);
@@ -44,13 +36,5 @@ class UpdateBlockInteractor {
         }
 
         $this->repository->updateBlock($block);
-    }
-
-    public function getByID($blockID)
-    {
-        if (!$block = $this->repository->findByID($blockID))
-            throw new \Exception('The block was not found');
-
-        return $block;
     }
 } 

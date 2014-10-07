@@ -4,8 +4,8 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 
-class MenuBlock extends Block {
-
+class MenuBlock extends Block
+{
     private $menuID;
 
     public function setMenuID($menuID)
@@ -17,5 +17,4 @@ class MenuBlock extends Block {
     {
         return $this->menuID;
     }
-
 }

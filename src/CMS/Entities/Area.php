@@ -2,8 +2,8 @@
 
 namespace CMS\Entities;
 
-class Area {
-
+class Area
+{
     private $ID;
     private $name;
     private $width;

@@ -1,6 +1,6 @@
 <?php
 
-use CMS\Interactors\Blocks\GetAllBlocksInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Structures\AreaStructure;
@@ -12,7 +12,7 @@ class GetAllBlocksInteractorTest extends PHPUnit_Framework_TestCase {
     {
         $this->repository = new InMemoryBlockRepository();
         $this->areaRepository = new InMemoryAreaRepository();
-        $this->interactor = new GetAllBlocksInteractor($this->repository, $this->areaRepository);
+        $this->interactor = new GetBlocksInteractor($this->repository, $this->areaRepository);
     }
 
     /**

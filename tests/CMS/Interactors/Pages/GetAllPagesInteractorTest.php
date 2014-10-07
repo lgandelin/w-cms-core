@@ -1,20 +1,20 @@
 <?php
 
-use CMS\Interactors\Pages\GetAllPagesInteractor;
+use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\PageStructure;
 
-class GetAllPagesInteractorTest extends PHPUnit_Framework_TestCase {
+class GetPagesInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
         $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new GetAllPagesInteractor($this->pageRepository);
+        $this->interactor = new GetPagesInteractor($this->pageRepository);
     }
 
     public function testConstruct()
     {
-        $this->assertInstanceOf('\CMS\Interactors\Pages\GetAllPagesInteractor', $this->interactor);
+        $this->assertInstanceOf('\CMS\Interactors\Pages\GetPagesInteractor', $this->interactor);
     }
 
     public function testGetAllWithoutPages()

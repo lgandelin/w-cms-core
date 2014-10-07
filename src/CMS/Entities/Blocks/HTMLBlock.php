@@ -4,8 +4,8 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 
-class HTMLBlock extends Block {
-
+class HTMLBlock extends Block
+{
     private $html;
 
     public function setHTML($html)
@@ -17,5 +17,4 @@ class HTMLBlock extends Block {
     {
         return $this->html;
     }
-
 } 

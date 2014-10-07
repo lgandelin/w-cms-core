@@ -17,12 +17,7 @@ class CreateUserInteractor
 
     public function run(UserStructure $userStructure)
     {
-        $user = new User();
-        $user->setLogin($userStructure->login);
-        if ($userStructure->password != null && $userStructure->password != $user->getPassword()) $user->setPassword($userStructure->password);
-        $user->setLastName($userStructure->last_name);
-        $user->setFirstName($userStructure->first_name);
-        $user->setEmail($userStructure->email);
+        $user = $this->createUserFromStructure($userStructure);
 
         if ($user->valid()) {
             if ($this->anotherUserExistsWithSameLogin($user->getLogin()))
@@ -32,8 +27,20 @@ class CreateUserInteractor
         }
     }
 
-    public function anotherUserExistsWithSameLogin($userLogin)
+    private function anotherUserExistsWithSameLogin($userLogin)
     {
         return $this->repository->findByLogin($userLogin);
+    }
+
+    private function createUserFromStructure(UserStructure $userStructure)
+    {
+        $user = new User();
+        $user->setLogin($userStructure->login);
+        if ($userStructure->password != null && $userStructure->password != $user->getPassword()) $user->setPassword($userStructure->password);
+        $user->setLastName($userStructure->last_name);
+        $user->setFirstName($userStructure->first_name);
+        $user->setEmail($userStructure->email);
+
+        return $user;
     }
 } 

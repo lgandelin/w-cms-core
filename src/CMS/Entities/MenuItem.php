@@ -2,14 +2,23 @@
 
 namespace CMS\Entities;
 
-use CMS\Entities\Page;
-
-class MenuItem {
-
+class MenuItem
+{
     private $ID;
     private $label;
-    private $page;
+    private $pageID;
     private $order;
+    private $menuID;
+
+    public function setID($ID)
+    {
+        $this->ID = $ID;
+    }
+
+    public function getID()
+    {
+        return $this->ID;
+    }
 
     public function setLabel($label)
     {
@@ -21,14 +30,14 @@ class MenuItem {
         return $this->label;
     }
 
-    public function setPage($page)
+    public function setPageID($pageID)
     {
-        $this->page = $page;
+        $this->pageID = $pageID;
     }
 
-    public function getPage()
+    public function getPageID()
     {
-        return $this->page;
+        return $this->pageID;
     }
 
     public function setOrder($order)
@@ -41,6 +50,16 @@ class MenuItem {
         return $this->order;
     }
 
+    public function setMenuID($menuID)
+    {
+        $this->menuID = $menuID;
+    }
+
+    public function getMenuID()
+    {
+        return $this->menuID;
+    }
+
     public function valid()
     {
         if (!is_int($this->getOrder()))
@@ -51,15 +70,4 @@ class MenuItem {
 
         return true;
     }
-
-    public function setID($ID)
-    {
-        $this->ID = $ID;
-    }
-
-    public function getID()
-    {
-        return $this->ID;
-    }
-
 }

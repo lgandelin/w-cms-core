@@ -4,8 +4,8 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 
-class ViewFileBlock extends Block {
-
+class ViewFileBlock extends Block
+{
     private $viewFile;
 
     public function setViewFile($viewFile)
@@ -17,5 +17,4 @@ class ViewFileBlock extends Block {
     {
         return $this->viewFile;
     }
-
 } 
