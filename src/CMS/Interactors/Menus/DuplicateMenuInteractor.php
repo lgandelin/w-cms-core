@@ -6,11 +6,11 @@ class DuplicateMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID)
     {
-        if ($menu = $this->getByID($menuID)) {
+        if ($menu = $this->getMenuByID($menuID, true)) {
             $menuDuplicated = clone $menu;
-            $menuDuplicated->setID(null);
-            $menuDuplicated->setName($menu->getName() . ' - COPY');
-            $menuDuplicated->setIdentifier($menu->getIdentifier() . '-copy');
+            $menuDuplicated->id = null;
+            $menuDuplicated->name = $menu->name . ' - COPY';
+            $menuDuplicated->identifier = $menu->identifier . '-copy';
 
             return $this->getCreateMenuInteractor()->run($menuDuplicated);
         }
