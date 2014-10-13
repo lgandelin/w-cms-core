@@ -28,5 +28,4 @@ class GetPagesInteractor
         } else
             return $pages;
     }
-
 }

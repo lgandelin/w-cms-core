@@ -21,12 +21,4 @@ class GetMenuInteractor
 
         return ($structure) ? MenuStructure::toStructure($menu) : $menu;
     }
-
-    private function getMenuByIdentifier($menuIdentifier, $structure = false)
-    {
-        if (!$menu = $this->repository->findByIdentifier($menuIdentifier))
-            throw new \Exception('The menu was not found');
-
-        return ($structure) ? MenuStructure::toStructure($menu) : $menu;
-    }
 }

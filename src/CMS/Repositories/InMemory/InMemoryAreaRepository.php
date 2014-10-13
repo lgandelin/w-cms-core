@@ -2,8 +2,8 @@
 
 namespace CMS\Repositories\InMemory;
 
+use CMS\Entities\Area;
 use CMS\Repositories\AreaRepositoryInterface;
-use CMS\Structures\AreaStructure;
 
 class InMemoryAreaRepository implements AreaRepositoryInterface {
 
@@ -17,7 +17,7 @@ class InMemoryAreaRepository implements AreaRepositoryInterface {
     public function findByID($areaID)
     {
         foreach ($this->areas as $area) {
-            if ($area->ID == $areaID)
+            if ($area->getID() == $areaID)
                 return $area;
         }
 
@@ -33,26 +33,31 @@ class InMemoryAreaRepository implements AreaRepositoryInterface {
     {
         $areas = array();
         foreach ($this->areas as $area) {
-            if ($area->page_id == $pageID) {
+            if ($area->getPageID() == $pageID) {
                 $areas[]= $area;
             }
         }
+
         return $areas;
     }
 
-    public function createArea(AreaStructure $areaStructure)
+    public function createArea(Area $area)
     {
-        $this->areas[]= $areaStructure;
+        $this->areas[]= $area;
+
+        return sizeof($this->areas);
     }
 
-    public function updateArea($areaID, AreaStructure $areaStructure)
+    public function updateArea(Area $area)
     {
-        foreach ($this->areas as $area) {
-            if ($area->ID == $areaID) {
-                $area->name = $areaStructure->name;
-                $area->width = $areaStructure->width;
-                $area->height = $areaStructure->height;
-                $area->class = $areaStructure->class;
+        foreach ($this->areas as $areaModel) {
+            if ($areaModel->getID() == $area->getID()) {
+                $areaModel->setName($area->getName());
+                $areaModel->setWidth($area->getWidth());
+                $areaModel->setHeight($area->getHeight());
+                $areaModel->setClass($area->getClass());
+                $areaModel->setOrder($area->getOrder());
+                $areaModel->setDisplay($area->getDisplay());
             }
         }
     }
@@ -60,7 +65,7 @@ class InMemoryAreaRepository implements AreaRepositoryInterface {
     public function deleteArea($areaID)
     {
         foreach ($this->areas as $i => $area) {
-            if ($area->ID == $areaID) {
+            if ($area->getID() == $areaID) {
                 unset($this->areas[$i]);
             }
         }

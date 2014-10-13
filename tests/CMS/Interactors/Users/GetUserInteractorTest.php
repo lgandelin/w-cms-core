@@ -1,20 +1,18 @@
 <?php
 
+use CMS\Entities\User;
 use CMS\Interactors\Users\GetUserInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
-use CMS\Structures\UserStructure;
 
 class GetUserInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $interactor;
+
     public function setUp()
     {
-        $this->userRepository = new InMemoryUserRepository();
-        $this->interactor = new GetUserInteractor($this->userRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Users\GetUserInteractor', $this->interactor);
+        $this->repository = new InMemoryUserRepository();
+        $this->interactor = new GetUserInteractor($this->repository);
     }
 
     /**
@@ -22,21 +20,24 @@ class GetUserInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testGetNonExistingUser()
     {
-        $this->interactor->getByID(1);
+        $this->interactor->getUserByID(1);
     }
 
     public function testGetUser()
     {
-        $userStructure = new UserStructure([
-            'ID' => 1,
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
+        $user = $this->createSampleUser();
+        
+        $this->assertEquals($user, $this->interactor->getUserByID(1));
+    }
 
-        $this->userRepository->createUser($userStructure);
+    private function createSampleUser()
+    {
+        $user = new User();
+        $user->setID(1);
+        $user->setLastName('User lastname');
+        $this->repository->createUser($user);
 
-        $this->assertEquals($userStructure, $this->interactor->getByID(1));
+        return $user;
     }
 
 }

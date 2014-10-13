@@ -19,15 +19,15 @@ class CreatePageInteractor
     {
         $page = $this->createPageFromStructure($pageStructure);
 
-        if ($page->valid()) {
-            if ($this->anotherExistingPageWithSameUri($page->getUri()))
-                throw new \Exception('There is already a page with the same URI');
+        $page->valid();
 
-            if ($this->anotherExistingPageWithSameIdentifier($page->getIdentifier()))
-                throw new \Exception('There is already a page with the same identifier');
+        if ($this->anotherExistingPageWithSameUri($page->getUri()))
+            throw new \Exception('There is already a page with the same URI');
 
-            return $this->repository->createPage($page);
-        }
+        if ($this->anotherExistingPageWithSameIdentifier($page->getIdentifier()))
+            throw new \Exception('There is already a page with the same identifier');
+
+        return $this->repository->createPage($page);
     }
 
     private function anotherExistingPageWithSameIdentifier($identifier)

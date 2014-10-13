@@ -6,15 +6,13 @@ use CMS\Structures\UserStructure;
 
 class CreateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $interactor;
+
     public function setUp()
     {
-        $this->userRepository = new InMemoryUserRepository();
-        $this->interactor = new CreateUserInteractor($this->userRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Users\CreateUserInteractor', $this->interactor);
+        $this->repository = new InMemoryUserRepository();
+        $this->interactor = new CreateUserInteractor($this->repository);
     }
 
     /**
@@ -51,7 +49,7 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testCreateUser()
     {
-        $this->assertCount(0, $this->userRepository->findAll());
+        $this->assertCount(0, $this->repository->findAll());
 
         $userStructure = new UserStructure([
             'login' => 'jdoe',
@@ -61,7 +59,7 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->interactor->run($userStructure);
 
-        $this->assertCount(1, $this->userRepository->findAll());
+        $this->assertCount(1, $this->repository->findAll());
     }
 
 }

@@ -8,13 +8,8 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new CreatePageInteractor($this->pageRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Pages\CreatePageInteractor', $this->interactor);
+        $this->repository = new InMemoryPageRepository();
+        $this->interactor = new CreatePageInteractor($this->repository);
     }
 
     /**
@@ -22,12 +17,12 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testCreatePageWithoutUri()
     {
-        $pageStructure = new PageStructure([
+        $page = new PageStructure([
             'name' => 'Page',
             'identifier' => 'page'
         ]);
 
-        $this->interactor->run($pageStructure);
+        $this->interactor->run($page);
     }
 
     /**
@@ -89,7 +84,7 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testCreatePage()
     {
-        $this->assertCount(0, $this->pageRepository->findAll());
+        $this->assertCount(0, $this->repository->findAll());
 
         $pageStructure = new PageStructure([
             'uri' => '/home',
@@ -99,6 +94,6 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->interactor->run($pageStructure);
 
-        $this->assertCount(1, $this->pageRepository->findAll());
+        $this->assertCount(1, $this->repository->findAll());
     }
 }

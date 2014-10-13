@@ -2,6 +2,7 @@
 
 namespace CMS\Repositories\InMemory;
 
+use CMS\Entities\User;
 use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
 
@@ -17,17 +18,17 @@ class InMemoryUserRepository implements UserRepositoryInterface {
     public function findByID($userID)
     {
         foreach ($this->users as $user) {
-            if ($user->ID == $userID)
+            if ($user->getID() == $userID)
                 return $user;
         }
 
         return false;
     }
 
-    public function findByLogin($login)
+    public function findByLogin($userLogin)
     {
         foreach ($this->users as $user) {
-            if ($user->login == $login)
+            if ($user->getLogin() == $userLogin)
                 return $user;
         }
 
@@ -39,30 +40,28 @@ class InMemoryUserRepository implements UserRepositoryInterface {
         return $this->users;
     }
 
-    public function createUser(UserStructure $userStructure)
+    public function createUser(User $user)
     {
-        $this->users[]= $userStructure;
+        $this->users[]= $user;
     }
 
-    public function updateUser($userID, UserStructure $userStructure)
+    public function updateUser(user $user)
     {
-        foreach ($this->users as $i => $user) {
-            if ($user->ID == $userID) {
-                if ($userStructure->login) $user->login = $userStructure->login;
-                if ($userStructure->password) $user->password = $userStructure->password;
-                $user->last_name = $userStructure->last_name;
-                $user->first_name = $userStructure->first_name;
-                $user->email = $userStructure->email;
+        foreach ($this->users as $userModel) {
+            if ($userModel->getID() == $user->getID()) {
+                if ($user->getLogin()) $userModel->setLogin($user->getLogin());
+                if ($user->getPassword()) $userModel->setPAssword($user->getPassword());
+                $userModel->setLastName($user->getLastName());
+                $userModel->setFirstName($user->getFirstName());
+                $userModel->setEmail($user->getEmail());
             }
         }
     }
 
     public function deleteUser($userID)
     {
-        foreach ($this->users as $i => $user) {
-            if ($user->ID == $userID) {
+        foreach ($this->users as $i => $user)
+            if ($user->getID() == $userID)
                 unset($this->users[$i]);
-            }
-        }
     }
 }

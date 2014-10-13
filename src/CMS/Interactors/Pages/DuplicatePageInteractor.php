@@ -35,10 +35,11 @@ class DuplicatePageInteractor extends GetPageInteractor
             $newPageID = $this->duplicatePage($page);
 
             $areas = $this->getAreasInteractor->getAll($pageID);
+
             foreach ($areas as $area) {
                 $newAreaID = $this->duplicateArea($area, $newPageID);
-
                 $blocks = $this->getBlocksInteractor->getAll($area->getID());
+
                 foreach ($blocks as $block)
                     $this->duplicateBlock($block, $newAreaID);
             }

@@ -8,7 +8,6 @@ class Page
     private $name;
     private $identifier;
     private $uri;
-    private $website;
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
@@ -51,16 +50,6 @@ class Page
     public function getUri()
     {
         return $this->uri;
-    }
-
-    public function setWebsite(Website $website)
-    {
-        $this->website = $website;
-    }
-
-    public function getWebsite()
-    {
-        return $this->website;
     }
 
     public function setMetaTitle($meta_title)

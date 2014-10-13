@@ -1,20 +1,33 @@
 <?php
 
+use CMS\Entities\Area;
+use CMS\Entities\Block;
+use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Page;
+use CMS\Interactors\Areas\CreateAreaInteractor;
+use CMS\Interactors\Areas\GetAreasInteractor;
+use CMS\Interactors\Blocks\CreateBlockInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
+use CMS\Interactors\Blocks\UpdateBlockInteractor;
+use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Interactors\Pages\DuplicatePageInteractor;
+use CMS\Repositories\InMemory\InMemoryAreaRepository;
+use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
-use CMS\Structures\PageStructure;
 
 class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $areaRepository;
+    private $blockRepository;
+    private $interactor;
+    
     public function setUp()
     {
-        $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new DuplicatePageInteractor($this->pageRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Pages\DuplicatePageInteractor', $this->interactor);
+        $this->repository = new InMemoryPageRepository();
+        $this->areaRepository = new InMemoryAreaRepository();
+        $this->blockRepository = new InMemoryBlockRepository();
+        $this->interactor = new DuplicatePageInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new GetBlocksInteractor($this->blockRepository), new CreatePageInteractor($this->repository), new CreateAreaInteractor($this->areaRepository), new CreateBlockInteractor($this->blockRepository), new UpdateBlockInteractor($this->blockRepository));
     }
 
     /**
@@ -27,26 +40,58 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testDuplicatePage()
     {
-        $pageStructure = new PageStructure([
-            'ID' => 1,
-            'name' => 'My page',
-            'uri' => '/my-page',
-            'identifier' => 'my-page'
-        ]);
+        $this->createSamplePage(1);
+        $this->createSampleArea(1, 1);
+        $this->createSampleArea(2, 1);
+        $this->createSampleBlock(1, 1);
+        $this->createSampleBlock(2, 1);
+        $this->createSampleBlock(3, 1);
+        $this->createSampleBlock(4, 2);
 
-        $this->pageRepository->createPage($pageStructure);
-        $this->assertCount(1, $this->pageRepository->findAll());
+        $this->assertCount(1, $this->repository->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(2, $this->pageRepository->findAll());
-        $pageStructureDuplicated = $this->pageRepository->findByIdentifier('my-page-copy');
-        $this->assertInstanceOf('\CMS\Structures\PageStructure', $pageStructureDuplicated);
+        $this->assertCount(2, $this->repository->findAll());
+        $pageDuplicated = $this->repository->findByIdentifier('test-page-copy');
 
-        $this->assertEquals($pageStructureDuplicated->name, 'My page - COPY');
-        $this->assertEquals($pageStructureDuplicated->uri, '/my-page-copy');
-        $this->assertEquals($pageStructureDuplicated->identifier, 'my-page-copy');
+        $this->assertEquals($pageDuplicated->getName(), 'Test page - COPY');
+        $this->assertEquals($pageDuplicated->getURI(), '/test-page-copy');
+        $this->assertEquals($pageDuplicated->getIdentifier(), 'test-page-copy');
 
+        $this->assertEquals(2, count($this->areaRepository->findByPageID(1)));
+        $this->assertEquals(3, count($this->blockRepository->findByAreaID(1)));
+    }
+
+    private function createSamplePage($pageID)
+    {
+        $page = new Page();
+        $page->setID($pageID);
+        $page->setName('Test page');
+        $page->setIdentifier('test-page');
+        $page->setURI('/test-page');
+        $this->repository->createPage($page);
+    }
+
+    private function createSampleArea($areaID, $pageID)
+    {
+        $area = new Area();
+        $area->setID($areaID);
+        $area->setPageID($pageID);
+        $area->setName('Test area ' . $areaID);
+
+        $this->areaRepository->createArea($area);
+    }
+
+    private function createSampleBlock($blockID, $areaID)
+    {
+        $block = new HTMLBlock();
+        $block->setID($blockID);
+        $block->setName('Test block ' . $blockID);
+        $block->setAreaID($areaID);
+        $block->setType('html');
+
+        $this->blockRepository->createBlock($block);
     }
 }
  

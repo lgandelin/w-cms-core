@@ -1,21 +1,20 @@
 <?php
 
 use CMS\Converters\PageConverter;
+use CMS\Entities\Page;
 use CMS\Interactors\Pages\UpdatePageInteractor;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\PageStructure;
 
 class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $interactor;
+
     public function setUp()
     {
-        $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new UpdatePageInteractor($this->pageRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Pages\UpdatePageInteractor', $this->interactor);
+        $this->repository = new InMemoryPageRepository();
+        $this->interactor = new UpdatePageInteractor($this->repository);
     }
 
     /**
@@ -42,7 +41,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
             'uri' => ''
         ]);
 
-        $this->pageRepository->createPage($pageStructure);
+        $this->repository->createPage($pageStructure);
 
         $this->interactor->run(1, $pageStructure);
     }
@@ -59,7 +58,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
             'identifier' => 'page-1'
         ]);
 
-        $this->pageRepository->createPage($pageStructure);
+        $this->repository->createPage($pageStructure);
 
         $pageStructure2 = new PageStructure([
             'ID' => 2,
@@ -68,7 +67,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
             'identifier' => 'page-2'
         ]);
 
-        $this->pageRepository->createPage($pageStructure2);
+        $this->repository->createPage($pageStructure2);
 
         $pageStructure2Updated = new PageStructure([
            'uri' => '/my-page'
@@ -89,7 +88,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
             'identifier' => 'my-page'
         ]);
 
-        $this->pageRepository->createPage($pageStructure);
+        $this->repository->createPage($pageStructure);
 
         $pageStructure2 = new PageStructure([
             'ID' => 2,
@@ -98,7 +97,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
             'identifier' => 'my-page-2'
         ]);
 
-        $this->pageRepository->createPage($pageStructure2);
+        $this->repository->createPage($pageStructure2);
 
         $pageStructure2Updated = new PageStructure([
             'identifier' => 'my-page'
@@ -109,29 +108,31 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdatePage()
     {
-        $pageStructure = new PageStructure([
-            'ID' => 1,
-            'name' => 'Home page',
-            'uri' => '/',
-            'identifier' => 'home page'
-        ]);
-
-        $this->pageRepository->createPage($pageStructure);
+        $this->createSamplePage();
 
         $pageStructureUpdated = new PageStructure([
-            'name' => 'Home page updated',
-            'uri' => '/home',
-            'identifier' => 'home-page'
+            'name' => 'Test page updated',
+            'uri' => '/test-page',
+            'identifier' => 'test-page'
         ]);
 
         $this->interactor->run(1, $pageStructureUpdated);
 
-        $pageStructure = $this->pageRepository->findByID(1);
-        $page = PageConverter::convertPageStructureToPage($pageStructure);
+        $page = $this->repository->findByID(1);
 
-        $this->assertEquals('Home page updated', $page->getName());
-        $this->assertEquals('/home', $page->getURI());
-        $this->assertEquals('home-page', $page->getIdentifier());
+        $this->assertEquals('Test page updated', $page->getName());
+        $this->assertEquals('/test-page', $page->getURI());
+        $this->assertEquals('test-page', $page->getIdentifier());
+    }
+
+    private function createSamplePage()
+    {
+        $page = new Page();
+        $page->setID(1);
+        $page->setName('Test page');
+        $page->setIdentifier('test-page');
+        $page->setURI('/test-page');
+        $this->repository->createPage($page);
     }
 }
  
