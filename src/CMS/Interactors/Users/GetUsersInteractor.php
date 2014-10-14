@@ -18,14 +18,16 @@ class GetUsersInteractor
     {
         $users = $this->repository->findAll();
 
-        if ($structure) {
-            $userStructures = [];
-            if (is_array($users) && sizeof($users) > 0)
-                foreach ($users as $user)
-                    $userStructures[]= UserStructure::toStructure($user);
+        return ($structure) ? $this->getUserStructures($users) : $users;
+    }
 
-            return $userStructures;
-        } else
-            return $users;
+    private function getUserStructures($users)
+    {
+        $userStructures = [];
+        if (is_array($users) && sizeof($users) > 0)
+            foreach ($users as $user)
+                $userStructures[] = UserStructure::toStructure($user);
+
+        return $userStructures;
     }
 }

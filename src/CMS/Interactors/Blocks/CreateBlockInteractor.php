@@ -21,7 +21,7 @@ class CreateBlockInteractor
 
         $block->valid();
 
-        $this->repository->createBlock($block);
+        return $this->repository->createBlock($block);
     }
 
     private function createBlockFromStructure(BlockStructure $blockStructure)

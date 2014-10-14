@@ -43,9 +43,11 @@ class InMemoryAreaRepository implements AreaRepositoryInterface {
 
     public function createArea(Area $area)
     {
+        $areaID = uniqid();
+        $area->setID($areaID);
         $this->areas[]= $area;
 
-        return sizeof($this->areas);
+        return $areaID;
     }
 
     public function updateArea(Area $area)

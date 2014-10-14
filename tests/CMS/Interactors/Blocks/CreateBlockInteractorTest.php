@@ -30,7 +30,12 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testCreate()
     {
-        $this->createSampleBlock();
+        $block = new BlockStructure([
+            'name' => 'Test block',
+            'area_id' => 1
+        ]);
+
+        $this->interactor->run($block);
 
         $this->assertEquals(1, count($this->repository->findAll()));
         $this->assertEquals(1, count($this->repository->findByAreaID(1)));

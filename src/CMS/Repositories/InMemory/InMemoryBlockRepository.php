@@ -40,9 +40,11 @@ class InMemoryBlockRepository implements BlockRepositoryInterface {
 
     public function createBlock(Block $block)
     {
+        $blockID = uniqid();
+        $block->setID($blockID);
         $this->blocks[]= $block;
 
-        return sizeof($this->blocks);
+        return $blockID;
     }
 
     public function updateBlock(Block $block)

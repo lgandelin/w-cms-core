@@ -26,25 +26,22 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdateArea()
     {
-        $area = $this->createSampleArea();
-        $this->assertEquals('Test area', $area->getName());
+        $areaID = $this->createSampleArea();
 
-        $this->interactor->run(1, new AreaStructure([
+        $this->interactor->run($areaID, new AreaStructure([
             'name' => 'Test area updated'
         ]));
 
-        $areaUpdated = $this->repository->findByID(1);
+        $areaUpdated = $this->repository->findByID($areaID);
         $this->assertEquals('Test area updated', $areaUpdated->getName());
     }
 
     private function createSampleArea()
     {
         $area = new Area();
-        $area->setID(1);
         $area->setName('Test area');
-        $this->repository->createArea($area);
 
-        return $area;
+        return $this->repository->createArea($area);
     }
 
 }

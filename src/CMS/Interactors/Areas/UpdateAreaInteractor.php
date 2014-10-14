@@ -17,6 +17,8 @@ class UpdateAreaInteractor extends GetAreaInteractor
         if ($areaStructure->order !== null && $areaStructure->order != $area->getOrder()) $area->setOrder($areaStructure->order);
         if ($areaStructure->display !== null && $areaStructure->display != $area->getDisplay()) $area->setDisplay($areaStructure->display);
 
-        return ($area->valid()) ? $this->repository->updateArea($area) : false;
+        $area->valid();
+
+        $this->repository->updateArea($area);
     }
 }

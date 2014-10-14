@@ -16,8 +16,9 @@ class UpdateMenuItemInteractor extends GetMenuItemInteractor
             if (isset($menuItemStructure->class) && $menuItemStructure->class !== null && $menuItem->getClass() != $menuItemStructure->class) $menuItem->setClass($menuItemStructure->class);
             if (isset($menuItemStructure->display) && $menuItemStructure->display !== null && $menuItem->getDisplay() != $menuItemStructure->display) $menuItem->setDisplay($menuItemStructure->display);
 
-            if ($menuItem->valid())
-                $this->repository->updateMenuItem($menuItem);
+            $menuItem->valid();
+
+            $this->repository->updateMenuItem($menuItem);
         }
     }
 }

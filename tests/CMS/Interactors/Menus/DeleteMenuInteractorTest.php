@@ -1,19 +1,24 @@
 <?php
 
 use CMS\Entities\Menu;
+use CMS\Entities\MenuItem;
+use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
+use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
 use CMS\Interactors\Menus\DeleteMenuInteractor;
+use CMS\Repositories\InMemory\InMemoryMenuItemRepository;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
-use CMS\Structures\MenuStructure;
 
 class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase {
 
     private $repository;
+    private $menuItemRepository;
     private $interactor;
 
     public function setUp()
     {
         $this->repository = new InMemoryMenuRepository();
-        $this->interactor = new DeleteMenuInteractor($this->repository);
+        $this->menuItemRepository = new InMemoryMenuItemRepository();
+        $this->interactor = new DeleteMenuInteractor($this->repository, new GetMenuItemsInteractor($this->menuItemRepository), new DeleteMenuItemInteractor($this->menuItemRepository));
     }
 
     /**
@@ -35,6 +40,21 @@ class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase {
         $this->assertCount(0, $this->repository->findAll());
     }
 
+    public function testDeleteAlongWithMenuItems()
+    {
+        $this->createSampleMenu();
+        $this->createSampleMenuItem(1);
+        $this->createSampleMenuItem(2);
+
+        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(2, $this->menuItemRepository->findByMenuID(1));
+
+        $this->interactor->run(1);
+
+        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, $this->menuItemRepository->findByMenuID(1));
+    }
+
     private function createSampleMenu()
     {
         $menu = new Menu();
@@ -45,6 +65,16 @@ class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase {
         $this->repository->createMenu($menu);
 
         return $menu;
+    }
+
+    private function createSampleMenuItem($menuItemID)
+    {
+        $menuItem = new MenuItem();
+        $menuItem->setID($menuItemID);
+        $menuItem->setMenuID(1);
+        $menuItem->setLabel('Test menu item');
+
+        $this->menuItemRepository->createMenuItem($menuItem);
     }
 }
  

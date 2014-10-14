@@ -25,21 +25,19 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testDelete()
     {
-        $this->createSampleBlock(1);
-        $this->createSampleBlock(2);
-        $this->assertEquals(2, sizeof($this->repository->findAll()));
-
-        $this->interactor->run(1);
-
+        $blockID = $this->createSampleBlock();
         $this->assertEquals(1, sizeof($this->repository->findAll()));
+
+        $this->interactor->run($blockID);
+
+        $this->assertEquals(0, sizeof($this->repository->findAll()));
     }
 
-    private function createSampleBlock($blockID)
+    private function createSampleBlock()
     {
         $block = new Block();
-        $block->setID($blockID);
         $block->setName('Block');
-        $block->setAreaID(1);
-        $this->repository->createBlock($block);
+
+        return $this->repository->createBlock($block);
     }
 } 

@@ -16,14 +16,16 @@ class GetBlocksInteractor
     {
         $blocks = $this->repository->findByAreaID($areaID);
 
-        if ($structure) {
-            $blockStructures = [];
-            if (is_array($blocks) && sizeof($blocks) > 0)
-                foreach ($blocks as $block)
-                    $blockStructures[]= BlockStructure::toStructure($block);
+        return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
+    }
 
-            return $blockStructures;
-        } else
-            return $blocks;
+    private function getBlockStructures($blocks)
+    {
+        $blockStructures = [];
+        if (is_array($blocks) && sizeof($blocks) > 0)
+            foreach ($blocks as $block)
+                $blockStructures[]= BlockStructure::toStructure($block);
+
+        return $blockStructures;
     }
 }

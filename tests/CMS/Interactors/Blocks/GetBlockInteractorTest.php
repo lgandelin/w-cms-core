@@ -27,22 +27,22 @@ class GetBlockInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testGetBlock()
     {
-        $this->createSampleBlock();
+        $blockID = $this->createSampleBlock();
 
-        $this->assertInstanceOf('\CMS\Entities\Block', $this->interactor->getBlockByID(1));
+        $this->assertInstanceOf('\CMS\Entities\Block', $this->interactor->getBlockByID($blockID));
     }
 
     public function testGetBlockAsStructure()
     {
-        $this->createSampleBlock();
+        $blockID = $this->createSampleBlock();
 
-        $this->assertInstanceOf('\CMS\Structures\BlockStructure', $this->interactor->getBlockByID(1, true));
+        $this->assertInstanceOf('\CMS\Structures\BlockStructure', $this->interactor->getBlockByID($blockID, true));
     }
 
     private function createSampleBlock()
     {
         $block = new Block();
-        $block->setID(1);
-        $this->repository->createBlock($block);
+
+        return $this->repository->createBlock($block);
     }
 }

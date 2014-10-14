@@ -26,22 +26,22 @@ class GetAreaInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testGetArea()
     {
-        $this->createSampleArea();
+        $areaID = $this->createSampleArea();
 
-        $this->assertInstanceOf('\CMS\Entities\Area', $this->interactor->getAreaByID(1));
+        $this->assertInstanceOf('\CMS\Entities\Area', $this->interactor->getAreaByID($areaID));
     }
 
     public function testGetAreaAsStructure()
     {
-        $this->createSampleArea();
+        $areaID = $this->createSampleArea();
 
-        $this->assertInstanceOf('\CMS\Structures\AreaStructure', $this->interactor->getAreaByID(1, true));
+        $this->assertInstanceOf('\CMS\Structures\AreaStructure', $this->interactor->getAreaByID($areaID, true));
     }
 
     private function createSampleArea()
     {
         $area = new Area();
-        $area->setID(1);
-        $this->repository->createArea($area);
+
+        return $this->repository->createArea($area);
     }
 }

@@ -4,35 +4,25 @@ namespace CMS\Interactors\Pages;
 
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Interactors\Blocks\DeleteBlockInteractor;
-use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\PageRepositoryInterface;
 
 class DeletePageInteractor extends GetPageInteractor
 {
-    public function __construct(PageRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, DeleteAreaInteractor $deleteAreaInteractor, DeleteBlockInteractor $deleteBlockInteractor)
+    public function __construct(PageRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, DeleteAreaInteractor $deleteAreaInteractor)
     {
         parent::__construct($repository);
 
         $this->getAreasInteractor = $getAreasInteractor;
-        $this->getBlocksInteractor = $getBlocksInteractor;
         $this->deleteAreaInteractor = $deleteAreaInteractor;
-        $this->deleteBlockInteractor = $deleteBlockInteractor;
     }
 
     public function run($pageID)
     {
         if ($this->getPageByID($pageID)) {
-            $areas = $this->getAreasInteractor->getAll($pageID, true);
+            $areas = $this->getAreasInteractor->getAll($pageID);
 
-            foreach ($areas as $area) {
-                $blocks = $this->getBlocksInteractor->getAll($area->ID, true);
-
-                foreach ($blocks as $block)
-                    $this->deleteBlockInteractor->run($block->ID);
-
-                $this->deleteAreaInteractor->run($area->ID);
-            }
+            foreach ($areas as $area)
+                $this->deleteAreaInteractor->run($area->getID());
 
             $this->repository->deletePage($pageID);
         }

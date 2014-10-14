@@ -16,15 +16,16 @@ class GetAreasInteractor
     {
         $areas = $this->repository->findByPageID($pageID);
 
-        if ($structure) {
-            $areaStructures = [];
-            if (is_array($areas) && sizeof($areas) > 0)
-                foreach ($areas as $area)
-                    $areaStructures[]= AreaStructure::toStructure($area);
+        return ($structure) ? $this->getAreaStructures($areas) : $areas;
+    }
 
-            return $areaStructures;
-        } else
-            return $areas;
+    private function getAreaStructures($areas)
+    {
+        $areaStructures = [];
+        if (is_array($areas) && sizeof($areas) > 0)
+            foreach ($areas as $area)
+                $areaStructures[] = AreaStructure::toStructure($area);
 
+        return $areaStructures;
     }
 }

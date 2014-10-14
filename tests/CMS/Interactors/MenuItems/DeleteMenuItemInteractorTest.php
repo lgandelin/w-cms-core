@@ -1,6 +1,5 @@
 <?php
 
-use CMS\Converters\MenuConverter;
 use CMS\Entities\Menu;
 use CMS\Entities\MenuItem;
 use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
@@ -37,7 +36,6 @@ class DeleteMenuItemInteractorTest extends PHPUnit_Framework_TestCase {
         $this->interactor->run(1);
 
         $this->assertEquals(0, count($this->repository->findByMenuID(1)));
-
     }
 
     private function createSampleMenu()
