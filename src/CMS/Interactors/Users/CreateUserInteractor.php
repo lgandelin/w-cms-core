@@ -19,12 +19,12 @@ class CreateUserInteractor
     {
         $user = $this->createUserFromStructure($userStructure);
 
-        if ($user->valid()) {
-            if ($this->anotherUserExistsWithSameLogin($user->getLogin()))
-                throw new \Exception('There is already a user with the same login');
+        $user->valid();
 
-            return $this->repository->createUser($user);
-        }
+        if ($this->anotherUserExistsWithSameLogin($user->getLogin()))
+            throw new \Exception('There is already a user with the same login');
+
+        return $this->repository->createUser($user);
     }
 
     private function anotherUserExistsWithSameLogin($userLogin)

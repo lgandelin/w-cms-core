@@ -1,20 +1,30 @@
 <?php
 
+use CMS\Entities\Area;
+use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Page;
+use CMS\Interactors\Areas\DeleteAreaInteractor;
+use CMS\Interactors\Areas\GetAreasInteractor;
+use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Pages\DeletePageInteractor;
+use CMS\Repositories\InMemory\InMemoryAreaRepository;
+use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
-use CMS\Structures\PageStructure;
 
 class DeletePageInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $areaRepository;
+    private $blockRepository;
+    private $interactor;
+
     public function setUp()
     {
-        $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new DeletePageInteractor($this->pageRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Pages\DeletePageInteractor', $this->interactor);
+        $this->repository = new InMemoryPageRepository();
+        $this->areaRepository = new InMemoryAreaRepository();
+        $this->blockRepository = new InMemoryBlockRepository();
+        $this->interactor = new DeletePageInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new DeleteAreaInteractor($this->areaRepository, new GetBlocksInteractor($this->blockRepository), new DeleteBlockInteractor($this->blockRepository)));
     }
 
     /**
@@ -22,35 +32,64 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testDeleteNonExistingPage()
     {
-        $pageStructure = new PageStructure([
-            'ID' => 1,
-            'name' => 'Home page',
-            'uri' => '/',
-            'identifier' => 'home'
-        ]);
-
-        $this->pageRepository->createPage($pageStructure);
-        $this->assertCount(1, $this->pageRepository->findAll());
-
         $this->interactor->run(2);
     }
 
     public function testDelete()
     {
-        $pageStructure = new PageStructure([
-            'ID' => 1,
-            'name' => 'Home page',
-            'uri' => '/',
-            'identifier' => 'home'
-        ]);
+        $pageID = $this->createSamplePage();
+        $this->assertCount(1, $this->repository->findAll());
 
-        $this->pageRepository->createPage($pageStructure);
+        $this->interactor->run($pageID);
+        $this->assertCount(0, $this->repository->findAll());
+    }
 
-        $this->assertCount(1, $this->pageRepository->findAll());
+    public function testDeleteAlongWithAreasAndBlocks()
+    {
+        $pageID = $this->createSamplePage();
+        $areaID = $this->createSampleArea($pageID);
+        $this->createSampleBlock($areaID);
+        $this->createSampleBlock($areaID);
+        $this->createSampleBlock($areaID);
 
-        $this->interactor->run(1);
+        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, $this->areaRepository->findAll($pageID));
+        $this->assertCount(3, $this->blockRepository->findAll($areaID));
 
-        $this->assertCount(0, $this->pageRepository->findAll());
+        $this->interactor->run($pageID);
+
+        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, $this->areaRepository->findAll());
+        $this->assertCount(0, $this->blockRepository->findAll());
+    }
+
+    private function createSamplePage()
+    {
+        $page = new Page();
+        $page->setName('Test page');
+        $page->setIdentifier('test-page');
+        $page->setURI('/test-page');
+
+        return $this->repository->createPage($page);
+    }
+
+    private function createSampleArea($pageID)
+    {
+        $area = new Area();
+        $area->setPageID($pageID);
+        $area->setName('Test area');
+
+        return $this->areaRepository->createArea($area);
+    }
+
+    private function createSampleBlock($areaID)
+    {
+        $block = new HTMLBlock();
+        $block->setName('Test block');
+        $block->setAreaID($areaID);
+        $block->setType('html');
+
+        return $this->blockRepository->createBlock($block);
     }
 }
  

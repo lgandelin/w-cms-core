@@ -7,16 +7,12 @@ use CMS\Structures\MenuStructure;
 class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase {
 
     private $repository;
+    private $interactor;
 
     public function setUp()
     {
         $this->repository = new InMemoryMenuRepository();
         $this->interactor = new CreateMenuInteractor($this->repository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Menus\CreateMenuInteractor', $this->interactor);
     }
 
     /**

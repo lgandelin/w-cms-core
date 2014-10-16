@@ -16,12 +16,12 @@ class UpdateUserInteractor extends GetUserInteractor
             if (isset($userStructure->first_name) && $userStructure->first_name !== null && $user->getFirstName() != $userStructure->first_name) $user->setFirstName($userStructure->first_name);
             if (isset($userStructure->email) && $userStructure->email !== null && $user->getEmail() != $userStructure->email) $user->setEmail($userStructure->email);
 
-            if ($user->valid()) {
-                if ($this->anotherUserExistsWithSameLogin($userID, $user->getLogin()))
-                    throw new \Exception('There is already a user with the same login');
+            $user->valid();
 
-                $this->repository->updateUser($user);
-            }
+            if ($this->anotherUserExistsWithSameLogin($userID, $user->getLogin()))
+                throw new \Exception('There is already a user with the same login');
+
+            $this->repository->updateUser($user);
         }
     }
 

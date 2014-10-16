@@ -1,20 +1,18 @@
 <?php
 
+use CMS\Entities\User;
 use CMS\Interactors\Users\DeleteUserInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
-use CMS\Structures\UserStructure;
 
 class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $interactor;
+
     public function setUp()
     {
-        $this->userRepository = new InMemoryUserRepository();
-        $this->interactor = new DeleteUserInteractor($this->userRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Users\DeleteUserInteractor', $this->interactor);
+        $this->repository = new InMemoryUserRepository();
+        $this->interactor = new DeleteUserInteractor($this->repository);
     }
 
     /**
@@ -22,32 +20,25 @@ class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testDeleteNonExistingUser()
     {
-        $userStructure = new UserStructure([
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
-
-        $this->interactor->run($userStructure);
+        $this->interactor->run(1);
     }
 
     public function testDeleteUser()
     {
-        $userStructure = new UserStructure([
-            'ID' => 1,
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
+        $this->createSampleUser();
 
-        $this->userRepository->createUser($userStructure);
-
-        $this->assertCount(1, $this->userRepository->findAll());
+        $this->assertCount(1, $this->repository->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, $this->userRepository->findAll());
+        $this->assertCount(0, $this->repository->findAll());
     }
 
-
+    private function createSampleUser()
+    {
+        $user = new User();
+        $user->setID(1);
+        $user->setLastName('User lastname');
+        $this->repository->createUser($user);
+    }
 }

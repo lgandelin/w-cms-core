@@ -19,8 +19,9 @@ class CreateMenuItemInteractor
     {
         $menuItem = $this->createFromMenuItemStructure($menuItemStructure);
 
-        if ($menuItem->valid())
-            return $this->repository->createMenuItem($menuItem);
+        $menuItem->valid();
+
+        return $this->repository->createMenuItem($menuItem);
     }
 
     private function createFromMenuItemStructure($menuItemStructure)

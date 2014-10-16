@@ -1,6 +1,7 @@
 <?php
 
 use CMS\Converters\MenuConverter;
+use CMS\Entities\Menu;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuStructure;
@@ -11,11 +12,6 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
     {
         $this->repository = new InMemoryMenuRepository();
         $this->interactor = new UpdateMenuInteractor($this->repository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Menus\UpdateMenuInteractor', $this->interactor);
     }
 
     /**
@@ -37,13 +33,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdateMenuWithInvalidIdentifier()
     {
-        $menuStructure = new MenuStructure([
-            'ID' => 1,
-            'name' => 'Menu',
-            'identifier' => 'main-menu'
-        ]);
-
-        $this->repository->createMenu($menuStructure);
+        $this->createSampleMenu(1);
 
         $menuStructureUpdated = new MenuStructure([
             'identifier' => ''
@@ -56,24 +46,11 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdateMenuWithAlreadyExistingMenuWithSameIdentifier()
     {
-        $menuStructure = new MenuStructure([
-            'ID' => 1,
-            'name' => 'Menu 1',
-            'identifier' => 'my-menu'
-        ]);
-
-        $this->repository->createMenu($menuStructure);
-
-        $menuStructure2 = new MenuStructure([
-            'ID' => 2,
-            'name' => 'Menu 2',
-            'identifier' => 'my-menu-2'
-        ]);
-
-        $this->repository->createMenu($menuStructure2);
+        $this->createSampleMenu(1);
+        $this->createSampleMenu(2);
 
         $menuStructure2Updated = new MenuStructure([
-            'identifier' => 'my-menu'
+            'identifier' => 'test-menu-1'
         ]);
 
         $this->interactor->run(2, $menuStructure2Updated);
@@ -81,13 +58,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdateMenu()
     {
-        $menuStructure = new MenuStructure([
-            'ID' => 1,
-            'name' => 'Main menu',
-            'identifier' => 'main-menu'
-        ]);
-
-        $this->repository->createMenu($menuStructure);
+        $this->createSampleMenu(1);
 
         $menuStructureUpdated = new MenuStructure([
             'name' => 'Main menu updated',
@@ -96,11 +67,22 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->interactor->run(1, $menuStructureUpdated);
 
-        $menuStructure = $this->repository->findByID(1);
-        $menu = MenuConverter::convertMenuStructureToMenu($menuStructure);
+        $menu = $this->repository->findByID(1);
 
         $this->assertEquals('Main menu updated', $menu->getName());
         $this->assertEquals('main-menu', $menu->getIdentifier());
+    }
+
+    private function createSampleMenu($menuID)
+    {
+        $menu = new Menu();
+        $menu->setID($menuID);
+        $menu->setName('Test menu ' . $menuID);
+        $menu->setIdentifier('test-menu-' . $menuID);
+
+        $this->repository->createMenu($menu);
+
+        return $menu;
     }
 }
  

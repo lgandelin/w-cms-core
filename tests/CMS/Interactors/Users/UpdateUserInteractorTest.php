@@ -1,21 +1,19 @@
 <?php
 
-use CMS\Converters\UserConverter;
+use CMS\Entities\User;
 use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Structures\UserStructure;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 
 class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
+    private $repository;
+    private $interactor;
+
     public function setUp()
     {
-        $this->userRepository = new InMemoryUserRepository();
-        $this->interactor = new UpdateUserInteractor($this->userRepository);
-    }
-
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Users\UpdateUserInteractor', $this->interactor);
+        $this->repository = new InMemoryUserRepository();
+        $this->interactor = new UpdateUserInteractor($this->repository);
     }
 
     /**
@@ -35,17 +33,8 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdateUser()
     {
-        $userStructure = new UserStructure([
-            'ID' => 1,
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John',
-            'email' => 'john.doe@gmail.com',
-        ]);
 
-        $this->userRepository->createUser($userStructure);
-
-        $userStructure = $this->userRepository->findByID(1);
+        $this->createSampleUser(1);
 
         $userStructureUpdated = new UserStructure([
             'first_name' => 'Jack'
@@ -53,8 +42,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->interactor->run(1, $userStructureUpdated);
 
-        $userStructure = $this->userRepository->findByID(1);
-        $user = UserConverter::convertUserStructureToUser($userStructure);
+        $user = $this->repository->findByID(1);
 
         $this->assertEquals('jdoe', $user->getLogin());
         $this->assertEquals('Doe', $user->getLastName());
@@ -67,14 +55,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
      */
     public function testUpdateUserWithEmptyLogin()
     {
-        $userStructure = new UserStructure([
-            'ID' => 1,
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
-
-        $this->userRepository->createUser($userStructure);
+        $this->createSampleUser(1);
 
         $userStructureUpdated = new UserStructure([
             'login' => ''
@@ -83,35 +64,36 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
         $this->interactor->run(1, $userStructureUpdated);
     }
 
-
     /**
      * @expectedException Exception
      */
     public function testUpdateUserWithAnotherUserExistingWithSameLogin()
     {
-        $userStructure = new UserStructure([
-            'ID' => 1,
-            'login' => 'pmartin',
-            'last_name' => 'Doe',
-            'first_name' => 'John'
-        ]);
+        $this->createSampleUser(1);
 
-        $this->userRepository->createUser($userStructure);
-
-        $userStructure = new UserStructure([
-            'ID' => 2,
-            'login' => 'jdoe',
-            'last_name' => 'Doe',
-            'first_name' => 'Jane'
-        ]);
-
-        $this->userRepository->createUser($userStructure);
+        $user = new User();
+        $user->setID(2);
+        $user->setLogin('jane.doe');
+        $this->repository->createUser($user);
 
         $userStructureUpdated = new UserStructure([
             'login' => 'jdoe'
         ]);
 
-        $this->interactor->run(1, $userStructureUpdated);
+        $this->interactor->run(2, $userStructureUpdated);
+    }
+
+    private function createSampleUser($userID)
+    {
+        $user = new User();
+        $user->setID($userID);
+        $user->setFirstName('John');
+        $user->setLastName('Doe');
+        $user->setLogin('jdoe');
+        $user->setEmail('john.doe@gmail.com');
+        $this->repository->createUser($user);
+
+        return $user;
     }
 }
  

@@ -19,12 +19,12 @@ class CreateMenuInteractor
     {
         $menu = $this->createMenuFromStructure($menuStructure);
 
-        if ($menu->valid()) {
-            if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier()))
-                throw new \Exception('There is already a menu with the same identifier');
+        $menu->valid();
 
-            return $this->repository->createMenu($menu);
-        }
+        if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier()))
+            throw new \Exception('There is already a menu with the same identifier');
+
+        return $this->repository->createMenu($menu);
     }
 
     private function anotherExistingMenuWithSameIdentifier($identifier)

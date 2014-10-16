@@ -2,9 +2,8 @@
 
 namespace CMS\Repositories\InMemory;
 
+use CMS\Entities\Menu;
 use CMS\Repositories\MenuRepositoryInterface;
-use CMS\Structures\MenuItemStructure;
-use CMS\Structures\MenuStructure;
 
 class InMemoryMenuRepository implements MenuRepositoryInterface {
 
@@ -18,7 +17,7 @@ class InMemoryMenuRepository implements MenuRepositoryInterface {
     public function findByID($menuID)
     {
         foreach ($this->menus as $menu) {
-            if ($menu->ID == $menuID)
+            if ($menu->getID() == $menuID)
                 return $menu;
         }
 
@@ -28,7 +27,7 @@ class InMemoryMenuRepository implements MenuRepositoryInterface {
     public function findByIdentifier($menuIdentifier)
     {
         foreach ($this->menus as $menu) {
-            if ($menu->identifier == $menuIdentifier)
+            if ($menu->getIdentifier() == $menuIdentifier)
                 return $menu;
         }
 
@@ -40,17 +39,17 @@ class InMemoryMenuRepository implements MenuRepositoryInterface {
         return $this->menus;
     }
 
-    public function createMenu(MenuStructure $menuStructure)
+    public function createMenu(Menu $menu)
     {
-        $this->menus[]= $menuStructure;
+        $this->menus[]= $menu;
     }
 
-    public function updateMenu($menuID, MenuStructure $menuStructure)
+    public function updateMenu(Menu $menu)
     {
-        foreach ($this->menus as $i => $menu) {
-            if ($menu->ID == $menuID) {
-                $menu->name = $menuStructure->name;
-                $menu->identifier = $menuStructure->identifier;
+        foreach ($this->menus as $menuModel) {
+            if ($menuModel->getID() == $menu->getID()) {
+                $menuModel->setName($menu->getName());
+                $menuModel->setIdentifier($menu->getIdentifier());
             }
         }
     }
@@ -58,59 +57,9 @@ class InMemoryMenuRepository implements MenuRepositoryInterface {
     public function deleteMenu($menuID)
     {
         foreach ($this->menus as $i => $menu) {
-            if ($menu->ID == $menuID) {
+            if ($menu->getID() == $menuID) {
                 unset($this->menus[$i]);
             }
         }
     }
-
-    public function findItemByID($menuID, $menuItemID)
-    {
-        if ($menu = $this->findByID($menuID)) {
-            if (is_array($menu->items) && sizeof($menu->items) > 0) {
-                foreach ($menu->items as $menuItem) {
-                    if ($menuItem->ID == $menuItemID)
-                        return $menuItem;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public function addItem($menuID, MenuItemStructure $menuItemStructure)
-    {
-        foreach ($this->menus as $menu) {
-            if ($menu->ID == $menuID) {
-                $menu->items[$menuItemStructure->ID]= $menuItemStructure;
-            }
-        }
-    }
-
-    public function updateItem($menuID, $menuItemID, MenuItemStructure $menuItemStructure)
-    {
-        foreach ($this->menus as $menu) {
-            if ($menu->ID == $menuID) {
-                if ($this->findItemByID($menuID, $menuItemID)) {
-                    $menuItemStructureUpdated = $menu->items[$menuItemID];
-
-                    if ($menuItemStructure->label != null) $menuItemStructureUpdated->label = $menuItemStructure->label;
-                    if ($menuItemStructure->order != null) $menuItemStructureUpdated->order = $menuItemStructure->order;
-
-                    $menu->items[$menuItemID] = $menuItemStructureUpdated;
-                }
-            }
-        }
-    }
-
-    public function deleteItem($menuID, $menuItemID)
-    {
-        foreach ($this->menus as $i => $menu) {
-            if ($menu->ID == $menuID) {
-                unset($this->menus[$i]->items[$menuItemID]);
-            }
-        }
-    }
-
-
 }

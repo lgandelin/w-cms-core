@@ -2,33 +2,35 @@
 
 namespace CMS\Interactors\Areas;
 
+use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\AreaRepositoryInterface;
-use CMS\Repositories\BlockRepositoryInterface;
 
 class DeleteAreaInteractor extends GetAreaInteractor
 {
-    private $blockRepository;
+    private $getBlocksInteractor;
+    private $deleteBlockInteractor;
 
-    public function __construct(AreaRepositoryInterface $repository, BlockRepositoryInterface $blockRepository)
+    public function __construct(AreaRepositoryInterface $repository, GetBlocksInteractor $getBlocksInteractor, DeleteBlockInteractor $deleteBlockInteractor)
     {
         $this->repository = $repository;
-        $this->blockRepository = $blockRepository;
+        $this->getBlocksInteractor = $getBlocksInteractor;
+        $this->deleteBlockInteractor = $deleteBlockInteractor;
     }
 
     public function run($areaID)
     {
         if ($this->getAreaByID($areaID)) {
-
-            if ($this->areaHasBlocks($areaID))
-                throw new \Exception('The area still has blocks inside');
-
+            $this->deleteBlocks($areaID);
             $this->repository->deleteArea($areaID);
         }
-
     }
 
-    private function areaHasBlocks($areaID)
+    private function deleteBlocks($areaID)
     {
-        return sizeof($this->blockRepository->findByAreaID($areaID));
+        $blocks = $this->getBlocksInteractor->getAll($areaID);
+
+        foreach ($blocks as $block)
+            $this->deleteBlockInteractor->run($block->getID());
     }
-} 
+}

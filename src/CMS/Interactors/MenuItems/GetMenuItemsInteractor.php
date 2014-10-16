@@ -18,14 +18,16 @@ class GetMenuItemsInteractor
     {
         $menuItems = $this->repository->findByMenuID($menuID);
 
-        if ($structure) {
-            $menuItemStructures = [];
-            if (is_array($menuItems) && sizeof($menuItems) > 0)
-                foreach ($menuItems as $menuItem)
-                    $menuItemStructures[]= MenuItemStructure::toStructure($menuItem);
+        return ($structure) ? $this->getMenuItemStructures($menuItems) : $menuItems;
+    }
 
-            return $menuItemStructures;
-        } else
-            return $menuItems;
+    private function getMenuItemStructures($menuItems)
+    {
+        $menuItemStructures = [];
+        if (is_array($menuItems) && sizeof($menuItems) > 0)
+            foreach ($menuItems as $menuItem)
+                $menuItemStructures[] = MenuItemStructure::toStructure($menuItem);
+
+        return $menuItemStructures;
     }
 } 

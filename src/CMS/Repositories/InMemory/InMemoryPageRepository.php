@@ -2,8 +2,8 @@
 
 namespace CMS\Repositories\InMemory;
 
+use CMS\Entities\Page;
 use CMS\Repositories\PageRepositoryInterface;
-use CMS\Structures\PageStructure;
 
 class InMemoryPageRepository implements PageRepositoryInterface {
 
@@ -17,7 +17,7 @@ class InMemoryPageRepository implements PageRepositoryInterface {
     public function findByID($pageID)
     {
         foreach ($this->pages as $page) {
-            if ($page->ID == $pageID)
+            if ($page->getID() == $pageID)
                 return $page;
         }
 
@@ -27,7 +27,7 @@ class InMemoryPageRepository implements PageRepositoryInterface {
     public function findByUri($pageUri)
     {
         foreach ($this->pages as $page) {
-            if ($page->uri == $pageUri)
+            if ($page->getURI() == $pageUri)
                 return $page;
         }
 
@@ -37,7 +37,7 @@ class InMemoryPageRepository implements PageRepositoryInterface {
     public function findByIdentifier($pageIdentifier)
     {
         foreach ($this->pages as $page) {
-            if ($page->identifier == $pageIdentifier)
+            if ($page->getIdentifier() == $pageIdentifier)
                 return $page;
         }
 
@@ -49,33 +49,29 @@ class InMemoryPageRepository implements PageRepositoryInterface {
         return $this->pages;
     }
 
-    public function createPage(PageStructure $pageStructure)
+    public function createPage(Page $page)
     {
-        $this->pages[]= $pageStructure;
+        $this->pages[]= $page;
     }
 
-    public function updatePage($pageID, PageStructure $pageStructure)
+    public function updatePage(Page $page)
     {
-        foreach ($this->pages as $i => $page) {
-            if ($page->ID == $pageID) {
-                $page->name = $pageStructure->name;
-                $page->uri = $pageStructure->uri;
-                $page->identifier = $pageStructure->identifier;
-                $page->text = $pageStructure->text;
-                $page->website = $pageStructure->website;
-                $page->meta_title = $pageStructure->meta_title;
-                $page->meta_description = $pageStructure->meta_description;
-                $page->meta_keywords = $pageStructure->meta_keywords;
+        foreach ($this->pages as $pageModel) {
+            if ($pageModel->getID() == $page->getID()) {
+                $pageModel->setName($page->getName());
+                $pageModel->setURI($page->getURI());
+                $pageModel->setIdentifier($page->getIdentifier());
+                $pageModel->setMetaTitle($page->getMetaTitle());
+                $pageModel->setMetaDescription($page->getMetaDescription());
+                $pageModel->setMetaKeywords($page->getMetaKeywords());
             }
         }
     }
 
     public function deletePage($pageID)
     {
-        foreach ($this->pages as $i => $page) {
-            if ($page->ID == $pageID) {
+        foreach ($this->pages as $i => $page)
+            if ($page->getID() == $pageID)
                 unset($this->pages[$i]);
-            }
-        }
     }
 }

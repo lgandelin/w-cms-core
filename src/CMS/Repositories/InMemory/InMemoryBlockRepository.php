@@ -3,9 +3,7 @@
 namespace CMS\Repositories\InMemory;
 
 use CMS\Entities\Block;
-use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Repositories\BlockRepositoryInterface;
-use CMS\Structures\BlockStructure;
 
 class InMemoryBlockRepository implements BlockRepositoryInterface {
 
@@ -36,40 +34,38 @@ class InMemoryBlockRepository implements BlockRepositoryInterface {
         foreach ($this->blocks as $block)
             if ($block->getAreaID() == $areaID)
                 $blocks[]= $block;
+
         return $blocks;
     }
 
-    public function createBlock(BlockStructure $blockStructure)
+    public function createBlock(Block $block)
     {
-        if ($blockStructure->type == 'html')
-            $block = new HTMLBlock();
-        else
-            $block = new Block();
-
-        $block->setID($blockStructure->ID);
-        $block->setName($blockStructure->name);
-        $block->setWidth($blockStructure->width);
-        $block->setHeight($blockStructure->height);
-        $block->setClass($blockStructure->class);
-        $block->setAreaID($blockStructure->area_id);
-        $block->setType($blockStructure->type);
-
-        if ($blockStructure->type == 'html')
-            $block->setHTML($blockStructure->html);
-
+        $blockID = uniqid();
+        $block->setID($blockID);
         $this->blocks[]= $block;
+
+        return $blockID;
     }
 
-    public function updateBlock($blockID, BlockStructure $blockStructure)
+    public function updateBlock(Block $block)
     {
-        foreach ($this->blocks as $block) {
-            if ($block->getID() == $blockID) {
-                $block->setName($blockStructure->name);
-                $block->setWidth($blockStructure->width);
-                $block->setHeight($blockStructure->height);
-                $block->setClass($blockStructure->class);
+        foreach ($this->blocks as $blockModel) {
+            if ($blockModel->getID() == $block->getID()) {
+                $blockModel->setName($block->getName());
+                $blockModel->setWidth($block->getWidth());
+                $blockModel->setHeight($block->getHeight());
+                $blockModel->setClass($block->getClass());
+                $blockModel->setOrder($block->getOrder());
+                $blockModel->setDisplay($block->getDisplay());
             }
         }
+    }
+
+    public function updateBlockType(Block $block)
+    {
+        foreach ($this->blocks as $blockModel)
+            if ($blockModel->getID() == $block->getID())
+                $blockModel->setType($block->getType());
     }
 
     public function deleteBlock($blockID)

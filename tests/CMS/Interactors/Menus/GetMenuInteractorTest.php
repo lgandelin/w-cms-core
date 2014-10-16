@@ -1,10 +1,14 @@
 <?php
 
+use CMS\Entities\Menu;
 use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuStructure;
 
 class GetMenuInteractorTest extends PHPUnit_Framework_TestCase {
+
+    private $repository;
+    private $interactor;
 
     public function setUp()
     {
@@ -12,30 +16,31 @@ class GetMenuInteractorTest extends PHPUnit_Framework_TestCase {
         $this->interactor = new GetMenuInteractor($this->repository);
     }
 
-    public function testConstruct()
-    {
-        $this->assertInstanceOf('\CMS\Interactors\Menus\GetMenuInteractor', $this->interactor);
-    }
-
     /**
      * @expectedException Exception
      */
     public function testGetNonExistingMenu()
     {
-        $this->interactor->getByID(1);
+        $this->interactor->getMenuByID(1);
     }
 
     public function testGetMenu()
     {
-        $menuStructure = new MenuStructure([
-            'ID' => 1,
-            'name' => 'Menu',
-            'identifier' => 'menu'
-        ]);
+        $menu = $this->createSampleMenu();
 
-        $this->repository->createMenu($menuStructure);
+        $this->assertEquals($menu, $this->interactor->getMenuByID(1));
+    }
 
-        $this->assertEquals($menuStructure, $this->interactor->getByID(1));
+    private function createSampleMenu()
+    {
+        $menu = new Menu();
+        $menu->setID(1);
+        $menu->setName('Test menu');
+        $menu->setIdentifier('test-menu');
+
+        $this->repository->createMenu($menu);
+
+        return $menu;
     }
 }
  

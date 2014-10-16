@@ -17,8 +17,9 @@ class CreateAreaInteractor
     {
         $area = $this->createAreaFromStructure($areaStructure);
 
-        if ($area->valid())
-            return $this->repository->createArea($area);
+        $area->valid();
+
+        return $this->repository->createArea($area);
     }
 
     private function createAreaFromStructure(AreaStructure $areaStructure)
