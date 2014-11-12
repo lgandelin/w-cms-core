@@ -32,6 +32,7 @@ class CreateArticleInteractor
         $article->setSummary($articleStructure->summary);
         $article->setText($articleStructure->text);
         $article->setAuthorID($articleStructure->author_id);
+        $article->setPublicationDate($articleStructure->publication_date);
 
         return $article;
     }

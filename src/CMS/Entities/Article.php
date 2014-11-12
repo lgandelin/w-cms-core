@@ -9,6 +9,7 @@ class Article
     private $summary;
     private $text;
     private $authorID;
+    private $publicationDate;
 
     public function setID($ID)
     {
@@ -66,5 +67,15 @@ class Article
             throw new \InvalidArgumentException('You must provide a title for a content');
 
         return true;
+    }
+
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate($publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
     }
 }

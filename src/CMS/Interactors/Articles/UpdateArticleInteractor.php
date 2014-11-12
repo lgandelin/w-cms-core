@@ -14,6 +14,7 @@ class UpdateArticleInteractor extends GetArticleInteractor
             if (isset($articleStructure->summary) && $articleStructure->summary !== null && $article->getSummary() != $articleStructure->summary) $article->setSummary($articleStructure->summary);
             if (isset($articleStructure->text) && $articleStructure->text !== null && $article->getText() != $articleStructure->text) $article->setText($articleStructure->text);
             if (isset($articleStructure->author_id) && $articleStructure->author_id !== null && $article->getAuthorID() != $articleStructure->author_id) $article->setAuthorID($articleStructure->author_id);
+            if (isset($articleStructure->publication_date) && $articleStructure->publication_date !== null && $article->getPublicationDate() != $articleStructure->publication_date) $article->setPublicationDate($articleStructure->publication_date);
 
             $article->valid();
 
