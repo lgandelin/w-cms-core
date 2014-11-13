@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Blocks;
 
+use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
@@ -51,6 +52,10 @@ class UpdateBlockInteractor extends GetBlockInteractor
 
             if ($blockStructure instanceof ViewFileBlockStructure && $block->getType() == 'view_file' && $blockStructure->view_file !== null && $blockStructure->view_file != $block->getViewFile()) {
                 $block->setViewFile($blockStructure->view_file);
+            }
+
+            if ($blockStructure instanceof ArticleBlockStructure && $block->getType() == 'article' && $blockStructure->article_id !== null && $blockStructure->article_id != $block->getArticleID()) {
+                $block->setArticleID($blockStructure->article_id);
             }
         }
 

@@ -63,8 +63,9 @@ class Article
 
     public function valid()
     {
-        if (!$this->getTitle())
-            throw new \InvalidArgumentException('You must provide a title for a content');
+        if (!$this->getTitle()) {
+            throw new \InvalidArgumentException('You must provide a title for an article');
+        }
 
         return true;
     }
