@@ -5,8 +5,8 @@ namespace CMS\Repositories\InMemory;
 use CMS\Entities\ArticleCategory;
 use CMS\Repositories\ArticleCategoryRepositoryInterface;
 
-class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInterface {
-
+class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInterface
+{
     private $articleCategories;
 
     public function __construct()
@@ -17,8 +17,9 @@ class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInte
     public function findByID($articleCategoryID)
     {
         foreach ($this->articleCategories as $articleCategory) {
-            if ($articleCategory->getID() == $articleCategoryID)
+            if ($articleCategory->getID() == $articleCategoryID) {
                 return $articleCategory;
+            }
         }
 
         return false;
@@ -46,8 +47,10 @@ class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInte
 
     public function deleteArticleCategory($articleCategoryID)
     {
-        foreach ($this->articleCategories as $i => $articleCategory)
-            if ($articleCategory->getID() == $articleCategoryID)
+        foreach ($this->articleCategories as $i => $articleCategory) {
+            if ($articleCategory->getID() == $articleCategoryID) {
                 unset($this->articleCategories[$i]);
+            }
+        }
     }
 }

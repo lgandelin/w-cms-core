@@ -5,8 +5,8 @@ namespace CMS\Repositories\InMemory;
 use CMS\Entities\Article;
 use CMS\Repositories\ArticleRepositoryInterface;
 
-class InMemoryArticleRepository implements ArticleRepositoryInterface {
-
+class InMemoryArticleRepository implements ArticleRepositoryInterface
+{
     private $articles;
 
     public function __construct()
@@ -17,8 +17,9 @@ class InMemoryArticleRepository implements ArticleRepositoryInterface {
     public function findByID($articleID)
     {
         foreach ($this->articles as $article) {
-            if ($article->getID() == $articleID)
+            if ($article->getID() == $articleID) {
                 return $article;
+            }
         }
 
         return false;
@@ -27,8 +28,9 @@ class InMemoryArticleRepository implements ArticleRepositoryInterface {
     public function findByTitle($articleTitle)
     {
         foreach ($this->articles as $article) {
-            if ($article->getID() == $articleTitle)
+            if ($article->getID() == $articleTitle) {
                 return $article;
+            }
         }
 
         return false;
@@ -58,8 +60,10 @@ class InMemoryArticleRepository implements ArticleRepositoryInterface {
 
     public function deleteArticle($articleID)
     {
-        foreach ($this->articles as $i => $article)
-            if ($article->getID() == $articleID)
+        foreach ($this->articles as $i => $article) {
+            if ($article->getID() == $articleID) {
                 unset($this->articles[$i]);
+            }
+        }
     }
 }

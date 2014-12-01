@@ -4,8 +4,8 @@ use CMS\Interactors\Articles\CreateArticleInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleRepository;
 use CMS\Structures\ArticleStructure;
 
-class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase {
-
+class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->repository = new InMemoryArticleRepository();

@@ -4,8 +4,8 @@ use CMS\Entities\ArticleCategory;
 use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleCategoryRepository;
 
-class GetArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 

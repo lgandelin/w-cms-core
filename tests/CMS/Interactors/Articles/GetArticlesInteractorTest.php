@@ -4,8 +4,8 @@ use CMS\Entities\Article;
 use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleRepository;
 
-class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -49,6 +49,4 @@ class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase {
         $article->setTitle('Sample article');
         $this->repository->createArticle($article);
     }
-
 }
- 

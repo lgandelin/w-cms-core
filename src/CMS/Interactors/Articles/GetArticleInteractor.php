@@ -16,9 +16,10 @@ class GetArticleInteractor
 
     public function getArticleByID($articleID, $structure = false)
     {
-        if (!$article = $this->repository->findByID($articleID))
+        if (!$article = $this->repository->findByID($articleID)) {
             throw new \Exception('The article was not found');
+        }
 
         return  ($structure) ? ArticleStructure::toStructure($article) : $article;
     }
-} 
+}

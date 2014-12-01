@@ -4,8 +4,8 @@ use CMS\Entities\Article;
 use CMS\Interactors\Articles\GetArticleInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleRepository;
 
-class GetArticleInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetArticleInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -40,4 +40,3 @@ class GetArticleInteractorTest extends PHPUnit_Framework_TestCase {
         return $article;
     }
 }
- 

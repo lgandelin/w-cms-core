@@ -4,8 +4,8 @@ use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleCategoryRepository;
 use CMS\Structures\ArticleCategoryStructure;
 
-class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase {
-
+class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->repository = new InMemoryArticleCategoryRepository();

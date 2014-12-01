@@ -4,8 +4,8 @@ use CMS\Entities\ArticleCategory;
 use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleCategoryRepository;
 
-class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -49,5 +49,4 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase {
         $articleCategory->setName('Sample category article');
         $this->repository->createArticleCategory($articleCategory);
     }
-
 }

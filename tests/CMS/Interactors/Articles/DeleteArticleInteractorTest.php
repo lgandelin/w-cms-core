@@ -4,8 +4,8 @@ use CMS\Entities\Article;
 use CMS\Interactors\Articles\DeleteArticleInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleRepository;
 
-class DeleteArticleInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DeleteArticleInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -42,4 +42,3 @@ class DeleteArticleInteractorTest extends PHPUnit_Framework_TestCase {
         $this->repository->createArticle($article);
     }
 }
- 

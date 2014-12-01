@@ -36,4 +36,4 @@ class CreateArticleInteractor
 
         return $article;
     }
-} 
+}

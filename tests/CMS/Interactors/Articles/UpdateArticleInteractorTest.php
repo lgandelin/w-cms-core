@@ -5,8 +5,8 @@ use CMS\Interactors\Articles\UpdateArticleInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleRepository;
 use CMS\Structures\ArticleStructure;
 
-class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -31,7 +31,6 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdateArticle()
     {
-
         $this->createSampleArticle(1);
 
         $articleStructureUpdated = new ArticleStructure([
@@ -69,4 +68,3 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase {
         return $article;
     }
 }
- 

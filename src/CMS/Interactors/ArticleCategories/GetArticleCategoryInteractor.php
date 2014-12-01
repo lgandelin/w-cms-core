@@ -16,8 +16,9 @@ class GetArticleCategoryInteractor
 
     public function getArticleCategoryByID($articleID, $structure = false)
     {
-        if (!$article = $this->repository->findByID($articleID))
+        if (!$article = $this->repository->findByID($articleID)) {
             throw new \Exception('The article was not found');
+        }
 
         return  ($structure) ? ArticleCategoryStructure::toStructure($article) : $article;
     }

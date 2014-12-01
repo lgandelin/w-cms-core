@@ -24,10 +24,12 @@ class GetArticlesInteractor
     private function getArticleStructures($articles)
     {
         $articleStructures = [];
-        if (is_array($articles) && sizeof($articles) > 0)
-            foreach ($articles as $article)
+        if (is_array($articles) && sizeof($articles) > 0) {
+            foreach ($articles as $article) {
                 $articleStructures[] = ArticleStructure::toStructure($article);
+            }
+        }
 
         return $articleStructures;
     }
-} 
+}

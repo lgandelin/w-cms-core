@@ -5,8 +5,8 @@ use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
 use CMS\Repositories\InMemory\InMemoryArticleCategoryRepository;
 use CMS\Structures\ArticleCategoryStructure;
 
-class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -31,7 +31,6 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdateArticleCategory()
     {
-
         $this->createSampleArticleCategory(1);
 
         $articleCategoryStructureUpdated = new ArticleCategoryStructure([
@@ -69,4 +68,3 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase {
         return $articleCategory;
     }
 }
- 
