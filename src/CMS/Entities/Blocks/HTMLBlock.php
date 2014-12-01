@@ -17,4 +17,4 @@ class HTMLBlock extends Block
     {
         return $this->html;
     }
-} 
+}

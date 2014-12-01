@@ -29,8 +29,9 @@ class BlockStructure extends DataStructure
         } elseif ($block->getType() == 'view_file') {
             $blockStructure = new ViewFileBlockStructure();
             $blockStructure->view_file = $block->getViewFile();
-        } else
+        } else {
             $blockStructure = new BlockStructure();
+        }
 
         $blockStructure->ID = $block->getID();
         $blockStructure->name = $block->getName();

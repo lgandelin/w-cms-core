@@ -5,8 +5,8 @@ namespace CMS\Repositories\InMemory;
 use CMS\Entities\Menu;
 use CMS\Repositories\MenuRepositoryInterface;
 
-class InMemoryMenuRepository implements MenuRepositoryInterface {
-
+class InMemoryMenuRepository implements MenuRepositoryInterface
+{
     private $menus;
 
     public function __construct()
@@ -17,8 +17,9 @@ class InMemoryMenuRepository implements MenuRepositoryInterface {
     public function findByID($menuID)
     {
         foreach ($this->menus as $menu) {
-            if ($menu->getID() == $menuID)
+            if ($menu->getID() == $menuID) {
                 return $menu;
+            }
         }
 
         return false;
@@ -27,8 +28,9 @@ class InMemoryMenuRepository implements MenuRepositoryInterface {
     public function findByIdentifier($menuIdentifier)
     {
         foreach ($this->menus as $menu) {
-            if ($menu->getIdentifier() == $menuIdentifier)
+            if ($menu->getIdentifier() == $menuIdentifier) {
                 return $menu;
+            }
         }
 
         return false;

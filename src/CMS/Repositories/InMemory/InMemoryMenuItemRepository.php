@@ -23,23 +23,26 @@ class InMemoryMenuItemRepository implements MenuItemRepositoryInterface
     {
         foreach ($this->menuItems as $menuItemModel) {
             if ($menuItemModel->getID() == $menuItem->getID()) {
-
             }
         }
     }
 
     public function deleteMenuItem($menuItemID)
     {
-        foreach ($this->menuItems as $i => $menuItem)
-            if ($menuItem->getID() == $menuItemID)
+        foreach ($this->menuItems as $i => $menuItem) {
+            if ($menuItem->getID() == $menuItemID) {
                 unset($this->menuItems[$i]);
+            }
+        }
     }
 
     public function findByID($menuItemID)
     {
-        foreach ($this->menuItems as $menuItem)
-            if ($menuItem->getID() == $menuItemID)
+        foreach ($this->menuItems as $menuItem) {
+            if ($menuItem->getID() == $menuItemID) {
                 return $menuItem;
+            }
+        }
 
         return false;
     }
@@ -48,9 +51,11 @@ class InMemoryMenuItemRepository implements MenuItemRepositoryInterface
     {
         $menuItems = [];
 
-        foreach ($this->menuItems as $menuItem)
-            if ($menuItem->getMenuID() == $menuID)
+        foreach ($this->menuItems as $menuItem) {
+            if ($menuItem->getMenuID() == $menuID) {
                 $menuItems[]= $menuItem;
+            }
+        }
 
         return $menuItems;
     }

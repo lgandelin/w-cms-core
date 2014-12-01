@@ -4,8 +4,8 @@ use CMS\Interactors\Menus\CreateMenuInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuStructure;
 
-class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase {
-
+class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -60,5 +60,4 @@ class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->assertCount(1, $this->repository->findAll());
     }
-    
 }

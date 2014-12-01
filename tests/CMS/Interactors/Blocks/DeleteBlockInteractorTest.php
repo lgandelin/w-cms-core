@@ -4,8 +4,8 @@ use CMS\Entities\Block;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 
-class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -40,4 +40,4 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase {
 
         return $this->repository->createBlock($block);
     }
-} 
+}

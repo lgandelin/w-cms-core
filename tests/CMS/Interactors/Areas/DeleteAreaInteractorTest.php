@@ -8,8 +8,8 @@ use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 
-class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $blockRepository;
     private $interactor;
@@ -39,4 +39,3 @@ class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase {
         return $this->repository->createArea($area);
     }
 }
- 

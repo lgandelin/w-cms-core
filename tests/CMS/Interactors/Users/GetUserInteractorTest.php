@@ -4,8 +4,8 @@ use CMS\Entities\User;
 use CMS\Interactors\Users\GetUserInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 
-class GetUserInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetUserInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -39,6 +39,4 @@ class GetUserInteractorTest extends PHPUnit_Framework_TestCase {
 
         return $user;
     }
-
 }
- 

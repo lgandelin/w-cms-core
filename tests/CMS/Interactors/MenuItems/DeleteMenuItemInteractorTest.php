@@ -6,8 +6,8 @@ use CMS\Interactors\MenuItems\DeleteMenuItemInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuItemRepository;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 
-class DeleteMenuItemInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DeleteMenuItemInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
 
     public function setUp()
@@ -59,6 +59,4 @@ class DeleteMenuItemInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->repository->createMenuItem($menuItem);
     }
-
 }
- 

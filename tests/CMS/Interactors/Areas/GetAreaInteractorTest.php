@@ -5,8 +5,8 @@ use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Structures\AreaStructure;
 
-class GetAreaInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetAreaInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 

@@ -29,4 +29,4 @@ class PageStructure extends DataStructure
 
         return $pageStructure;
     }
-} 
+}

@@ -6,8 +6,8 @@ use CMS\Repositories\InMemory\InMemoryMenuItemRepository;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuItemStructure;
 
-class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase {
-
+class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $menuRepository;
     private $interactor;
@@ -94,6 +94,4 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase {
 
         return $menu;
     }
-
 }
- 

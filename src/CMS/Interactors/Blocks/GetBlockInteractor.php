@@ -16,8 +16,9 @@ class GetBlockInteractor
 
     public function getBlockByID($blockID, $structure = false)
     {
-        if (!$block = $this->repository->findByID($blockID))
+        if (!$block = $this->repository->findByID($blockID)) {
             throw new \Exception('The block was not found');
+        }
 
         return ($structure) ? BlockStructure::toStructure($block) : $block;
     }

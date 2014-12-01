@@ -16,8 +16,9 @@ class GetUserInteractor
 
     public function getUserByID($userID, $structure = false)
     {
-        if (!$user = $this->repository->findByID($userID))
+        if (!$user = $this->repository->findByID($userID)) {
             throw new \Exception('The user was not found');
+        }
 
         return  ($structure) ? UserStructure::toStructure($user) : $user;
     }

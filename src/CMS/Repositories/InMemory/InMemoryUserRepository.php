@@ -6,8 +6,8 @@ use CMS\Entities\User;
 use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
 
-class InMemoryUserRepository implements UserRepositoryInterface {
-
+class InMemoryUserRepository implements UserRepositoryInterface
+{
     private $users;
 
     public function __construct()
@@ -18,8 +18,9 @@ class InMemoryUserRepository implements UserRepositoryInterface {
     public function findByID($userID)
     {
         foreach ($this->users as $user) {
-            if ($user->getID() == $userID)
+            if ($user->getID() == $userID) {
                 return $user;
+            }
         }
 
         return false;
@@ -28,8 +29,9 @@ class InMemoryUserRepository implements UserRepositoryInterface {
     public function findByLogin($userLogin)
     {
         foreach ($this->users as $user) {
-            if ($user->getLogin() == $userLogin)
+            if ($user->getLogin() == $userLogin) {
                 return $user;
+            }
         }
 
         return false;
@@ -49,8 +51,12 @@ class InMemoryUserRepository implements UserRepositoryInterface {
     {
         foreach ($this->users as $userModel) {
             if ($userModel->getID() == $user->getID()) {
-                if ($user->getLogin()) $userModel->setLogin($user->getLogin());
-                if ($user->getPassword()) $userModel->setPAssword($user->getPassword());
+                if ($user->getLogin()) {
+                    $userModel->setLogin($user->getLogin());
+                }
+                if ($user->getPassword()) {
+                    $userModel->setPAssword($user->getPassword());
+                }
                 $userModel->setLastName($user->getLastName());
                 $userModel->setFirstName($user->getFirstName());
                 $userModel->setEmail($user->getEmail());
@@ -60,8 +66,10 @@ class InMemoryUserRepository implements UserRepositoryInterface {
 
     public function deleteUser($userID)
     {
-        foreach ($this->users as $i => $user)
-            if ($user->getID() == $userID)
+        foreach ($this->users as $i => $user) {
+            if ($user->getID() == $userID) {
                 unset($this->users[$i]);
+            }
+        }
     }
 }

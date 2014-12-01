@@ -22,9 +22,11 @@ class GetBlocksInteractor
     private function getBlockStructures($blocks)
     {
         $blockStructures = [];
-        if (is_array($blocks) && sizeof($blocks) > 0)
-            foreach ($blocks as $block)
+        if (is_array($blocks) && sizeof($blocks) > 0) {
+            foreach ($blocks as $block) {
                 $blockStructures[]= BlockStructure::toStructure($block);
+            }
+        }
 
         return $blockStructures;
     }

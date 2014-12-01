@@ -15,4 +15,4 @@ interface MenuItemRepositoryInterface
     public function updateMenuItem(MenuItem $menuItem);
 
     public function deleteMenuItem($menuItemID);
-} 
+}

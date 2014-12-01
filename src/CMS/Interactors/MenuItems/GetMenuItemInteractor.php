@@ -16,9 +16,10 @@ class GetMenuItemInteractor
 
     public function getMenuItemByID($menuItemID, $structure = false)
     {
-        if (!$menu = $this->repository->findByID($menuItemID))
+        if (!$menu = $this->repository->findByID($menuItemID)) {
             throw new \Exception('The menu item was not found');
+        }
 
         return ($structure) ? MenuItemStructure::toStructure($menu) : $menu;
     }
-} 
+}

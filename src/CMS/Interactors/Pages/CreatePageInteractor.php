@@ -21,11 +21,13 @@ class CreatePageInteractor
 
         $page->valid();
 
-        if ($this->anotherExistingPageWithSameUri($page->getUri()))
+        if ($this->anotherExistingPageWithSameUri($page->getUri())) {
             throw new \Exception('There is already a page with the same URI');
+        }
 
-        if ($this->anotherExistingPageWithSameIdentifier($page->getIdentifier()))
+        if ($this->anotherExistingPageWithSameIdentifier($page->getIdentifier())) {
             throw new \Exception('There is already a page with the same identifier');
+        }
 
         return $this->repository->createPage($page);
     }

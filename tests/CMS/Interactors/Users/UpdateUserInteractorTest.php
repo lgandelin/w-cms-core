@@ -5,8 +5,8 @@ use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Structures\UserStructure;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 
-class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -33,7 +33,6 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
     public function testUpdateUser()
     {
-
         $this->createSampleUser(1);
 
         $userStructureUpdated = new UserStructure([
@@ -96,4 +95,3 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase {
         return $user;
     }
 }
- 

@@ -6,8 +6,8 @@ use CMS\Interactors\Pages\UpdatePageInteractor;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\PageStructure;
 
-class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -135,4 +135,3 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase {
         $this->repository->createPage($page);
     }
 }
- 

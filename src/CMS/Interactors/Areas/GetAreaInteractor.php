@@ -16,8 +16,9 @@ class GetAreaInteractor
 
     public function getAreaByID($areaID, $structure = false)
     {
-        if (!$area = $this->repository->findByID($areaID))
+        if (!$area = $this->repository->findByID($areaID)) {
             throw new \Exception('The area was not found');
+        }
 
         return ($structure) ? AreaStructure::toStructure($area) : $area;
     }

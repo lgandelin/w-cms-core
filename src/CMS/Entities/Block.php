@@ -106,7 +106,8 @@ class Block
 
     public function valid()
     {
-        if (!$this->getName())
+        if (!$this->getName()) {
             throw new \InvalidArgumentException('You must provide a name for a block');
+        }
     }
 }

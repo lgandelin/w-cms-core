@@ -21,8 +21,9 @@ class CreateUserInteractor
 
         $user->valid();
 
-        if ($this->anotherUserExistsWithSameLogin($user->getLogin()))
+        if ($this->anotherUserExistsWithSameLogin($user->getLogin())) {
             throw new \Exception('There is already a user with the same login');
+        }
 
         return $this->repository->createUser($user);
     }
@@ -36,11 +37,13 @@ class CreateUserInteractor
     {
         $user = new User();
         $user->setLogin($userStructure->login);
-        if ($userStructure->password != null && $userStructure->password != $user->getPassword()) $user->setPassword($userStructure->password);
+        if ($userStructure->password != null && $userStructure->password != $user->getPassword()) {
+            $user->setPassword($userStructure->password);
+        }
         $user->setLastName($userStructure->last_name);
         $user->setFirstName($userStructure->first_name);
         $user->setEmail($userStructure->email);
 
         return $user;
     }
-} 
+}

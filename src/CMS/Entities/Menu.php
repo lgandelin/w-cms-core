@@ -40,8 +40,9 @@ class Menu
 
     public function valid()
     {
-        if (!$this->getIdentifier())
+        if (!$this->getIdentifier()) {
             throw new \InvalidArgumentException('You must provide an identifier for a menu');
+        }
 
         return true;
     }

@@ -4,8 +4,8 @@ use CMS\Interactors\Users\CreateUserInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 use CMS\Structures\UserStructure;
 
-class CreateUserInteractorTest extends PHPUnit_Framework_TestCase {
-
+class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -61,5 +61,4 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->assertCount(1, $this->repository->findAll());
     }
-
 }

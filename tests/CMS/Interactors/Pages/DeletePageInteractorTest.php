@@ -12,8 +12,8 @@ use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 
-class DeletePageInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $areaRepository;
     private $blockRepository;
@@ -92,4 +92,3 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase {
         return $this->blockRepository->createBlock($block);
     }
 }
- 

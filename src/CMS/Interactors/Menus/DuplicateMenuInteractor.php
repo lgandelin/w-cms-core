@@ -25,8 +25,9 @@ class DuplicateMenuInteractor extends GetMenuInteractor
             $newMenuID = $this->duplicateMenu($menu);
 
             $menuItems = $this->getMenuItemsInteractor->getAll($menuID);
-            foreach ($menuItems as $menuItem)
+            foreach ($menuItems as $menuItem) {
                 $this->duplicateMenuItem($menuItem, $newMenuID);
+            }
         }
     }
 
@@ -48,4 +49,4 @@ class DuplicateMenuInteractor extends GetMenuInteractor
 
         $this->createMenuItemInteractor->run($menuItemStructure);
     }
-} 
+}

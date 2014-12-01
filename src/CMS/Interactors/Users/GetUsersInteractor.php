@@ -24,9 +24,11 @@ class GetUsersInteractor
     private function getUserStructures($users)
     {
         $userStructures = [];
-        if (is_array($users) && sizeof($users) > 0)
-            foreach ($users as $user)
+        if (is_array($users) && sizeof($users) > 0) {
+            foreach ($users as $user) {
                 $userStructures[] = UserStructure::toStructure($user);
+            }
+        }
 
         return $userStructures;
     }

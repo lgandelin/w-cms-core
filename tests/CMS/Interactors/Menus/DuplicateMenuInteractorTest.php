@@ -9,8 +9,8 @@ use CMS\Interactors\Menus\DuplicateMenuInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuItemRepository;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 
-class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $menuItemRepository;
     private $interactor;
@@ -83,6 +83,4 @@ class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase {
 
         $this->menuItemRepository->createMenuItem($menuItem);
     }
-
 }
- 

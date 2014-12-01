@@ -15,8 +15,8 @@ use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 
-class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $areaRepository;
     private $blockRepository;
@@ -94,4 +94,3 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase {
         $this->blockRepository->createBlock($block);
     }
 }
- 

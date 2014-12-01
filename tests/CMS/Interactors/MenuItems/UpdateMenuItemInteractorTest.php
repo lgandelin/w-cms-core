@@ -8,8 +8,8 @@ use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuItemStructure;
 use CMS\Structures\MenuStructure;
 
-class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
 
     public function setUp()
@@ -42,7 +42,7 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase {
             'label' => 'Test menu item updated',
         ]);
 
-        $this->interactor->run(1,$menuItemStructureUpdated);
+        $this->interactor->run(1, $menuItemStructureUpdated);
 
         $menuItem = $this->repository->findByID(1);
 

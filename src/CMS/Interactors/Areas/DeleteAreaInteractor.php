@@ -30,7 +30,8 @@ class DeleteAreaInteractor extends GetAreaInteractor
     {
         $blocks = $this->getBlocksInteractor->getAll($areaID);
 
-        foreach ($blocks as $block)
+        foreach ($blocks as $block) {
             $this->deleteBlockInteractor->run($block->getID());
+        }
     }
 }

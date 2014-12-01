@@ -6,8 +6,8 @@ use CMS\Interactors\Menus\UpdateMenuInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuStructure;
 
-class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->repository = new InMemoryMenuRepository();
@@ -85,4 +85,3 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase {
         return $menu;
     }
 }
- 
