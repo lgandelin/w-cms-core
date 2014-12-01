@@ -10,6 +10,7 @@ class ArticleStructure extends DataStructure
     public $title;
     public $summary;
     public $text;
+    public $category_id;
     public $author_id;
     public $publication_date;
 
@@ -20,6 +21,7 @@ class ArticleStructure extends DataStructure
         $articleStructure->title = $article->getTitle();
         $articleStructure->summary = $article->getSummary();
         $articleStructure->text = $article->getText();
+        $articleStructure->category_id = $article->getCategoryID();
         $articleStructure->author_id = $article->getAuthorID();
         $articleStructure->publication_date = $article->getPublicationDate();
 

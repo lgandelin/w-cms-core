@@ -8,6 +8,7 @@ class Article
     private $title;
     private $summary;
     private $text;
+    private $categoryID;
     private $authorID;
     private $publicationDate;
 
@@ -78,5 +79,15 @@ class Article
     public function setPublicationDate($publicationDate)
     {
         $this->publicationDate = $publicationDate;
+    }
+
+    public function getCategoryID()
+    {
+        return $this->categoryID;
+    }
+
+    public function setCategoryID($categoryID)
+    {
+        $this->categoryID = $categoryID;
     }
 }

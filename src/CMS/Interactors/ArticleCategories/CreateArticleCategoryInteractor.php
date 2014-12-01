@@ -17,20 +17,20 @@ class CreateArticleCategoryInteractor
 
     public function run(ArticleCategoryStructure $articleStructure)
     {
-        $article = $this->createArticleCategoryFromStructure($articleStructure);
+        $articleCategory = $this->createArticleCategoryFromStructure($articleStructure);
 
-        $article->valid();
+        $articleCategory->valid();
 
-        return $this->repository->createArticleCategory($article);
+        return $this->repository->createArticleCategory($articleCategory);
     }
 
     private function createArticleCategoryFromStructure(ArticleCategoryStructure $articleStructure)
     {
-        $article = new ArticleCategory();
-        $article->setID($articleStructure->ID);
-        $article->setName($articleStructure->name);
-        $article->setDescription($articleStructure->description);
+        $articleCategory = new ArticleCategory();
+        $articleCategory->setID($articleStructure->ID);
+        $articleCategory->setName($articleStructure->name);
+        $articleCategory->setDescription($articleStructure->description);
 
-        return $article;
+        return $articleCategory;
     }
 }
