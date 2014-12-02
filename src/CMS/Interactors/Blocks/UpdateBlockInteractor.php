@@ -54,7 +54,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
                 $block->setViewFile($blockStructure->view_file);
             }
 
-            if ($blockStructure instanceof ArticleBlockStructure && $block->getType() == 'article' && $blockStructure->article_id !== null && $blockStructure->article_id != $block->getArticleID()) {
+            if ($blockStructure instanceof ArticleBlockStructure && $block->getType() == 'article' && $blockStructure->article_id != $block->getArticleID()) {
                 $block->setArticleID($blockStructure->article_id);
             }
         }
