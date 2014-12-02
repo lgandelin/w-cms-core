@@ -21,8 +21,9 @@ class DeletePageInteractor extends GetPageInteractor
         if ($this->getPageByID($pageID)) {
             $areas = $this->getAreasInteractor->getAll($pageID);
 
-            foreach ($areas as $area)
+            foreach ($areas as $area) {
                 $this->deleteAreaInteractor->run($area->getID());
+            }
 
             $this->repository->deletePage($pageID);
         }

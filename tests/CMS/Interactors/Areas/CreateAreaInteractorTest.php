@@ -6,8 +6,8 @@ use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\AreaStructure;
 
-class AddAreaInteractorTest extends PHPUnit_Framework_TestCase {
-
+class AddAreaInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $pageRepository;
     private $interactor;
@@ -53,6 +53,4 @@ class AddAreaInteractorTest extends PHPUnit_Framework_TestCase {
         $page->setName('Test page');
         $this->pageRepository->createPage($page);
     }
-
 }
- 

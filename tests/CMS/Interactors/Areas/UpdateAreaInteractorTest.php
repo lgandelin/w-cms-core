@@ -5,8 +5,8 @@ use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Structures\AreaStructure;
 
-class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -43,6 +43,4 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase {
 
         return $this->repository->createArea($area);
     }
-
 }
- 

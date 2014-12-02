@@ -17,4 +17,4 @@ class ViewFileBlock extends Block
     {
         return $this->viewFile;
     }
-} 
+}

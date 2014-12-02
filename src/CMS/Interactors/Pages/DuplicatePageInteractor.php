@@ -40,8 +40,9 @@ class DuplicatePageInteractor extends GetPageInteractor
                 $newAreaID = $this->duplicateArea($area, $newPageID);
                 $blocks = $this->getBlocksInteractor->getAll($area->getID());
 
-                foreach ($blocks as $block)
+                foreach ($blocks as $block) {
                     $this->duplicateBlock($block, $newAreaID);
+                }
             }
         }
     }
@@ -74,18 +75,19 @@ class DuplicatePageInteractor extends GetPageInteractor
 
         $blockID = $this->createBlockInteractor->run($blockStructure);
 
-        if ($block->getType() == 'html')
+        if ($block->getType() == 'html') {
             $blockStructureContent = new HTMLBlockStructure([
                 'html' => $block->getHTML(),
             ]);
-        elseif ($block->getType() == 'menu')
+        } elseif ($block->getType() == 'menu') {
             $blockStructureContent = new MenuBlockStructure([
                 'menu_id' => $block->getMenuID(),
             ]);
-        elseif ($block->getType() == 'view_file')
+        } elseif ($block->getType() == 'view_file') {
             $blockStructureContent = new ViewFileBlockStructure([
                 'view_file' => $block->getViewFile(),
             ]);
+        }
 
         $this->updateBlockInteractor->run($blockID, $blockStructureContent);
     }

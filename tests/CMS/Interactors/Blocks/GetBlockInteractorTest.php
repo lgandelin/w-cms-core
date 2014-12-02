@@ -6,8 +6,8 @@ use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Structures\BlockStructure;
 
-class GetBlockInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 

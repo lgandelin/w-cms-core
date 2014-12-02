@@ -5,8 +5,8 @@ use CMS\Interactors\Menus\GetMenusInteractor;
 use CMS\Repositories\InMemory\InMemoryMenuRepository;
 use CMS\Structures\MenuStructure;
 
-class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $interactor;
     private $repository;
 
@@ -53,4 +53,3 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase {
         return $menu;
     }
 }
- 

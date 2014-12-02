@@ -95,13 +95,14 @@ class MenuItem
 
     public function valid()
     {
-        if (!is_int($this->getOrder()))
+        if (!is_int($this->getOrder())) {
             throw new \InvalidArgumentException('You must provide an integer for the menu item order');
+        }
 
-        if (!$this->getLabel())
+        if (!$this->getLabel()) {
             throw new \InvalidArgumentException('You must provide a label for the menu item');
+        }
 
         return true;
     }
-
 }

@@ -21,8 +21,9 @@ class CreateMenuInteractor
 
         $menu->valid();
 
-        if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier()))
+        if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier())) {
             throw new \Exception('There is already a menu with the same identifier');
+        }
 
         return $this->repository->createMenu($menu);
     }
@@ -40,4 +41,4 @@ class CreateMenuInteractor
 
         return $menu;
     }
-} 
+}

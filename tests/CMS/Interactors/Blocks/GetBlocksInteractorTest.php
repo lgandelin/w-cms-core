@@ -7,8 +7,8 @@ use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Structures\BlockStructure;
 
-class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $areaRepository;
     private $interactor;
@@ -60,4 +60,3 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase {
         $this->repository->createBlock($block);
     }
 }
- 

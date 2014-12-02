@@ -84,12 +84,14 @@ class Page
 
     public function valid()
     {
-        if (!$this->getUri())
+        if (!$this->getUri()) {
             throw new \InvalidArgumentException('You must provide a URI for a page');
+        }
 
-        if (!$this->getIdentifier())
+        if (!$this->getIdentifier()) {
             throw new \InvalidArgumentException('You must provide an identifier for a page');
+        }
 
         return true;
     }
-} 
+}

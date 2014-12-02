@@ -4,8 +4,8 @@ use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\PageStructure;
 
-class CreatePageInteractorTest extends PHPUnit_Framework_TestCase {
-
+class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
+{
     public function setUp()
     {
         $this->repository = new InMemoryPageRepository();

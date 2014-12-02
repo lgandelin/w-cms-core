@@ -4,8 +4,8 @@ use CMS\Entities\Page;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 
-class GetPageInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetPageInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -43,4 +43,3 @@ class GetPageInteractorTest extends PHPUnit_Framework_TestCase {
         $this->repository->createPage($page);
     }
 }
- 

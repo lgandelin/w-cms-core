@@ -2,6 +2,7 @@
 
 namespace CMS\Structures;
 
+use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
@@ -29,8 +30,12 @@ class BlockStructure extends DataStructure
         } elseif ($block->getType() == 'view_file') {
             $blockStructure = new ViewFileBlockStructure();
             $blockStructure->view_file = $block->getViewFile();
-        } else
+        } elseif ($block->getType() == 'article') {
+            $blockStructure = new ArticleBlockStructure();
+            $blockStructure->article_id = $block->getArticleID();
+        } else {
             $blockStructure = new BlockStructure();
+        }
 
         $blockStructure->ID = $block->getID();
         $blockStructure->name = $block->getName();

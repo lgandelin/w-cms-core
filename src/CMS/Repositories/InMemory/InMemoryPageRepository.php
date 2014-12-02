@@ -5,8 +5,8 @@ namespace CMS\Repositories\InMemory;
 use CMS\Entities\Page;
 use CMS\Repositories\PageRepositoryInterface;
 
-class InMemoryPageRepository implements PageRepositoryInterface {
-
+class InMemoryPageRepository implements PageRepositoryInterface
+{
     private $pages;
 
     public function __construct()
@@ -17,8 +17,9 @@ class InMemoryPageRepository implements PageRepositoryInterface {
     public function findByID($pageID)
     {
         foreach ($this->pages as $page) {
-            if ($page->getID() == $pageID)
+            if ($page->getID() == $pageID) {
                 return $page;
+            }
         }
 
         return false;
@@ -27,8 +28,9 @@ class InMemoryPageRepository implements PageRepositoryInterface {
     public function findByUri($pageUri)
     {
         foreach ($this->pages as $page) {
-            if ($page->getURI() == $pageUri)
+            if ($page->getURI() == $pageUri) {
                 return $page;
+            }
         }
 
         return false;
@@ -37,8 +39,9 @@ class InMemoryPageRepository implements PageRepositoryInterface {
     public function findByIdentifier($pageIdentifier)
     {
         foreach ($this->pages as $page) {
-            if ($page->getIdentifier() == $pageIdentifier)
+            if ($page->getIdentifier() == $pageIdentifier) {
                 return $page;
+            }
         }
 
         return false;
@@ -70,8 +73,10 @@ class InMemoryPageRepository implements PageRepositoryInterface {
 
     public function deletePage($pageID)
     {
-        foreach ($this->pages as $i => $page)
-            if ($page->getID() == $pageID)
+        foreach ($this->pages as $i => $page) {
+            if ($page->getID() == $pageID) {
                 unset($this->pages[$i]);
+            }
+        }
     }
 }

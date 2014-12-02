@@ -22,9 +22,11 @@ class GetAreasInteractor
     private function getAreaStructures($areas)
     {
         $areaStructures = [];
-        if (is_array($areas) && sizeof($areas) > 0)
-            foreach ($areas as $area)
+        if (is_array($areas) && sizeof($areas) > 0) {
+            foreach ($areas as $area) {
                 $areaStructures[] = AreaStructure::toStructure($area);
+            }
+        }
 
         return $areaStructures;
     }

@@ -7,4 +7,4 @@ use CMS\Structures\BlockStructure;
 class HTMLBlockStructure extends BlockStructure
 {
     public $html;
-} 
+}

@@ -4,8 +4,8 @@ use CMS\Entities\User;
 use CMS\Interactors\Users\DeleteUserInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 
-class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase {
-
+class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 

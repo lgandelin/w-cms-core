@@ -5,8 +5,8 @@ use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Structures\BlockStructure;
 
-class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase {
-
+class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -66,4 +66,3 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase {
         return $this->repository->createBlock($block);
     }
 }
- 

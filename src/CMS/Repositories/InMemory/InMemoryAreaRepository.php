@@ -5,8 +5,8 @@ namespace CMS\Repositories\InMemory;
 use CMS\Entities\Area;
 use CMS\Repositories\AreaRepositoryInterface;
 
-class InMemoryAreaRepository implements AreaRepositoryInterface {
-
+class InMemoryAreaRepository implements AreaRepositoryInterface
+{
     private $areas;
 
     public function __construct()
@@ -17,8 +17,9 @@ class InMemoryAreaRepository implements AreaRepositoryInterface {
     public function findByID($areaID)
     {
         foreach ($this->areas as $area) {
-            if ($area->getID() == $areaID)
+            if ($area->getID() == $areaID) {
                 return $area;
+            }
         }
 
         return false;
@@ -72,4 +73,4 @@ class InMemoryAreaRepository implements AreaRepositoryInterface {
             }
         }
     }
-} 
+}

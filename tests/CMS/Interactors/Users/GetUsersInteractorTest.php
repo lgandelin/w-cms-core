@@ -4,8 +4,8 @@ use CMS\Entities\User;
 use CMS\Interactors\Users\GetUsersInteractor;
 use CMS\Repositories\InMemory\InMemoryUserRepository;
 
-class GetUsersInteractorTest extends PHPUnit_Framework_TestCase {
-
+class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
+{
     private $repository;
     private $interactor;
 
@@ -49,6 +49,4 @@ class GetUsersInteractorTest extends PHPUnit_Framework_TestCase {
         $user->setLastName('User lastname');
         $this->repository->createUser($user);
     }
-
 }
- 

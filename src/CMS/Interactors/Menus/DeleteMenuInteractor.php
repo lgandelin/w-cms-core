@@ -31,7 +31,8 @@ class DeleteMenuInteractor extends GetMenuInteractor
     {
         $menuItems = $this->getMenuItemsInteractor->getAll($menuID);
 
-        foreach ($menuItems as $menuItem)
+        foreach ($menuItems as $menuItem) {
             $this->deleteMenuItemInteractor->run($menuItem->getID());
+        }
     }
 }
