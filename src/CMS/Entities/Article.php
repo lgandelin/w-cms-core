@@ -10,6 +10,7 @@ class Article
     private $text;
     private $categoryID;
     private $authorID;
+    private $pageID;
     private $publicationDate;
 
     public function setID($ID)
@@ -89,5 +90,15 @@ class Article
     public function setCategoryID($categoryID)
     {
         $this->categoryID = $categoryID;
+    }
+
+    public function setPageID($pageID)
+    {
+        $this->pageID = $pageID;
+    }
+
+    public function getPageID()
+    {
+        return $this->pageID;
     }
 }

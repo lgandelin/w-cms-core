@@ -33,6 +33,7 @@ class CreateArticleInteractor
         $article->setText($articleStructure->text);
         $article->setCategoryID($articleStructure->category_id);
         $article->setAuthorID($articleStructure->author_id);
+        $article->setPageID($articleStructure->page_id);
         $article->setPublicationDate($articleStructure->publication_date);
 
         return $article;

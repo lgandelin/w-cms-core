@@ -12,6 +12,7 @@ class ArticleStructure extends DataStructure
     public $text;
     public $category_id;
     public $author_id;
+    public $page_id;
     public $publication_date;
 
     public static function toStructure(Article $article)
@@ -23,6 +24,7 @@ class ArticleStructure extends DataStructure
         $articleStructure->text = $article->getText();
         $articleStructure->category_id = $article->getCategoryID();
         $articleStructure->author_id = $article->getAuthorID();
+        $articleStructure->page_id = $article->getPageID();
         $articleStructure->publication_date = $article->getPublicationDate();
 
         return $articleStructure;
