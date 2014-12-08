@@ -21,6 +21,13 @@ class GetArticlesInteractor
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }
 
+    public function getByCategoryID($categoryID, $limit, $order, $structure = false)
+    {
+        $articles = $this->repository->findByCategoryID($categoryID, $limit, $order);
+
+        return ($structure) ? $this->getArticleStructures($articles) : $articles;
+    }
+
     private function getArticleStructures($articles)
     {
         $articleStructures = [];

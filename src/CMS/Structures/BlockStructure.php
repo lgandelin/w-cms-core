@@ -3,6 +3,7 @@
 namespace CMS\Structures;
 
 use CMS\Structures\Blocks\ArticleBlockStructure;
+use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
@@ -33,6 +34,11 @@ class BlockStructure extends DataStructure
         } elseif ($block->getType() == 'article') {
             $blockStructure = new ArticleBlockStructure();
             $blockStructure->article_id = $block->getArticleID();
+        } elseif ($block->getType() == 'article_list') {
+            $blockStructure = new ArticleListBlockStructure();
+            $blockStructure->article_list_category_id = $block->getArticleListCategoryID();
+            $blockStructure->article_list_order = $block->getArticleListOrder();
+            $blockStructure->article_list_number = $block->getArticleListNumber();
         } else {
             $blockStructure = new BlockStructure();
         }
