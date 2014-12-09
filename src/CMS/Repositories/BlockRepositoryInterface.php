@@ -10,6 +10,8 @@ interface BlockRepositoryInterface
 
     public function findByAreaID($areaID);
 
+    public function findGlobalBlocks();
+
     public function findAll();
 
     public function createBlock(Block $block);

@@ -4,6 +4,7 @@ namespace CMS\Structures;
 
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
+use CMS\Structures\Blocks\GlobalBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\ViewFileBlockStructure;
@@ -19,6 +20,7 @@ class BlockStructure extends DataStructure
     public $type;
     public $area_id;
     public $display;
+    public $is_global;
 
     public static function toStructure($block)
     {
@@ -39,6 +41,9 @@ class BlockStructure extends DataStructure
             $blockStructure->article_list_category_id = $block->getArticleListCategoryID();
             $blockStructure->article_list_order = $block->getArticleListOrder();
             $blockStructure->article_list_number = $block->getArticleListNumber();
+        } elseif ($block->getType() == 'global') {
+            $blockStructure = new GlobalBlockStructure();
+            $blockStructure->block_reference_id = $block->getBlockReferenceID();
         } else {
             $blockStructure = new BlockStructure();
         }
@@ -52,6 +57,7 @@ class BlockStructure extends DataStructure
         $blockStructure->type = $block->getType();
         $blockStructure->area_id = $block->getAreaID();
         $blockStructure->display = $block->getDisplay();
+        $blockStructure->is_global = $block->getIsGlobal();
 
         return $blockStructure;
     }

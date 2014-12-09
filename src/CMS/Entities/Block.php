@@ -13,6 +13,7 @@ class Block
     private $type;
     private $areaID;
     private $display;
+    private $isGlobal;
 
     public function setID($ID)
     {
@@ -102,6 +103,16 @@ class Block
     public function getDisplay()
     {
         return $this->display;
+    }
+
+    public function setIsGlobal($isGlobal)
+    {
+        $this->isGlobal = $isGlobal;
+    }
+
+    public function getIsGlobal()
+    {
+        return $this->isGlobal;
     }
 
     public function valid()
