@@ -26,7 +26,7 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleBlock();
         $this->createSampleBlock();
 
-        $blocks = $this->interactor->getAll(1);
+        $blocks = $this->interactor->getAllByAreaID(1);
         $this->assertEquals(2, count($blocks));
 
         $this->assertInstanceOf('\CMS\Entities\Block', $blocks[0]);
@@ -38,7 +38,7 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleBlock();
         $this->createSampleBlock();
 
-        $blocks = $this->interactor->getAll(1, true);
+        $blocks = $this->interactor->getAllByAreaID(1, true);
         $this->assertEquals(2, count($blocks));
 
         $this->assertInstanceOf('\CMS\Structures\BlockStructure', $blocks[0]);

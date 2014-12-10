@@ -4,6 +4,7 @@ namespace CMS\Interactors\Blocks;
 
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
+use CMS\Structures\Blocks\GlobalBlockStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
@@ -42,6 +43,9 @@ class UpdateBlockInteractor extends GetBlockInteractor
             if ($blockStructure->display !== null && $blockStructure->display != $block->getDisplay()) {
                 $block->setDisplay($blockStructure->display);
             }
+            if ($blockStructure->is_global !== null && $blockStructure->is_global != $block->getIsGlobal()) {
+                $block->setIsGlobal($blockStructure->is_global);
+            }
 
             if ($blockStructure instanceof HTMLBlockStructure && $block->getType() == 'html' && $blockStructure->html !== null && $blockStructure->html != $block->getHTML()) {
                 $block->setHTML($blockStructure->html);
@@ -63,6 +67,10 @@ class UpdateBlockInteractor extends GetBlockInteractor
                 $block->setArticleListCategoryID($blockStructure->article_list_category_id);
                 $block->setArticleListOrder($blockStructure->article_list_order);
                 $block->setArticleListNumber($blockStructure->article_list_number);
+            }
+
+            if ($blockStructure instanceof GlobalBlockStructure && $block->getType() == 'global' && $blockStructure->block_reference_id != $block->getBlockReferenceID()) {
+                $block->setBlockReferenceID($blockStructure->block_reference_id);
             }
         }
 

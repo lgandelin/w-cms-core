@@ -12,12 +12,20 @@ class GetBlocksInteractor
         $this->repository = $repository;
     }
 
-    public function getAll($areaID, $structure = false)
+    public function getAllByAreaID($areaID, $structure = false)
     {
         $blocks = $this->repository->findByAreaID($areaID);
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }
+
+    public function getGlobalBlocks($structure = false)
+    {
+        $blocks = $this->repository->findGlobalBlocks();
+
+        return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
+    }
+
 
     private function getBlockStructures($blocks)
     {

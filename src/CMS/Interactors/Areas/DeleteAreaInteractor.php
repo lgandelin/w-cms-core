@@ -28,7 +28,7 @@ class DeleteAreaInteractor extends GetAreaInteractor
 
     private function deleteBlocks($areaID)
     {
-        $blocks = $this->getBlocksInteractor->getAll($areaID);
+        $blocks = $this->getBlocksInteractor->getAllByAreaID    ($areaID);
 
         foreach ($blocks as $block) {
             $this->deleteBlockInteractor->run($block->getID());
