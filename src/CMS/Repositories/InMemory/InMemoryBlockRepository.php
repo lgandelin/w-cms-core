@@ -82,4 +82,15 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
             }
         }
     }
+
+    public function findGlobalBlocks()
+    {
+        $blocks = array();
+        foreach ($this->blocks as $block) {
+            if ($block->isGlobal())
+                $blocks[]= $block;
+        }
+
+        return $blocks;
+    }
 }
