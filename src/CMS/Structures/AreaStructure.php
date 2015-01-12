@@ -12,6 +12,8 @@ class AreaStructure extends DataStructure
     public $order;
     public $page_id;
     public $display;
+    public $is_master;
+    public $master_area_id;
 
     public static function toStructure($area)
     {
@@ -24,6 +26,8 @@ class AreaStructure extends DataStructure
         $areaStructure->order = $area->getOrder();
         $areaStructure->page_id = $area->getPageID();
         $areaStructure->display = $area->getDisplay();
+        $areaStructure->is_master = $area->getIsMaster();
+        $areaStructure->master_area_id = $area->getMasterAreaID();
 
         return $areaStructure;
     }

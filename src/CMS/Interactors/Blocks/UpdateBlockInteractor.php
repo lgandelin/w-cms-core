@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Blocks;
 
+use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
@@ -12,6 +13,15 @@ use CMS\Structures\Blocks\ViewFileBlockStructure;
 
 class UpdateBlockInteractor extends GetBlockInteractor
 {
+
+    private $getBlocksInteractor;
+
+    public function __construct(BlockRepositoryInterface $repository, GetBlocksInteractor $getBlocksInteractor)
+    {
+        $this->repository = $repository;
+        $this->getBlocksInteractor = $getBlocksInteractor;
+    }
+
     public function run($blockID, BlockStructure $blockStructure)
     {
         if ($block = $this->getBlockByID($blockID)) {
@@ -72,8 +82,25 @@ class UpdateBlockInteractor extends GetBlockInteractor
             if ($blockStructure instanceof GlobalBlockStructure && $block->getType() == 'global' && $blockStructure->block_reference_id != $block->getBlockReferenceID()) {
                 $block->setBlockReferenceID($blockStructure->block_reference_id);
             }
+
+            if ($block->getIsMaster()) {
+                $this->updateChildBlocks($blockStructure, $block->getID());
+            }
         }
 
         $this->repository->updateBlock($block);
+    }
+
+    private function updateChildBlocks(BlockStructure $blockStructure, $blockID)
+    {
+        $childBlocks = $this->getBlocksInteractor->getChildBlocks($blockID);
+
+        unset($blockStructure->area_id);
+
+        if (is_array($childBlocks) && sizeof($childBlocks) > 0) {
+            foreach ($childBlocks as $child) {
+                $this->run($child->getID(), $blockStructure);
+            }
+        }
     }
 }

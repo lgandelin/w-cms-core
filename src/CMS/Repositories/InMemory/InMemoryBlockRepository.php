@@ -87,7 +87,18 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
     {
         $blocks = array();
         foreach ($this->blocks as $block) {
-            if ($block->isGlobal())
+            if ($block->getIsGlobal())
+                $blocks[]= $block;
+        }
+
+        return $blocks;
+    }
+
+    public function findChildBlocks($blockID)
+    {
+        $blocks = array();
+        foreach ($this->blocks as $block) {
+            if ($block->getMasterBlockID() == $blockID)
                 $blocks[]= $block;
         }
 

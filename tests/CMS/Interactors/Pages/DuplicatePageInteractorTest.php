@@ -27,7 +27,7 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->repository = new InMemoryPageRepository();
         $this->areaRepository = new InMemoryAreaRepository();
         $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new DuplicatePageInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new GetBlocksInteractor($this->blockRepository), new CreatePageInteractor($this->repository), new CreateAreaInteractor($this->areaRepository), new CreateBlockInteractor($this->blockRepository), new UpdateBlockInteractor($this->blockRepository));
+        $this->interactor = new DuplicatePageInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new GetBlocksInteractor($this->blockRepository), new CreatePageInteractor($this->repository), new CreateAreaInteractor($this->areaRepository), new CreateBlockInteractor($this->blockRepository), new UpdateBlockInteractor($this->blockRepository, new GetBlocksInteractor($this->blockRepository)));
     }
 
     /**

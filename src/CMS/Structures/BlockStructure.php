@@ -21,6 +21,8 @@ class BlockStructure extends DataStructure
     public $area_id;
     public $display;
     public $is_global;
+    public $is_master;
+    public $master_block_id;
 
     public static function toStructure($block)
     {
@@ -58,6 +60,8 @@ class BlockStructure extends DataStructure
         $blockStructure->area_id = $block->getAreaID();
         $blockStructure->display = $block->getDisplay();
         $blockStructure->is_global = $block->getIsGlobal();
+        $blockStructure->is_master = $block->getIsMaster();
+        $blockStructure->master_block_id = $block->getMasterBlockID();
 
         return $blockStructure;
     }
