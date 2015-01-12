@@ -54,7 +54,11 @@ class InMemoryPageRepository implements PageRepositoryInterface
 
     public function createPage(Page $page)
     {
+        $pageID = sizeof($this->pages) + 1;
+        $page->setID($pageID);
         $this->pages[]= $page;
+
+        return $pageID;
     }
 
     public function updatePage(Page $page)

@@ -14,6 +14,8 @@ class PageStructure extends DataStructure
     public $meta_title;
     public $meta_description;
     public $meta_keywords;
+    public $is_master;
+    public $master_page_id;
 
     public static function toStructure(Page $page)
     {
@@ -26,6 +28,8 @@ class PageStructure extends DataStructure
         $pageStructure->meta_title = $page->getMetaTitle();
         $pageStructure->meta_description = $page->getMetaDescription();
         $pageStructure->meta_keywords = $page->getMetaKeywords();
+        $pageStructure->is_master = $page->getIsMaster();
+        $pageStructure->master_page_id = $page->getMasterPageID();
 
         return $pageStructure;
     }

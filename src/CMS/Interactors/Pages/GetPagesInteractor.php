@@ -21,6 +21,13 @@ class GetPagesInteractor
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }
 
+    public function getMasterPages($structure = false)
+    {
+        $pages = $this->repository->findMasterPages();
+
+        return ($structure) ? $this->getPageStructures($pages) : $pages;
+    }
+
     private function getPageStructures($pages)
     {
         $pageStructures = [];

@@ -1,6 +1,8 @@
 <?php
 
 use CMS\Interactors\Pages\CreatePageInteractor;
+use CMS\Repositories\InMemory\InMemoryAreaRepository;
+use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\PageStructure;
 
@@ -9,6 +11,8 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repository = new InMemoryPageRepository();
+        $this->areaRepository = new InMemoryAreaRepository();
+        $this->blockRepository = new InMemoryBlockRepository();
         $this->interactor = new CreatePageInteractor($this->repository);
     }
 
