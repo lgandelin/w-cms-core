@@ -63,6 +63,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $block = new Block();
         $block->setName('Block');
         $block->setType('html');
+        $block->setAreaID(null);
 
         return $this->repository->createBlock($block);
     }
@@ -73,18 +74,21 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $masterBlock->setID(1);
         $masterBlock->setIsMaster(true);
         $masterBlock->setName('Test block');
+        $masterBlock->setAreaID(null);
         $this->repository->createBlock($masterBlock);
 
         $childBlock1 = new Block();
         $childBlock1->setID(2);
         $childBlock1->setMasterBlockID($masterBlock->getID());
         $childBlock1->setName('Test block');
+        $childBlock1->setAreaID(null);
         $this->repository->createBlock($childBlock1);
 
         $childBlock2 = new Block();
         $childBlock2->setID(3);
         $childBlock2->setMasterBlockID($masterBlock->getID());
         $childBlock2->setName('Test block');
+        $childBlock2->setAreaID(null);
         $this->repository->createBlock($childBlock2);
 
         $blockStructure = new BlockStructure([

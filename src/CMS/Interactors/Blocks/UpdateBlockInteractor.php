@@ -47,7 +47,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
             if ($blockStructure->order !== null && $blockStructure->order != $block->getOrder()) {
                 $block->setOrder($blockStructure->order);
             }
-            if ($blockStructure->area_id !== null && $blockStructure->area_id != $block->getAreaId()) {
+            if (isset($blockStructure->area_id) && $blockStructure->area_id !== null && $blockStructure->area_id != $block->getAreaId()) {
                 $block->setAreaID($blockStructure->area_id);
             }
             if ($blockStructure->display !== null && $blockStructure->display != $block->getDisplay()) {

@@ -5,10 +5,12 @@ use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
+use CMS\Interactors\Areas\DuplicateAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
+use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Interactors\Pages\DuplicatePageInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
@@ -27,7 +29,18 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->repository = new InMemoryPageRepository();
         $this->areaRepository = new InMemoryAreaRepository();
         $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new DuplicatePageInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new GetBlocksInteractor($this->blockRepository), new CreatePageInteractor($this->repository), new CreateAreaInteractor($this->areaRepository), new CreateBlockInteractor($this->blockRepository), new UpdateBlockInteractor($this->blockRepository, new GetBlocksInteractor($this->blockRepository)));
+        $this->interactor = new DuplicatePageInteractor(
+            $this->repository,
+            new GetAreasInteractor($this->areaRepository),
+            new GetBlocksInteractor($this->blockRepository),
+            new CreatePageInteractor($this->repository),
+            new DuplicateAreaInteractor(new CreateAreaInteractor($this->areaRepository)),
+            new DuplicateBlockInteractor(
+                new CreateBlockInteractor($this->blockRepository),
+                new UpdateBlockInteractor($this->blockRepository, new GetBlocksInteractor($this->blockRepository)
+                )
+            )
+        );
     }
 
     /**
