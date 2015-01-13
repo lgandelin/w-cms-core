@@ -16,6 +16,7 @@ class Block
     private $isGlobal;
     private $masterBlockID;
     private $isMaster;
+    private $isGhost;
 
     public function setID($ID)
     {
@@ -135,6 +136,16 @@ class Block
     public function getMasterBlockID()
     {
         return $this->masterBlockID;
+    }
+
+    public function setIsGhost($isGhost)
+    {
+        $this->isGhost = $isGhost;
+    }
+
+    public function getIsGhost()
+    {
+        return $this->isGhost;
     }
 
     public function valid()

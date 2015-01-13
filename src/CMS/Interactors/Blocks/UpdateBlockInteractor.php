@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Blocks;
 
+use CMS\Entities\Blocks\ArticleBlock;
 use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
@@ -32,6 +33,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
         }
 
         if ($block = $this->getBlockByID($blockID)) {
+
             if ($blockStructure->name !== null && $blockStructure->name != $block->getName()) {
                 $block->setName($blockStructure->name);
             }
@@ -84,7 +86,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
                 $block->setViewFile($blockStructure->view_file);
             }
 
-            if ($blockStructure instanceof ArticleBlockStructure && $block->getType() == 'article' && $blockStructure->article_id != $block->getArticleID()) {
+            if ($blockStructure instanceof ArticleBlockStructure && $block->getType() == 'article' && $block instanceof ArticleBlock && $blockStructure->article_id != $block->getArticleID()) {
                 $block->setArticleID($blockStructure->article_id);
             }
 

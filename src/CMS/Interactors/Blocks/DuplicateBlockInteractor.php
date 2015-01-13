@@ -2,6 +2,12 @@
 
 namespace CMS\Interactors\Blocks;
 
+use CMS\Entities\Blocks\ArticleBlock;
+use CMS\Entities\Blocks\ArticleListBlock;
+use CMS\Entities\Blocks\GlobalBlock;
+use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Blocks\MenuBlock;
+use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
@@ -30,29 +36,29 @@ class DuplicateBlockInteractor
         $blockID = $this->createBlockInteractor->run($blockStructure);
         $blockStructureContent = new BlockStructure();
 
-        if ($block->getType() == 'html') {
+        if ($block instanceof HTMLBlock && $block->getType() == 'html') {
             $blockStructureContent = new HTMLBlockStructure([
                 'html' => $block->getHTML(),
             ]);
-        } elseif ($block->getType() == 'menu') {
+        } elseif ($block instanceof MenuBlock && $block->getType() == 'menu') {
             $blockStructureContent = new MenuBlockStructure([
                 'menu_id' => $block->getMenuID(),
             ]);
-        } elseif ($block->getType() == 'view_file') {
+        } elseif ($block instanceof ViewFileBlock && $block->getType() == 'view_file') {
             $blockStructureContent = new ViewFileBlockStructure([
                 'view_file' => $block->getViewFile(),
             ]);
-        } elseif ($block->getType() == 'article') {
+        } elseif ($block instanceof ArticleBlock && $block->getType() == 'article') {
             $blockStructureContent = new ArticleBlockStructure([
                 'article_id' => $block->getArticleID(),
             ]);
-        } elseif ($block->getType() == 'article_list') {
+        } elseif ($block instanceof ArticleListBlock && $block->getType() == 'article_list') {
             $blockStructureContent = new ArticleListBlockStructure([
                 'article_list_category_id' => $block->getArticleListCategoryID(),
                 'article_list_order' => $block->getArticleListOrder(),
                 'article_list_number' => $block->getArticleListNumber(),
             ]);
-        } elseif ($block->getType() == 'global') {
+        } elseif ($block instanceof GlobalBlock && $block->getType() == 'global') {
             $blockStructureContent = new GlobalBlockStructure([
                 'block_reference_id' => $block->getBlockReferenceID()
             ]);

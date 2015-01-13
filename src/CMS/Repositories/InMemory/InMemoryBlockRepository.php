@@ -3,6 +3,7 @@
 namespace CMS\Repositories\InMemory;
 
 use CMS\Entities\Block;
+use CMS\Entities\Blocks\ArticleBlock;
 use CMS\Repositories\BlockRepositoryInterface;
 
 class InMemoryBlockRepository implements BlockRepositoryInterface
@@ -61,6 +62,11 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
                 $blockModel->setClass($block->getClass());
                 $blockModel->setOrder($block->getOrder());
                 $blockModel->setDisplay($block->getDisplay());
+                $blockModel->setType($block->getType());
+
+                if ($block instanceof ArticleBlock) {
+                    $blockModel->setArticleID($block->getArticleID());
+                }
             }
         }
     }

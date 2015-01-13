@@ -13,6 +13,7 @@ use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\AreaStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\PageStructure;
+use CMS\Structures\Blocks\ArticleBlockStructure;
 
 class CreatePageFromMasterInteractor
 {
@@ -37,7 +38,7 @@ class CreatePageFromMasterInteractor
         $this->duplicateBlockInteractor = $duplicateBlockInteractor;
     }
 
-    public function run(PageStructure $pageStructure)
+    public function run(PageStructure $pageStructure, $customBlock = null)
     {
         $pageID = $this->createPageInteractor->run($pageStructure);
 
@@ -55,12 +56,20 @@ class CreatePageFromMasterInteractor
                 $blocks = $this->getBlocksInteractor->getAllByAreaID($area->getID());
 
                 foreach ($blocks as $block) {
-                    $newBlockID = $this->duplicateBlockInteractor->run($block, $newAreaID);
+                    if ($block->getIsGhost()) {
+                        if ($customBlock) {
+                            $newBlockID = $this->duplicateBlockInteractor->run($block, $newAreaID);
+                            $customBlock->is_ghost = 0;
+                            $this->updateBlockInteractor->run($newBlockID, $customBlock);
+                        }
+                    } else {
+                        $newBlockID = $this->duplicateBlockInteractor->run($block, $newAreaID);
 
-                    $blockStructure = new BlockStructure([
-                        'master_block_id' => $block->getID()
-                    ]);
-                    $this->updateBlockInteractor->run($newBlockID, $blockStructure);
+                        $blockStructure = new BlockStructure([
+                            'master_block_id' => $block->getID()
+                        ]);
+                        $this->updateBlockInteractor->run($newBlockID, $blockStructure);
+                    }
                 }
             }
         }

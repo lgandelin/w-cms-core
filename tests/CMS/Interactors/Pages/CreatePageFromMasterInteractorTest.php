@@ -77,7 +77,7 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
         $block = new BlockStructure([
             'ID' => 1,
             'area_id' => 1,
-            'name' => 'Test area'
+            'name' => 'Test block',
         ]);
 
         $createBlockInteractor = new CreateBlockInteractor($this->blockRepository);
