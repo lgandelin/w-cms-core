@@ -70,6 +70,10 @@ class UpdateBlockInteractor extends GetBlockInteractor
                 $block->setMasterBlockID($blockStructure->master_block_id);
             }
 
+            if ($blockStructure->is_ghost !== null && $blockStructure->is_ghost != $block->getIsGhost()) {
+                $block->setIsGhost($blockStructure->is_ghost);
+            }
+
             if (isset($blockStructure->is_master) && $blockStructure->is_master !== null && $blockStructure->is_master != $block->getIsMaster()) {
                 $block->setIsMaster($blockStructure->is_master);
             }

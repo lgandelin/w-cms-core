@@ -5,10 +5,13 @@ use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
+use CMS\Interactors\Articles\GetArticlesInteractor;
+use CMS\Interactors\Articles\UpdateArticleInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Pages\DeletePageInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
+use CMS\Repositories\InMemory\InMemoryArticleRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 
@@ -24,7 +27,18 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->repository = new InMemoryPageRepository();
         $this->areaRepository = new InMemoryAreaRepository();
         $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new DeletePageInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new DeleteAreaInteractor($this->areaRepository, new GetBlocksInteractor($this->blockRepository), new DeleteBlockInteractor($this->blockRepository)));
+        $this->articleRepository = new InMemoryArticleRepository();
+        $this->interactor = new DeletePageInteractor(
+            $this->repository,
+            new GetAreasInteractor($this->areaRepository),
+            new DeleteAreaInteractor(
+                $this->areaRepository,
+                new GetBlocksInteractor($this->blockRepository),
+                new DeleteBlockInteractor($this->blockRepository)
+            ),
+            new GetArticlesInteractor($this->articleRepository),
+            new UpdateArticleInteractor($this->articleRepository)
+        );
     }
 
     /**

@@ -24,7 +24,7 @@ class UpdateArticleInteractor extends GetArticleInteractor
             if (isset($articleStructure->author_id) && $articleStructure->author_id !== null && $article->getAuthorID() != $articleStructure->author_id) {
                 $article->setAuthorID($articleStructure->author_id);
             }
-            if (isset($articleStructure->page_id) && $articleStructure->page_id !== null && $article->getPageID() != $articleStructure->page_id) {
+            if ($article->getPageID() != $articleStructure->page_id) {
                 $article->setPageID($articleStructure->page_id);
             }
             if (isset($articleStructure->publication_date) && $articleStructure->publication_date !== null && $article->getPublicationDate() != $articleStructure->publication_date) {
