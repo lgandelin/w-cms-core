@@ -28,6 +28,13 @@ class GetPagesInteractor
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }
 
+    public function getChildPages($pageID, $structure = false)
+    {
+        $pages = $this->repository->findChildPages($pageID);
+
+        return ($structure) ? $this->getPageStructures($pages) : $pages;
+    }
+
     private function getPageStructures($pages)
     {
         $pageStructures = [];

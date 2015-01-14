@@ -63,6 +63,7 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
                 $blockModel->setOrder($block->getOrder());
                 $blockModel->setDisplay($block->getDisplay());
                 $blockModel->setType($block->getType());
+                $blockModel->setIsMaster($block->getIsMaster());
 
                 if ($block instanceof ArticleBlock) {
                     $blockModel->setArticleID($block->getArticleID());

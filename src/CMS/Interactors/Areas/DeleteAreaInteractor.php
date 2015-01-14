@@ -20,7 +20,11 @@ class DeleteAreaInteractor extends GetAreaInteractor
 
     public function run($areaID)
     {
-        if ($this->getAreaByID($areaID)) {
+        if ($area = $this->getAreaByID($areaID)) {
+
+            if ($area->getIsMaster())
+                $this->deleteChildAreas($areaID);
+            
             $this->deleteBlocks($areaID);
             $this->repository->deleteArea($areaID);
         }
@@ -32,6 +36,18 @@ class DeleteAreaInteractor extends GetAreaInteractor
 
         foreach ($blocks as $block) {
             $this->deleteBlockInteractor->run($block->getID());
+        }
+    }
+
+    private function deleteChildAreas($areaID)
+    {
+        $childAreas = $this->repository->findChildAreas($areaID);
+
+        if (is_array($childAreas) && sizeof($childAreas) > 0) {
+            foreach ($childAreas as $childArea) {
+                $this->deleteBlocks($childArea->getID());
+                $this->repository->deleteArea($childArea->getID());
+            }
         }
     }
 }

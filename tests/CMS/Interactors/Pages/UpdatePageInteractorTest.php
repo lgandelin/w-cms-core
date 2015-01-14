@@ -4,11 +4,14 @@ use CMS\Converters\PageConverter;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
+use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
+use CMS\Interactors\Pages\GetPageInteractor;
+use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
@@ -171,7 +174,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'name' => 'Test area'
         ]);
 
-        $createAreaInteractor = new CreateAreaInteractor($this->areaRepository);
+        $createAreaInteractor = new CreateAreaInteractor($this->areaRepository, new GetPagesInteractor($this->repository), new GetPageInteractor($this->repository));
         $createAreaInteractor->run($area);
 
         $block = new BlockStructure([
@@ -180,7 +183,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'name' => 'Test block'
         ]);
 
-        $createBlockInteractor = new CreateBlockInteractor($this->blockRepository);
+        $createBlockInteractor = new CreateBlockInteractor($this->blockRepository, new GetAreasInteractor($this->areaRepository), new GetAreaInteractor($this->areaRepository));
         $createBlockInteractor->run($block);
 
         $pageStructure = new PageStructure([

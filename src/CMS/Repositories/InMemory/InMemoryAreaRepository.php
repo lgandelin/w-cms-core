@@ -72,6 +72,7 @@ class InMemoryAreaRepository implements AreaRepositoryInterface
                 $areaModel->setClass($area->getClass());
                 $areaModel->setOrder($area->getOrder());
                 $areaModel->setDisplay($area->getDisplay());
+                $areaModel->setIsMaster($area->getIsMaster());
             }
         }
     }
