@@ -11,6 +11,8 @@ class Page
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
+    private $is_master;
+    private $master_page_id;
 
     public function setID($ID)
     {
@@ -80,6 +82,26 @@ class Page
     public function getMetaKeywords()
     {
         return $this->meta_keywords;
+    }
+
+    public function setIsMaster($is_master)
+    {
+        $this->is_master = $is_master;
+    }
+
+    public function getIsMaster()
+    {
+        return $this->is_master;
+    }
+
+    public function setMasterPageId($master_page_id)
+    {
+        $this->master_page_id = $master_page_id;
+    }
+
+    public function getMasterPageId()
+    {
+        return $this->master_page_id;
     }
 
     public function valid()

@@ -26,6 +26,12 @@ class GetBlocksInteractor
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }
 
+    public function getChildBlocks($masterblockID, $structure = false)
+    {
+        $blocks = $this->repository->findChildBlocks($masterblockID);
+
+        return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
+    }
 
     private function getBlockStructures($blocks)
     {

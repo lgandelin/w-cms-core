@@ -30,4 +30,11 @@ class GetAreasInteractor
 
         return $areaStructures;
     }
+
+    public function getChildAreas($masterAreaID, $structure = false)
+    {
+        $areas = $this->repository->findChildAreas($masterAreaID);
+
+        return ($structure) ? $this->getAreaStructures($areas) : $areas;
+    }
 }

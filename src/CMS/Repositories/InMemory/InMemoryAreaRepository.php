@@ -30,6 +30,17 @@ class InMemoryAreaRepository implements AreaRepositoryInterface
         return $this->areas;
     }
 
+    public function findChildAreas($areaID)
+    {
+        $areas = array();
+        foreach ($this->areas as $area) {
+            if ($area->getMasterAreaID() == $areaID)
+                $areas[]= $area;
+        }
+
+        return $areas;
+    }
+
     public function findByPageID($pageID)
     {
         $areas = array();
@@ -44,7 +55,7 @@ class InMemoryAreaRepository implements AreaRepositoryInterface
 
     public function createArea(Area $area)
     {
-        $areaID = uniqid();
+        $areaID = sizeof($this->areas) + 1;
         $area->setID($areaID);
         $this->areas[]= $area;
 
@@ -61,6 +72,7 @@ class InMemoryAreaRepository implements AreaRepositoryInterface
                 $areaModel->setClass($area->getClass());
                 $areaModel->setOrder($area->getOrder());
                 $areaModel->setDisplay($area->getDisplay());
+                $areaModel->setIsMaster($area->getIsMaster());
             }
         }
     }

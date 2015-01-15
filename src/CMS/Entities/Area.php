@@ -12,6 +12,8 @@ class Area
     private $order;
     private $pageID;
     private $display;
+    private $isMaster;
+    private $masterAreaID;
 
     public function setID($ID)
     {
@@ -91,6 +93,26 @@ class Area
     public function getDisplay()
     {
         return $this->display;
+    }
+
+    public function setIsMaster($isMaster)
+    {
+        $this->isMaster = $isMaster;
+    }
+
+    public function getIsMaster()
+    {
+        return $this->isMaster;
+    }
+
+    public function setMasterAreaID($masterAreaID)
+    {
+        $this->masterAreaID = $masterAreaID;
+    }
+
+    public function getMasterAreaID()
+    {
+        return $this->masterAreaID;
     }
 
     public function valid()

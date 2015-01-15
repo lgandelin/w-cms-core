@@ -38,4 +38,23 @@ class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase
 
         return $this->repository->createArea($area);
     }
+
+    public function testDeleteMasterArea()
+    {
+        $area = new Area();
+        $area->setID(2);
+        $area->setName('Area');
+        $area->setIsMaster(1);
+        $this->repository->createArea($area);
+
+        $childArea = new Area();
+        $childArea->setID(2);
+        $childArea->setName('Child area');
+        $childArea->setMasterAreaID(1);
+        $this->repository->createArea($childArea);
+
+        $this->interactor->run(1);
+
+        $this->assertFalse($this->repository->findByID(2));
+    }
 }

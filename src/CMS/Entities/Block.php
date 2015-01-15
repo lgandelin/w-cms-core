@@ -14,6 +14,9 @@ class Block
     private $areaID;
     private $display;
     private $isGlobal;
+    private $masterBlockID;
+    private $isMaster;
+    private $isGhost;
 
     public function setID($ID)
     {
@@ -113,6 +116,36 @@ class Block
     public function getIsGlobal()
     {
         return $this->isGlobal;
+    }
+
+    public function setIsMaster($isMaster)
+    {
+        $this->isMaster = $isMaster;
+    }
+
+    public function getIsMaster()
+    {
+        return $this->isMaster;
+    }
+
+    public function setMasterBlockID($blockID)
+    {
+        $this->masterBlockID = $blockID;
+    }
+
+    public function getMasterBlockID()
+    {
+        return $this->masterBlockID;
+    }
+
+    public function setIsGhost($isGhost)
+    {
+        $this->isGhost = $isGhost;
+    }
+
+    public function getIsGhost()
+    {
+        return $this->isGhost;
     }
 
     public function valid()

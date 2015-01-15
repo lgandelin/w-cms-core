@@ -32,4 +32,11 @@ class GetArticlesInteractor
 
         return $articleStructures;
     }
+
+    public function getByAssociatedPageID($pageID, $structure = false)
+    {
+        $articles = $this->repository->findByPageID($pageID);
+
+        return ($structure) ? $this->getArticleStructures($articles) : $articles;
+    }
 }

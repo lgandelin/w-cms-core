@@ -12,6 +12,8 @@ interface BlockRepositoryInterface
 
     public function findGlobalBlocks();
 
+    public function findChildBlocks($blockID);
+
     public function findAll();
 
     public function createBlock(Block $block);

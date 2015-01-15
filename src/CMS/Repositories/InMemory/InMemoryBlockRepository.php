@@ -3,6 +3,7 @@
 namespace CMS\Repositories\InMemory;
 
 use CMS\Entities\Block;
+use CMS\Entities\Blocks\ArticleBlock;
 use CMS\Repositories\BlockRepositoryInterface;
 
 class InMemoryBlockRepository implements BlockRepositoryInterface
@@ -44,7 +45,7 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
 
     public function createBlock(Block $block)
     {
-        $blockID = uniqid();
+        $blockID = sizeof($this->blocks) + 1;
         $block->setID($blockID);
         $this->blocks[]= $block;
 
@@ -61,6 +62,12 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
                 $blockModel->setClass($block->getClass());
                 $blockModel->setOrder($block->getOrder());
                 $blockModel->setDisplay($block->getDisplay());
+                $blockModel->setType($block->getType());
+                $blockModel->setIsMaster($block->getIsMaster());
+
+                if ($block instanceof ArticleBlock) {
+                    $blockModel->setArticleID($block->getArticleID());
+                }
             }
         }
     }
@@ -87,7 +94,18 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
     {
         $blocks = array();
         foreach ($this->blocks as $block) {
-            if ($block->isGlobal())
+            if ($block->getIsGlobal())
+                $blocks[]= $block;
+        }
+
+        return $blocks;
+    }
+
+    public function findChildBlocks($blockID)
+    {
+        $blocks = array();
+        foreach ($this->blocks as $block) {
+            if ($block->getMasterBlockID() == $blockID)
                 $blocks[]= $block;
         }
 
