@@ -1,7 +1,6 @@
 <?php
 
 use CMS\Entities\Area;
-use CMS\Entities\Block;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;

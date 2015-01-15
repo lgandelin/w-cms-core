@@ -2,10 +2,11 @@
 
 namespace CMS\Interactors\Areas;
 
+use CMS\Interactors\Interactor;
 use CMS\Repositories\AreaRepositoryInterface;
 use CMS\Structures\AreaStructure;
 
-class GetAreaInteractor
+class GetAreaInteractor extends Interactor
 {
     protected $repository;
 

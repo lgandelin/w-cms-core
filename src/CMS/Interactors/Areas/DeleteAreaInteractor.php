@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Areas;
 
+use CMS\Events\DeleteAreaEvent;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\AreaRepositoryInterface;
@@ -12,12 +13,14 @@ class DeleteAreaInteractor extends GetAreaInteractor
     private $getBlocksInteractor;
     private $deleteBlockInteractor;
 
-    public function __construct(AreaRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, DeleteBlockInteractor $deleteBlockInteractor)
+    public function __construct(AreaRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, DeleteBlockInteractor $deleteBlockInteractor, $eventDispatcher = null)
     {
         $this->repository = $repository;
         $this->getAreasInteractor = $getAreasInteractor;
         $this->getBlocksInteractor = $getBlocksInteractor;
         $this->deleteBlockInteractor = $deleteBlockInteractor;
+
+        parent::__construct($repository, $eventDispatcher);
     }
 
     public function run($areaID)
@@ -30,6 +33,8 @@ class DeleteAreaInteractor extends GetAreaInteractor
 
             $this->deleteBlocks($areaID);
             $this->repository->deleteArea($areaID);
+
+            $this->fire(new DeleteAreaEvent(), $area);
         }
     }
 
