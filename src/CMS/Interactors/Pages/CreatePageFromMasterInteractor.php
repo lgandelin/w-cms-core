@@ -60,6 +60,7 @@ class CreatePageFromMasterInteractor
                         if ($customBlock) {
                             $newBlockID = $this->duplicateBlockInteractor->run($block, $newAreaID);
                             $customBlock->is_ghost = 0;
+                            $customBlock->master_block_id = $block->getID();
                             $this->updateBlockInteractor->run($newBlockID, $customBlock);
                         }
                     } else {
