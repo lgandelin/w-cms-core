@@ -2,6 +2,12 @@
 
 namespace CMS\Structures;
 
+use CMS\Entities\Blocks\ArticleBlock;
+use CMS\Entities\Blocks\ArticleListBlock;
+use CMS\Entities\Blocks\GlobalBlock;
+use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Blocks\MenuBlock;
+use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
@@ -21,27 +27,30 @@ class BlockStructure extends DataStructure
     public $area_id;
     public $display;
     public $is_global;
+    public $is_master;
+    public $master_block_id;
+    public $is_ghost;
 
     public static function toStructure($block)
     {
-        if ($block->getType() == 'html') {
+        if ($block instanceof HTMLBlock && $block->getType() == 'html') {
             $blockStructure = new HTMLBlockStructure();
             $blockStructure->html = $block->getHTML();
-        } elseif ($block->getType() == 'menu') {
+        } elseif ($block instanceof MenuBlock && $block->getType() == 'menu') {
             $blockStructure = new MenuBlockStructure();
             $blockStructure->menu_id = $block->getMenuID();
-        } elseif ($block->getType() == 'view_file') {
+        } elseif ($block instanceof ViewFileBlock && $block->getType() == 'view_file') {
             $blockStructure = new ViewFileBlockStructure();
             $blockStructure->view_file = $block->getViewFile();
-        } elseif ($block->getType() == 'article') {
+        } elseif ($block instanceof ArticleBlock && $block->getType() == 'article') {
             $blockStructure = new ArticleBlockStructure();
             $blockStructure->article_id = $block->getArticleID();
-        } elseif ($block->getType() == 'article_list') {
+        } elseif ($block instanceof ArticleListBlock && $block->getType() == 'article_list') {
             $blockStructure = new ArticleListBlockStructure();
             $blockStructure->article_list_category_id = $block->getArticleListCategoryID();
             $blockStructure->article_list_order = $block->getArticleListOrder();
             $blockStructure->article_list_number = $block->getArticleListNumber();
-        } elseif ($block->getType() == 'global') {
+        } elseif ($block instanceof GlobalBlock && $block->getType() == 'global') {
             $blockStructure = new GlobalBlockStructure();
             $blockStructure->block_reference_id = $block->getBlockReferenceID();
         } else {
@@ -58,6 +67,9 @@ class BlockStructure extends DataStructure
         $blockStructure->area_id = $block->getAreaID();
         $blockStructure->display = $block->getDisplay();
         $blockStructure->is_global = $block->getIsGlobal();
+        $blockStructure->is_master = $block->getIsMaster();
+        $blockStructure->master_block_id = $block->getMasterBlockID();
+        $blockStructure->is_ghost = $block->getIsGhost();
 
         return $blockStructure;
     }

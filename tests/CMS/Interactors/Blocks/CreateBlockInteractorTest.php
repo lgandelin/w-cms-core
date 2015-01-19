@@ -1,7 +1,11 @@
 <?php
 
+use CMS\Entities\Area;
 use CMS\Entities\Block;
+use CMS\Interactors\Areas\GetAreaInteractor;
+use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
+use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 use CMS\Structures\BlockStructure;
 
@@ -13,7 +17,8 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repository = new InMemoryBlockRepository();
-        $this->interactor = new CreateBlockInteractor($this->repository);
+        $this->areaRepository = new InMemoryAreaRepository();
+        $this->interactor = new CreateBlockInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new GetAreaInteractor($this->areaRepository));
     }
 
     /**
@@ -30,6 +35,11 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
+        $area = new Area();
+        $area->setID(1);
+        $area->setName('Area');
+        $this->areaRepository->createArea($area);
+
         $block = new BlockStructure([
             'name' => 'Test block',
             'area_id' => 1
@@ -41,12 +51,27 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($this->repository->findByAreaID(1)));
     }
 
-    private function createSampleBlock()
+    public function testCreateBlockInMasterPage()
     {
-        $block = new Block();
-        $block->setID(1);
-        $block->setAreaID(1);
-        $block->setName('Test block');
-        $this->repository->createBlock($block);
+        $area = new Area();
+        $area->setID(1);
+        $area->setName('Master area');
+        $area->setIsMaster(1);
+        $this->areaRepository->createArea($area);
+
+        $childArea = new Area();
+        $childArea->setID(2);
+        $childArea->setName('Child area');
+        $childArea->setMasterAreaID(1);
+        $this->areaRepository->createArea($childArea);
+
+        $block = new BlockStructure([
+            'name' => 'Test block',
+            'area_id' => 1,
+            'is_master' => 1
+        ]);
+        $this->interactor->run($block);
+
+        $this->assertEquals(1, count($this->repository->findByAreaID(2)));
     }
 }

@@ -3,6 +3,9 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Entities\Page;
+use CMS\Interactors\Areas\DuplicateAreaInteractor;
+use CMS\Interactors\Blocks\DuplicateBlockInteractor;
+use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\PageStructure;
 
@@ -52,6 +55,8 @@ class CreatePageInteractor
         $page->setMetaTitle($pageStructure->meta_title);
         $page->setMetaDescription($pageStructure->meta_description);
         $page->setMetaKeywords($pageStructure->meta_keywords);
+        $page->setIsMaster($pageStructure->is_master);
+        $page->setMasterPageID($pageStructure->master_page_id);
 
         return $page;
     }

@@ -52,9 +52,25 @@ class InMemoryPageRepository implements PageRepositoryInterface
         return $this->pages;
     }
 
+    public function findChildPages($pageID)
+    {
+        $pages = [];
+        foreach ($this->pages as $page) {
+            if ($page->getMasterPageID() == $pageID) {
+                $pages[]= $page;
+            }
+        }
+
+        return $pages;
+    }
+
     public function createPage(Page $page)
     {
+        $pageID = sizeof($this->pages) + 1;
+        $page->setID($pageID);
         $this->pages[]= $page;
+
+        return $pageID;
     }
 
     public function updatePage(Page $page)

@@ -36,6 +36,18 @@ class InMemoryArticleRepository implements ArticleRepositoryInterface
         return false;
     }
 
+    public function findByPageID($pageID)
+    {
+        $articles = [];
+        foreach ($this->articles as $article) {
+            if ($article->getPageID() == $pageID) {
+                $articles[]= $article;
+            }
+        }
+
+        return $articles;
+    }
+
     public function findAll()
     {
         return $this->articles;

@@ -14,16 +14,9 @@ class GetArticlesInteractor
         $this->repository = $repository;
     }
 
-    public function getAll($structure = false)
+    public function getAll($structure = false, $categoryID = null, $limit = 0, $order = 'ASC')
     {
-        $articles = $this->repository->findAll();
-
-        return ($structure) ? $this->getArticleStructures($articles) : $articles;
-    }
-
-    public function getByCategoryID($categoryID, $limit, $order, $structure = false)
-    {
-        $articles = $this->repository->findByCategoryID($categoryID, $limit, $order);
+        $articles = $this->repository->findAll($categoryID, $limit, $order);
 
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }
@@ -38,5 +31,12 @@ class GetArticlesInteractor
         }
 
         return $articleStructures;
+    }
+
+    public function getByAssociatedPageID($pageID, $structure = false)
+    {
+        $articles = $this->repository->findByPageID($pageID);
+
+        return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }
 }
