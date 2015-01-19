@@ -3,9 +3,6 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Entities\Page;
-use CMS\Interactors\Areas\DuplicateAreaInteractor;
-use CMS\Interactors\Blocks\DuplicateBlockInteractor;
-use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\PageStructure;
 

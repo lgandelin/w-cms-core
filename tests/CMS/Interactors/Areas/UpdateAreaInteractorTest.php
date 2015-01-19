@@ -14,7 +14,10 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repository = new InMemoryAreaRepository();
-        $this->interactor = new UpdateAreaInteractor($this->repository, new GetAreasInteractor($this->repository));
+        $this->interactor = new UpdateAreaInteractor(
+            $this->repository,
+            new GetAreasInteractor($this->repository)
+        );
     }
 
     /**

@@ -12,6 +12,8 @@ interface AreaRepositoryInterface
 
     public function findAll();
 
+    public function findChildAreas($areaID);
+
     public function createArea(Area $area);
 
     public function updateArea(Area $area);

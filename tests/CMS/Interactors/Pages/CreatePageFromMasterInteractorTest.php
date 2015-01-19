@@ -38,7 +38,12 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
                 $this->areaRepository,
                 new GetAreasInteractor($this->areaRepository)
             ),
-            new DuplicateAreaInteractor(new CreateAreaInteractor($this->areaRepository, new GetPagesInteractor($this->repository), new GetPageInteractor($this->repository))),
+            new DuplicateAreaInteractor(
+                new CreateAreaInteractor($this->areaRepository,
+                    new GetPagesInteractor($this->repository),
+                    new GetPageInteractor($this->repository)
+                )
+            ),
             new GetBlocksInteractor($this->blockRepository),
             new UpdateBlockInteractor(
                 $this->blockRepository,
@@ -77,7 +82,11 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
             'name' => 'Test area'
         ]);
 
-        $createAreaInteractor = new CreateAreaInteractor($this->areaRepository, new GetPagesInteractor($this->repository), new GetPageInteractor($this->repository));
+        $createAreaInteractor = new CreateAreaInteractor(
+            $this->areaRepository,
+            new GetPagesInteractor($this->repository),
+            new GetPageInteractor($this->repository)
+        );
         $createAreaInteractor->run($area);
 
         $block = new BlockStructure([
@@ -86,7 +95,11 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
             'name' => 'Test block',
         ]);
 
-        $createBlockInteractor = new CreateBlockInteractor($this->blockRepository, new GetAreasInteractor($this->areaRepository), new GetAreaInteractor($this->areaRepository));
+        $createBlockInteractor = new CreateBlockInteractor(
+            $this->blockRepository,
+            new GetAreasInteractor($this->areaRepository),
+            new GetAreaInteractor($this->areaRepository)
+        );
         $createBlockInteractor->run($block);
 
         //Create child page

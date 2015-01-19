@@ -3,6 +3,7 @@
 use CMS\Entities\Area;
 use CMS\Entities\Block;
 use CMS\Interactors\Areas\DeleteAreaInteractor;
+use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
@@ -18,7 +19,12 @@ class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->repository = new InMemoryAreaRepository();
         $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new DeleteAreaInteractor($this->repository, new GetBlocksInteractor($this->blockRepository), new DeleteBlockInteractor($this->blockRepository));
+        $this->interactor = new DeleteAreaInteractor(
+            $this->repository,
+            new GetAreasInteractor($this->repository),
+            new GetBlocksInteractor($this->blockRepository),
+            new DeleteBlockInteractor($this->blockRepository, new GetBlocksInteractor($this->blockRepository))
+        );
     }
 
     public function testDelete()

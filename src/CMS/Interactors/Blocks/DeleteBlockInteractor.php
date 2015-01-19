@@ -2,8 +2,16 @@
 
 namespace CMS\Interactors\Blocks;
 
+use CMS\Repositories\BlockRepositoryInterface;
+
 class DeleteBlockInteractor extends GetBlockInteractor
 {
+    public function __construct(BlockRepositoryInterface $repository, GetBlocksInteractor $getBlocksInteractor)
+    {
+        $this->repository = $repository;
+        $this->getBlocksInteractor = $getBlocksInteractor;
+    }
+
     public function run($blockID)
     {
         if ($block = $this->getBlockByID($blockID)) {
@@ -17,7 +25,7 @@ class DeleteBlockInteractor extends GetBlockInteractor
 
     private function deleteChildBlocks($blockID)
     {
-        $childBlocks = $this->repository->findChildBlocks($blockID);
+        $childBlocks = $this->getBlocksInteractor->getChildBlocks($blockID);
 
         if (is_array($childBlocks) && sizeof($childBlocks) > 0) {
             foreach ($childBlocks as $childBlock) {

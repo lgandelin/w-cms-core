@@ -2,6 +2,7 @@
 
 use CMS\Entities\Block;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
+use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\InMemory\InMemoryBlockRepository;
 
 class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
@@ -12,7 +13,7 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repository = new InMemoryBlockRepository();
-        $this->interactor = new DeleteBlockInteractor($this->repository);
+        $this->interactor = new DeleteBlockInteractor($this->repository, new GetBlocksInteractor($this->repository));
     }
 
     /**

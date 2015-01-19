@@ -58,11 +58,11 @@ class UpdateAreaInteractor extends GetAreaInteractor
 
         if ($area->getIsMaster()) {
             $areaStructure->is_master = 0;
-            $this->updateChildAreas($areaStructure, $areaID);
+            $this->updateChildAreas($areaID, $areaStructure);
         }
     }
 
-    private function updateChildAreas(AreaStructure $areaStructure, $areaID)
+    private function updateChildAreas($areaID, AreaStructure $areaStructure)
     {
         $childAreas = $this->getAreasInteractor->getChildAreas($areaID);
 

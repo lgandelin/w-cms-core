@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\BlockStructure;
@@ -11,13 +10,11 @@ use CMS\Structures\BlockStructure;
 class CreateBlockInteractor
 {
     private $repository;
-    private $getAreaInteractor;
     private $getAreasInteractor;
 
-    public function __construct(BlockRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetAreaInteractor $getAreaInteractor)
+    public function __construct(BlockRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor)
     {
         $this->repository = $repository;
-        $this->getAreaInteractor = $getAreaInteractor;
         $this->getAreasInteractor = $getAreasInteractor;
     }
 
@@ -29,10 +26,8 @@ class CreateBlockInteractor
 
         $blockID = $this->repository->createBlock($block);
 
-        $area = $this->getAreaInteractor->getareaByID($block->getAreaID());
-
         if ($block->getIsMaster()) {
-            $this->createBlockInChildAreas($blockStructure, $blockID, $area->getID());
+            $this->createBlockInChildAreas($blockStructure, $blockID, $block->getAreaID());
         }
         
         return $blockID;

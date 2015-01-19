@@ -18,7 +18,10 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->repository = new InMemoryBlockRepository();
         $this->areaRepository = new InMemoryAreaRepository();
-        $this->interactor = new CreateBlockInteractor($this->repository, new GetAreasInteractor($this->areaRepository), new GetAreaInteractor($this->areaRepository));
+        $this->interactor = new CreateBlockInteractor(
+            $this->repository,
+            new GetAreasInteractor($this->areaRepository)
+        );
     }
 
     /**

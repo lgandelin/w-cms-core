@@ -2,12 +2,6 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Entities\Blocks\ArticleBlock;
-use CMS\Entities\Blocks\ArticleListBlock;
-use CMS\Entities\Blocks\GlobalBlock;
-use CMS\Entities\Blocks\HTMLBlock;
-use CMS\Entities\Blocks\MenuBlock;
-use CMS\Entities\Blocks\ViewFileBlock;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\Blocks\GlobalBlockStructure;
@@ -27,40 +21,39 @@ class DuplicateBlockInteractor
         $this->updateBlockInteractor = $updateBlockInteractor;
     }
 
-    public function run($block, $newAreaID)
+    public function run(BlockStructure $blockStructure, $newAreaID)
     {
-        $blockStructure = BlockStructure::toStructure($block);
         $blockStructure->ID = null;
         $blockStructure->area_id = $newAreaID;
 
         $blockID = $this->createBlockInteractor->run($blockStructure);
         $blockStructureContent = new BlockStructure();
 
-        if ($block instanceof HTMLBlock && $block->getType() == 'html') {
+        if ($blockStructure instanceof HTMLBlockStructure && $blockStructure->type == 'html') {
             $blockStructureContent = new HTMLBlockStructure([
-                'html' => $block->getHTML(),
+                'html' => $blockStructure->html
             ]);
-        } elseif ($block instanceof MenuBlock && $block->getType() == 'menu') {
+        } elseif ($blockStructure instanceof MenuBlockStructure && $blockStructure->type == 'menu') {
             $blockStructureContent = new MenuBlockStructure([
-                'menu_id' => $block->getMenuID(),
+                'menu_id' => $blockStructure->menu_id
             ]);
-        } elseif ($block instanceof ViewFileBlock && $block->getType() == 'view_file') {
+        } elseif ($blockStructure instanceof ViewFileBlockStructure && $blockStructure->type == 'view_file') {
             $blockStructureContent = new ViewFileBlockStructure([
-                'view_file' => $block->getViewFile(),
+                'view_file' => $blockStructure->view_file
             ]);
-        } elseif ($block instanceof ArticleBlock && $block->getType() == 'article') {
+        } elseif ($blockStructure instanceof ArticleBlockStructure && $blockStructure->type == 'article') {
             $blockStructureContent = new ArticleBlockStructure([
-                'article_id' => $block->getArticleID(),
+                'article_id' => $blockStructure->article_id
             ]);
-        } elseif ($block instanceof ArticleListBlock && $block->getType() == 'article_list') {
+        } elseif ($blockStructure instanceof ArticleListBlockStructure && $blockStructure->type == 'article_list') {
             $blockStructureContent = new ArticleListBlockStructure([
-                'article_list_category_id' => $block->getArticleListCategoryID(),
-                'article_list_order' => $block->getArticleListOrder(),
-                'article_list_number' => $block->getArticleListNumber(),
+                'article_list_category_id' => $blockStructure->article_list_category_id,
+                'article_list_order' => $blockStructure->article_list_order,
+                'article_list_number' => $blockStructure->article_list_number
             ]);
-        } elseif ($block instanceof GlobalBlock && $block->getType() == 'global') {
+        } elseif ($blockStructure instanceof GlobalBlockStructure && $blockStructure->type == 'global') {
             $blockStructureContent = new GlobalBlockStructure([
-                'block_reference_id' => $block->getBlockReferenceID()
+                'block_reference_id' => $blockStructure->block_reference_id
             ]);
         }
 

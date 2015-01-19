@@ -47,7 +47,7 @@ class CreatePageFromMasterInteractor
             $areas = $this->getAreasInteractor->getAll($pageStructure->master_page_id);
 
             foreach ($areas as $area) {
-                $newAreaID = $this->duplicateAreaInteractor->run($area, $pageID);
+                $newAreaID = $this->duplicateAreaInteractor->run(AreaStructure::toStructure($area), $pageID);
                 $areaStructure = new AreaStructure([
                     'master_area_id' => $area->getID()
                 ]);
@@ -56,16 +56,15 @@ class CreatePageFromMasterInteractor
                 $blocks = $this->getBlocksInteractor->getAllByAreaID($area->getID());
 
                 foreach ($blocks as $block) {
+                    $newBlockID = $this->duplicateBlockInteractor->run(BlockStructure::toStructure($block), $newAreaID);
+
                     if ($block->getIsGhost()) {
                         if ($customBlock) {
-                            $newBlockID = $this->duplicateBlockInteractor->run($block, $newAreaID);
                             $customBlock->is_ghost = 0;
                             $customBlock->master_block_id = $block->getID();
                             $this->updateBlockInteractor->run($newBlockID, $customBlock);
                         }
                     } else {
-                        $newBlockID = $this->duplicateBlockInteractor->run($block, $newAreaID);
-
                         $blockStructure = new BlockStructure([
                             'master_block_id' => $block->getID()
                         ]);

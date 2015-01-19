@@ -17,7 +17,10 @@ class GetAreasInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->repository = new InMemoryAreaRepository();
         $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new GetAreasInteractor($this->repository, $this->pageRepository);
+        $this->interactor = new GetAreasInteractor(
+            $this->repository,
+            $this->pageRepository
+        );
     }
 
     public function testGetAllAreas()

@@ -7,6 +7,8 @@ use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Repositories\PageRepositoryInterface;
+use CMS\Structures\AreaStructure;
+use CMS\Structures\BlockStructure;
 use CMS\Structures\PageStructure;
 
 class DuplicatePageInteractor extends GetPageInteractor
@@ -30,11 +32,11 @@ class DuplicatePageInteractor extends GetPageInteractor
             $areas = $this->getAreasInteractor->getAll($pageID);
 
             foreach ($areas as $area) {
-                $newAreaID = $this->duplicateAreaInteractor->run($area, $newPageID);
+                $newAreaID = $this->duplicateAreaInteractor->run(AreaStructure::toStructure($area), $newPageID);
                 $blocks = $this->getBlocksInteractor->getAllByAreaID($area->getID());
 
                 foreach ($blocks as $block) {
-                    $this->duplicateBlockInteractor->run($block, $newAreaID);
+                    $this->duplicateBlockInteractor->run(BlockStructure::toStructure($block), $newAreaID);
                 }
             }
         }

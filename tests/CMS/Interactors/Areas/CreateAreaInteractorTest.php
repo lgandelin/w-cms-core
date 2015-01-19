@@ -2,13 +2,12 @@
 
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
-use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Repositories\InMemory\InMemoryAreaRepository;
 use CMS\Repositories\InMemory\InMemoryPageRepository;
 use CMS\Structures\AreaStructure;
 
-class AddAreaInteractorTest extends PHPUnit_Framework_TestCase
+class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
 {
     private $repository;
     private $pageRepository;
@@ -18,7 +17,10 @@ class AddAreaInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->repository = new InMemoryAreaRepository();
         $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new CreateAreaInteractor($this->repository, new GetPagesInteractor($this->pageRepository), new GetPageInteractor($this->pageRepository));
+        $this->interactor = new CreateAreaInteractor(
+            $this->repository,
+            new GetPagesInteractor($this->pageRepository)
+        );
     }
 
     /**

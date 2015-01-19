@@ -33,8 +33,12 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
             new GetAreasInteractor($this->areaRepository),
             new DeleteAreaInteractor(
                 $this->areaRepository,
+                new GetAreasInteractor($this->areaRepository),
                 new GetBlocksInteractor($this->blockRepository),
-                new DeleteBlockInteractor($this->blockRepository)
+                new DeleteBlockInteractor(
+                    $this->blockRepository,
+                    new GetBlocksInteractor($this->blockRepository)
+                )
             ),
             new GetArticlesInteractor($this->articleRepository),
             new UpdateArticleInteractor($this->articleRepository)
