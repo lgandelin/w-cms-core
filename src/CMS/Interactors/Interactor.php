@@ -2,15 +2,14 @@
 
 namespace CMS\Interactors;
 
+use CMS\Events\EventManagerInterface;
+
 class Interactor
 {
-    public function __construct()
+    protected $eventManager;
+
+    public function setEventManager(EventManagerInterface $eventManager)
     {
-
+        $this->eventManager = $eventManager;
     }
-
-    public function fire()
-    {
-
-    }
-}
+} 

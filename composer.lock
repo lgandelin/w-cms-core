@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6a67cb7865bfe7e714563fb6809ae2f6",
+    "hash": "94b41ef52260ec8c9359e1a937650db8",
     "packages": [],
     "packages-dev": [
         {
@@ -1061,8 +1061,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "phpunit/phpunit": 20,
-        "fabpot/php-cs-fixer": 20,
-        "symfony/event-dispatcher": 20
+        "fabpot/php-cs-fixer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

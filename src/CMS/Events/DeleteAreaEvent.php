@@ -3,9 +3,8 @@
 namespace CMS\Events;
 
 use CMS\Entities\Area;
-use Symfony\Component\EventDispatcher\Event;
 
-class DeleteAreaEvent extends Event
+class DeleteAreaEvent implements EventInterface
 {
     protected $area;
 
@@ -18,4 +17,10 @@ class DeleteAreaEvent extends Event
     {
         return $this->area;
     }
+
+    public function getName()
+    {
+        return Events::DELETE_AREA;
+    }
+
 }

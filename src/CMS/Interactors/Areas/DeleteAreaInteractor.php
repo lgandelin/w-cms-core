@@ -13,14 +13,12 @@ class DeleteAreaInteractor extends GetAreaInteractor
     private $getBlocksInteractor;
     private $deleteBlockInteractor;
 
-    public function __construct(AreaRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, DeleteBlockInteractor $deleteBlockInteractor, $eventDispatcher = null)
+    public function __construct(AreaRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, DeleteBlockInteractor $deleteBlockInteractor)
     {
         $this->repository = $repository;
         $this->getAreasInteractor = $getAreasInteractor;
         $this->getBlocksInteractor = $getBlocksInteractor;
         $this->deleteBlockInteractor = $deleteBlockInteractor;
-
-        parent::__construct($repository, $eventDispatcher);
     }
 
     public function run($areaID)
@@ -34,7 +32,9 @@ class DeleteAreaInteractor extends GetAreaInteractor
             $this->deleteBlocks($areaID);
             $this->repository->deleteArea($areaID);
 
-            $this->fire(new DeleteAreaEvent(), $area);
+            if ($this->eventManager) {
+                $this->eventManager->fireEvent(new DeleteAreaEvent($area));
+            }
         }
     }
 
