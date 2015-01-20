@@ -22,5 +22,9 @@
             "CMS": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-0": {
+            "CMSTests": "tests/" }
+    },
     "minimum-stability": "dev"
 }
