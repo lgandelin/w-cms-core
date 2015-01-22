@@ -9,6 +9,8 @@ class MediaStructure extends DataStructure
     public $ID;
     public $name;
     public $path;
+    public $alt;
+    public $title;
 
     public static function toStructure(Media $media)
     {
@@ -16,6 +18,8 @@ class MediaStructure extends DataStructure
         $mediaStructure->ID = $media->getID();
         $mediaStructure->name = $media->getName();
         $mediaStructure->path = $media->getPath();
+        $mediaStructure->alt = $media->getAlt();
+        $mediaStructure->title = $media->getTitle();
 
         return $mediaStructure;
     }

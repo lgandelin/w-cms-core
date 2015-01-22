@@ -7,6 +7,8 @@ class Media
     private $ID;
     private $name;
     private $path;
+    private $alt;
+    private $title;
 
     public function setID($ID)
     {
@@ -36,6 +38,26 @@ class Media
     public function getPath()
     {
         return $this->path;
+    }
+
+    public function setAlt($alt)
+    {
+        $this->alt = $alt;
+    }
+
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     public function valid()
