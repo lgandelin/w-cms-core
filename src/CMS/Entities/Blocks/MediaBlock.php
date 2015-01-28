@@ -7,6 +7,7 @@ use CMS\Entities\Block;
 class MediaBlock extends Block
 {
     private $mediaID;
+    private $mediaLink;
 
     public function setMediaID($mediaID)
     {
@@ -17,4 +18,15 @@ class MediaBlock extends Block
     {
         return $this->mediaID;
     }
+
+    public function setMediaLink($mediaLink)
+    {
+        $this->mediaLink = $mediaLink;
+    }
+
+    public function getMediaLink()
+    {
+        return $this->mediaLink;
+    }
+
 }
