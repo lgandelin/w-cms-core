@@ -8,6 +8,7 @@ class MediaBlock extends Block
 {
     private $mediaID;
     private $mediaLink;
+    private $mediaFormatID;
 
     public function setMediaID($mediaID)
     {
@@ -29,4 +30,13 @@ class MediaBlock extends Block
         return $this->mediaLink;
     }
 
+    public function setMediaFormatID($mediaFormatID)
+    {
+        $this->mediaFormatID = $mediaFormatID;
+    }
+
+    public function getMediaFormatID()
+    {
+        return $this->mediaFormatID;
+    }
 }
