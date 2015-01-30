@@ -8,7 +8,7 @@ class MediaStructure extends DataStructure
 {
     public $ID;
     public $name;
-    public $path;
+    public $file_name;
     public $alt;
     public $title;
 
@@ -17,7 +17,7 @@ class MediaStructure extends DataStructure
         $mediaStructure = new MediaStructure();
         $mediaStructure->ID = $media->getID();
         $mediaStructure->name = $media->getName();
-        $mediaStructure->path = $media->getPath();
+        $mediaStructure->file_name = $media->getFileName();
         $mediaStructure->alt = $media->getAlt();
         $mediaStructure->title = $media->getTitle();
 

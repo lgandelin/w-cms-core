@@ -26,7 +26,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
         $mediaStructure = new MediaStructure([
             'ID' => 1,
             'name' => 'Test Media',
-            'path' => '/path/to/image'
+            'file_name' => '/file_name/to/image'
         ]);
 
         $this->interactor->run($mediaStructure);
@@ -37,14 +37,14 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
         $this->createSampleMedia(1);
 
         $mediaStructureUpdated = new MediaStructure([
-            'path' => '/new/path/to/image'
+            'file_name' => '/new/file_name/to/image'
         ]);
 
         $this->interactor->run(1, $mediaStructureUpdated);
 
         $media = $this->repository->findByID(1);
 
-        $this->assertEquals('/new/path/to/image', $media->getPath());
+        $this->assertEquals('/new/file_name/to/image', $media->getFileName());
     }
 
     private function createSampleMedia($mediaID)
@@ -52,7 +52,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
         $media = new Media();
         $media->setID($mediaID);
         $media->setName('Test media');
-        $media->setPath('/path/to/image');
+        $media->setFileName('/file_name/to/image');
         $this->repository->createMedia($media);
 
         return $media;

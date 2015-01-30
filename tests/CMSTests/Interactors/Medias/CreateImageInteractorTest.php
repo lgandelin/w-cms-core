@@ -13,7 +13,7 @@ class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {
         $media = new MediaStructure([
             'ID' => 1,
             'name' => 'Test media',
-            'path' => '/path/to/media'
+            'file_name' => '/path/to/media'
         ]);
 
         $repository = new InMemoryMediaRepository();

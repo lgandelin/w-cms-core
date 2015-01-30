@@ -12,8 +12,8 @@ class UpdateMediaInteractor extends GetMediaInteractor
             if (isset($mediaStructure->name) && $mediaStructure->name !== null && $media->getName() != $mediaStructure->name) {
                 $media->setName($mediaStructure->name);
             }
-            if (isset($mediaStructure->path) && $mediaStructure->path !== null && $media->getPath() != $mediaStructure->path) {
-                $media->setPath($mediaStructure->path);
+            if (isset($mediaStructure->file_name) && $mediaStructure->file_name !== null && $media->getFileName() != $mediaStructure->file_name) {
+                $media->setFileName($mediaStructure->file_name);
             }
             if (isset($mediaStructure->alt) && $mediaStructure->alt !== null && $media->getAlt() != $mediaStructure->alt) {
                 $media->setAlt($mediaStructure->alt);

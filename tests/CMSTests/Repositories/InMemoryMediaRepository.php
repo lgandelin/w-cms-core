@@ -40,7 +40,7 @@ class InMemoryMediaRepository implements MediaRepositoryInterface
         foreach ($this->medias as $mediaModel) {
             if ($mediaModel->getID() == $media->getID()) {
                 $mediaModel->setName($media->getName());
-                $mediaModel->setPath($media->getPath());
+                $mediaModel->setFileName($media->getFileName());
             }
         }
     }

@@ -6,7 +6,7 @@ class Media
 {
     private $ID;
     private $name;
-    private $path;
+    private $fileName;
     private $alt;
     private $title;
 
@@ -30,16 +30,6 @@ class Media
         return $this->name;
     }
 
-    public function setPath($path)
-    {
-        $this->path = $path;
-    }
-
-    public function getPath()
-    {
-        return $this->path;
-    }
-
     public function setAlt($alt)
     {
         $this->alt = $alt;
@@ -58,6 +48,16 @@ class Media
     public function getTitle()
     {
         return $this->title;
+    }
+
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+    }
+
+    public function getFileName()
+    {
+        return $this->fileName;
     }
 
     public function valid()

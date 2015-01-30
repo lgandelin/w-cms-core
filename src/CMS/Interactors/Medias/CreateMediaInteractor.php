@@ -29,7 +29,7 @@ class CreateMediaInteractor extends Interactor
         $media = new Media();
         $media->setID($mediaStructure->ID);
         $media->setName($mediaStructure->name);
-        $media->setPath($mediaStructure->path);
+        $media->setFileName($mediaStructure->file_name);
         $media->setAlt($mediaStructure->alt);
         $media->setTitle($mediaStructure->title);
 
