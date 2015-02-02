@@ -26,4 +26,11 @@ class ArticleBlock extends Block
 
         return $blockStructure;
     }
+
+    public function updateContent(ArticleBlockStructure $blockStructure)
+    {
+        if ($blockStructure->article_id != $this->getArticleID()) {
+            $this->setArticleID($blockStructure->article_id);
+        }
+    }
 }

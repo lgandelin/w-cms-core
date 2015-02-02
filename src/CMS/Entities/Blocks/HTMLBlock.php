@@ -26,4 +26,11 @@ class HTMLBlock extends Block
 
         return $blockStructure;
     }
+
+    public function updateContent(HTMLBlockStructure $blockStructure)
+    {
+        if ($blockStructure->html !== null && $blockStructure->html != $this->getHTML()) {
+            $this->setHTML($blockStructure->html);
+        }
+    }
 }

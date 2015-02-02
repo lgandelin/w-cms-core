@@ -26,4 +26,11 @@ class ViewFileBlock extends Block
 
         return $blockStructure;
     }
+
+    public function updateContent(ViewFileBlockStructure $blockStructure)
+    {
+        if ($blockStructure->view_file !== null && $blockStructure->view_file != $this->getViewFile()) {
+            $this->setViewFile($blockStructure->view_file);
+        }
+    }
 }

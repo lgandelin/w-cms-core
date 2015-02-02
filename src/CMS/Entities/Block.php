@@ -161,4 +161,9 @@ class Block
     {
         return new BlockStructure();
     }
+
+    public function updateContent()
+    {
+
+    }
 }

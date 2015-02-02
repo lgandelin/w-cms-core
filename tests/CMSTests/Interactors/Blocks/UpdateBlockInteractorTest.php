@@ -1,9 +1,11 @@
 <?php
 
 use CMS\Entities\Block;
+use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMSTests\Repositories\InMemoryBlockRepository;
+use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\BlockStructure;
 
 class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
@@ -101,5 +103,21 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('Test block updated', $childBlock1->getName());
         $this->assertEquals('Test block updated', $childBlock2->getName());
+    }
+
+    public function testUpdateHTMLBlock()
+    {
+        $block = new HTMLBlock();
+        $block->setID(1);
+        $block->setHTML('<h1>Hello World</h1>');
+        $this->repository->createBlock($block);
+
+        $blockStructure = new HTMLBlockStructure([
+           'html' => '<h1>Goodbye World</h1>'
+        ]);
+        $this->interactor->run(1, $blockStructure);
+
+        $blockUpdated = $this->repository->findByID(1);
+        $this->assertEquals('<h1>Goodbye World</h1>', $blockUpdated->getHTML());
     }
 }
