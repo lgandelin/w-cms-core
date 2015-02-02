@@ -36,50 +36,7 @@ class CreateBlockInteractor
     private function createBlockFromStructure(BlockStructure $blockStructure)
     {
         $block = new Block();
-
-        if ($blockStructure->name !== null) {
-            $block->setName($blockStructure->name);
-        }
-
-        if ($blockStructure->width !== null) {
-            $block->setWidth($blockStructure->width);
-        }
-
-        if ($blockStructure->height !== null) {
-            $block->setHeight($blockStructure->height);
-        }
-
-        if ($blockStructure->type !== null) {
-            $block->setType($blockStructure->type);
-        }
-
-        if ($blockStructure->class !== null) {
-            $block->setClass($blockStructure->class);
-        }
-
-        if ($blockStructure->order !== null) {
-            $block->setOrder($blockStructure->order);
-        }
-
-        if ($blockStructure->area_id !== null) {
-            $block->setAreaID($blockStructure->area_id);
-        }
-
-        if ($blockStructure->display !== null) {
-            $block->setDisplay($blockStructure->display);
-        }
-
-        if ($blockStructure->is_ghost !== null) {
-            $block->setIsGhost($blockStructure->is_ghost);
-        }
-
-        if ($blockStructure->is_master !== null) {
-            $block->setIsMaster($blockStructure->is_master);
-        }
-
-        if ($blockStructure->master_block_id !== null) {
-            $block->setMasterBlockID($blockStructure->master_block_id);
-        }
+        $block->setInfos($blockStructure);
 
         return $block;
     }
