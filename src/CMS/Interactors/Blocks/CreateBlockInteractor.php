@@ -2,7 +2,6 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Entities\Block;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Repositories\BlockRepositoryInterface;
 use CMS\Structures\BlockStructure;
@@ -20,8 +19,8 @@ class CreateBlockInteractor
 
     public function run(BlockStructure $blockStructure)
     {
-        $block = $this->createBlockFromStructure($blockStructure);
-
+        $block = $blockStructure->getBlock();
+        $block->setInfos($blockStructure);
         $block->valid();
 
         $blockID = $this->repository->createBlock($block);
@@ -31,14 +30,6 @@ class CreateBlockInteractor
         }
         
         return $blockID;
-    }
-
-    private function createBlockFromStructure(BlockStructure $blockStructure)
-    {
-        $block = new Block();
-        $block->setInfos($blockStructure);
-
-        return $block;
     }
 
     private function createBlockInChildAreas($blockStructure, $blockID, $areaID)

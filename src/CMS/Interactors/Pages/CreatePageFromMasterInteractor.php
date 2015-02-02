@@ -2,7 +2,6 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\Entities\Page;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Areas\DuplicateAreaInteractor;
@@ -13,7 +12,6 @@ use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\AreaStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\PageStructure;
-use CMS\Structures\Blocks\ArticleBlockStructure;
 
 class CreatePageFromMasterInteractor
 {

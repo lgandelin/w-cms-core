@@ -2,6 +2,8 @@
 
 namespace CMS\Structures;
 
+use CMS\Entities\Block;
+
 class BlockStructure extends DataStructure
 {
     public $ID;
@@ -37,5 +39,10 @@ class BlockStructure extends DataStructure
         $blockStructure->is_ghost = $block->getIsGhost();
 
         return $blockStructure;
+    }
+
+    public function getBlock()
+    {
+        return new Block();
     }
 }
