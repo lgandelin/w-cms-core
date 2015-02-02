@@ -2,6 +2,8 @@
 
 namespace CMS\Entities;
 
+use CMS\Structures\BlockStructure;
+
 class Block
 {
     private $ID;
@@ -153,5 +155,10 @@ class Block
         if (!$this->getName()) {
             throw new \InvalidArgumentException('You must provide a name for a block');
         }
+    }
+
+    public function getStructure()
+    {
+        return new BlockStructure();
     }
 }
