@@ -2,7 +2,9 @@
 
 namespace CMS\Entities;
 
-class Block
+use CMS\Structures\BlockStructure;
+
+abstract class Block
 {
     private $ID;
     private $name;
@@ -154,4 +156,61 @@ class Block
             throw new \InvalidArgumentException('You must provide a name for a block');
         }
     }
+
+    public function setInfos(BlockStructure $blockStructure)
+    {
+        if ($blockStructure->name !== null && $blockStructure->name != $this->getName()) {
+            $this->setName($blockStructure->name);
+        }
+
+        if ($blockStructure->width !== null && $blockStructure->width != $this->getWidth()) {
+            $this->setWidth($blockStructure->width);
+        }
+
+        if ($blockStructure->height !== null && $blockStructure->height != $this->getHeight()) {
+            $this->setHeight($blockStructure->height);
+        }
+
+        if ($blockStructure->class !== null && $blockStructure->class != $this->getClass()) {
+            $this->setClass($blockStructure->class);
+        }
+
+        if ($blockStructure->order !== null && $blockStructure->order != $this->getOrder()) {
+            $this->setOrder($blockStructure->order);
+        }
+
+        if ($blockStructure->type !== null && $blockStructure->type != $this->getType()) {
+            $this->setType($blockStructure->type);
+        }
+
+        if (isset($blockStructure->area_id) && $blockStructure->area_id !== null && $blockStructure->area_id != $this->getAreaId()) {
+            $this->setAreaID($blockStructure->area_id);
+        }
+
+        if ($blockStructure->display !== null && $blockStructure->display != $this->getDisplay()) {
+            $this->setDisplay($blockStructure->display);
+        }
+
+        if ($blockStructure->is_global !== null && $blockStructure->is_global != $this->getIsGlobal()) {
+            $this->setIsGlobal($blockStructure->is_global);
+        }
+
+        if ($blockStructure->master_block_id !== null && $blockStructure->master_block_id != $this->getMasterBlockID()) {
+            $this->setMasterBlockID($blockStructure->master_block_id);
+        }
+
+        if ($blockStructure->is_ghost !== null && $blockStructure->is_ghost != $this->getIsGhost()) {
+            $this->setIsGhost($blockStructure->is_ghost);
+        }
+
+        if (isset($blockStructure->is_master) && $blockStructure->is_master !== null && $blockStructure->is_master != $this->getIsMaster()) {
+            $this->setIsMaster($blockStructure->is_master);
+        }
+        
+        return $this;
+    }
+
+    abstract public function getStructure();
+
+    abstract public function updateContent(BlockStructure $blockStructure);
 }

@@ -13,9 +13,8 @@ class DuplicateAreaInteractor
         $this->createAreaInteractor = $createAreaInteractor;
     }
 
-    public function run($area, $newPageID)
+    public function run(AreaStructure $areaStructure, $newPageID)
     {
-        $areaStructure = AreaStructure::toStructure($area);
         $areaStructure->ID = null;
         $areaStructure->page_id = $newPageID;
 
