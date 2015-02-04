@@ -4,6 +4,7 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 use CMS\Structures\Blocks\GlobalBlockStructure;
+use CMS\Structures\BlockStructure;
 
 class GlobalBlock extends Block
 {
@@ -27,7 +28,7 @@ class GlobalBlock extends Block
         return $blockStructure;
     }
 
-    public function updateContent(GlobalBlockStructure $blockStructure)
+    public function updateContent(BlockStructure $blockStructure)
     {
         if ($blockStructure->block_reference_id != $this->getBlockReferenceID()) {
             $this->setBlockReferenceID($blockStructure->block_reference_id);

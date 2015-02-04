@@ -4,6 +4,7 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
+use CMS\Structures\BlockStructure;
 
 class ArticleListBlock extends Block
 {
@@ -51,7 +52,7 @@ class ArticleListBlock extends Block
         return $blockStructure;
     }
 
-    public function updateContent(ArticleListBlockStructure $blockStructure)
+    public function updateContent(BlockStructure $blockStructure)
     {
         if ($blockStructure->article_list_category_id != $this->getArticleListCategoryID() || $blockStructure->article_list_order != $this->getArticleListOrder() || $blockStructure->article_list_number != $this->getArticleListNumber()) {
             $this->setArticleListCategoryID($blockStructure->article_list_category_id);

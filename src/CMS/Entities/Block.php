@@ -211,7 +211,7 @@ class Block
         return $this;
     }
 
-    public function updateContent()
+    public function updateContent(BlockStructure $blockStructure)
     {
 
     }

@@ -4,6 +4,7 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 use CMS\Structures\Blocks\ArticleBlockStructure;
+use CMS\Structures\BlockStructure;
 
 class ArticleBlock extends Block
 {
@@ -27,7 +28,7 @@ class ArticleBlock extends Block
         return $blockStructure;
     }
 
-    public function updateContent(ArticleBlockStructure $blockStructure)
+    public function updateContent(BlockStructure $blockStructure)
     {
         if ($blockStructure->article_id != $this->getArticleID()) {
             $this->setArticleID($blockStructure->article_id);

@@ -4,6 +4,7 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 use CMS\Structures\Blocks\MenuBlockStructure;
+use CMS\Structures\BlockStructure;
 
 class MenuBlock extends Block
 {
@@ -27,7 +28,7 @@ class MenuBlock extends Block
         return $blockStructure;
     }
 
-    public function updateContent(MenuBlockStructure $blockStructure)
+    public function updateContent(BlockStructure $blockStructure)
     {
         if ($blockStructure->menu_id !== null && $blockStructure->menu_id != $this->getMenuID()) {
             $this->setMenuID($blockStructure->menu_id);
