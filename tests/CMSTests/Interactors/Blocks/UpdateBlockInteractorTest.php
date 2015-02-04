@@ -1,6 +1,5 @@
 <?php
 
-use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
@@ -24,7 +23,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingBlock()
     {
-        $blockStructure = new BlockStructure([
+        $blockStructure = new HTMLBlockStructure([
             'name' => 'Block'
         ]);
 
@@ -35,7 +34,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $blockID = $this->createSampleBlock();
 
-        $blockStructure = new BlockStructure([
+        $blockStructure = new HTMLBlockStructure([
             'name' => 'Block test updated'
         ]);
 
@@ -45,24 +44,9 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Block test updated', $block->getName());
     }
 
-    public function testUpdateBlockType()
-    {
-        $blockID = $this->createSampleBlock();
-
-        $blockStructure = new BlockStructure([
-            'type' => 'menu',
-            'menu_id' => 1
-        ]);
-
-        $this->interactor->run($blockID, $blockStructure);
-
-        $block = $this->repository->findByID($blockID);
-        $this->assertEquals('menu', $block->getType());
-    }
-
     private function createSampleBlock()
     {
-        $block = new Block();
+        $block = new HTMLBlock();
         $block->setName('Block');
         $block->setType('html');
         $block->setAreaID(null);
@@ -72,28 +56,28 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateMasterBlock()
     {
-        $masterBlock = new Block();
+        $masterBlock = new HTMLBlock();
         $masterBlock->setID(1);
         $masterBlock->setIsMaster(true);
         $masterBlock->setName('Test block');
         $masterBlock->setAreaID(null);
         $this->repository->createBlock($masterBlock);
 
-        $childBlock1 = new Block();
+        $childBlock1 = new HTMLBlock();
         $childBlock1->setID(2);
         $childBlock1->setMasterBlockID($masterBlock->getID());
         $childBlock1->setName('Test block');
         $childBlock1->setAreaID(null);
         $this->repository->createBlock($childBlock1);
 
-        $childBlock2 = new Block();
+        $childBlock2 = new HTMLBlock();
         $childBlock2->setID(3);
         $childBlock2->setMasterBlockID($masterBlock->getID());
         $childBlock2->setName('Test block');
         $childBlock2->setAreaID(null);
         $this->repository->createBlock($childBlock2);
 
-        $blockStructure = new BlockStructure([
+        $blockStructure = new HTMLBlockStructure([
             'name' => 'Test block updated'
         ]);
         $this->interactor->run($masterBlock->getID(), $blockStructure);

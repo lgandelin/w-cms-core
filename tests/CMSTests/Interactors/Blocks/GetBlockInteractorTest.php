@@ -1,10 +1,8 @@
 <?php
 
-use CMS\Entities\Area;
-use CMS\Entities\Block;
+use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\GetBlockInteractor;
 use CMSTests\Repositories\InMemoryBlockRepository;
-use CMS\Structures\BlockStructure;
 
 class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -41,7 +39,7 @@ class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
 
     private function createSampleBlock()
     {
-        $block = new Block();
+        $block = new HTMLBlock();
 
         return $this->repository->createBlock($block);
     }

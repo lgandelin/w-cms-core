@@ -13,11 +13,11 @@ use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
 use CMS\Interactors\Pages\CreatePageInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Interactors\Pages\GetPagesInteractor;
+use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMSTests\Repositories\InMemoryAreaRepository;
 use CMSTests\Repositories\InMemoryBlockRepository;
 use CMSTests\Repositories\InMemoryPageRepository;
 use CMS\Structures\AreaStructure;
-use CMS\Structures\BlockStructure;
 use CMS\Structures\PageStructure;
 
 class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
@@ -89,7 +89,7 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
         );
         $createAreaInteractor->run($area);
 
-        $block = new BlockStructure([
+        $block = new HTMLBlockStructure([
             'ID' => 1,
             'area_id' => 1,
             'name' => 'Test block',

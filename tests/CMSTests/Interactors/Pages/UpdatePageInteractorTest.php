@@ -17,6 +17,7 @@ use CMSTests\Repositories\InMemoryBlockRepository;
 use CMSTests\Repositories\InMemoryPageRepository;
 use CMS\Structures\AreaStructure;
 use CMS\Structures\BlockStructure;
+use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\PageStructure;
 
 class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
@@ -177,7 +178,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
         $createAreaInteractor = new CreateAreaInteractor($this->areaRepository, new GetPagesInteractor($this->repository), new GetPageInteractor($this->repository));
         $createAreaInteractor->run($area);
 
-        $block = new BlockStructure([
+        $block = new HTMLBlockStructure([
             'ID' => 1,
             'area_id' => 1,
             'name' => 'Test block'

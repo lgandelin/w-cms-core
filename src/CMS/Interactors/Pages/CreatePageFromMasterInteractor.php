@@ -63,9 +63,8 @@ class CreatePageFromMasterInteractor
                             $this->updateBlockInteractor->run($newBlockID, $customBlock);
                         }
                     } else {
-                        $blockStructure = new BlockStructure([
-                            'master_block_id' => $block->getID()
-                        ]);
+                        $blockStructure = $block->getStructure();
+                        $blockStructure->master_block_id = $block->getID();
                         $this->updateBlockInteractor->run($newBlockID, $blockStructure);
                     }
                 }

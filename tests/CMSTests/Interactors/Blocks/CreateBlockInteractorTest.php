@@ -1,13 +1,11 @@
 <?php
 
 use CMS\Entities\Area;
-use CMS\Entities\Block;
-use CMS\Interactors\Areas\GetAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
+use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMSTests\Repositories\InMemoryAreaRepository;
 use CMSTests\Repositories\InMemoryBlockRepository;
-use CMS\Structures\BlockStructure;
 
 class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -29,7 +27,7 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateInvalidBlock()
     {
-        $block = new BlockStructure([
+        $block = new HTMLBlockStructure([
 
         ]);
 
@@ -43,7 +41,8 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $area->setName('Area');
         $this->areaRepository->createArea($area);
 
-        $block = new BlockStructure([
+        $block = new HTMLBlockStructure([
+            'ID' => 1,
             'name' => 'Test block',
             'area_id' => 1
         ]);
@@ -68,11 +67,12 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $childArea->setMasterAreaID(1);
         $this->areaRepository->createArea($childArea);
 
-        $block = new BlockStructure([
+        $block = new HTMLBlockStructure([
             'name' => 'Test block',
             'area_id' => 1,
             'is_master' => 1
         ]);
+
         $this->interactor->run($block);
 
         $this->assertEquals(1, count($this->repository->findByAreaID(2)));

@@ -1,6 +1,6 @@
 <?php
 
-use CMS\Entities\Block;
+use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\DeleteBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMSTests\Repositories\InMemoryBlockRepository;
@@ -36,7 +36,7 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
 
     private function createSampleBlock()
     {
-        $block = new Block();
+        $block = new HTMLBlock();
         $block->setName('Block');
 
         return $this->repository->createBlock($block);
@@ -44,13 +44,13 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testDeleteMasterBlock()
     {
-        $block = new Block();
+        $block = new HTMLBlock();
         $block->setID(2);
         $block->setName('Block');
         $block->setIsMaster(1);
         $this->repository->createBlock($block);
 
-        $childBlock = new Block();
+        $childBlock = new HTMLBlock();
         $childBlock->setID(2);
         $childBlock->setName('Child block');
         $childBlock->setMasterBlockID(1);

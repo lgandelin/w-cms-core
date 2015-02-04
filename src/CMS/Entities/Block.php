@@ -4,7 +4,7 @@ namespace CMS\Entities;
 
 use CMS\Structures\BlockStructure;
 
-class Block
+abstract class Block
 {
     private $ID;
     private $name;
@@ -157,11 +157,6 @@ class Block
         }
     }
 
-    public function getStructure()
-    {
-        return new BlockStructure();
-    }
-
     public function setInfos(BlockStructure $blockStructure)
     {
         if ($blockStructure->name !== null && $blockStructure->name != $this->getName()) {
@@ -182,6 +177,10 @@ class Block
 
         if ($blockStructure->order !== null && $blockStructure->order != $this->getOrder()) {
             $this->setOrder($blockStructure->order);
+        }
+
+        if ($blockStructure->type !== null && $blockStructure->type != $this->getType()) {
+            $this->setType($blockStructure->type);
         }
 
         if (isset($blockStructure->area_id) && $blockStructure->area_id !== null && $blockStructure->area_id != $this->getAreaId()) {
@@ -211,8 +210,7 @@ class Block
         return $this;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
-    {
+    abstract public function getStructure();
 
-    }
+    abstract public function updateContent(BlockStructure $blockStructure);
 }

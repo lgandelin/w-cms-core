@@ -2,9 +2,7 @@
 
 namespace CMS\Structures;
 
-use CMS\Entities\Block;
-
-class BlockStructure extends DataStructure
+abstract class BlockStructure extends DataStructure
 {
     public $ID;
     public $name;
@@ -41,8 +39,5 @@ class BlockStructure extends DataStructure
         return $blockStructure;
     }
 
-    public function getBlock()
-    {
-        return new Block();
-    }
+    abstract public function getBlock();
 }

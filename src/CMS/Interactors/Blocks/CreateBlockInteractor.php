@@ -28,7 +28,7 @@ class CreateBlockInteractor
         if ($block->getIsMaster()) {
             $this->createBlockInChildAreas($blockStructure, $blockID, $block->getAreaID());
         }
-        
+
         return $blockID;
     }
 
@@ -38,17 +38,11 @@ class CreateBlockInteractor
 
         if (is_array($childAreas) && sizeof($childAreas) > 0) {
             foreach ($childAreas as $childArea) {
-                $blockStructure = new BlockStructure([
-                    'name' => $blockStructure->name,
-                    'area_id' => $childArea->getID(),
-                    'master_block_id' => $blockID,
-                    'width' => $blockStructure->width,
-                    'height' => $blockStructure->height,
-                    'order' => $blockStructure->order,
-                    'display' => $blockStructure->display,
-                    'type' => $blockStructure->type,
-                ]);
-                $this->run($blockStructure);
+                $childBlockStructure = clone $blockStructure;
+                $childBlockStructure->area_id = $childArea->getID();
+                $childBlockStructure->master_block_id = $blockID;
+
+                $this->run($childBlockStructure);
             }
         }
     }
