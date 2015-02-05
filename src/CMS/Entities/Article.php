@@ -11,6 +11,7 @@ class Article
     private $categoryID;
     private $authorID;
     private $pageID;
+    private $mediaID;
     private $publicationDate;
 
     public function setID($ID)
@@ -100,5 +101,15 @@ class Article
     public function getPageID()
     {
         return $this->pageID;
+    }
+
+    public function setMediaID($mediaID)
+    {
+        $this->mediaID = $mediaID;
+    }
+
+    public function getMediaID()
+    {
+        return $this->mediaID;
     }
 }
