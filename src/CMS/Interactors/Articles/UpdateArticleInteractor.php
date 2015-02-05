@@ -27,6 +27,9 @@ class UpdateArticleInteractor extends GetArticleInteractor
             if ($article->getPageID() != $articleStructure->page_id) {
                 $article->setPageID($articleStructure->page_id);
             }
+            if ($article->getMediaID() != $articleStructure->media_id) {
+                $article->setMediaID($articleStructure->media_id);
+            }
             if (isset($articleStructure->publication_date) && $articleStructure->publication_date !== null && $article->getPublicationDate() != $articleStructure->publication_date) {
                 $article->setPublicationDate($articleStructure->publication_date);
             }
