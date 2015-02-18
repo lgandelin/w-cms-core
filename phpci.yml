@@ -14,7 +14,9 @@ test:
             - "phpunit.xml"
     php_mess_detector:
         allow_failures: true
+        zero_config: true
     php_code_sniffer:
         standard: "PSR2"
+        allowed_warnings: -1
 
 complete:

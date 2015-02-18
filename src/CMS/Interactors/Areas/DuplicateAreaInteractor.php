@@ -20,4 +20,4 @@ class DuplicateAreaInteractor
 
         return $this->createAreaInteractor->run($areaStructure);
     }
-} 
+}

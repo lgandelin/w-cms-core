@@ -25,4 +25,4 @@ class DuplicateBlockInteractor
 
         return $blockID;
     }
-} 
+}

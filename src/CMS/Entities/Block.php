@@ -159,54 +159,18 @@ abstract class Block
 
     public function setInfos(BlockStructure $blockStructure)
     {
-        if ($blockStructure->name !== null && $blockStructure->name != $this->getName()) {
-            $this->setName($blockStructure->name);
+        $properties = get_object_vars($blockStructure);
+        foreach ($properties as $property => $value) {
+
+            $method = ucfirst(str_replace('_', '', $property));
+            $getter = 'get' . $method;
+            $setter = 'set' . $method;
+
+            if (isset($blockStructure->$property) && property_exists(get_parent_class($blockStructure), $property) && $blockStructure->$property !== null && $blockStructure->$property != call_user_func_array(array($this, $getter), array())) {
+                call_user_func_array(array($this, $setter), array($value));
+            }
         }
 
-        if ($blockStructure->width !== null && $blockStructure->width != $this->getWidth()) {
-            $this->setWidth($blockStructure->width);
-        }
-
-        if ($blockStructure->height !== null && $blockStructure->height != $this->getHeight()) {
-            $this->setHeight($blockStructure->height);
-        }
-
-        if ($blockStructure->class !== null && $blockStructure->class != $this->getClass()) {
-            $this->setClass($blockStructure->class);
-        }
-
-        if ($blockStructure->order !== null && $blockStructure->order != $this->getOrder()) {
-            $this->setOrder($blockStructure->order);
-        }
-
-        if ($blockStructure->type !== null && $blockStructure->type != $this->getType()) {
-            $this->setType($blockStructure->type);
-        }
-
-        if (isset($blockStructure->area_id) && $blockStructure->area_id !== null && $blockStructure->area_id != $this->getAreaId()) {
-            $this->setAreaID($blockStructure->area_id);
-        }
-
-        if ($blockStructure->display !== null && $blockStructure->display != $this->getDisplay()) {
-            $this->setDisplay($blockStructure->display);
-        }
-
-        if ($blockStructure->is_global !== null && $blockStructure->is_global != $this->getIsGlobal()) {
-            $this->setIsGlobal($blockStructure->is_global);
-        }
-
-        if ($blockStructure->master_block_id !== null && $blockStructure->master_block_id != $this->getMasterBlockID()) {
-            $this->setMasterBlockID($blockStructure->master_block_id);
-        }
-
-        if ($blockStructure->is_ghost !== null && $blockStructure->is_ghost != $this->getIsGhost()) {
-            $this->setIsGhost($blockStructure->is_ghost);
-        }
-
-        if (isset($blockStructure->is_master) && $blockStructure->is_master !== null && $blockStructure->is_master != $this->getIsMaster()) {
-            $this->setIsMaster($blockStructure->is_master);
-        }
-        
         return $this;
     }
 

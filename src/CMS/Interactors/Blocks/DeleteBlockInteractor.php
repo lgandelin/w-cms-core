@@ -16,8 +16,9 @@ class DeleteBlockInteractor extends GetBlockInteractor
     {
         if ($block = $this->getBlockByID($blockID)) {
 
-            if ($block->getIsMaster())
+            if ($block->getIsMaster()) {
                 $this->deleteChildBlocks($blockID);
+            }
 
             $this->repository->deleteBlock($blockID);
         }

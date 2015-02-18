@@ -15,4 +15,4 @@ class MediaBlockStructure extends BlockStructure
     {
         return new MediaBlock();
     }
-} 
+}

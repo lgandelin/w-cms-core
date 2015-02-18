@@ -54,11 +54,14 @@ class ArticleListBlock extends Block
 
     public function updateContent(BlockStructure $blockStructure)
     {
-        if ($blockStructure->article_list_category_id != $this->getArticleListCategoryID() || $blockStructure->article_list_order != $this->getArticleListOrder() || $blockStructure->article_list_number != $this->getArticleListNumber()) {
+        if (
+            $blockStructure->article_list_category_id != $this->getArticleListCategoryID()
+            || $blockStructure->article_list_order != $this->getArticleListOrder()
+            || $blockStructure->article_list_number != $this->getArticleListNumber()
+        ) {
             $this->setArticleListCategoryID($blockStructure->article_list_category_id);
             $this->setArticleListOrder($blockStructure->article_list_order);
             $this->setArticleListNumber($blockStructure->article_list_number);
         }
     }
 }
-
