@@ -9,29 +9,15 @@ class UpdateArticleInteractor extends GetArticleInteractor
     public function run($articleID, ArticleStructure $articleStructure)
     {
         if ($article = $this->getArticleByID($articleID)) {
-            if (isset($articleStructure->title) && $articleStructure->title !== null && $article->getTitle() != $articleStructure->title) {
-                $article->setTitle($articleStructure->title);
-            }
-            if (isset($articleStructure->summary) && $articleStructure->summary !== null && $article->getSummary() != $articleStructure->summary) {
-                $article->setSummary($articleStructure->summary);
-            }
-            if (isset($articleStructure->text) && $articleStructure->text !== null && $article->getText() != $articleStructure->text) {
-                $article->setText($articleStructure->text);
-            }
-            if (isset($articleStructure->category_id) && $articleStructure->category_id !== null && $article->getCategoryID() != $articleStructure->category_id) {
-                $article->setCategoryID($articleStructure->category_id);
-            }
-            if (isset($articleStructure->author_id) && $articleStructure->author_id !== null && $article->getAuthorID() != $articleStructure->author_id) {
-                $article->setAuthorID($articleStructure->author_id);
-            }
-            if ($article->getPageID() != $articleStructure->page_id) {
-                $article->setPageID($articleStructure->page_id);
-            }
-            if ($article->getMediaID() != $articleStructure->media_id) {
-                $article->setMediaID($articleStructure->media_id);
-            }
-            if (isset($articleStructure->publication_date) && $articleStructure->publication_date !== null && $article->getPublicationDate() != $articleStructure->publication_date) {
-                $article->setPublicationDate($articleStructure->publication_date);
+            $properties = get_object_vars($articleStructure);
+            unset ($properties['ID']);
+            foreach ($properties as $property => $value) {
+                $method = ucfirst(str_replace('_', '', $property));
+                $setter = 'set' . $method;
+
+                if ($articleStructure->$property !== null) {
+                    call_user_func_array(array($article, $setter), array($value));
+                }
             }
 
             $article->valid();

@@ -13,8 +13,14 @@ use CMS\Structures\PageStructure;
 
 class DuplicatePageInteractor extends GetPageInteractor
 {
-    public function __construct(PageRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, CreatePageInteractor $createPageInteractor, DuplicateAreaInteractor $duplicateAreaInteractor, DuplicateBlockInteractor $duplicateBlockInteractor)
-    {
+    public function __construct(
+        PageRepositoryInterface $repository,
+        GetAreasInteractor $getAreasInteractor,
+        GetBlocksInteractor $getBlocksInteractor,
+        CreatePageInteractor $createPageInteractor,
+        DuplicateAreaInteractor $duplicateAreaInteractor,
+        DuplicateBlockInteractor $duplicateBlockInteractor
+    ) {
         parent::__construct($repository);
 
         $this->getAreasInteractor = $getAreasInteractor;

@@ -12,8 +12,11 @@ class DeleteMenuInteractor extends GetMenuInteractor
     private $getMenuItemsInteractor;
     private $deleteMenuItemInteractor;
 
-    public function __construct(MenuRepositoryInterface $repository, GetMenuItemsInteractor $getMenuItemsInteractor, DeleteMenuItemInteractor $deleteMenuItemInteractor)
-    {
+    public function __construct(
+        MenuRepositoryInterface $repository,
+        GetMenuItemsInteractor $getMenuItemsInteractor,
+        DeleteMenuItemInteractor $deleteMenuItemInteractor
+    ) {
         $this->repository = $repository;
         $this->getMenuItemsInteractor = $getMenuItemsInteractor;
         $this->deleteMenuItemInteractor = $deleteMenuItemInteractor;

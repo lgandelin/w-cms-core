@@ -11,8 +11,13 @@ use CMS\Structures\ArticleStructure;
 
 class DeletePageInteractor extends GetPageInteractor
 {
-    public function __construct(PageRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, DeleteAreaInteractor $deleteAreaInteractor, GetArticlesInteractor $getArticlesInteractor, UpdateArticleInteractor $updateArticleInteractor)
-    {
+    public function __construct(
+        PageRepositoryInterface $repository,
+        GetAreasInteractor $getAreasInteractor,
+        DeleteAreaInteractor $deleteAreaInteractor,
+        GetArticlesInteractor $getArticlesInteractor,
+        UpdateArticleInteractor $updateArticleInteractor
+    ) {
         parent::__construct($repository);
 
         $this->getAreasInteractor = $getAreasInteractor;

@@ -30,7 +30,11 @@ class HTMLBlock extends Block
 
     public function updateContent(BlockStructure $blockStructure)
     {
-        if (isset($blockStructure->html) && $blockStructure->html !== null && $blockStructure->html != $this->getHTML()) {
+        if (
+            isset($blockStructure->html) &&
+            $blockStructure->html !== null &&
+            $blockStructure->html != $this->getHTML()
+        ) {
             $this->setHTML($blockStructure->html);
         }
     }

@@ -166,7 +166,12 @@ abstract class Block
             $getter = 'get' . $method;
             $setter = 'set' . $method;
 
-            if (isset($blockStructure->$property) && property_exists(get_parent_class($blockStructure), $property) && $blockStructure->$property !== null && $blockStructure->$property != call_user_func_array(array($this, $getter), array())) {
+            if (
+                isset($blockStructure->$property) &&
+                property_exists(get_parent_class($blockStructure), $property) &&
+                $blockStructure->$property !== null &&
+                $blockStructure->$property != call_user_func_array(array($this, $getter), array())
+            ) {
                 call_user_func_array(array($this, $setter), array($value));
             }
         }

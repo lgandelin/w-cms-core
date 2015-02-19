@@ -10,8 +10,12 @@ use CMS\Structures\MenuStructure;
 
 class DuplicateMenuInteractor extends GetMenuInteractor
 {
-    public function __construct(MenuRepositoryInterface $repository, CreateMenuInteractor $createMenuInteractor, GetMenuItemsInteractor $getMenuItemsInteractor, CreateMenuItemInteractor $createMenuItemInteractor)
-    {
+    public function __construct(
+        MenuRepositoryInterface $repository,
+        CreateMenuInteractor $createMenuInteractor,
+        GetMenuItemsInteractor $getMenuItemsInteractor,
+        CreateMenuItemInteractor $createMenuItemInteractor
+    ) {
         parent::__construct($repository);
 
         $this->createMenuInteractor = $createMenuInteractor;

@@ -13,6 +13,11 @@ test:
         config:
             - "phpunit.xml"
     php_mess_detector:
+        rules:
+            - "codesize"
+            - "unusedcode"
+            - "cleancode"
+            - "design"
         allow_failures: true
         zero_config: true
     php_code_sniffer:

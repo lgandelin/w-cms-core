@@ -9,10 +9,17 @@ class UpdateArticleCategoryInteractor extends GetArticleCategoryInteractor
     public function run($articleID, ArticleCategoryStructure $articleStructure)
     {
         if ($article = $this->getArticleCategoryByID($articleID)) {
-            if (isset($articleStructure->name) && $articleStructure->name !== null && $article->getName() != $articleStructure->name) {
+            if (
+                isset($articleStructure->name) &&
+                $articleStructure->name !== null &&
+                $article->getName() != $articleStructure->name
+            ) {
                 $article->setName($articleStructure->name);
             }
-            if (isset($articleStructure->description) && $articleStructure->description !== null && $article->getDescription() != $articleStructure->description) {
+            if (isset($articleStructure->description) &&
+                $articleStructure->description !== null &&
+                $article->getDescription() != $articleStructure->description
+            ) {
                 $article->setDescription($articleStructure->description);
             }
 

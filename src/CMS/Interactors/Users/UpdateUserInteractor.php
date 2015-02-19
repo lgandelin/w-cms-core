@@ -9,20 +9,16 @@ class UpdateUserInteractor extends GetUserInteractor
     public function run($userID, UserStructure $userStructure)
     {
         if ($user = $this->getUserByID($userID)) {
-            if (isset($userStructure->login) && $userStructure->login !== null && $user->getLogin() != $userStructure->login) {
-                $user->setLogin($userStructure->login);
-            }
-            if (isset($userStructure->password) && $userStructure->password !== null && $user->getPassword() != $userStructure->password) {
-                $user->setPassword($userStructure->password);
-            }
-            if (isset($userStructure->last_name) && $userStructure->last_name !== null && $user->getLastName() != $userStructure->last_name) {
-                $user->setLastName($userStructure->last_name);
-            }
-            if (isset($userStructure->first_name) && $userStructure->first_name !== null && $user->getFirstName() != $userStructure->first_name) {
-                $user->setFirstName($userStructure->first_name);
-            }
-            if (isset($userStructure->email) && $userStructure->email !== null && $user->getEmail() != $userStructure->email) {
-                $user->setEmail($userStructure->email);
+
+            $properties = get_object_vars($userStructure);
+            unset ($properties['ID']);
+            foreach ($properties as $property => $value) {
+                $method = ucfirst(str_replace('_', '', $property));
+                $setter = 'set' . $method;
+
+                if ($userStructure->$property !== null) {
+                    call_user_func_array(array($user, $setter), array($value));
+                }
             }
 
             $user->valid();
