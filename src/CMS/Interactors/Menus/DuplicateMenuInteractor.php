@@ -41,6 +41,7 @@ class DuplicateMenuInteractor extends GetMenuInteractor
         $menuDuplicated->setID(null);
         $menuDuplicated->setName($menu->getName() . ' - COPY');
         $menuDuplicated->setIdentifier($menu->getIdentifier() . '-copy');
+        $menuDuplicated->setLangID($menu->getLangID());
 
         return $this->createMenuInteractor->run(MenuStructure::toStructure($menuDuplicated));
     }

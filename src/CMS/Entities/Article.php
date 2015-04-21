@@ -8,6 +8,7 @@ class Article
     private $title;
     private $summary;
     private $text;
+    private $langID;
     private $categoryID;
     private $authorID;
     private $pageID;
@@ -52,6 +53,16 @@ class Article
     public function getText()
     {
         return $this->text;
+    }
+
+    public function setlangID($lang_id)
+    {
+        $this->langID = $lang_id;
+    }
+
+    public function getlangID()
+    {
+        return $this->langID;
     }
 
     public function setTitle($title)

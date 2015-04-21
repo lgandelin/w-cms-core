@@ -38,6 +38,7 @@ class CreateMenuInteractor
         $menu = new Menu();
         $menu->setIdentifier($menuStructure->identifier);
         $menu->setName($menuStructure->name);
+        $menu->setLangID($menuStructure->lang_id);
 
         return $menu;
     }

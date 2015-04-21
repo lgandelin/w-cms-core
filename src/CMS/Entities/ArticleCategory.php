@@ -7,6 +7,7 @@ class ArticleCategory
     private $ID;
     private $name;
     private $description;
+    private $langID;
 
     public function setID($ID)
     {
@@ -26,6 +27,16 @@ class ArticleCategory
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function setlangID($lang_id)
+    {
+        $this->langID = $lang_id;
+    }
+
+    public function getlangID()
+    {
+        return $this->langID;
     }
 
     public function setName($name)

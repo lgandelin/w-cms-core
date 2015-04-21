@@ -30,6 +30,7 @@ class CreateArticleCategoryInteractor
         $articleCategory->setID($articleStructure->ID);
         $articleCategory->setName($articleStructure->name);
         $articleCategory->setDescription($articleStructure->description);
+        $articleCategory->setLangID($articleStructure->lang_id);
 
         return $articleCategory;
     }
