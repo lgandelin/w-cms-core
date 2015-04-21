@@ -14,9 +14,9 @@ class GetPagesInteractor
         $this->repository = $repository;
     }
 
-    public function getAll($structure = false)
+    public function getAll($langID = null, $structure = false)
     {
-        $pages = $this->repository->findAll();
+        $pages = $this->repository->findAll($langID);
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }

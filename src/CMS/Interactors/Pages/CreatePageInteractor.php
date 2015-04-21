@@ -49,6 +49,7 @@ class CreatePageInteractor
         $page->setIdentifier($pageStructure->identifier);
         $page->setName($pageStructure->name);
         $page->setUri($pageStructure->uri);
+        $page->setLangID($pageStructure->lang_id);
         $page->setMetaTitle($pageStructure->meta_title);
         $page->setMetaDescription($pageStructure->meta_description);
         $page->setMetaKeywords($pageStructure->meta_keywords);

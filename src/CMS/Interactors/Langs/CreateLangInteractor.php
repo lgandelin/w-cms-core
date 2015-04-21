@@ -29,6 +29,7 @@ class CreateLangInteractor
         $lang = new Lang();
         $lang->setName($langStructure->name);
         $lang->setPrefix($langStructure->prefix);
+        $lang->setCode($langStructure->code);
         $lang->setIsDefault($langStructure->is_default);
 
         return $lang;

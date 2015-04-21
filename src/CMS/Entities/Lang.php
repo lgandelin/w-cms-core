@@ -7,6 +7,7 @@ class Lang
     private $ID;
     private $name;
     private $prefix;
+    private $code;
     private $is_default;
 
     public function setID($ID)
@@ -39,6 +40,16 @@ class Lang
         return $this->prefix;
     }
 
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    public function getCode()
+    {
+        return $this->code;
+    }
+    
     public function setIsDefault($is_default)
     {
         $this->is_default = $is_default;

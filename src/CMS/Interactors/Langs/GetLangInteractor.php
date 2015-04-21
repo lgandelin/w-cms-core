@@ -22,4 +22,9 @@ class GetLangInteractor
 
         return  ($structure) ? LangStructure::toStructure($lang) : $lang;
     }
+
+    public function getDefaultLangID()
+    {
+        return $this->repository->findDefautLangID();
+    }
 }
