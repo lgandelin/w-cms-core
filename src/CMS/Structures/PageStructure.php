@@ -9,6 +9,7 @@ class PageStructure extends DataStructure
     public $ID;
     public $name;
     public $uri;
+    public $lang_id;
     public $identifier;
     public $website;
     public $meta_title;
@@ -23,7 +24,7 @@ class PageStructure extends DataStructure
         $pageStructure->ID = $page->getID();
         $pageStructure->name = $page->getName();
         $pageStructure->uri = $page->getURI();
-        $pageStructure->identifier = $page->getIdentifier();
+        $pageStructure->lang_id = $page->getLangID();
         $pageStructure->identifier = $page->getIdentifier();
         $pageStructure->meta_title = $page->getMetaTitle();
         $pageStructure->meta_description = $page->getMetaDescription();

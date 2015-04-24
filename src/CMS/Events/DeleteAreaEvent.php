@@ -22,5 +22,4 @@ class DeleteAreaEvent implements EventInterface
     {
         return Events::DELETE_AREA;
     }
-
 }

@@ -1,0 +1,27 @@
+build_settings:
+    clone_depth: 1 # depth of 1 is a shallow clone, remove this line to clone entire repo
+    ignore:
+        - "vendor"
+        - "tests"
+
+setup:
+    composer:
+        action: "install"
+
+test:
+    php_unit:
+        config:
+            - "phpunit.xml"
+    php_mess_detector:
+        rules:
+            - "codesize"
+            - "unusedcode"
+            - "cleancode"
+            - "design"
+        allow_failures: true
+        zero_config: true
+    php_code_sniffer:
+        standard: "PSR2"
+        allowed_warnings: -1
+
+complete:

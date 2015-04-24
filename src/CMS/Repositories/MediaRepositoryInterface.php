@@ -15,4 +15,4 @@ interface MediaRepositoryInterface
     public function updateMedia(Media $media);
 
     public function deleteMedia($mediaID);
-} 
+}

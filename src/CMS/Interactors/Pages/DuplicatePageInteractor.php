@@ -13,8 +13,14 @@ use CMS\Structures\PageStructure;
 
 class DuplicatePageInteractor extends GetPageInteractor
 {
-    public function __construct(PageRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, CreatePageInteractor $createPageInteractor, DuplicateAreaInteractor $duplicateAreaInteractor, DuplicateBlockInteractor $duplicateBlockInteractor)
-    {
+    public function __construct(
+        PageRepositoryInterface $repository,
+        GetAreasInteractor $getAreasInteractor,
+        GetBlocksInteractor $getBlocksInteractor,
+        CreatePageInteractor $createPageInteractor,
+        DuplicateAreaInteractor $duplicateAreaInteractor,
+        DuplicateBlockInteractor $duplicateBlockInteractor
+    ) {
         parent::__construct($repository);
 
         $this->getAreasInteractor = $getAreasInteractor;
@@ -48,6 +54,7 @@ class DuplicatePageInteractor extends GetPageInteractor
         $pageDuplicated->setID(null);
         $pageDuplicated->setName($page->getName() . ' - COPY');
         $pageDuplicated->setURI($page->getURI() . '-copy');
+        $pageDuplicated->setLangID($page->getLangID());
         $pageDuplicated->setIdentifier($page->getIdentifier() . '-copy');
 
         return $this->createPageInteractor->run(PageStructure::toStructure($pageDuplicated));

@@ -8,12 +8,17 @@ use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\AreaStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\PageStructure;
 
 class UpdatePageInteractor extends GetPageInteractor
 {
-    public function __construct(PageRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, UpdateAreaInteractor $updateAreaInteractor, GetBlocksInteractor $getBlocksInteractor, UpdateBlockInteractor $updateBlockInteractor)
-    {
+    public function __construct(
+        PageRepositoryInterface $repository,
+        GetAreasInteractor $getAreasInteractor,
+        UpdateAreaInteractor $updateAreaInteractor,
+        GetBlocksInteractor $getBlocksInteractor,
+        UpdateBlockInteractor $updateBlockInteractor
+    ) {
         $this->repository = $repository;
         $this->getAreasInteractor = $getAreasInteractor;
         $this->updateAreaInteractor = $updateAreaInteractor;
@@ -21,36 +26,20 @@ class UpdatePageInteractor extends GetPageInteractor
         $this->updateBlockInteractor = $updateBlockInteractor;
     }
 
-    public function run($pageID, $pageStructure)
+    public function run($pageID, PageStructure $pageStructure)
     {
         $page = $this->getPageByID($pageID);
 
-        if (isset($pageStructure->name) && $pageStructure->name !== null && $page->getName() != $pageStructure->name) {
-            $page->setName($pageStructure->name);
-        }
+        $properties = get_object_vars($pageStructure);
+        unset ($properties['ID']);
+        unset ($properties['master_page_id']);
+        foreach ($properties as $property => $value) {
+            $method = ucfirst(str_replace('_', '', $property));
+            $setter = 'set' . $method;
 
-        if (isset($pageStructure->uri) && $pageStructure->uri !== null && $page->getURI() != $pageStructure->uri) {
-            $page->setURI($pageStructure->uri);
-        }
-
-        if (isset($pageStructure->identifier) && $pageStructure->identifier !== null && $page->getIdentifier() != $pageStructure->identifier) {
-            $page->setIdentifier($pageStructure->identifier);
-        }
-
-        if (isset($pageStructure->meta_title) && $pageStructure->meta_title !== null && $page->getMetaTitle() != $pageStructure->meta_title) {
-            $page->setMetaTitle($pageStructure->meta_title);
-        }
-
-        if (isset($pageStructure->meta_description) && $pageStructure->meta_description !== null && $page->getMetaDescription() != $pageStructure->meta_description) {
-            $page->setMetaDescription($pageStructure->meta_description);
-        }
-
-        if (isset($pageStructure->meta_keywords) && $pageStructure->meta_keywords !== null && $page->getMetaKeywords() != $pageStructure->meta_keywords) {
-            $page->setMetaKeywords($pageStructure->meta_keywords);
-        }
-
-        if (isset($pageStructure->is_master) && $pageStructure->is_master !== null && $page->getIsMaster() != $pageStructure->is_master) {
-            $page->setIsMaster($pageStructure->is_master);
+            if ($pageStructure->$property !== null) {
+                call_user_func_array(array($page, $setter), array($value));
+            }
         }
 
         $page->valid();

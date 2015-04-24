@@ -14,9 +14,9 @@ class GetArticlesInteractor
         $this->repository = $repository;
     }
 
-    public function getAll($structure = false, $categoryID = null, $limit = 0, $order = 'ASC')
+    public function getAll($langID = null, $structure = false, $categoryID = null, $limit = 0, $order = 'ASC')
     {
-        $articles = $this->repository->findAll($categoryID, $limit, $order);
+        $articles = $this->repository->findAll($langID, $categoryID, $limit, $order);
 
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }

@@ -10,9 +10,11 @@ interface PageRepositoryInterface
 
     public function findByUri($pageUri);
 
+    public function findByUriAndLangID($pageUri, $langID);
+
     public function findByIdentifier($pageIdentifier);
 
-    public function findAll();
+    public function findAll($langID = null);
 
     public function createPage(Page $page);
 

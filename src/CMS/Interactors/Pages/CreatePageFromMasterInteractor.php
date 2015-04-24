@@ -24,8 +24,16 @@ class CreatePageFromMasterInteractor
     private $updateBlockInteractor;
     private $duplicateBlockInteractor;
 
-    public function __construct(PageRepositoryInterface $repository, CreatePageInteractor $createPageInteractor, GetAreasInteractor $getAreasInteractor, UpdateAreaInteractor $updateAreaInteractor, DuplicateAreaInteractor $duplicateAreaInteractor, GetBlocksInteractor $getBlocksInteractor, UpdateBlockInteractor $updateBlockInteractor, DuplicateBlockInteractor $duplicateBlockInteractor)
-    {
+    public function __construct(
+        PageRepositoryInterface $repository,
+        CreatePageInteractor $createPageInteractor,
+        GetAreasInteractor $getAreasInteractor,
+        UpdateAreaInteractor $updateAreaInteractor,
+        DuplicateAreaInteractor $duplicateAreaInteractor,
+        GetBlocksInteractor $getBlocksInteractor,
+        UpdateBlockInteractor $updateBlockInteractor,
+        DuplicateBlockInteractor $duplicateBlockInteractor
+    ) {
         $this->repository = $repository;
         $this->createPageInteractor = $createPageInteractor;
         $this->getAreasInteractor = $getAreasInteractor;

@@ -34,40 +34,14 @@ class CreateAreaInteractor
     {
         $area = new Area();
 
-        if ($areaStructure->name !== null) {
-            $area->setName($areaStructure->name);
-        }
+        $properties = get_object_vars($areaStructure);
+        foreach ($properties as $property => $value) {
+            $method = ucfirst(str_replace('_', '', $property));
+            $setter = 'set' . $method;
 
-        if ($areaStructure->width !== null) {
-            $area->setWidth($areaStructure->width);
-        }
-
-        if ($areaStructure->height !== null) {
-            $area->setHeight($areaStructure->height);
-        }
-
-        if ($areaStructure->class !== null) {
-            $area->setClass($areaStructure->class);
-        }
-
-        if ($areaStructure->order !== null) {
-            $area->setOrder($areaStructure->order);
-        }
-
-        if ($areaStructure->page_id !== null) {
-            $area->setPageID($areaStructure->page_id);
-        }
-
-        if ($areaStructure->display !== null) {
-            $area->setDisplay($areaStructure->display);
-        }
-
-        if ($areaStructure->is_master !== null) {
-            $area->setIsMaster($areaStructure->is_master);
-        }
-
-        if ($areaStructure->master_area_id !== null) {
-            $area->setMasterAreaID($areaStructure->master_area_id);
+            if ($areaStructure->$property !== null) {
+                call_user_func_array(array($area, $setter), array($value));
+            }
         }
 
         return $area;

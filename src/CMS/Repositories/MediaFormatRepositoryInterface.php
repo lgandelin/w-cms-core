@@ -15,4 +15,4 @@ interface MediaFormatRepositoryInterface
     public function updateMediaFormat(MediaFormat $mediaFormat);
 
     public function deleteMediaFormat($mediaFormatID);
-} 
+}

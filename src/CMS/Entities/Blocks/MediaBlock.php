@@ -62,7 +62,10 @@ class MediaBlock extends Block
             $this->setMediaLink($blockStructure->media_link);
         }
 
-        if ($blockStructure->media_format_id !== null && $blockStructure->media_format_id != $this->getMediaFormatID()) {
+        if (
+            $blockStructure->media_format_id !== null &&
+            $blockStructure->media_format_id != $this->getMediaFormatID()
+        ) {
             $this->setMediaFormatID($blockStructure->media_format_id);
         }
     }

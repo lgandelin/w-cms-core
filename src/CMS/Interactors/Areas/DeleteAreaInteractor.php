@@ -13,8 +13,12 @@ class DeleteAreaInteractor extends GetAreaInteractor
     private $getBlocksInteractor;
     private $deleteBlockInteractor;
 
-    public function __construct(AreaRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor, GetBlocksInteractor $getBlocksInteractor, DeleteBlockInteractor $deleteBlockInteractor)
-    {
+    public function __construct(
+        AreaRepositoryInterface $repository,
+        GetAreasInteractor $getAreasInteractor,
+        GetBlocksInteractor $getBlocksInteractor,
+        DeleteBlockInteractor $deleteBlockInteractor
+    ) {
         $this->repository = $repository;
         $this->getAreasInteractor = $getAreasInteractor;
         $this->getBlocksInteractor = $getBlocksInteractor;

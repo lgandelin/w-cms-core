@@ -68,5 +68,4 @@ class Media
 
         return true;
     }
-
-} 
+}

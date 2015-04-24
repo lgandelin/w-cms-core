@@ -10,8 +10,12 @@ use CMS\Structures\MenuStructure;
 
 class DuplicateMenuInteractor extends GetMenuInteractor
 {
-    public function __construct(MenuRepositoryInterface $repository, CreateMenuInteractor $createMenuInteractor, GetMenuItemsInteractor $getMenuItemsInteractor, CreateMenuItemInteractor $createMenuItemInteractor)
-    {
+    public function __construct(
+        MenuRepositoryInterface $repository,
+        CreateMenuInteractor $createMenuInteractor,
+        GetMenuItemsInteractor $getMenuItemsInteractor,
+        CreateMenuItemInteractor $createMenuItemInteractor
+    ) {
         parent::__construct($repository);
 
         $this->createMenuInteractor = $createMenuInteractor;
@@ -37,6 +41,7 @@ class DuplicateMenuInteractor extends GetMenuInteractor
         $menuDuplicated->setID(null);
         $menuDuplicated->setName($menu->getName() . ' - COPY');
         $menuDuplicated->setIdentifier($menu->getIdentifier() . '-copy');
+        $menuDuplicated->setLangID($menu->getLangID());
 
         return $this->createMenuInteractor->run(MenuStructure::toStructure($menuDuplicated));
     }

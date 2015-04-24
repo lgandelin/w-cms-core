@@ -21,4 +21,4 @@ class MediaFormatStructure extends DataStructure
 
         return $mediaStructure;
     }
-} 
+}

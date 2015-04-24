@@ -9,8 +9,10 @@ class DuplicateBlockInteractor
     private $createBlockInteractor;
     private $updateBlockInteractor;
 
-    public function __construct(CreateBlockInteractor $createBlockInteractor, UpdateBlockInteractor $updateBlockInteractor)
-    {
+    public function __construct(
+        CreateBlockInteractor $createBlockInteractor,
+        UpdateBlockInteractor $updateBlockInteractor
+    ) {
         $this->createBlockInteractor = $createBlockInteractor;
         $this->updateBlockInteractor = $updateBlockInteractor;
     }
@@ -25,4 +27,4 @@ class DuplicateBlockInteractor
 
         return $blockID;
     }
-} 
+}

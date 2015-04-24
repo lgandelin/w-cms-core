@@ -20,36 +20,15 @@ class UpdateAreaInteractor extends GetAreaInteractor
     {
         $area = $this->getAreaByID($areaID);
 
-        if ($areaStructure->name !== null && $areaStructure->name != $area->getName()) {
-            $area->setName($areaStructure->name);
-        }
+        $properties = get_object_vars($areaStructure);
+        unset ($properties['ID']);
+        foreach ($properties as $property => $value) {
+            $method = ucfirst(str_replace('_', '', $property));
+            $setter = 'set' . $method;
 
-        if ($areaStructure->width !== null && $areaStructure->width != $area->getWidth()) {
-            $area->setWidth($areaStructure->width);
-        }
-
-        if ($areaStructure->height !== null && $areaStructure->height != $area->getHeight()) {
-            $area->setHeight($areaStructure->height);
-        }
-
-        if ($areaStructure->class !== null && $areaStructure->class != $area->getClass()) {
-            $area->setClass($areaStructure->class);
-        }
-
-        if ($areaStructure->order !== null && $areaStructure->order != $area->getOrder()) {
-            $area->setOrder($areaStructure->order);
-        }
-
-        if ($areaStructure->display !== null && $areaStructure->display != $area->getDisplay()) {
-            $area->setDisplay($areaStructure->display);
-        }
-
-        if ($areaStructure->master_area_id !== null && $areaStructure->master_area_id != $area->getMasterAreaID()) {
-            $area->setMasterAreaID($areaStructure->master_area_id);
-        }
-
-        if (isset($areaStructure->is_master) && $areaStructure->is_master !== null && $areaStructure->is_master != $area->getIsMaster()) {
-            $area->setIsMaster($areaStructure->is_master);
+            if ($areaStructure->$property !== null) {
+                call_user_func_array(array($area, $setter), array($value));
+            }
         }
 
         $area->valid();
