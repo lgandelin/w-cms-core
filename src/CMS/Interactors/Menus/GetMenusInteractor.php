@@ -14,9 +14,9 @@ class GetMenusInteractor
         $this->repository = $repository;
     }
     
-    public function getAll($structure = false)
+    public function getAll($langID = null, $structure = false)
     {
-        $menus = $this->repository->findAll();
+        $menus = $this->repository->findAll($langID);
 
         return ($structure) ? $this->getMenuStructures($menus) : $menus;
     }

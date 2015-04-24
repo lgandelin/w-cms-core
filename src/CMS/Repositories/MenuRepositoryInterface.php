@@ -10,7 +10,7 @@ interface MenuRepositoryInterface
 
     public function findByIdentifier($menuIdentifier);
 
-    public function findAll();
+    public function findAll($langID = null);
 
     public function createMenu(Menu $menu);
 

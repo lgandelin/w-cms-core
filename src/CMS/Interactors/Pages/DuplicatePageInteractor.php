@@ -54,6 +54,7 @@ class DuplicatePageInteractor extends GetPageInteractor
         $pageDuplicated->setID(null);
         $pageDuplicated->setName($page->getName() . ' - COPY');
         $pageDuplicated->setURI($page->getURI() . '-copy');
+        $pageDuplicated->setLangID($page->getLangID());
         $pageDuplicated->setIdentifier($page->getIdentifier() . '-copy');
 
         return $this->createPageInteractor->run(PageStructure::toStructure($pageDuplicated));

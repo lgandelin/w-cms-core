@@ -7,6 +7,7 @@ class Menu
     private $ID;
     private $identifier;
     private $name;
+    private $langID;
 
     public function setID($ID)
     {
@@ -36,6 +37,16 @@ class Menu
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setLangID($langID)
+    {
+        $this->langID = $langID;
+    }
+
+    public function getLangID()
+    {
+        return $this->langID;
     }
 
     public function valid()

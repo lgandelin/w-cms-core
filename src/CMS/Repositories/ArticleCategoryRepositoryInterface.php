@@ -8,7 +8,7 @@ interface ArticleCategoryRepositoryInterface
 {
     public function findByID($articleCategoryID);
 
-    public function findAll();
+    public function findAll($lang = null);
 
     public function createArticleCategory(ArticleCategory $articleCategory);
 

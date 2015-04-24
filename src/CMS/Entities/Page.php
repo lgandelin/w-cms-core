@@ -8,6 +8,7 @@ class Page
     private $name;
     private $identifier;
     private $uri;
+    private $langID;
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
@@ -52,6 +53,16 @@ class Page
     public function getUri()
     {
         return $this->uri;
+    }
+
+    public function setLangID($lang_id)
+    {
+        $this->langID = $lang_id;
+    }
+
+    public function getLangID()
+    {
+        return $this->langID;
     }
 
     public function setMetaTitle($meta_title)
