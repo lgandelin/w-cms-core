@@ -11,6 +11,7 @@ abstract class Block
     private $width;
     private $height;
     private $class;
+    private $alignment;
     private $order;
     private $type;
     private $areaID;
@@ -38,6 +39,16 @@ abstract class Block
     public function getClass()
     {
         return $this->class;
+    }
+
+    public function setAlignment($alignment)
+    {
+        $this->alignment = $alignment;
+    }
+
+    public function getAlignment()
+    {
+        return $this->alignment;
     }
 
     public function setHeight($height)
