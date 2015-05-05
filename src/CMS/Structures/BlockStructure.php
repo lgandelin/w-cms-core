@@ -9,6 +9,7 @@ abstract class BlockStructure extends DataStructure
     public $width;
     public $height;
     public $class;
+    public $alignment;
     public $order;
     public $type;
     public $area_id;
@@ -27,6 +28,7 @@ abstract class BlockStructure extends DataStructure
         $blockStructure->width = $block->getWidth();
         $blockStructure->height = $block->getHeight();
         $blockStructure->class = $block->getClass();
+        $blockStructure->alignment = $block->getAlignment();
         $blockStructure->order = $block->getOrder();
         $blockStructure->type = $block->getType();
         $blockStructure->area_id = $block->getAreaID();
