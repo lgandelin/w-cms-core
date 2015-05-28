@@ -4,6 +4,7 @@ namespace CMSTests\Interactors\Langs;
 
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\GetLangInteractor;
+use CMS\Interactors\Langs\GetLangsInteractor;
 use CMSTests\Repositories\InMemoryLangRepository;
 
 class GetLangInteractorTest extends \PHPUnit_Framework_TestCase {
@@ -11,7 +12,7 @@ class GetLangInteractorTest extends \PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->repository = new InMemoryLangRepository();
-        $this->interactor = new GetLangInteractor($this->repository);
+        $this->interactor = new GetLangInteractor($this->repository, new GetLangsInteractor($this->repository));
     }
 
     /**

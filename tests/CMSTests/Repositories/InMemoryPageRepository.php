@@ -36,6 +36,17 @@ class InMemoryPageRepository implements PageRepositoryInterface
         return false;
     }
 
+    public function findByUriAndLangID($pageUri, $langID)
+    {
+        foreach ($this->pages as $page) {
+            if ($page->getURI() == $pageUri && $page->getLangID() == $langID) {
+                return $page;
+            }
+        }
+
+        return false;
+    }
+
     public function findByIdentifier($pageIdentifier)
     {
         foreach ($this->pages as $page) {
@@ -47,7 +58,7 @@ class InMemoryPageRepository implements PageRepositoryInterface
         return false;
     }
 
-    public function findAll()
+    public function findAll($lang = null)
     {
         return $this->pages;
     }

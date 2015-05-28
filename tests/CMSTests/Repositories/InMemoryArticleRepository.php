@@ -48,7 +48,7 @@ class InMemoryArticleRepository implements ArticleRepositoryInterface
         return $articles;
     }
 
-    public function findAll()
+    public function findAll($lang = null)
     {
         return $this->articles;
     }

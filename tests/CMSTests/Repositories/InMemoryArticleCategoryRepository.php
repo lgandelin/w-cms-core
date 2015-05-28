@@ -25,7 +25,7 @@ class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInte
         return false;
     }
 
-    public function findAll()
+    public function findAll($lang = null)
     {
         return $this->articleCategories;
     }

@@ -23,9 +23,15 @@ class GetPageInteractor
         return ($structure) ? PageStructure::toStructure($page) : $page;
     }
 
-    public function getPageByURI($pageURI, $langID, $structure = false)
+    public function getPageByURI($pageURI, $langID = null, $structure = false)
     {
-        if (!$page = $this->repository->findByUriAndLangID($pageURI, $langID)) {
+        if ($langID) {
+            $page = $this->repository->findByUriAndLangID($pageURI, $langID);
+        } else {
+            $page = $this->repository->findByUri($pageURI);
+        }
+
+        if (!$page) {
             throw new \Exception('The page was not found');
         }
 

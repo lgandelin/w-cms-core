@@ -36,7 +36,7 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleArticleCategory(1);
         $this->createSampleArticleCategory(2);
 
-        $articleCategories = $this->interactor->getAll(true);
+        $articleCategories = $this->interactor->getAll(null, true);
 
         $this->assertCount(2, $articleCategories);
         $this->assertInstanceOf('\CMS\Structures\ArticleCategoryStructure', $articleCategories[0]);

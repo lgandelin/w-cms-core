@@ -36,7 +36,7 @@ class InMemoryMenuRepository implements MenuRepositoryInterface
         return false;
     }
 
-    public function findAll()
+    public function findAll($langID = null)
     {
         return $this->menus;
     }

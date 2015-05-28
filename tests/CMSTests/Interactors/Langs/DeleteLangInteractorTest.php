@@ -4,6 +4,7 @@ namespace CMSTests\Interactors\Langs;
 
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\DeleteLangInteractor;
+use CMS\Interactors\Langs\GetLangsInteractor;
 use CMSTests\Repositories\InMemoryLangRepository;
 
 class DeleteLangInteractorTest extends \PHPUnit_Framework_TestCase {
@@ -11,7 +12,7 @@ class DeleteLangInteractorTest extends \PHPUnit_Framework_TestCase {
     public function setUp()
     {
         $this->repository = new InMemoryLangRepository();
-        $this->interactor = new DeleteLangInteractor($this->repository);
+        $this->interactor = new DeleteLangInteractor($this->repository, new GetLangsInteractor($this->repository));
     }
 
     /**
