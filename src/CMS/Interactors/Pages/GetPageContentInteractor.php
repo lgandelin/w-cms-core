@@ -29,27 +29,28 @@ class GetPageContentInteractor
         $this->getBlocksInteractor = $getBlocksInteractor;
         $this->getBlockContentInteractor = $getBlockContentInteractor;
     }
-    public function run($uri)
+    public function run($uri, $structure = false)
     {
         $lang = $this->getLangInteractor->getLangFromURI($uri);
 
-        try {
-            $page = $this->getPageInteractor->getPageByUri($uri, $lang->ID, true);
-            $areas = $this->getAreasInteractor->getAll($page->ID, true);
+        //try {
+            $page = $this->getPageInteractor->getPageByUri($uri, $lang->ID, $structure);
+            $areas = $this->getAreasInteractor->getAll($page->getID(), $structure);
 
             if ($areas) {
                 foreach ($areas as $area) {
-                    $blocks = $this->getBlocksInteractor->getAllByAreaID($area->ID, true);
+                    $blocks = $this->getBlocksInteractor->getAllByAreaID($area->getID(), $structure);
                     foreach ($blocks as $block) {
-                        $area->blocks[]= $this->getBlockContentInteractor->run($block);
+                        //$area->blocks[]= $this->getBlockContentInteractor->run($block);
+                        $area->blocks[]= $block;
                     }
                     $page->areas[]= $area;
                 }
             }
 
-        } catch(\Exception $e) {
+        /*} catch(\Exception $e) {
             $page = $this->getPageInteractor->getPageByUri('/404', true);
-        }
+        }*/
 
         return $page;
     }

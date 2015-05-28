@@ -53,27 +53,27 @@ class GetBlockContentInteractor
         $this->getBlockInteractor = $getBlockInteractor;
     }
 
-    public function run(BlockStructure $block)
+    public function run(BlockStructure $block, $structure = false)
     {
         if ($block instanceof MenuBlockStructure && $block->menu_id) {
-            $block->menu = $this->getMenuInteractor->getMenuByID($block->menu_id, true);
-            $menuItems = $this->getMenuItemsInteractor->getAll($block->menu_id, true);
+            $block->menu = $this->getMenuInteractor->getMenuByID($block->menu_id, $structure);
+            $menuItems = $this->getMenuItemsInteractor->getAll($block->menu_id, $structure);
 
             foreach ($menuItems as $menuItem)
                 if ($menuItem->page_id)
-                    $menuItem->page = $this->getPageInteractor->getPageByID($menuItem->page_id, true);
+                    $menuItem->page = $this->getPageInteractor->getPageByID($menuItem->page_id, $structure);
 
             $block->menu->items =$menuItems;
         }
 
         elseif ($block instanceof ArticleBlockStructure && $block->article_id) {
-            $block->article = $this->getArticleInteractor->getArticleByID($block->article_id, true);
+            $block->article = $this->getArticleInteractor->getArticleByID($block->article_id, $structure);
 
             if ($block->article->author_id)
-                $block->article->author = $this->getUserInteractor->getUserByID($block->article->author_id, true);
+                $block->article->author = $this->getUserInteractor->getUserByID($block->article->author_id, $structure);
 
             if ($block->article->page_id)
-                $block->article->page = $this->getPageInteractor->getPageByID($block->article->page_id, true);
+                $block->article->page = $this->getPageInteractor->getPageByID($block->article->page_id, $structure);
         }
 
         elseif ($block instanceof ArticleListBlockStructure) {
@@ -81,10 +81,10 @@ class GetBlockContentInteractor
             $block->articles = $this->getArticlesInteractor->getAll(true, $block->article_list_category_id, $block->article_list_number, $block->article_list_order);
             foreach ($block->articles as $article) {
                 if ($article->page_id)
-                    $article->page = $this->getPageInteractor->getPageByID($article->page_id, true);
+                    $article->page = $this->getPageInteractor->getPageByID($article->page_id, $structure);
 
                 if ($article->media_id)
-                    $article->media = $this->getMediaInteractor->getMediaByID($article->media_id, true);
+                    $article->media = $this->getMediaInteractor->getMediaByID($article->media_id, $structure);
             }
         }
 
@@ -92,7 +92,7 @@ class GetBlockContentInteractor
 
             if ($block->block_reference_id !== null) {
                 $oldBlock = $block;
-                $block = $this->getBlockInteractor->getBlockByID($block->block_reference_id, true);
+                $block = $this->getBlockInteractor->getBlockByID($block->block_reference_id, $structure);
                 $block = self::run($block);
 
                 $block->ID = $oldBlock->ID;
