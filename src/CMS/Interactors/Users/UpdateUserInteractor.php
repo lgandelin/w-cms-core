@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Users;
 
+use CMS\Context;
 use CMS\Structures\UserStructure;
 
 class UpdateUserInteractor extends GetUserInteractor
@@ -27,13 +28,13 @@ class UpdateUserInteractor extends GetUserInteractor
                 throw new \Exception('There is already a user with the same login');
             }
 
-            $this->repository->updateUser($user);
+            Context::$userRepository->updateUser($user);
         }
     }
 
     private function anotherUserExistsWithSameLogin($userID, $userLogin)
     {
-        $user = $this->repository->findByLogin($userLogin);
+        $user = Context::$userRepository->findByLogin($userLogin);
 
         return ($user && $user->getID() != $userID);
     }

@@ -56,5 +56,8 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::$langRepository->findAll() as $lang)
             Context::$langRepository->deleteLang($lang->getID());
+
+        foreach (Context::$userRepository->findAll() as $user)
+            Context::$userRepository->deleteUser($user->getID());
     }
 }

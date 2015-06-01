@@ -2,19 +2,12 @@
 
 namespace CMS\Interactors\Users;
 
+use CMS\Context;
 use CMS\Entities\User;
-use CMS\Repositories\UserRepositoryInterface;
 use CMS\Structures\UserStructure;
 
 class CreateUserInteractor
 {
-    private $repository;
-
-    public function __construct(UserRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(UserStructure $userStructure)
     {
         $user = $this->createUserFromStructure($userStructure);
@@ -25,12 +18,12 @@ class CreateUserInteractor
             throw new \Exception('There is already a user with the same login');
         }
 
-        return $this->repository->createUser($user);
+        return Context::$userRepository->createUser($user);
     }
 
     private function anotherUserExistsWithSameLogin($userLogin)
     {
-        return $this->repository->findByLogin($userLogin);
+        return Context::$userRepository->findByLogin($userLogin);
     }
 
     private function createUserFromStructure(UserStructure $userStructure)

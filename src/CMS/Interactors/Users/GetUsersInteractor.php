@@ -2,21 +2,14 @@
 
 namespace CMS\Interactors\Users;
 
-use CMS\Repositories\UserRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\UserStructure;
 
 class GetUsersInteractor
 {
-    private $repository;
-
-    public function __construct(UserRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($structure = false)
     {
-        $users = $this->repository->findAll();
+        $users = Context::$userRepository->findAll();
 
         return ($structure) ? $this->getUserStructures($users) : $users;
     }
