@@ -2,26 +2,20 @@
 
 namespace CMS\Interactors\Areas;
 
+use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Repositories\AreaRepositoryInterface;
 use CMS\Structures\AreaStructure;
 
 class CreateAreaInteractor
 {
-    public function __construct(AreaRepositoryInterface $repository, GetPagesInteractor $getPagesInteractor)
-    {
-        $this->repository = $repository;
-        $this->getPagesInteractor = $getPagesInteractor;
-    }
-
     public function run(AreaStructure $areaStructure)
     {
         $area = $this->createAreaFromStructure($areaStructure);
 
         $area->valid();
 
-        $areaID = $this->repository->createArea($area);
+        $areaID = Context::$areaRepository->createArea($area);
 
         if ($area->getIsMaster()) {
             $this->createAreaInChildPages($areaStructure, $areaID, $area->getPageID());
@@ -49,7 +43,7 @@ class CreateAreaInteractor
 
     private function createAreaInChildPages(AreaStructure $areaStructure, $areaID, $pageID)
     {
-        $childPages = $this->getPagesInteractor->getChildPages($pageID);
+        $childPages = (new GetPagesInteractor())->getChildPages($pageID);
 
         if (is_array($childPages) && sizeof($childPages) > 0) {
             foreach ($childPages as $childPage) {

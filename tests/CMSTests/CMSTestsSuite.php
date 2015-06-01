@@ -12,7 +12,7 @@ use CMSTests\Repositories\InMemoryMenuRepository;
 use CMSTests\Repositories\InMemoryPageRepository;
 use CMSTests\Repositories\InMemoryUserRepository;
 
-class FunctionalTestsSuite extends PHPUnit_Framework_TestSuite
+class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 {
     public function __construct()
     {
@@ -33,5 +33,17 @@ class FunctionalTestsSuite extends PHPUnit_Framework_TestSuite
         $suite = new self();
 
         return $suite;
+    }
+
+    public static function clean()
+    {
+        foreach (Context::$blockRepository->findAll() as $block)
+            Context::$blockRepository->deleteBlock($block->getID());
+
+        foreach (Context::$areaRepository->findAll() as $area)
+            Context::$areaRepository->deleteArea($area->getID());
+
+        foreach (Context::$pageRepository->findAll() as $page)
+            Context::$pageRepository->deletePage($page->getID());
     }
 }

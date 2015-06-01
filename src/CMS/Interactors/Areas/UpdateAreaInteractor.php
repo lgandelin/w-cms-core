@@ -2,20 +2,11 @@
 
 namespace CMS\Interactors\Areas;
 
-use CMS\Repositories\AreaRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\AreaStructure;
 
 class UpdateAreaInteractor extends GetAreaInteractor
 {
-    protected $repository;
-    private $getAreasInteractor;
-
-    public function __construct(AreaRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor)
-    {
-        $this->repository = $repository;
-        $this->getAreasInteractor = $getAreasInteractor;
-    }
-
     public function run($areaID, AreaStructure $areaStructure)
     {
         $area = $this->getAreaByID($areaID);
@@ -33,7 +24,7 @@ class UpdateAreaInteractor extends GetAreaInteractor
 
         $area->valid();
 
-        $this->repository->updateArea($area);
+        Context::$areaRepository->updateArea($area);
 
         if ($area->getIsMaster()) {
             $areaStructure->is_master = 0;
@@ -43,7 +34,7 @@ class UpdateAreaInteractor extends GetAreaInteractor
 
     private function updateChildAreas($areaID, AreaStructure $areaStructure)
     {
-        $childAreas = $this->getAreasInteractor->getChildAreas($areaID);
+        $childAreas = (new GetAreasInteractor())->getChildAreas($areaID);
 
         if (is_array($childAreas) && sizeof($childAreas) > 0) {
             foreach ($childAreas as $child) {
