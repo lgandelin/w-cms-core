@@ -65,5 +65,8 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::$menuRepository->findAll() as $menu)
             Context::$menuRepository->deleteMenu($menu->getID());
+
+        foreach (Context::$mediaRepository->findAll() as $media)
+            Context::$mediaRepository->deleteMedia($media->getID());
     }
 }

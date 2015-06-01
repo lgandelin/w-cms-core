@@ -2,20 +2,17 @@
 
 namespace CMSTests\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Entities\Media;
 use CMS\Interactors\Medias\UpdateMediaInteractor;
 use CMS\Structures\MediaStructure;
-use CMSTests\Repositories\InMemoryMediaRepository;
+use CMSTestsSuite;
 
 class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $interactor;
-
-    public function setUp()
-    {
-        $this->repository = new InMemoryMediaRepository();
-        $this->interactor = new UpdateMediaInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdateMediaInteractor();
     }
 
     /**
@@ -42,7 +39,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $mediaStructureUpdated);
 
-        $media = $this->repository->findByID(1);
+        $media = Context::$mediaRepository->findByID(1);
 
         $this->assertEquals('/new/file_name/to/image', $media->getFileName());
     }
@@ -53,7 +50,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
         $media->setID($mediaID);
         $media->setName('Test media');
         $media->setFileName('/file_name/to/image');
-        $this->repository->createMedia($media);
+        Context::$mediaRepository->createMedia($media);
 
         return $media;
     }

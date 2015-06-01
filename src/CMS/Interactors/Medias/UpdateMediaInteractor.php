@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Structures\MediaStructure;
 
 class UpdateMediaInteractor extends GetMediaInteractor
@@ -22,7 +23,7 @@ class UpdateMediaInteractor extends GetMediaInteractor
 
             $media->valid();
 
-            $this->repository->updateMedia($media);
+            Context::$mediaRepository->updateMedia($media);
         }
     }
 }

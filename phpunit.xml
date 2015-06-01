@@ -12,7 +12,7 @@
         >
     <testsuites>
         <testsuite name="CMS Test Suite">
-            <directory>./tests/CMSTests/Interactors/MenuItems/</directory>
+            <directory>./tests/CMSTests/Interactors/</directory>
             <file>./tests/CMSTests/CMSTestsSuite.php</file>
         </testsuite>
     </testsuites>

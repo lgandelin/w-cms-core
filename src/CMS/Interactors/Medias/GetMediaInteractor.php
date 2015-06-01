@@ -2,22 +2,15 @@
 
 namespace CMS\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Interactors\Interactor;
-use CMS\Repositories\MediaRepositoryInterface;
 use CMS\Structures\MediaStructure;
 
 class GetMediaInteractor extends Interactor
 {
-    protected $repository;
-
-    public function __construct(MediaRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getMediaByID($mediaID, $structure = false)
     {
-        if (!$media = $this->repository->findByID($mediaID)) {
+        if (!$media = Context::$mediaRepository->findByID($mediaID)) {
             throw new \Exception('The media was not found');
         }
 
