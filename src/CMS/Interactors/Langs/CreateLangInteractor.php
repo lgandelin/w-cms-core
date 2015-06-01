@@ -2,26 +2,19 @@
 
 namespace CMS\Interactors\Langs;
 
+use CMS\Context;
 use CMS\Entities\Lang;
-use CMS\Repositories\LangRepositoryInterface;
 use CMS\Structures\LangStructure;
 
 class CreateLangInteractor
 {
-    private $repository;
-
-    public function __construct(LangRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(LangStructure $langStructure)
     {
         $lang = $this->createLangFromStructure($langStructure);
 
         $lang->valid();
 
-        return $this->repository->createLang($lang);
+        return Context::$langRepository->createLang($lang);
     }
 
     private function createLangFromStructure(LangStructure $langStructure)

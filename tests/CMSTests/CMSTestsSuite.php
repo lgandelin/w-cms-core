@@ -53,5 +53,8 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::$articleCategoryRepository->findAll() as $articleCategory)
             Context::$articleCategoryRepository->deleteArticleCategory($articleCategory->getID());
+
+        foreach (Context::$langRepository->findAll() as $lang)
+            Context::$langRepository->deleteLang($lang->getID());
     }
 }

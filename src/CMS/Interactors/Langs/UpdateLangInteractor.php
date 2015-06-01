@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Langs;
 
+use CMS\Context;
 use CMS\Structures\LangStructure;
 
 class UpdateLangInteractor extends GetLangInteractor
@@ -23,7 +24,7 @@ class UpdateLangInteractor extends GetLangInteractor
 
             $lang->valid();
 
-            $this->repository->updateLang($lang);
+            Context::$langRepository->updateLang($lang);
         }
     }
 }
