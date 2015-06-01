@@ -2,6 +2,8 @@
 
 namespace CMS\Interactors\Menus;
 
+use CMS\Context;
+
 class UpdateMenuInteractor extends GetMenuInteractor
 {
     public function run($menuID, $menuStructure)
@@ -28,13 +30,13 @@ class UpdateMenuInteractor extends GetMenuInteractor
                 throw new \Exception('There is already a menu with the same identifier');
             }
 
-            $this->repository->updateMenu($menu);
+            Context::$menuRepository->updateMenu($menu);
         }
     }
 
     private function anotherMenuExistsWithSameIdentifier($menuID, $menuIdentifier)
     {
-        $existingMenu = $this->repository->findByIdentifier($menuIdentifier);
+        $existingMenu = Context::$menuRepository->findByIdentifier($menuIdentifier);
 
         return ($existingMenu && $existingMenu->getID() != $menuID);
     }

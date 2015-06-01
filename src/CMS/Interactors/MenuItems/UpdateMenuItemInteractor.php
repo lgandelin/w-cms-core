@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\MenuItems;
 
+use CMS\Context;
 use CMS\Structures\MenuItemStructure;
 
 class UpdateMenuItemInteractor extends GetMenuItemInteractor
@@ -22,7 +23,7 @@ class UpdateMenuItemInteractor extends GetMenuItemInteractor
 
             $menuItem->valid();
 
-            $this->repository->updateMenuItem($menuItem);
+            Context::$menuItemRepository->updateMenuItem($menuItem);
         }
     }
 }

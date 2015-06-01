@@ -1,18 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\MenuItem;
 use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
-use CMSTests\Repositories\InMemoryMenuItemRepository;
 
 class GetMenuItemsInteractorTest extends PHPUnit_Framework_TestCase
 {
     private $interactor;
-    private $repository;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryMenuItemRepository();
-        $this->interactor = new GetMenuItemsInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetMenuItemsInteractor(Context::$menuItemRepository);
     }
 
     public function testGetAllWithoutMenuItems()
@@ -40,18 +38,6 @@ class GetMenuItemsInteractorTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\CMS\Structures\MenuItemStructure', $menus[0]);
     }
 
-    private function createSampleMenu()
-    {
-        $menu = new Menu();
-        $menu->setID(1);
-        $menu->setName('Test menu');
-        $menu->setIdentifier('test-menu');
-
-        $this->repository->createMenu($menu);
-
-        return $menu;
-    }
-
     private function createSampleMenuItem($menuItemID)
     {
         $menu = new MenuItem();
@@ -60,7 +46,7 @@ class GetMenuItemsInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setLabel('Test menu item');
         $menu->setOrder(999);
 
-        $this->repository->createMenuItem($menu);
+        Context::$menuItemRepository->createMenuItem($menu);
 
         return $menu;
     }

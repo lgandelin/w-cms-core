@@ -2,19 +2,12 @@
 
 namespace CMS\Interactors\Menus;
 
+use CMS\Context;
 use CMS\Entities\Menu;
-use CMS\Repositories\MenuRepositoryInterface;
 use CMS\Structures\MenuStructure;
 
 class CreateMenuInteractor
 {
-    private $repository;
-
-    public function __construct(MenuRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(MenuStructure $menuStructure)
     {
         $menu = $this->createMenuFromStructure($menuStructure);
@@ -25,12 +18,12 @@ class CreateMenuInteractor
             throw new \Exception('There is already a menu with the same identifier');
         }
 
-        return $this->repository->createMenu($menu);
+        return Context::$menuRepository->createMenu($menu);
     }
 
     private function anotherExistingMenuWithSameIdentifier($identifier)
     {
-        return $this->repository->findByIdentifier($identifier);
+        return Context::$menuRepository->findByIdentifier($identifier);
     }
 
     private function createMenuFromStructure(MenuStructure $menuStructure)

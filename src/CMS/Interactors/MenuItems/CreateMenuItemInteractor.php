@@ -2,26 +2,19 @@
 
 namespace CMS\Interactors\MenuItems;
 
+use CMS\Context;
 use CMS\Entities\MenuItem;
-use CMS\Repositories\MenuItemRepositoryInterface;
 use CMS\Structures\MenuItemStructure;
 
 class CreateMenuItemInteractor
 {
-    private $repository;
-
-    public function __construct(MenuItemRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(MenuItemStructure $menuItemStructure)
     {
         $menuItem = $this->createFromMenuItemStructure($menuItemStructure);
 
         $menuItem->valid();
 
-        return $this->repository->createMenuItem($menuItem);
+        return Context::$menuItemRepository->createMenuItem($menuItem);
     }
 
     private function createFromMenuItemStructure($menuItemStructure)

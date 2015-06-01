@@ -2,11 +2,19 @@
 
 namespace CMSTests\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Interactors\Medias\CreateMediaInteractor;
 use CMS\Structures\MediaStructure;
-use CMSTests\Repositories\InMemoryMediaRepository;
+use CMSTestsSuite;
 
 class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {
+
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreateMediaInteractor();
+    }
 
     public function testCreateMedia()
     {
@@ -16,11 +24,8 @@ class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {
             'file_name' => '/path/to/media'
         ]);
 
-        $repository = new InMemoryMediaRepository();
-        $interactor = new CreateMediaInteractor($repository);
+        $this->interactor->run($media);
 
-        $interactor->run($media);
-
-        $this->assertEquals(1, count($repository->findByID(1)));
+        $this->assertEquals(1, count(Context::$mediaRepository->findByID(1)));
     }
 }
