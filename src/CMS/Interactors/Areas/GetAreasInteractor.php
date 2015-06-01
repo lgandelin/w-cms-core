@@ -2,19 +2,14 @@
 
 namespace CMS\Interactors\Areas;
 
-use CMS\Repositories\AreaRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\AreaStructure;
 
 class GetAreasInteractor
 {
-    public function __construct(AreaRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($pageID, $structure = false)
     {
-        $areas = $this->repository->findByPageID($pageID);
+        $areas = Context::$areaRepository->findByPageID($pageID);
 
         return ($structure) ? $this->getAreaStructures($areas) : $areas;
     }
@@ -33,7 +28,7 @@ class GetAreasInteractor
 
     public function getChildAreas($masterAreaID, $structure = false)
     {
-        $areas = $this->repository->findChildAreas($masterAreaID);
+        $areas = Context::$areaRepository->findChildAreas($masterAreaID);
 
         return ($structure) ? $this->getAreaStructures($areas) : $areas;
     }

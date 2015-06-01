@@ -7,7 +7,6 @@ class Context
     public static $pageRepository;
     public static $areaRepository;
     public static $blockRepository;
-    public static $getPageContentInteractor;
     public static $langRepository;
     public static $menuRepository;
     public static $menuItemRepository;

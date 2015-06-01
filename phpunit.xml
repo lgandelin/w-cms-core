@@ -12,14 +12,8 @@
         >
     <testsuites>
         <testsuite name="CMS Test Suite">
-            <directory>./tests/CMSTests</directory>
-        </testsuite>
-    </testsuites>
-
-    <testsuites>
-        <testsuite name="Functional Test Suite">
-            <directory>./tests/FunctionalTests</directory>
-            <file>./tests/FunctionalTests/FunctionalTestsSuite.php</file>
+            <directory>./tests/CMSTests/Interactors/Blocks/</directory>
+            <file>./tests/CMSTests/CMSTestsSuite.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
