@@ -1,20 +1,18 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\ArticleCategory;
 use CMS\Interactors\ArticleCategories\GetArticleCategoriesInteractor;
-use CMSTests\Repositories\InMemoryArticleCategoryRepository;
 
 class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryArticleCategoryRepository();
-        $this->interactor = new GetArticleCategoriesInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetArticleCategoriesInteractor();
     }
-
+    
     public function testGetAllWithoutArticleCategories()
     {
         $this->assertCount(0, $this->interactor->getAll());
@@ -26,9 +24,8 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleArticleCategory(2);
 
         $articleCategories = $this->interactor->getAll();
-
         $this->assertCount(2, $articleCategories);
-        $this->assertInstanceOf('\CMS\Entities\ArticleCategory', $articleCategories[0]);
+        $this->assertInstanceOf('\CMS\Entities\ArticleCategory', Context::$articleCategoryRepository->findByID(1));
     }
 
     public function testGetByStructures()
@@ -39,7 +36,6 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
         $articleCategories = $this->interactor->getAll(null, true);
 
         $this->assertCount(2, $articleCategories);
-        $this->assertInstanceOf('\CMS\Structures\ArticleCategoryStructure', $articleCategories[0]);
     }
 
     private function createSampleArticleCategory($articleCategoryID)
@@ -47,6 +43,6 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
         $articleCategory = new ArticleCategory();
         $articleCategory->setID($articleCategoryID);
         $articleCategory->setName('Sample category article');
-        $this->repository->createArticleCategory($articleCategory);
+        Context::$articleCategoryRepository->createArticleCategory($articleCategory);
     }
 }

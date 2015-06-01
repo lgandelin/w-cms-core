@@ -32,7 +32,11 @@ class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInte
 
     public function createArticleCategory(ArticleCategory $articleCategory)
     {
+        $articleCategoryID = sizeof($this->articleCategories) + 1;
+        $articleCategory->setID($articleCategoryID);
         $this->articleCategories[]= $articleCategory;
+
+        return $articleCategoryID;
     }
 
     public function updateArticleCategory(ArticleCategory $articleCategory)

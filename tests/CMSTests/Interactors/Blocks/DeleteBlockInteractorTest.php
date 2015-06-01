@@ -42,13 +42,11 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
     public function testDeleteMasterBlock()
     {
         $block = new HTMLBlock();
-        $block->setID(2);
         $block->setName('Block');
         $block->setIsMaster(1);
         Context::$blockRepository->createBlock($block);
 
         $childBlock = new HTMLBlock();
-        $childBlock->setID(2);
         $childBlock->setName('Child block');
         $childBlock->setMasterBlockID(1);
         Context::$blockRepository->createBlock($childBlock);

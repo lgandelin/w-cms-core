@@ -2,21 +2,14 @@
 
 namespace CMS\Interactors\Articles;
 
-use CMS\Repositories\ArticleRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\ArticleStructure;
 
 class GetArticlesInteractor
 {
-    private $repository;
-
-    public function __construct(ArticleRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($langID = null, $structure = false, $categoryID = null, $limit = 0, $order = 'ASC')
     {
-        $articles = $this->repository->findAll($langID, $categoryID, $limit, $order);
+        $articles = Context::$articleRepository->findAll($langID, $categoryID, $limit, $order);
 
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }
@@ -35,7 +28,7 @@ class GetArticlesInteractor
 
     public function getByAssociatedPageID($pageID, $structure = false)
     {
-        $articles = $this->repository->findByPageID($pageID);
+        $articles = Context::$articleRepository->findByPageID($pageID);
 
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }

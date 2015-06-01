@@ -14,4 +14,5 @@ class Context
     public static $mediaRepository;
     public static $userRepository;
     public static $articleRepository;
+    public static $articleCategoryRepository;
 }

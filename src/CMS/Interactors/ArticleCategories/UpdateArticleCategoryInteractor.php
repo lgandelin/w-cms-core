@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\ArticleCategories;
 
+use CMS\Context;
 use CMS\Structures\ArticleCategoryStructure;
 
 class UpdateArticleCategoryInteractor extends GetArticleCategoryInteractor
@@ -25,7 +26,7 @@ class UpdateArticleCategoryInteractor extends GetArticleCategoryInteractor
 
             $article->valid();
 
-            $this->repository->updateArticleCategory($article);
+            Context::$articleCategoryRepository->updateArticleCategory($article);
         }
     }
 }

@@ -1,19 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Article;
 use CMS\Interactors\Articles\UpdateArticleInteractor;
-use CMSTests\Repositories\InMemoryArticleRepository;
 use CMS\Structures\ArticleStructure;
 
 class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
     public function setUp()
     {
-        $this->repository = new InMemoryArticleRepository();
-        $this->interactor = new UpdateArticleInteractor($this->repository);
+        $this->interactor = new UpdateArticleInteractor();
     }
 
     /**
@@ -31,15 +29,15 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateArticle()
     {
-        $this->createSampleArticle(1);
+        $blockID = $this->createSampleArticle();
 
         $articleStructureUpdated = new ArticleStructure([
             'title' => 'Sample article updated'
         ]);
 
-        $this->interactor->run(1, $articleStructureUpdated);
+        $this->interactor->run($blockID, $articleStructureUpdated);
 
-        $article = $this->repository->findByID(1);
+        $article = Context::$articleRepository->findByID($blockID);
 
         $this->assertEquals('Sample article updated', $article->getTitle());
     }
@@ -49,22 +47,21 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateArticleWithEmptyTitle()
     {
-        $this->createSampleArticle(1);
+        $articleID = $this->createSampleArticle();
 
         $articleStructureUpdated = new ArticleStructure([
             'title' => ''
         ]);
 
-        $this->interactor->run(1, $articleStructureUpdated);
+        $this->interactor->run($articleID, $articleStructureUpdated);
     }
 
-    private function createSampleArticle($articleID)
+    private function createSampleArticle()
     {
         $article = new Article();
-        $article->setID($articleID);
         $article->setTitle('Sample article');
-        $this->repository->createArticle($article);
+        Context::$articleRepository->createArticle($article);
 
-        return $article;
+        return $article->getID();
     }
 }

@@ -2,26 +2,19 @@
 
 namespace CMS\Interactors\Articles;
 
+use CMS\Context;
 use CMS\Entities\Article;
-use CMS\Repositories\ArticleRepositoryInterface;
 use CMS\Structures\ArticleStructure;
 
 class CreateArticleInteractor
 {
-    private $repository;
-
-    public function __construct(ArticleRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(ArticleStructure $articleStructure)
     {
         $article = $this->createArticleFromStructure($articleStructure);
 
         $article->valid();
 
-        return $this->repository->createArticle($article);
+        return Context::$articleRepository->createArticle($article);
     }
 
     private function createArticleFromStructure(ArticleStructure $articleStructure)

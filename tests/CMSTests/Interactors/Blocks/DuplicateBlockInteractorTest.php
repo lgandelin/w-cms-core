@@ -22,7 +22,6 @@ class DuplicateBlockInteractorTest extends PHPUnit_Framework_TestCase
         Context::$areaRepository->createArea($area);
 
         $block = new HTMLBlock();
-        $block->setID(1);
         $block->setName('HTML Block');
         $block->setHTML('<h1>Hello World</h1>');
         Context::$blockRepository->createBlock($block);

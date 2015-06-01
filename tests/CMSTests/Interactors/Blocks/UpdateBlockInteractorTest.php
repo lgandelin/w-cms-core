@@ -53,21 +53,18 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
     public function testUpdateMasterBlock()
     {
         $masterBlock = new HTMLBlock();
-        $masterBlock->setID(1);
         $masterBlock->setIsMaster(true);
         $masterBlock->setName('Test block');
         $masterBlock->setAreaID(null);
         Context::$blockRepository->createBlock($masterBlock);
 
         $childBlock1 = new HTMLBlock();
-        $childBlock1->setID(2);
         $childBlock1->setMasterBlockID($masterBlock->getID());
         $childBlock1->setName('Test block');
         $childBlock1->setAreaID(null);
         Context::$blockRepository->createBlock($childBlock1);
 
         $childBlock2 = new HTMLBlock();
-        $childBlock2->setID(3);
         $childBlock2->setMasterBlockID($masterBlock->getID());
         $childBlock2->setName('Test block');
         $childBlock2->setAreaID(null);
@@ -88,16 +85,15 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
     public function testUpdateHTMLBlock()
     {
         $block = new HTMLBlock();
-        $block->setID(1);
         $block->setHTML('<h1>Hello World</h1>');
-        Context::$blockRepository->createBlock($block);
+        $blockID = Context::$blockRepository->createBlock($block);
 
         $blockStructure = new HTMLBlockStructure([
            'html' => '<h1>Goodbye World</h1>'
         ]);
-        $this->interactor->run(1, $blockStructure);
+        $this->interactor->run($blockID, $blockStructure);
 
-        $blockUpdated = Context::$blockRepository->findByID(1);
+        $blockUpdated = Context::$blockRepository->findByID($blockID);
         $this->assertEquals('<h1>Goodbye World</h1>', $blockUpdated->getHTML());
     }
 }

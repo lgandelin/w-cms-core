@@ -2,6 +2,7 @@
 
 namespace CMS\Interactors\Articles;
 
+use CMS\Context;
 use CMS\Structures\ArticleStructure;
 
 class UpdateArticleInteractor extends GetArticleInteractor
@@ -26,13 +27,13 @@ class UpdateArticleInteractor extends GetArticleInteractor
                 throw new \Exception('There is already a article with the same title');
             }
 
-            $this->repository->updateArticle($article);
+            Context::$articleRepository->updateArticle($article);
         }
     }
 
     private function anotherArticleExistsWithSameTitle($articleID, $articleTitle)
     {
-        $article = $this->repository->findByTitle($articleTitle);
+        $article = Context::$articleRepository->findByTitle($articleTitle);
 
         return ($article && $article->getID() != $articleID);
     }

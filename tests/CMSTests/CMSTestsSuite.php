@@ -2,6 +2,7 @@
 
 use CMS\Context;
 use CMSTests\Repositories\InMemoryAreaRepository;
+use CMSTests\Repositories\InMemoryArticleCategoryRepository;
 use CMSTests\Repositories\InMemoryArticleRepository;
 use CMSTests\Repositories\InMemoryBlockRepository;
 use CMSTests\Repositories\InMemoryLangRepository;
@@ -23,6 +24,7 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
         Context::$menuRepository = new InMemoryMenuRepository();
         Context::$menuItemRepository = new InMemoryMenuItemRepository();
         Context::$articleRepository = new InMemoryArticleRepository();
+        Context::$articleCategoryRepository = new InMemoryArticleCategoryRepository();
         Context::$mediaRepository = new InMemoryMediaRepository();
         Context::$mediaFormatRepository = new InMemoryMediaFormatRepository();
         Context::$userRepository = new InMemoryUserRepository();
@@ -45,5 +47,11 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::$pageRepository->findAll() as $page)
             Context::$pageRepository->deletePage($page->getID());
+
+        foreach (Context::$articleRepository->findAll() as $article)
+            Context::$articleRepository->deleteArticle($article->getID());
+
+        foreach (Context::$articleCategoryRepository->findAll() as $articleCategory)
+            Context::$articleCategoryRepository->deleteArticleCategory($articleCategory->getID());
     }
 }

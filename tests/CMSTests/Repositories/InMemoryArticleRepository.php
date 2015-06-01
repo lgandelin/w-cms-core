@@ -55,7 +55,11 @@ class InMemoryArticleRepository implements ArticleRepositoryInterface
 
     public function createArticle(Article $article)
     {
+        $articleID = sizeof($this->articles) + 1;
+        $article->setID($articleID);
         $this->articles[]= $article;
+
+        return $articleID;
     }
 
     public function updateArticle(Article $article)

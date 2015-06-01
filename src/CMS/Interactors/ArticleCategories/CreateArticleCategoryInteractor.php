@@ -2,26 +2,19 @@
 
 namespace CMS\Interactors\ArticleCategories;
 
+use CMS\Context;
 use CMS\Entities\ArticleCategory;
-use CMS\Repositories\ArticleCategoryRepositoryInterface;
 use CMS\Structures\ArticleCategoryStructure;
 
 class CreateArticleCategoryInteractor
 {
-    private $repository;
-
-    public function __construct(ArticleCategoryRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(ArticleCategoryStructure $articleStructure)
     {
         $articleCategory = $this->createArticleCategoryFromStructure($articleStructure);
 
         $articleCategory->valid();
 
-        return $this->repository->createArticleCategory($articleCategory);
+        return Context::$articleCategoryRepository->createArticleCategory($articleCategory);
     }
 
     private function createArticleCategoryFromStructure(ArticleCategoryStructure $articleStructure)
