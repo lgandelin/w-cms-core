@@ -2,19 +2,12 @@
 
 namespace CMS\Interactors\Pages;
 
+use CMS\Context;
 use CMS\Entities\Page;
-use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\PageStructure;
 
 class CreatePageInteractor
 {
-    protected $repository;
-
-    public function __construct(PageRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(PageStructure $pageStructure)
     {
         $page = $this->createPageFromStructure($pageStructure);
@@ -29,17 +22,17 @@ class CreatePageInteractor
             throw new \Exception('There is already a page with the same identifier');
         }
 
-        return $this->repository->createPage($page);
+        return Context::$pageRepository->createPage($page);
     }
 
     private function anotherExistingPageWithSameIdentifier($identifier)
     {
-        return $this->repository->findByIdentifier($identifier);
+        return Context::$pageRepository->findByIdentifier($identifier);
     }
 
     private function anotherExistingPageWithSameUri($uri)
     {
-        return $this->repository->findByUri($uri);
+        return Context::$pageRepository->findByUri($uri);
     }
 
     private function createPageFromStructure(PageStructure $pageStructure)

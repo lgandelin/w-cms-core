@@ -6,43 +6,25 @@ use CMS\Interactors\Areas\DuplicateAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\AreaStructure;
 use CMS\Structures\BlockStructure;
 use CMS\Structures\PageStructure;
 
 class DuplicatePageInteractor extends GetPageInteractor
 {
-    public function __construct(
-        PageRepositoryInterface $repository,
-        GetAreasInteractor $getAreasInteractor,
-        GetBlocksInteractor $getBlocksInteractor,
-        CreatePageInteractor $createPageInteractor,
-        DuplicateAreaInteractor $duplicateAreaInteractor,
-        DuplicateBlockInteractor $duplicateBlockInteractor
-    ) {
-        parent::__construct($repository);
-
-        $this->getAreasInteractor = $getAreasInteractor;
-        $this->getBlocksInteractor = $getBlocksInteractor;
-        $this->createPageInteractor = $createPageInteractor;
-        $this->duplicateAreaInteractor = $duplicateAreaInteractor;
-        $this->duplicateBlockInteractor = $duplicateBlockInteractor;
-    }
-
     public function run($pageID)
     {
         if ($page = $this->getPageByID($pageID)) {
             $newPageID = $this->duplicatePage($page);
 
-            $areas = $this->getAreasInteractor->getAll($pageID);
+            $areas = (new GetAreasInteractor())->getAll($pageID);
 
             foreach ($areas as $area) {
-                $newAreaID = $this->duplicateAreaInteractor->run(AreaStructure::toStructure($area), $newPageID);
-                $blocks = $this->getBlocksInteractor->getAllByAreaID($area->getID());
+                $newAreaID = (new DuplicateAreaInteractor())->run(AreaStructure::toStructure($area), $newPageID);
+                $blocks = (new GetBlocksInteractor())->getAllByAreaID($area->getID());
 
                 foreach ($blocks as $block) {
-                    $this->duplicateBlockInteractor->run(BlockStructure::toStructure($block), $newAreaID);
+                    (new DuplicateBlockInteractor())->run(BlockStructure::toStructure($block), $newAreaID);
                 }
             }
         }
@@ -57,6 +39,6 @@ class DuplicatePageInteractor extends GetPageInteractor
         $pageDuplicated->setLangID($page->getLangID());
         $pageDuplicated->setIdentifier($page->getIdentifier() . '-copy');
 
-        return $this->createPageInteractor->run(PageStructure::toStructure($pageDuplicated));
+        return (new CreatePageInteractor())->run(PageStructure::toStructure($pageDuplicated));
     }
 }

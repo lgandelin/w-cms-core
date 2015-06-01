@@ -1,5 +1,6 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
@@ -22,34 +23,11 @@ use CMSTests\Repositories\InMemoryPageRepository;
 
 class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $areaRepository;
-    private $blockRepository;
     private $interactor;
-    
-    public function setUp()
-    {
-        $this->repository = new InMemoryPageRepository();
-        $this->areaRepository = new InMemoryAreaRepository();
-        $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new DuplicatePageInteractor(
-            $this->repository,
-            new GetAreasInteractor($this->areaRepository),
-            new GetBlocksInteractor($this->blockRepository),
-            new CreatePageInteractor($this->repository),
-            new DuplicateAreaInteractor(
-                new CreateAreaInteractor(
-                    $this->areaRepository,
-                    new GetPagesInteractor($this->repository),
-                    new GetPageInteractor($this->repository)
-                )
-            ),
-            new DuplicateBlockInteractor(
-                new CreateBlockInteractor($this->blockRepository, new GetAreasInteractor($this->areaRepository), new GetAreaInteractor($this->areaRepository)),
-                new UpdateBlockInteractor($this->blockRepository, new GetBlocksInteractor($this->blockRepository)
-                )
-            )
-        );
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new DuplicatePageInteractor();
     }
 
     /**
@@ -70,19 +48,19 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleBlock(3, 1);
         $this->createSampleBlock(4, 2);
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::$pageRepository->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(2, $this->repository->findAll());
-        $pageDuplicated = $this->repository->findByIdentifier('test-page-copy');
+        $this->assertCount(2, Context::$pageRepository->findAll());
+        $pageDuplicated = Context::$pageRepository->findByIdentifier('test-page-copy');
 
         $this->assertEquals($pageDuplicated->getName(), 'Test page - COPY');
         $this->assertEquals($pageDuplicated->getURI(), '/test-page-copy');
         $this->assertEquals($pageDuplicated->getIdentifier(), 'test-page-copy');
 
-        $this->assertEquals(2, count($this->areaRepository->findByPageID(1)));
-        $this->assertEquals(3, count($this->blockRepository->findByAreaID(1)));
+        $this->assertEquals(2, count(Context::$areaRepository->findByPageID(1)));
+        $this->assertEquals(3, count(Context::$blockRepository->findByAreaID(1)));
     }
 
     private function createSamplePage($pageID)
@@ -92,7 +70,7 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $page->setName('Test page');
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
-        $this->repository->createPage($page);
+        Context::$pageRepository->createPage($page);
     }
 
     private function createSampleArea($areaID, $pageID)
@@ -102,17 +80,16 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $area->setPageID($pageID);
         $area->setName('Test area ' . $areaID);
 
-        $this->areaRepository->createArea($area);
+        Context::$areaRepository->createArea($area);
     }
 
     private function createSampleBlock($blockID, $areaID)
     {
         $block = new HTMLBlock();
-        $block->setID($blockID);
         $block->setName('Test block ' . $blockID);
         $block->setAreaID($areaID);
         $block->setType('html');
 
-        $this->blockRepository->createBlock($block);
+        Context::$blockRepository->createBlock($block);
     }
 }

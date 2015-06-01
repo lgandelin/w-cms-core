@@ -1,50 +1,21 @@
 <?php
 
-use CMS\Converters\PageConverter;
+use CMS\Context;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
-use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Interactors\Areas\GetAreaInteractor;
-use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
-use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
-use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Interactors\Pages\GetPagesInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMSTests\Repositories\InMemoryBlockRepository;
-use CMSTests\Repositories\InMemoryPageRepository;
 use CMS\Structures\AreaStructure;
-use CMS\Structures\BlockStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\PageStructure;
 
 class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $areaRepository;
-    private $blockRepository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryPageRepository();
-        $this->areaRepository = new InMemoryAreaRepository();
-        $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new UpdatePageInteractor(
-            $this->repository,
-            new GetAreasInteractor($this->areaRepository),
-            new UpdateAreaInteractor(
-                $this->areaRepository,
-                new GetAreasInteractor($this->areaRepository)
-            ),
-            new GetBlocksInteractor($this->blockRepository),
-            new UpdateBlockInteractor(
-                $this->blockRepository,
-                new GetBlocksInteractor($this->blockRepository)
-            )
-        );
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdatePageInteractor();
     }
 
     /**
@@ -71,7 +42,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'uri' => ''
         ]);
 
-        $this->repository->createPage($pageStructure);
+        Context::$pageRepository->createPage($pageStructure);
 
         $this->interactor->run(1, $pageStructure);
     }
@@ -88,7 +59,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'page-1'
         ]);
 
-        $this->repository->createPage($pageStructure);
+        Context::$pageRepository->createPage($pageStructure);
 
         $pageStructure2 = new PageStructure([
             'ID' => 2,
@@ -97,7 +68,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'page-2'
         ]);
 
-        $this->repository->createPage($pageStructure2);
+        Context::$pageRepository->createPage($pageStructure2);
 
         $pageStructure2Updated = new PageStructure([
            'uri' => '/my-page'
@@ -118,7 +89,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'my-page'
         ]);
 
-        $this->repository->createPage($pageStructure);
+        Context::$pageRepository->createPage($pageStructure);
 
         $pageStructure2 = new PageStructure([
             'ID' => 2,
@@ -127,7 +98,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'my-page-2'
         ]);
 
-        $this->repository->createPage($pageStructure2);
+        Context::$pageRepository->createPage($pageStructure2);
 
         $pageStructure2Updated = new PageStructure([
             'identifier' => 'my-page'
@@ -148,7 +119,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $pageStructureUpdated);
 
-        $page = $this->repository->findByID(1);
+        $page = Context::$pageRepository->findByID(1);
 
         $this->assertEquals('Test page updated', $page->getName());
         $this->assertEquals('/test-page', $page->getURI());
@@ -162,7 +133,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
         $page->setName('Test page');
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
-        $this->repository->createPage($page);
+        Context::$pageRepository->createPage($page);
     }
 
     public function testUpdatePageToMaster()
@@ -175,8 +146,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'name' => 'Test area'
         ]);
 
-        $createAreaInteractor = new CreateAreaInteractor($this->areaRepository, new GetPagesInteractor($this->repository), new GetPageInteractor($this->repository));
-        $createAreaInteractor->run($area);
+        (new CreateAreaInteractor())->run($area);
 
         $block = new HTMLBlockStructure([
             'ID' => 1,
@@ -184,18 +154,17 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'name' => 'Test block'
         ]);
 
-        $createBlockInteractor = new CreateBlockInteractor($this->blockRepository, new GetAreasInteractor($this->areaRepository), new GetAreaInteractor($this->areaRepository));
-        $createBlockInteractor->run($block);
+        (new CreateBlockInteractor())->run($block);
 
         $pageStructure = new PageStructure([
             'is_master' => 1
         ]);
         $this->interactor->run(1, $pageStructure);
 
-        $area = $this->areaRepository->findByID(1);
+        $area = Context::$areaRepository->findByID(1);
         $this->assertEquals(1, $area->getIsMaster());
 
-        $block = $this->blockRepository->findByID(1);
+        $block = Context::$blockRepository->findByID(1);
         $this->assertEquals(1, $block->getIsMaster());
     }
 }

@@ -1,20 +1,18 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Page;
 use CMS\Interactors\Pages\GetPageInteractor;
-use CMSTests\Repositories\InMemoryPageRepository;
 
 class GetPageInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryPageRepository();
-        $this->interactor = new GetPageInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetPageInteractor();
     }
-
+    
     /**
      * @expectedException Exception
      */
@@ -35,11 +33,10 @@ class GetPageInteractorTest extends PHPUnit_Framework_TestCase
     private function createSamplePage()
     {
         $page = new Page();
-        $page->setID(1);
         $page->setName('Test page');
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
 
-        $this->repository->createPage($page);
+        Context::$pageRepository->createPage($page);
     }
 }

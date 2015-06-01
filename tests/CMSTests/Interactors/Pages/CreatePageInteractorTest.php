@@ -1,19 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Interactors\Pages\CreatePageInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMSTests\Repositories\InMemoryBlockRepository;
-use CMSTests\Repositories\InMemoryPageRepository;
 use CMS\Structures\PageStructure;
 
 class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->repository = new InMemoryPageRepository();
-        $this->areaRepository = new InMemoryAreaRepository();
-        $this->blockRepository = new InMemoryBlockRepository();
-        $this->interactor = new CreatePageInteractor($this->repository);
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreatePageInteractor();
     }
 
     /**
@@ -88,7 +85,7 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreatePage()
     {
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::$pageRepository->findAll());
 
         $pageStructure = new PageStructure([
             'uri' => '/home',
@@ -98,6 +95,6 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($pageStructure);
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::$pageRepository->findAll());
     }
 }
