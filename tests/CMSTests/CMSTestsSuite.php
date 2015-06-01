@@ -68,5 +68,8 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::$mediaRepository->findAll() as $media)
             Context::$mediaRepository->deleteMedia($media->getID());
+
+        foreach (Context::$mediaFormatRepository->findAll() as $mediaFormat)
+            Context::$mediaFormatRepository->deleteMediaFormat($mediaFormat->getID());
     }
 }

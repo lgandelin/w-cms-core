@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class Area
+class Area extends Entity
 {
     private $ID;
     private $name;

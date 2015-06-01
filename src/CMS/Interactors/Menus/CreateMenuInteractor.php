@@ -10,8 +10,8 @@ class CreateMenuInteractor
 {
     public function run(MenuStructure $menuStructure)
     {
-        $menu = $this->createMenuFromStructure($menuStructure);
-
+        $menu = new Menu();
+        $menu->setInfos($menuStructure);
         $menu->valid();
 
         if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier())) {
@@ -24,15 +24,5 @@ class CreateMenuInteractor
     private function anotherExistingMenuWithSameIdentifier($identifier)
     {
         return Context::$menuRepository->findByIdentifier($identifier);
-    }
-
-    private function createMenuFromStructure(MenuStructure $menuStructure)
-    {
-        $menu = new Menu();
-        $menu->setIdentifier($menuStructure->identifier);
-        $menu->setName($menuStructure->name);
-        $menu->setLangID($menuStructure->lang_id);
-
-        return $menu;
     }
 }

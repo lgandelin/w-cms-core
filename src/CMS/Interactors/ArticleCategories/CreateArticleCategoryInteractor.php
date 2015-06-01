@@ -8,23 +8,12 @@ use CMS\Structures\ArticleCategoryStructure;
 
 class CreateArticleCategoryInteractor
 {
-    public function run(ArticleCategoryStructure $articleStructure)
+    public function run(ArticleCategoryStructure $articleCategoryStructure)
     {
-        $articleCategory = $this->createArticleCategoryFromStructure($articleStructure);
-
+        $articleCategory = new ArticleCategory();
+        $articleCategory->setInfos($articleCategoryStructure);
         $articleCategory->valid();
 
         return Context::$articleCategoryRepository->createArticleCategory($articleCategory);
-    }
-
-    private function createArticleCategoryFromStructure(ArticleCategoryStructure $articleStructure)
-    {
-        $articleCategory = new ArticleCategory();
-        $articleCategory->setID($articleStructure->ID);
-        $articleCategory->setName($articleStructure->name);
-        $articleCategory->setDescription($articleStructure->description);
-        $articleCategory->setLangID($articleStructure->lang_id);
-
-        return $articleCategory;
     }
 }

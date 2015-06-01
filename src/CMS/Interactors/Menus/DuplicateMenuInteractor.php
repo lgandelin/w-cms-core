@@ -13,11 +13,7 @@ class DuplicateMenuInteractor extends GetMenuInteractor
     {
         if ($menu = $this->getMenuByID($menuID)) {
             $newMenuID = $this->duplicateMenu($menu);
-
-            $menuItems = (new GetMenuItemsInteractor())->getAll($menuID);
-            foreach ($menuItems as $menuItem) {
-                $this->duplicateMenuItem($menuItem, $newMenuID);
-            }
+            $this->duplicateMenuItems($menuID, $newMenuID);
         }
     }
 
@@ -30,6 +26,14 @@ class DuplicateMenuInteractor extends GetMenuInteractor
         $menuDuplicated->setLangID($menu->getLangID());
 
         return (new CreateMenuInteractor())->run(MenuStructure::toStructure($menuDuplicated));
+    }
+
+    private function duplicateMenuItems($menuID, $newMenuID)
+    {
+        $menuItems = (new GetMenuItemsInteractor())->getAll($menuID);
+        foreach ($menuItems as $menuItem) {
+            $this->duplicateMenuItem($menuItem, $newMenuID);
+        }
     }
 
     private function duplicateMenuItem($menuItem, $newMenuID)

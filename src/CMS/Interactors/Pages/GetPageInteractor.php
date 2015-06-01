@@ -18,11 +18,7 @@ class GetPageInteractor
 
     public function getPageByURI($pageURI, $langID = null, $structure = false)
     {
-        if ($langID) {
-            $page = Context::$pageRepository->findByUriAndLangID($pageURI, $langID);
-        } else {
-            $page = Context::$pageRepository->findByUri($pageURI);
-        }
+        $page = ($langID) ? Context::$pageRepository->findByUriAndLangID($pageURI, $langID) : Context::$pageRepository->findByUri($pageURI);
 
         if (!$page) {
             throw new \Exception('The page was not found');

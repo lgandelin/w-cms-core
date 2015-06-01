@@ -25,13 +25,18 @@ class GetLangInteractor
     {
         $langID = $this->getDefaultLangID();
         foreach ((new GetLangsInteractor())->getAll(true) as $lang) {
-            if (preg_match('#' . $lang->prefix . '#', $uri, $matches)) {
-                if (count($matches) > 0) {
-                    $langID = $lang->ID;
-                }
+            if ($this->langPrefixMatchesURI($uri, $lang)) {
+                $langID = $lang->ID;
             }
         }
 
         return LangStructure::toStructure($this->getLangByID($langID));
+    }
+
+    private function langPrefixMatchesURI($uri, $lang)
+    {
+        preg_match('#' . $lang->prefix . '#', $uri, $matches);
+
+        return count($matches) > 0;
     }
 }

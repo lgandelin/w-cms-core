@@ -7,29 +7,49 @@ use CMS\Repositories\MediaFormatRepositoryInterface;
 
 class InMemoryMediaFormatRepository implements MediaFormatRepositoryInterface
 {
+    private $mediaFormats;
+
+    public function __construct()
+    {
+        $this->mediaFormats = [];
+    }
+
     public function findByID($mediaFormatID)
     {
-        // TODO: Implement findByID() method.
+        foreach ($this->mediaFormats as $mediaFormat) {
+            if ($mediaFormat->getID() == $mediaFormatID) {
+                return $mediaFormat;
+            }
+        }
+
+        return false;
     }
 
     public function findAll()
     {
-        // TODO: Implement findAll() method.
+        return $this->mediaFormats;
     }
 
     public function createMediaFormat(MediaFormat $mediaFormat)
     {
-        // TODO: Implement createMediaFormat() method.
+        $this->mediaFormats[]= $mediaFormat;
     }
 
     public function updateMediaFormat(MediaFormat $mediaFormat)
     {
-        // TODO: Implement updateMediaFormat() method.
+        foreach ($this->mediaFormats as $mediaFormatModel) {
+            if ($mediaFormatModel->getID() == $mediaFormat->getID()) {
+                $mediaFormatModel->setName($mediaFormat->getName());
+            }
+        }
     }
 
     public function deleteMediaFormat($mediaFormatID)
     {
-        // TODO: Implement deleteMediaFormat() method.
+        foreach ($this->mediaFormats as $i => $mediaFormat) {
+            if ($mediaFormat->getID() == $mediaFormatID) {
+                unset($this->mediaFormats[$i]);
+            }
+        }
     }
-
-} 
+}

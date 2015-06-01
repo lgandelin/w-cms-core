@@ -14,27 +14,35 @@ class DeletePageInteractor extends GetPageInteractor
     public function run($pageID)
     {
         if ($this->getPageByID($pageID)) {
+            $this->deleteAssociatedArticlesToPage($pageID);
+            $this->deleteAreasInPage($pageID);
+            Context::$pageRepository->deletePage($pageID);
+        }
+    }
 
-            //If there are associated articles to this page, delete the reference
-            $articles = (new GetArticlesInteractor())->getByAssociatedPageID($pageID);
+    private function deleteAreasInPage($pageID)
+    {
+        $areas = (new GetAreasInteractor())->getAll($pageID);
 
-            if (is_array($articles) && sizeof($articles) > 0) {
-                foreach ($articles as $article) {
-                    $articleStructure = new ArticleStructure([
-                        'page_id' => null
-                    ]);
-
-                    (new UpdateArticleInteractor())->run($article->getID(), $articleStructure);
-                }
-            }
-
-            $areas = (new GetAreasInteractor())->getAll($pageID);
-
+        if (is_array($areas) && sizeof($areas) > 0) {
             foreach ($areas as $area) {
                 (new DeleteAreaInteractor())->run($area->getID());
             }
+        }
+    }
 
-            Context::$pageRepository->deletePage($pageID);
+    private function deleteAssociatedArticlesToPage($pageID)
+    {
+        $articles = (new GetArticlesInteractor())->getByAssociatedPageID($pageID);
+
+        if (is_array($articles) && sizeof($articles) > 0) {
+            foreach ($articles as $article) {
+                $articleStructure = new ArticleStructure([
+                    'page_id' => null
+                ]);
+
+                (new UpdateArticleInteractor())->run($article->getID(), $articleStructure);
+            }
         }
     }
 }

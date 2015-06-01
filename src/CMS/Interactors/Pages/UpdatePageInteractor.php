@@ -7,7 +7,6 @@ use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Repositories\PageRepositoryInterface;
 use CMS\Structures\AreaStructure;
 use CMS\Structures\PageStructure;
 
@@ -16,19 +15,7 @@ class UpdatePageInteractor extends GetPageInteractor
     public function run($pageID, PageStructure $pageStructure)
     {
         $page = $this->getPageByID($pageID);
-
-        $properties = get_object_vars($pageStructure);
-        unset ($properties['ID']);
-        unset ($properties['master_page_id']);
-        foreach ($properties as $property => $value) {
-            $method = ucfirst(str_replace('_', '', $property));
-            $setter = 'set' . $method;
-
-            if ($pageStructure->$property !== null) {
-                call_user_func_array(array($page, $setter), array($value));
-            }
-        }
-
+        $page->setInfos($pageStructure);
         $page->valid();
 
         if ($this->anotherPageExistsWithSameURI($pageID, $page->getURI())) {
@@ -40,9 +27,26 @@ class UpdatePageInteractor extends GetPageInteractor
         }
 
         Context::$pageRepository->updatePage($page);
+        $this->updateIsMasterFields($page);
+    }
 
-        //Update is_master fields
-        $areas = (new getAreasInteractor())->getAll($page->getID());
+    private function anotherPageExistsWithSameURI($pageID, $pageURI)
+    {
+        $existingPageStructure = Context::$pageRepository->findByUri($pageURI);
+
+        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
+    }
+
+    private function anotherPageExistsWithSameIdentifier($pageID, $pageIdentifier)
+    {
+        $existingPageStructure = Context::$pageRepository->findByIdentifier($pageIdentifier);
+
+        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
+    }
+
+    private function updateIsMasterFields($page)
+    {
+        $areas = (new GetAreasInteractor())->getAll($page->getID());
 
         if (is_array($areas) && sizeof($areas) > 0) {
             foreach ($areas as $area) {
@@ -63,19 +67,5 @@ class UpdatePageInteractor extends GetPageInteractor
                 }
             }
         }
-    }
-
-    private function anotherPageExistsWithSameURI($pageID, $pageURI)
-    {
-        $existingPageStructure = Context::$pageRepository->findByUri($pageURI);
-
-        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
-    }
-
-    private function anotherPageExistsWithSameIdentifier($pageID, $pageIdentifier)
-    {
-        $existingPageStructure = Context::$pageRepository->findByIdentifier($pageIdentifier);
-
-        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
     }
 }

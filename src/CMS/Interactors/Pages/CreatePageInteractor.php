@@ -10,8 +10,8 @@ class CreatePageInteractor
 {
     public function run(PageStructure $pageStructure)
     {
-        $page = $this->createPageFromStructure($pageStructure);
-
+        $page = new Page();
+        $page->setInfos($pageStructure);
         $page->valid();
 
         if ($this->anotherExistingPageWithSameUri($page->getUri())) {
@@ -33,22 +33,5 @@ class CreatePageInteractor
     private function anotherExistingPageWithSameUri($uri)
     {
         return Context::$pageRepository->findByUri($uri);
-    }
-
-    private function createPageFromStructure(PageStructure $pageStructure)
-    {
-        $page = new Page();
-        $page->setID($pageStructure->ID);
-        $page->setIdentifier($pageStructure->identifier);
-        $page->setName($pageStructure->name);
-        $page->setUri($pageStructure->uri);
-        $page->setLangID($pageStructure->lang_id);
-        $page->setMetaTitle($pageStructure->meta_title);
-        $page->setMetaDescription($pageStructure->meta_description);
-        $page->setMetaKeywords($pageStructure->meta_keywords);
-        $page->setIsMaster($pageStructure->is_master);
-        $page->setMasterPageID($pageStructure->master_page_id);
-
-        return $page;
     }
 }

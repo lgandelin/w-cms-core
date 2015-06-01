@@ -11,8 +11,8 @@ class CreateAreaInteractor
 {
     public function run(AreaStructure $areaStructure)
     {
-        $area = $this->createAreaFromStructure($areaStructure);
-
+        $area = new Area();
+        $area->setInfos($areaStructure);
         $area->valid();
 
         $areaID = Context::$areaRepository->createArea($area);
@@ -22,23 +22,6 @@ class CreateAreaInteractor
         }
 
         return $areaID;
-    }
-
-    private function createAreaFromStructure(AreaStructure $areaStructure)
-    {
-        $area = new Area();
-
-        $properties = get_object_vars($areaStructure);
-        foreach ($properties as $property => $value) {
-            $method = ucfirst(str_replace('_', '', $property));
-            $setter = 'set' . $method;
-
-            if ($areaStructure->$property !== null) {
-                call_user_func_array(array($area, $setter), array($value));
-            }
-        }
-
-        return $area;
     }
 
     private function createAreaInChildPages(AreaStructure $areaStructure, $areaID, $pageID)

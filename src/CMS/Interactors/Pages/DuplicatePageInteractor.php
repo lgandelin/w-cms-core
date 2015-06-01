@@ -16,17 +16,7 @@ class DuplicatePageInteractor extends GetPageInteractor
     {
         if ($page = $this->getPageByID($pageID)) {
             $newPageID = $this->duplicatePage($page);
-
-            $areas = (new GetAreasInteractor())->getAll($pageID);
-
-            foreach ($areas as $area) {
-                $newAreaID = (new DuplicateAreaInteractor())->run(AreaStructure::toStructure($area), $newPageID);
-                $blocks = (new GetBlocksInteractor())->getAllByAreaID($area->getID());
-
-                foreach ($blocks as $block) {
-                    (new DuplicateBlockInteractor())->run(BlockStructure::toStructure($block), $newAreaID);
-                }
-            }
+            $this->duplicateAreas($pageID, $newPageID);
         }
     }
 
@@ -40,5 +30,28 @@ class DuplicatePageInteractor extends GetPageInteractor
         $pageDuplicated->setIdentifier($page->getIdentifier() . '-copy');
 
         return (new CreatePageInteractor())->run(PageStructure::toStructure($pageDuplicated));
+    }
+
+    private function duplicateAreas($pageID, $newPageID)
+    {
+        $areas = (new GetAreasInteractor())->getAll($pageID);
+
+        if (is_array($areas) && sizeof($areas) > 0) {
+            foreach ($areas as $area) {
+                $newAreaID = (new DuplicateAreaInteractor())->run(AreaStructure::toStructure($area), $newPageID);
+                $this->duplicateBLocks($area->getID(), $newAreaID);
+            }
+        }
+    }
+
+    private function duplicateBLocks($areaID, $newAreaID)
+    {
+        $blocks = (new GetBlocksInteractor())->getAllByAreaID($areaID);
+
+        if (is_array($blocks) && sizeof($blocks) > 0) {
+            foreach ($blocks as $block) {
+                (new DuplicateBlockInteractor())->run(BlockStructure::toStructure($block), $newAreaID);
+            }
+        }
     }
 }

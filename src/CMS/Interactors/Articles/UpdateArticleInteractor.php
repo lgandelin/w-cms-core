@@ -10,17 +10,7 @@ class UpdateArticleInteractor extends GetArticleInteractor
     public function run($articleID, ArticleStructure $articleStructure)
     {
         if ($article = $this->getArticleByID($articleID)) {
-            $properties = get_object_vars($articleStructure);
-            unset ($properties['ID']);
-            foreach ($properties as $property => $value) {
-                $method = ucfirst(str_replace('_', '', $property));
-                $setter = 'set' . $method;
-
-                if ($articleStructure->$property !== null) {
-                    call_user_func_array(array($article, $setter), array($value));
-                }
-            }
-
+            $article->setInfos($articleStructure);
             $article->valid();
 
             if ($this->anotherArticleExistsWithSameTitle($articleID, $article->getTitle())) {

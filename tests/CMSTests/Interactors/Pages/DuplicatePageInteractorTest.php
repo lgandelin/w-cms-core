@@ -2,24 +2,9 @@
 
 use CMS\Context;
 use CMS\Entities\Area;
-use CMS\Entities\Block;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Page;
-use CMS\Interactors\Areas\CreateAreaInteractor;
-use CMS\Interactors\Areas\DuplicateAreaInteractor;
-use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Interactors\Areas\GetAreaInteractor;
-use CMS\Interactors\Blocks\CreateBlockInteractor;
-use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Interactors\Blocks\DuplicateBlockInteractor;
-use CMS\Interactors\Pages\CreatePageInteractor;
-use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Interactors\Pages\GetPagesInteractor;
 use CMS\Interactors\Pages\DuplicatePageInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMSTests\Repositories\InMemoryBlockRepository;
-use CMSTests\Repositories\InMemoryPageRepository;
 
 class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
 {

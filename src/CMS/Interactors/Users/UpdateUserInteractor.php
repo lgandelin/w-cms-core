@@ -10,18 +10,7 @@ class UpdateUserInteractor extends GetUserInteractor
     public function run($userID, UserStructure $userStructure)
     {
         if ($user = $this->getUserByID($userID)) {
-
-            $properties = get_object_vars($userStructure);
-            unset ($properties['ID']);
-            foreach ($properties as $property => $value) {
-                $method = ucfirst(str_replace('_', '', $property));
-                $setter = 'set' . $method;
-
-                if ($userStructure->$property !== null) {
-                    call_user_func_array(array($user, $setter), array($value));
-                }
-            }
-
+            $user->setInfos($userStructure);
             $user->valid();
 
             if ($this->anotherUserExistsWithSameLogin($userID, $user->getLogin())) {
