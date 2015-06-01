@@ -170,5 +170,7 @@ abstract class Block extends Entity
 
     abstract public function getStructure();
 
+    abstract public function getContent();
+
     abstract public function updateContent(BlockStructure $blockStructure);
 }

@@ -5,9 +5,10 @@ use CMS\Entities\Area;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Lang;
 use CMS\Entities\Page;
+use CMS\Interactors\Pages\GetPageContentInteractor;
 use CMSTests\PageRenderer;
 
-class FunctionalTest extends PHPUnit_Framework_TestCase
+class FixturesTest extends PHPUnit_Framework_TestCase
 {
     public function testAddAreaToPage()
     {
@@ -40,11 +41,11 @@ class FunctionalTest extends PHPUnit_Framework_TestCase
         $block->setAreaID($areaID);
         $blockID = Context::$blockRepository->createBlock($block);
 
-        $pageData = Context::$getPageContentInteractor->run($page->getUri());
-
+        $pageData = (new GetPageContentInteractor())->run($page->getUri());
         $this->assertEquals('<page><title>Page 1</title><area><title>Area 1 (12)</title><block><title>Block 1 (6)</title><content>Hello World !</content></block></area></page>', PageRenderer::render($pageData));
 
         $block = Context::$blockRepository->findByID($blockID);
+
         $block->setDisplay(false);
 
         $this->assertEquals('<page><title>Page 1</title><area><title>Area 1 (12)</title></area></page>', PageRenderer::render($pageData));

@@ -2,7 +2,6 @@
 
 namespace CMSTests;
 
-use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Entities\Page;
 
 class PageRenderer
@@ -19,8 +18,7 @@ class PageRenderer
 
     private static function renderBlockContent($block)
     {
-        if ($block instanceof HTMLBlock)
-            return '<content>' . $block->getHTML() . '</content>';
+        return '<content>' . $block->getContent() . '</content>';
     }
 
     private static function renderBlock($block)
