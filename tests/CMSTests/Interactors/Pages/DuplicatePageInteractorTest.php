@@ -25,17 +25,17 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testDuplicatePage()
     {
-        $this->createSamplePage(1);
-        $this->createSampleArea(1, 1);
-        $this->createSampleArea(2, 1);
-        $this->createSampleBlock(1, 1);
-        $this->createSampleBlock(2, 1);
-        $this->createSampleBlock(3, 1);
-        $this->createSampleBlock(4, 2);
+        $pageID = $this->createSamplePage();
+        $area1ID = $this->createSampleArea($pageID);
+        $area2ID = $this->createSampleArea($pageID);
+        $this->createSampleBlock($area1ID);
+        $this->createSampleBlock($area1ID);
+        $this->createSampleBlock($area1ID);
+        $this->createSampleBlock($area2ID);
 
         $this->assertCount(1, Context::$pageRepository->findAll());
 
-        $this->interactor->run(1);
+        $this->interactor->run($pageID);
 
         $this->assertCount(2, Context::$pageRepository->findAll());
         $pageDuplicated = Context::$pageRepository->findByIdentifier('test-page-copy');
@@ -44,37 +44,36 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($pageDuplicated->getURI(), '/test-page-copy');
         $this->assertEquals($pageDuplicated->getIdentifier(), 'test-page-copy');
 
-        $this->assertEquals(2, count(Context::$areaRepository->findByPageID(1)));
-        $this->assertEquals(3, count(Context::$blockRepository->findByAreaID(1)));
+        $this->assertEquals(2, count(Context::$areaRepository->findByPageID($pageID)));
+        $this->assertEquals(3, count(Context::$blockRepository->findByAreaID($area1ID)));
     }
 
-    private function createSamplePage($pageID)
+    private function createSamplePage()
     {
         $page = new Page();
-        $page->setID($pageID);
         $page->setName('Test page');
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
-        Context::$pageRepository->createPage($page);
+
+        return Context::$pageRepository->createPage($page);
     }
 
-    private function createSampleArea($areaID, $pageID)
+    private function createSampleArea($pageID)
     {
         $area = new Area();
-        $area->setID($areaID);
         $area->setPageID($pageID);
-        $area->setName('Test area ' . $areaID);
+        $area->setName('Test area');
 
-        Context::$areaRepository->createArea($area);
+        return Context::$areaRepository->createArea($area);
     }
 
-    private function createSampleBlock($blockID, $areaID)
+    private function createSampleBlock($areaID)
     {
         $block = new HTMLBlock();
-        $block->setName('Test block ' . $blockID);
+        $block->setName('Test block');
         $block->setAreaID($areaID);
         $block->setType('html');
 
-        Context::$blockRepository->createBlock($block);
+        return Context::$blockRepository->createBlock($block);
     }
 }

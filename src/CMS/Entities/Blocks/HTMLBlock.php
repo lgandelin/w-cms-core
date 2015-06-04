@@ -28,7 +28,7 @@ class HTMLBlock extends Block
         return $blockStructure;
     }
 
-    public function getContent()
+    public function getContentData()
     {
         return $this->html;
     }

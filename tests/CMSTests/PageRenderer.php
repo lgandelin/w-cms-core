@@ -18,7 +18,24 @@ class PageRenderer
 
     private static function renderBlockContent($block)
     {
-        return '<content>' . $block->getContent() . '</content>';
+        $content = '<content>';
+        switch ($block->getType()) {
+            case 'html' :
+                $content .= $block->getContentData();
+            break;
+
+            case 'menu' :
+                foreach ($block->getContentData() as $item) {
+                    $content .= '<item>' . $item->getLabel() . '</item>';
+                }
+            break;
+
+            default:
+            break;
+        }
+        $content .= '</content>';
+
+        return $content;
     }
 
     private static function renderBlock($block)

@@ -29,7 +29,7 @@ class GetBlockContentInteractor
                 if ($menuItem->page_id)
                     $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->page_id, $structure);
 
-            $block->menu->items =$menuItems;
+            $block->menu->items = $menuItems;
         }
 
         elseif ($block instanceof ArticleBlockStructure && $block->article_id) {

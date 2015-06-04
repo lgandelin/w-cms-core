@@ -2,6 +2,7 @@
 
 namespace CMS\Entities\Blocks;
 
+use CMS\Context;
 use CMS\Entities\Block;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\BlockStructure;
@@ -26,6 +27,11 @@ class MenuBlock extends Block
         $blockStructure->menu_id = $this->getMenuID();
 
         return $blockStructure;
+    }
+
+    public function getContentData()
+    {
+        return Context::$menuItemRepository->findByMenuID($this->menuID);
     }
 
     public function updateContent(BlockStructure $blockStructure)
