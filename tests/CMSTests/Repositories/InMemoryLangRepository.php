@@ -4,7 +4,6 @@ namespace CMSTests\Repositories;
 
 use CMS\Entities\Lang;
 use CMS\Repositories\LangRepositoryInterface;
-use CMS\Structures\LangStructure;
 
 class InMemoryLangRepository implements LangRepositoryInterface
 {
@@ -33,7 +32,11 @@ class InMemoryLangRepository implements LangRepositoryInterface
 
     public function createLang(Lang $lang)
     {
+        $langID = sizeof($this->langs) + 1;
+        $lang->setID($langID);
         $this->langs[]= $lang;
+
+        return $langID;
     }
 
     public function updateLang(lang $lang)
@@ -58,5 +61,16 @@ class InMemoryLangRepository implements LangRepositoryInterface
                 unset($this->langs[$i]);
             }
         }
+    }
+
+    public function findDefautLangID()
+    {
+        foreach ($this->langs as $lang) {
+            if ($lang->getIsDefault()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

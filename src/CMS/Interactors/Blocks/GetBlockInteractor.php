@@ -2,21 +2,14 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Repositories\BlockRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\BlockStructure;
 
 class GetBlockInteractor
 {
-    protected $repository;
-
-    public function __construct(BlockRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getBlockByID($blockID, $structure = false)
     {
-        if (!$block = $this->repository->findByID($blockID)) {
+        if (!$block = Context::$blockRepository->findByID($blockID)) {
             throw new \Exception('The block was not found');
         }
 

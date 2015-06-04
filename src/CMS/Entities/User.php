@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class User
+class User extends Entity
 {
     private $ID;
     private $login;

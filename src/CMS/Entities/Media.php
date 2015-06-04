@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class Media
+class Media extends Entity
 {
     private $ID;
     private $name;

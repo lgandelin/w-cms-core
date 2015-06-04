@@ -2,12 +2,14 @@
 
 namespace CMS\Interactors\Users;
 
+use CMS\Context;
+
 class DeleteUserInteractor extends GetUserInteractor
 {
     public function run($userID)
     {
         if ($this->getUserByID($userID)) {
-            $this->repository->deleteUser($userID);
+            Context::$userRepository->deleteUser($userID);
         }
     }
 }

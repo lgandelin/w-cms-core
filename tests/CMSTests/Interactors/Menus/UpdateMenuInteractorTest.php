@@ -1,6 +1,6 @@
 <?php
 
-use CMS\Converters\MenuConverter;
+use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
 use CMSTests\Repositories\InMemoryMenuRepository;
@@ -10,8 +10,8 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        $this->repository = new InMemoryMenuRepository();
-        $this->interactor = new UpdateMenuInteractor($this->repository);
+        Context::$menuRepository = new InMemoryMenuRepository();
+        $this->interactor = new UpdateMenuInteractor(Context::$menuRepository);
     }
 
     /**
@@ -67,7 +67,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $menuStructureUpdated);
 
-        $menu = $this->repository->findByID(1);
+        $menu = Context::$menuRepository->findByID(1);
 
         $this->assertEquals('Main menu updated', $menu->getName());
         $this->assertEquals('main-menu', $menu->getIdentifier());
@@ -80,7 +80,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu ' . $menuID);
         $menu->setIdentifier('test-menu-' . $menuID);
 
-        $this->repository->createMenu($menu);
+        Context::$menuRepository->createMenu($menu);
 
         return $menu;
     }

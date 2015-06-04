@@ -2,16 +2,18 @@
 
 namespace CMSTests\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Entities\Media;
 use CMS\Interactors\Medias\DeleteMediaInteractor;
-use CMSTests\Repositories\InMemoryMediaRepository;
+use CMSTestsSuite;
 
 class DeleteMediaInteractorTest extends \PHPUnit_Framework_TestCase {
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryMediaRepository();
-        $this->interactor = new DeleteMediaInteractor($this->repository);
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new DeleteMediaInteractor();
     }
 
     /**
@@ -26,11 +28,11 @@ class DeleteMediaInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $this->createSampleMedia();
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::$mediaRepository->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::$mediaRepository->findAll());
     }
 
     private function createSampleMedia()
@@ -38,6 +40,6 @@ class DeleteMediaInteractorTest extends \PHPUnit_Framework_TestCase {
         $media = new Media();
         $media->setID(1);
         $media->setName('Test media');
-        $this->repository->createMedia($media);
+        Context::$mediaRepository->createMedia($media);
     }
 }

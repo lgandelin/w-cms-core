@@ -1,20 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\Menus\GetMenusInteractor;
-use CMSTests\Repositories\InMemoryMenuRepository;
-use CMS\Structures\MenuStructure;
 
 class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $interactor;
-    private $repository;
-
-    public function setUp()
-    {
-        $this->repository = new InMemoryMenuRepository();
-        $this->interactor = new GetMenusInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetMenusInteractor();
     }
+
 
     public function testGetAllWithoutMenus()
     {
@@ -28,7 +24,7 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
 
         $menus = $this->interactor->getAll();
         $this->assertCount(2, $menus);
-        $this->assertInstanceOf('\CMS\Entities\Menu', $menus[0]);
+        $this->assertInstanceOf('\CMS\Entities\Menu', array_shift($menus));
     }
 
     public function testGetAllByStructures()
@@ -36,9 +32,9 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleMenu(1);
         $this->createSampleMenu(1);
 
-        $menus = $this->interactor->getAll(true);
+        $menus = $this->interactor->getAll(null, true);
         $this->assertCount(2, $menus);
-        $this->assertInstanceOf('\CMS\Structures\MenuStructure', $menus[0]);
+        $this->assertInstanceOf('\CMS\Structures\MenuStructure', array_shift($menus));
     }
 
     private function createSampleMenu($menuID)
@@ -48,7 +44,7 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        $this->repository->createMenu($menu);
+        Context::$menuRepository->createMenu($menu);
 
         return $menu;
     }

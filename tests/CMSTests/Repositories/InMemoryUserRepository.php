@@ -44,7 +44,11 @@ class InMemoryUserRepository implements UserRepositoryInterface
 
     public function createUser(User $user)
     {
+        $userID = sizeof($this->users) + 1;
+        $user->setID($userID);
         $this->users[]= $user;
+
+        return $userID;
     }
 
     public function updateUser(user $user)

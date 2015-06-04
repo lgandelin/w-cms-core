@@ -1,18 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\GetBlockInteractor;
-use CMSTests\Repositories\InMemoryBlockRepository;
 
 class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryBlockRepository();
-        $this->interactor = new GetBlockInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetBlockInteractor();
     }
 
     /**
@@ -41,6 +39,6 @@ class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $block = new HTMLBlock();
 
-        return $this->repository->createBlock($block);
+        return Context::$blockRepository->createBlock($block);
     }
 }

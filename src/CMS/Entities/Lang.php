@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class Lang
+class Lang extends Entity
 {
     private $ID;
     private $name;

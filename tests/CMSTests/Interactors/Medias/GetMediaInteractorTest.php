@@ -2,16 +2,18 @@
 
 namespace CMSTests\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Entities\Media;
 use CMS\Interactors\Medias\GetMediaInteractor;
-use CMSTests\Repositories\InMemoryMediaRepository;
+use CMSTestsSuite;
 
 class GetMediaInteractorTest extends \PHPUnit_Framework_TestCase {
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryMediaRepository();
-        $this->interactor = new GetMediaInteractor($this->repository);
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetMediaInteractor();
     }
 
     /**
@@ -40,7 +42,7 @@ class GetMediaInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $media = new Media();
 
-        return $this->repository->createMedia($media);
+        return Context::$mediaRepository->createMedia($media);
     }
 }
  

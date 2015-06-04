@@ -2,35 +2,28 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\Repositories\PageRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\PageStructure;
 
 class GetPagesInteractor
 {
-    private $repository;
-
-    public function __construct(PageRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($langID = null, $structure = false)
     {
-        $pages = $this->repository->findAll($langID);
+        $pages = Context::$pageRepository->findAll($langID);
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }
 
     public function getMasterPages($structure = false)
     {
-        $pages = $this->repository->findMasterPages();
+        $pages = Context::$pageRepository->findMasterPages();
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }
 
     public function getChildPages($pageID, $structure = false)
     {
-        $pages = $this->repository->findChildPages($pageID);
+        $pages = Context::$pageRepository->findChildPages($pageID);
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }

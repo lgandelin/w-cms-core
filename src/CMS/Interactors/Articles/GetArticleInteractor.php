@@ -2,21 +2,14 @@
 
 namespace CMS\Interactors\Articles;
 
-use CMS\Repositories\ArticleRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\ArticleStructure;
 
 class GetArticleInteractor
 {
-    protected $repository;
-
-    public function __construct(ArticleRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getArticleByID($articleID, $structure = false)
     {
-        if (!$article = $this->repository->findByID($articleID)) {
+        if (!$article = Context::$articleRepository->findByID($articleID)) {
             throw new \Exception('The article was not found');
         }
 

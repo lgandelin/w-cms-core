@@ -1,18 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Article;
 use CMS\Interactors\Articles\GetArticlesInteractor;
-use CMSTests\Repositories\InMemoryArticleRepository;
 
 class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
     public function setUp()
     {
-        $this->repository = new InMemoryArticleRepository();
-        $this->interactor = new GetArticlesInteractor($this->repository);
+        CMSTestsSuite::clean();
+        $this->interactor = new GetArticlesInteractor();
     }
 
     public function testGetAllWithoutArticles()
@@ -22,31 +21,30 @@ class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testGetAll()
     {
-        $this->createSampleArticle(1);
-        $this->createSampleArticle(2);
+        $this->createSampleArticle();
+        $this->createSampleArticle();
 
         $articles = $this->interactor->getAll();
 
         $this->assertCount(2, $articles);
-        $this->assertInstanceOf('\CMS\Entities\Article', $articles[0]);
+        $this->assertInstanceOf('\CMS\Entities\Article', array_shift($articles));
     }
 
     public function testGetByStructures()
     {
-        $this->createSampleArticle(1);
-        $this->createSampleArticle(2);
+        $this->createSampleArticle();
+        $this->createSampleArticle();
 
-        $articles = $this->interactor->getAll(true);
+        $articles = $this->interactor->getAll(null, true);
 
         $this->assertCount(2, $articles);
-        $this->assertInstanceOf('\CMS\Structures\ArticleStructure', $articles[0]);
+        $this->assertInstanceOf('\CMS\Structures\ArticleStructure', array_shift($articles));
     }
 
-    private function createSampleArticle($articleID)
+    private function createSampleArticle()
     {
         $article = new Article();
-        $article->setID($articleID);
         $article->setTitle('Sample article');
-        $this->repository->createArticle($article);
+        Context::$articleRepository->createArticle($article);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class Article
+class Article extends Entity
 {
     private $ID;
     private $title;

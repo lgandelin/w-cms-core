@@ -2,42 +2,18 @@
 
 namespace CMS\Interactors\Articles;
 
+use CMS\Context;
 use CMS\Entities\Article;
-use CMS\Repositories\ArticleRepositoryInterface;
 use CMS\Structures\ArticleStructure;
 
 class CreateArticleInteractor
 {
-    private $repository;
-
-    public function __construct(ArticleRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function run(ArticleStructure $articleStructure)
     {
-        $article = $this->createArticleFromStructure($articleStructure);
-
+        $article = new Article();
+        $article->setInfos($articleStructure);
         $article->valid();
 
-        return $this->repository->createArticle($article);
-    }
-
-    private function createArticleFromStructure(ArticleStructure $articleStructure)
-    {
-        $article = new Article();
-        $article->setID($articleStructure->ID);
-        $article->setTitle($articleStructure->title);
-        $article->setSummary($articleStructure->summary);
-        $article->setText($articleStructure->text);
-        $article->setLangID($articleStructure->lang_id);
-        $article->setCategoryID($articleStructure->category_id);
-        $article->setAuthorID($articleStructure->author_id);
-        $article->setPageID($articleStructure->page_id);
-        $article->setMediaID($articleStructure->media_id);
-        $article->setPublicationDate($articleStructure->publication_date);
-
-        return $article;
+        return Context::$articleRepository->createArticle($article);
     }
 }

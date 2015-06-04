@@ -2,33 +2,28 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Repositories\BlockRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\BlockStructure;
 
 class GetBlocksInteractor
 {
-    public function __construct(BlockRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAllByAreaID($areaID, $structure = false)
     {
-        $blocks = $this->repository->findByAreaID($areaID);
+        $blocks = Context::$blockRepository->findByAreaID($areaID);
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }
 
     public function getGlobalBlocks($structure = false)
     {
-        $blocks = $this->repository->findGlobalBlocks();
+        $blocks = Context::$blockRepository->findGlobalBlocks();
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }
 
     public function getChildBlocks($masterblockID, $structure = false)
     {
-        $blocks = $this->repository->findChildBlocks($masterblockID);
+        $blocks = Context::$blockRepository->findChildBlocks($masterblockID);
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }

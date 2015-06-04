@@ -1,19 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\UpdateUserInteractor;
 use CMS\Structures\UserStructure;
-use CMSTests\Repositories\InMemoryUserRepository;
 
 class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryUserRepository();
-        $this->interactor = new UpdateUserInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdateUserInteractor();
     }
 
     /**
@@ -41,7 +39,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $userStructureUpdated);
 
-        $user = $this->repository->findByID(1);
+        $user = Context::$userRepository->findByID(1);
 
         $this->assertEquals('jdoe', $user->getLogin());
         $this->assertEquals('Doe', $user->getLastName());
@@ -73,7 +71,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID(2);
         $user->setLogin('jane.doe');
-        $this->repository->createUser($user);
+        Context::$userRepository->createUser($user);
 
         $userStructureUpdated = new UserStructure([
             'login' => 'jdoe'
@@ -90,7 +88,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user->setLastName('Doe');
         $user->setLogin('jdoe');
         $user->setEmail('john.doe@gmail.com');
-        $this->repository->createUser($user);
+        Context::$userRepository->createUser($user);
 
         return $user;
     }

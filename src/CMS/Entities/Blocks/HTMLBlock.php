@@ -28,6 +28,11 @@ class HTMLBlock extends Block
         return $blockStructure;
     }
 
+    public function getContentData()
+    {
+        return $this->html;
+    }
+
     public function updateContent(BlockStructure $blockStructure)
     {
         if (

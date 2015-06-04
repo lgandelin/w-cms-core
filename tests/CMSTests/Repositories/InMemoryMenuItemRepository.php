@@ -59,4 +59,9 @@ class InMemoryMenuItemRepository implements MenuItemRepositoryInterface
 
         return $menuItems;
     }
+
+    public function findAll($langID = null)
+    {
+        return $this->menuItems;
+    }
 }

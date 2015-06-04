@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class Page
+class Page extends Entity
 {
     private $ID;
     private $name;
