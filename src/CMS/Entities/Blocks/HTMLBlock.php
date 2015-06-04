@@ -30,7 +30,10 @@ class HTMLBlock extends Block
 
     public function getContentData()
     {
-        return $this->html;
+        $content = new \StdClass();
+        $content->html = $this->html;
+
+        return $content;
     }
 
     public function updateContent(BlockStructure $blockStructure)

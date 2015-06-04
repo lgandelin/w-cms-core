@@ -4,6 +4,9 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Context;
 use CMS\Entities\Block;
+use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
+use CMS\Interactors\Menus\GetMenuInteractor;
+use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Structures\Blocks\MenuBlockStructure;
 use CMS\Structures\BlockStructure;
 
@@ -31,7 +34,16 @@ class MenuBlock extends Block
 
     public function getContentData()
     {
-        return Context::$menuItemRepository->findByMenuID($this->menuID);
+        $content = (new GetMenuInteractor())->getMenuByID($this->getMenuID(), true);
+        $menuItems = (new GetMenuItemsInteractor())->getAll($this->getMenuID(), true);
+
+        foreach ($menuItems as $menuItem)
+            if ($menuItem->page_id)
+                $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->page_id, true);
+
+        $content->items = $menuItems;
+
+        return $content;
     }
 
     public function updateContent(BlockStructure $blockStructure)

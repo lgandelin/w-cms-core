@@ -33,7 +33,9 @@ class GetBlocksInteractor
         $blockStructures = [];
         if (is_array($blocks) && sizeof($blocks) > 0) {
             foreach ($blocks as $block) {
-                $blockStructures[]= BlockStructure::toStructure($block);
+                $blockStructure = BlockStructure::toStructure($block);
+                $blockStructure->content = $block->getContentData();
+                $blockStructures[]= $blockStructure;
             }
         }
 

@@ -21,21 +21,21 @@ class GetLangInteractor
         return Context::$langRepository->findDefautLangID();
     }
 
-    public function getLangFromURI($uri)
+    public function getLangFromURI($uri, $structure = false)
     {
         $langID = $this->getDefaultLangID();
-        foreach ((new GetLangsInteractor())->getAll(true) as $lang) {
-            if ($this->langPrefixMatchesURI($uri, $lang)) {
-                $langID = $lang->ID;
+        foreach ((new GetLangsInteractor())->getAll($structure) as $lang) {
+            if ($this->langPrefixMatchesURI($uri, $lang, $structure)) {
+                $langID = ($structure ? $lang->ID : $lang->getID());
             }
         }
 
-        return LangStructure::toStructure($this->getLangByID($langID));
+        return $this->getLangByID($langID, $structure);
     }
 
-    private function langPrefixMatchesURI($uri, $lang)
+    private function langPrefixMatchesURI($uri, $lang, $structure = false)
     {
-        preg_match('#' . $lang->prefix . '#', $uri, $matches);
+        preg_match('#' . ($structure ? $lang->prefix : $lang->getPrefix()). '#', $uri, $matches);
 
         return count($matches) > 0;
     }
