@@ -7,7 +7,7 @@ use CMS\Structures\ArticleStructure;
 
 class GetArticlesInteractor
 {
-    public function getAll($langID = null, $structure = false, $categoryID = null, $limit = 0, $order = 'ASC')
+    public function getAll($categoryID = null, $limit = 0, $order = 'ASC', $langID = null, $structure = false)
     {
         $articles = Context::$articleRepository->findAll($langID, $categoryID, $limit, $order);
 

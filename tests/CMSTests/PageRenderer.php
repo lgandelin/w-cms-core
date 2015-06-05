@@ -21,12 +21,14 @@ class PageRenderer
         $content = '<content>';
         switch ($block->getType()) {
             case 'html' :
-                $content .= $block->getContentData();
+                $content .= $block->getContentData()->html;
             break;
 
             case 'menu' :
-                foreach ($block->getContentData() as $item) {
-                    $content .= '<item>' . $item->getLabel() . '</item>';
+                if ($block->getContentData()) {
+                    foreach ($block->getContentData()->items as $item) {
+                        $content .= '<item>' . $item->label . '</item>';
+                    }
                 }
             break;
 

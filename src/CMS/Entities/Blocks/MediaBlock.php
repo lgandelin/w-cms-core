@@ -3,6 +3,8 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
+use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Structures\Blocks\MediaBlockStructure;
 use CMS\Structures\BlockStructure;
 
@@ -69,4 +71,24 @@ class MediaBlock extends Block
             $this->setMediaFormatID($blockStructure->media_format_id);
         }
     }
+
+    public function getContentData()
+    {
+        if ($this->getMediaID()) {
+            $content = new \StdClass();
+            $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), true);
+            $content->media_link = $this->getMediaLink();
+
+            if ($this->getMediaFormatID()) {
+                $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($this->getMediaFormatID(), true);
+                $content->media->file_name = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $content->media->file_name;
+
+                return $content;
+            }
+        }
+
+        return null;
+    }
+
+
 }

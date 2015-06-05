@@ -3,6 +3,9 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
+use CMS\Interactors\Articles\GetArticlesInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
+use CMS\Interactors\Pages\GetPageInteractor;
 use CMS\Structures\Blocks\ArticleListBlockStructure;
 use CMS\Structures\BlockStructure;
 
@@ -63,5 +66,21 @@ class ArticleListBlock extends Block
             $this->setArticleListOrder($blockStructure->article_list_order);
             $this->setArticleListNumber($blockStructure->article_list_number);
         }
+    }
+
+    public function getContentData()
+    {
+        $content = new \StdClass();
+        $content->articles = (new GetArticlesInteractor())->getAll($this->article_list_category_id, $this->article_list_number, $this->article_list_order, null, true);
+
+        foreach ($content->articles as $article) {
+            if ($article->page_id)
+                $article->page = (new GetPageInteractor())->getPageByID($article->page_id, true);
+
+            if ($article->media_id)
+                $article->media = (new GetMediaInteractor())->getMediaByID($article->media_id, true);
+        }
+
+        return $content;
     }
 }

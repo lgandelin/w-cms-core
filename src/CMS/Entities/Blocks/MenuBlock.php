@@ -2,7 +2,6 @@
 
 namespace CMS\Entities\Blocks;
 
-use CMS\Context;
 use CMS\Entities\Block;
 use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
 use CMS\Interactors\Menus\GetMenuInteractor;
@@ -32,24 +31,28 @@ class MenuBlock extends Block
         return $blockStructure;
     }
 
-    public function getContentData()
-    {
-        $content = (new GetMenuInteractor())->getMenuByID($this->getMenuID(), true);
-        $menuItems = (new GetMenuItemsInteractor())->getAll($this->getMenuID(), true);
-
-        foreach ($menuItems as $menuItem)
-            if ($menuItem->page_id)
-                $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->page_id, true);
-
-        $content->items = $menuItems;
-
-        return $content;
-    }
-
     public function updateContent(BlockStructure $blockStructure)
     {
         if ($blockStructure->menu_id !== null && $blockStructure->menu_id != $this->getMenuID()) {
             $this->setMenuID($blockStructure->menu_id);
         }
+    }
+
+    public function getContentData()
+    {
+        if ($this->getMenuID()) {
+            $content = (new GetMenuInteractor())->getMenuByID($this->getMenuID(), true);
+            $menuItems = (new GetMenuItemsInteractor())->getAll($this->getMenuID(), true);
+
+            foreach ($menuItems as $menuItem)
+                if ($menuItem->page_id)
+                    $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->page_id, true);
+
+            $content->items = $menuItems;
+
+            return $content;
+        }
+
+        return null;
     }
 }

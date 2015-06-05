@@ -43,7 +43,11 @@ class InMemoryMenuRepository implements MenuRepositoryInterface
 
     public function createMenu(Menu $menu)
     {
+        $menuID = sizeof($this->menus) + 1;
+        $menu->setID($menuID);
         $this->menus[]= $menu;
+
+        return $menuID;
     }
 
     public function updateMenu(Menu $menu)

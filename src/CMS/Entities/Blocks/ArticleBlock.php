@@ -3,6 +3,7 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
+use CMS\Interactors\Articles\GetArticleInteractor;
 use CMS\Structures\Blocks\ArticleBlockStructure;
 use CMS\Structures\BlockStructure;
 
@@ -33,5 +34,16 @@ class ArticleBlock extends Block
         if ($blockStructure->article_id != $this->getArticleID()) {
             $this->setArticleID($blockStructure->article_id);
         }
+    }
+
+    public function getContentData()
+    {
+        if ($this->getArticleID()) {
+            $content = (new GetArticleInteractor())->getArticleByID($this->getArticleID(), true);
+
+            return $content;
+        }
+
+        return null;
     }
 }

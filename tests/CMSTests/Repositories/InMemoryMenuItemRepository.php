@@ -16,7 +16,11 @@ class InMemoryMenuItemRepository implements MenuItemRepositoryInterface
 
     public function createMenuItem(MenuItem $menuItem)
     {
+        $menuItemID = sizeof($this->menuItems) + 1;
+        $menuItem->setID($menuItemID);
         $this->menuItems[]= $menuItem;
+
+        return $menuItemID;
     }
 
     public function updateMenuItem(MenuItem $menuItem)
