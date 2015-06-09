@@ -11,7 +11,6 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
         $this->interactor = new GetMenusInteractor();
     }
 
-
     public function testGetAllWithoutMenus()
     {
         $this->assertCount(0, $this->interactor->getAll());
@@ -44,7 +43,7 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        Context::$menuRepository->createMenu($menu);
+        Context::getRepository('menu')->createMenu($menu);
 
         return $menu;
     }

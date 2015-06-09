@@ -29,7 +29,7 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setID(1);
         $area->setName('Area');
-        Context::$areaRepository->createArea($area);
+        Context::getRepository('area')->createArea($area);
 
         $block = new HTMLBlockStructure([
             'ID' => 1,
@@ -38,8 +38,8 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         ]);
         $this->interactor->run($block);
 
-        $this->assertEquals(1, count(Context::$blockRepository->findAll()));
-        $this->assertEquals(1, count(Context::$blockRepository->findByAreaID(1)));
+        $this->assertEquals(1, count(Context::getRepository('block')->findAll()));
+        $this->assertEquals(1, count(Context::getRepository('block')->findByAreaID(1)));
     }
 
     public function testCreateBlockInMasterPage()
@@ -48,13 +48,13 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $area->setID(1);
         $area->setName('Master area');
         $area->setIsMaster(1);
-        Context::$areaRepository->createArea($area);
+        Context::getRepository('area')->createArea($area);
 
         $childArea = new Area();
         $childArea->setID(2);
         $childArea->setName('Child area');
         $childArea->setMasterAreaID(1);
-        Context::$areaRepository->createArea($childArea);
+        Context::getRepository('area')->createArea($childArea);
 
         $block = new HTMLBlockStructure([
             'name' => 'Test block',
@@ -63,6 +63,6 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         ]);
         $this->interactor->run($block);
 
-        $this->assertEquals(1, count(Context::$blockRepository->findByAreaID(2)));
+        $this->assertEquals(1, count(Context::getRepository('block')->findByAreaID(2)));
     }
 }

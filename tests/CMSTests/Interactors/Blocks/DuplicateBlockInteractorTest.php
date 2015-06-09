@@ -19,16 +19,16 @@ class DuplicateBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $area = new Area();
         $area->setID(1);
-        Context::$areaRepository->createArea($area);
+        Context::getRepository('area')->createArea($area);
 
         $block = new HTMLBlock();
         $block->setName('HTML Block');
         $block->setHTML('<h1>Hello World</h1>');
-        Context::$blockRepository->createBlock($block);
+        Context::getRepository('block')->createBlock($block);
 
         $this->interactor->run(BlockStructure::toStructure($block), 1);
 
-        $duplicatedBlock = Context::$blockRepository->findByID(2);
+        $duplicatedBlock = Context::getRepository('block')->findByID(2);
 
         $this->assertEquals(1, count($duplicatedBlock));
         $this->assertEquals('<h1>Hello World</h1>', $duplicatedBlock->getHTML());

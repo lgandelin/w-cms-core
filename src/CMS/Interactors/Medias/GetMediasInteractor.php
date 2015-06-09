@@ -10,7 +10,7 @@ class GetMediasInteractor extends Interactor
 {
     public function getAll($structure = false)
     {
-        $medias = Context::$mediaRepository->findAll();
+        $medias = Context::getRepository('media')->findAll();
 
         return ($structure) ? $this->getMediaStructures($medias) : $medias;
     }

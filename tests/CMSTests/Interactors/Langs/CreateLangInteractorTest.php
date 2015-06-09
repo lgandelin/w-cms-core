@@ -26,6 +26,6 @@ class CreateLangInteractorTest extends \PHPUnit_Framework_TestCase {
 
         $this->interactor->run($lang);
 
-        $this->assertEquals(1, count(Context::$langRepository->findByID(1)));
+        $this->assertEquals(1, count(Context::getRepository('lang')->findByID(1)));
     }
 }

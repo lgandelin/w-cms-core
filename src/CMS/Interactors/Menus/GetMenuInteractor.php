@@ -9,7 +9,7 @@ class GetMenuInteractor
 {
     public function getMenuByID($menuID, $structure = false)
     {
-        if (!$menu = Context::$menuRepository->findByID($menuID)) {
+        if (!$menu = Context::getRepository('menu')->findByID($menuID)) {
             throw new \Exception('The menu was not found');
         }
 

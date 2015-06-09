@@ -15,7 +15,7 @@ class CreateAreaInteractor
         $area->setInfos($areaStructure);
         $area->valid();
 
-        $areaID = Context::$areaRepository->createArea($area);
+        $areaID = Context::getRepository('area')->createArea($area);
 
         if ($area->getIsMaster()) {
             $this->createAreaInChildPages($areaStructure, $areaID, $area->getPageID());

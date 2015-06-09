@@ -9,7 +9,7 @@ class GetArticleCategoriesInteractor
 {
     public function getAll($langID = null, $structure = false)
     {
-        $articles = Context::$articleCategoryRepository->findAll($langID);
+        $articles = Context::getRepository('article_category')->findAll($langID);
 
         return ($structure) ? $this->getArticleCategoryStructures($articles) : $articles;
     }

@@ -10,7 +10,7 @@ class GetMediaFormatsInteractor extends Interactor
 {
     public function getAll($structure = false)
     {
-        $mediaFormats = Context::$mediaFormatRepository->findAll();
+        $mediaFormats = Context::getRepository('media_format')->findAll();
 
         return ($structure) ? $this->getMediaFormatStructures($mediaFormats) : $mediaFormats;
     }

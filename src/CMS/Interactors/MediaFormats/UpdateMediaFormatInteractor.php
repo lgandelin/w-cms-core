@@ -13,7 +13,7 @@ class UpdateMediaFormatInteractor extends GetMediaFormatInteractor
             $mediaFormat->setInfos($mediaFormatStructure);
             $mediaFormat->valid();
 
-            Context::$mediaFormatRepository->updateMediaFormat($mediaFormat);
+            Context::getRepository('media_format')->updateMediaFormat($mediaFormat);
         }
     }
 }

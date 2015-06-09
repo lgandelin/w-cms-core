@@ -9,7 +9,7 @@ class GetPageInteractor
 {
     public function getPageByID($pageID, $structure = false)
     {
-        if (!$page = Context::$pageRepository->findByID($pageID)) {
+        if (!$page = Context::getRepository('page')->findByID($pageID)) {
             throw new \Exception('The page was not found');
         }
 
@@ -18,7 +18,7 @@ class GetPageInteractor
 
     public function getPageByURI($pageURI, $langID = null, $structure = false)
     {
-        $page = ($langID) ? Context::$pageRepository->findByUriAndLangID($pageURI, $langID) : Context::$pageRepository->findByUri($pageURI);
+        $page = ($langID) ? Context::getRepository('page')->findByUriAndLangID($pageURI, $langID) : Context::getRepository('page')->findByUri($pageURI);
 
         if (!$page) {
             throw new \Exception('The page was not found');

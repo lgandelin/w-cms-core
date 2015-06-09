@@ -9,7 +9,7 @@ class DeleteArticleInteractor extends GetArticleInteractor
     public function run($articleID)
     {
         if ($this->getArticleByID($articleID)) {
-            Context::$articleRepository->deleteArticle($articleID);
+            Context::getRepository('article')->deleteArticle($articleID);
         }
     }
 }

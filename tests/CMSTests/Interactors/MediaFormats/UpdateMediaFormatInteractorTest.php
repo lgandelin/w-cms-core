@@ -38,7 +38,7 @@ class UpdateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $mediaFormatStructureUpdated);
 
-        $mediaFormat = Context::$mediaFormatRepository->findByID(1);
+        $mediaFormat = Context::getRepository('media_format')->findByID(1);
 
         $this->assertEquals('new Media Format', $mediaFormat->getName());
     }
@@ -48,7 +48,7 @@ class UpdateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase
         $mediaFormat = new MediaFormat();
         $mediaFormat->setID($mediaFormatID);
         $mediaFormat->setName('Test media Format');
-        Context::$mediaFormatRepository->createMediaFormat($mediaFormat);
+        Context::getRepository('media_format')->createMediaFormat($mediaFormat);
 
         return $mediaFormat;
     }

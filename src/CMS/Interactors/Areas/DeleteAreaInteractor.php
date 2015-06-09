@@ -17,7 +17,7 @@ class DeleteAreaInteractor extends GetAreaInteractor
                 $this->deleteChildAreas($areaID);
             }
             $this->deleteBlocks($areaID);
-            Context::$areaRepository->deleteArea($areaID);
+            Context::getRepository('area')->deleteArea($areaID);
 
             if ($this->eventManager) {
                 $this->eventManager->fireEvent(new DeleteAreaEvent($area));

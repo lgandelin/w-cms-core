@@ -9,7 +9,7 @@ class GetLangInteractor
 {
     public function getLangByID($langID, $structure = false)
     {
-        if (!$lang = Context::$langRepository->findByID($langID)) {
+        if (!$lang = Context::getRepository('lang')->findByID($langID)) {
             throw new \Exception('The lang was not found');
         }
 
@@ -18,7 +18,7 @@ class GetLangInteractor
 
     public function getDefaultLangID()
     {
-        return Context::$langRepository->findDefautLangID();
+        return Context::getRepository('lang')->findDefautLangID();
     }
 
     public function getLangFromURI($uri, $structure = false)

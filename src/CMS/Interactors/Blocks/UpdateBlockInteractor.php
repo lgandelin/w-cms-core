@@ -13,7 +13,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
             if ($blockStructure->type !== null && $blockStructure->type != $block->getType()) {
                 $block->setType($blockStructure->type);
             }
-            Context::$blockRepository->updateBlockType($block);
+            Context::getRepository('block')->updateBlockType($block);
 
             $block->setInfos($blockStructure);
 
@@ -28,7 +28,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
             }
         }
 
-        Context::$blockRepository->updateBlock($block);
+        Context::getRepository('block')->updateBlock($block);
     }
 
     private function updateChildBlocks(BlockStructure $blockStructure, $blockID)

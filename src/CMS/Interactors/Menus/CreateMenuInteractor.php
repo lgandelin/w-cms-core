@@ -18,11 +18,11 @@ class CreateMenuInteractor
             throw new \Exception('There is already a menu with the same identifier');
         }
 
-        return Context::$menuRepository->createMenu($menu);
+        return Context::getRepository('menu')->createMenu($menu);
     }
 
     private function anotherExistingMenuWithSameIdentifier($identifier)
     {
-        return Context::$menuRepository->findByIdentifier($identifier);
+        return Context::getRepository('menu')->findByIdentifier($identifier);
     }
 }

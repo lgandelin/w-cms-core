@@ -40,6 +40,6 @@ class GetAreaInteractorTest extends PHPUnit_Framework_TestCase
     {
         $area = new Area();
 
-        return Context::$areaRepository->createArea($area);
+        return Context::getRepository('area')->createArea($area);
     }
 }

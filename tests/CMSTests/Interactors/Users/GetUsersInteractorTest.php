@@ -45,7 +45,7 @@ class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID($userID);
         $user->setLastName('User lastname');
-        Context::$userRepository->createUser($user);
+        Context::getRepository('user')->createUser($user);
 
         return $user;
     }

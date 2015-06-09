@@ -39,7 +39,7 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($area);
 
-        $this->assertEquals(1, count(Context::$areaRepository->findByPageID(1)));
+        $this->assertEquals(1, count(Context::getRepository('area')->findByPageID(1)));
     }
 
     private function createSamplePage()
@@ -47,7 +47,7 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $page = new Page();
         $page->setID(1);
         $page->setName('Test page');
-        Context::$pageRepository->createPage($page);
+        Context::getRepository('page')->createPage($page);
     }
 
     public function testCreateAreaInMasterPage()
@@ -56,13 +56,13 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $page->setID(1);
         $page->setName('Master page');
         $page->setIsMaster(1);
-        Context::$pageRepository->createPage($page);
+        Context::getRepository('page')->createPage($page);
 
         $childPage = new Page();
         $childPage->setID(2);
         $childPage->setName('Child page');
         $childPage->setMasterPageID(1);
-        Context::$pageRepository->createPage($childPage);
+        Context::getRepository('page')->createPage($childPage);
         
         $area = new AreaStructure([
             'ID' => 1,
@@ -72,6 +72,6 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
         ]);
         $this->interactor->run($area);
 
-        $this->assertEquals(1, count(Context::$areaRepository->findByPageID(2)));
+        $this->assertEquals(1, count(Context::getRepository('area')->findByPageID(2)));
     }
 }

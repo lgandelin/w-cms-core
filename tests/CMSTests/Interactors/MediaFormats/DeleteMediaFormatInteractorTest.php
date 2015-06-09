@@ -28,11 +28,11 @@ class DeleteMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $this->createSampleMediaFormat();
 
-        $this->assertCount(1, Context::$mediaFormatRepository->findAll());
+        $this->assertCount(1, Context::getRepository('media_format')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::$mediaFormatRepository->findAll());
+        $this->assertCount(0, Context::getRepository('media_format')->findAll());
     }
 
     private function createSampleMediaFormat()
@@ -40,6 +40,6 @@ class DeleteMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {
         $mediaFormat = new MediaFormat();
         $mediaFormat->setID(1);
         $mediaFormat->setName('Test media format');
-        Context::$mediaFormatRepository->createMediaFormat($mediaFormat);
+        Context::getRepository('media_format')->createMediaFormat($mediaFormat);
     }
 }

@@ -9,21 +9,21 @@ class GetBlocksInteractor
 {
     public function getAllByAreaID($areaID, $structure = false)
     {
-        $blocks = Context::$blockRepository->findByAreaID($areaID);
+        $blocks = Context::getRepository('block')->findByAreaID($areaID);
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }
 
     public function getGlobalBlocks($structure = false)
     {
-        $blocks = Context::$blockRepository->findGlobalBlocks();
+        $blocks = Context::getRepository('block')->findGlobalBlocks();
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }
 
     public function getChildBlocks($masterblockID, $structure = false)
     {
-        $blocks = Context::$blockRepository->findChildBlocks($masterblockID);
+        $blocks = Context::getRepository('block')->findChildBlocks($masterblockID);
 
         return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
     }

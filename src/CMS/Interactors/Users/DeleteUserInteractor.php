@@ -9,7 +9,7 @@ class DeleteUserInteractor extends GetUserInteractor
     public function run($userID)
     {
         if ($this->getUserByID($userID)) {
-            Context::$userRepository->deleteUser($userID);
+            Context::getRepository('user')->deleteUser($userID);
         }
     }
 }

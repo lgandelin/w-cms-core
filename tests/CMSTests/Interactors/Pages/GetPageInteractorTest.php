@@ -37,6 +37,6 @@ class GetPageInteractorTest extends PHPUnit_Framework_TestCase
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
 
-        Context::$pageRepository->createPage($page);
+        Context::getRepository('page')->createPage($page);
     }
 }

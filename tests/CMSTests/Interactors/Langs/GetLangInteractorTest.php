@@ -42,7 +42,7 @@ class GetLangInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $lang = new Lang();
 
-        return Context::$langRepository->createLang($lang);
+        return Context::getRepository('lang')->createLang($lang);
     }
 }
  

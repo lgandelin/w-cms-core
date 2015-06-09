@@ -85,7 +85,7 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreatePage()
     {
-        $this->assertCount(0, Context::$pageRepository->findAll());
+        $this->assertCount(0, Context::getRepository('page')->findAll());
 
         $pageStructure = new PageStructure([
             'uri' => '/home',
@@ -95,6 +95,6 @@ class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($pageStructure);
 
-        $this->assertCount(1, Context::$pageRepository->findAll());
+        $this->assertCount(1, Context::getRepository('page')->findAll());
     }
 }

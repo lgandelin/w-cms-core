@@ -42,13 +42,13 @@ class GetAreasInteractorTest extends PHPUnit_Framework_TestCase
         $page = new Page();
         $page->setID(1);
         $page->setName('Test page');
-        Context::$pageRepository->createPage($page);
+        Context::getRepository('page')->createPage($page);
     }
 
     private function createSampleArea()
     {
         $area = new Area();
         $area->setPageID(1);
-        Context::$areaRepository->createArea($area);
+        Context::getRepository('area')->createArea($area);
     }
 }

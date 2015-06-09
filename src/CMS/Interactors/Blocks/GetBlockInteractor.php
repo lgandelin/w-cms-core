@@ -9,7 +9,7 @@ class GetBlockInteractor
 {
     public function getBlockByID($blockID, $structure = false)
     {
-        if (!$block = Context::$blockRepository->findByID($blockID)) {
+        if (!$block = Context::getRepository('block')->findByID($blockID)) {
             throw new \Exception('The block was not found');
         }
 

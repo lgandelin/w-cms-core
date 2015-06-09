@@ -9,7 +9,7 @@ class DeleteArticleCategoryInteractor extends GetArticleCategoryInteractor
     public function run($articleCategoryID)
     {
         if ($this->getArticleCategoryByID($articleCategoryID)) {
-            Context::$articleCategoryRepository->deleteArticleCategory($articleCategoryID);
+            Context::getRepository('article_category')->deleteArticleCategory($articleCategoryID);
         }
     }
 }

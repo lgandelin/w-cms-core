@@ -16,7 +16,7 @@ class DeletePageInteractor extends GetPageInteractor
         if ($this->getPageByID($pageID)) {
             $this->deleteAssociatedArticlesToPage($pageID);
             $this->deleteAreasInPage($pageID);
-            Context::$pageRepository->deletePage($pageID);
+            Context::getRepository('page')->deletePage($pageID);
         }
     }
 

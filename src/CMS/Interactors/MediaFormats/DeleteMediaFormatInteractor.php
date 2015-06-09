@@ -9,7 +9,7 @@ class DeleteMediaFormatInteractor extends GetMediaFormatInteractor
     public function run($mediaFormatID)
     {
         if ($this->getMediaFormatByID($mediaFormatID)) {
-            Context::$mediaFormatRepository->deleteMediaFormat($mediaFormatID);
+            Context::getRepository('media_format')->deleteMediaFormat($mediaFormatID);
         }
     }
 }

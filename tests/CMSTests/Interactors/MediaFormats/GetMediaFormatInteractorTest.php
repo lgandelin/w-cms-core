@@ -42,7 +42,7 @@ class GetMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $mediaFormat = new MediaFormat();
 
-        return Context::$mediaFormatRepository->createMediaFormat($mediaFormat);
+        return Context::getRepository('media_format')->createMediaFormat($mediaFormat);
     }
 }
  

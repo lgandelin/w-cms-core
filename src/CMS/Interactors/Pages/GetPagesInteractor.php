@@ -9,21 +9,21 @@ class GetPagesInteractor
 {
     public function getAll($langID = null, $structure = false)
     {
-        $pages = Context::$pageRepository->findAll($langID);
+        $pages = Context::getRepository('page')->findAll($langID);
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }
 
     public function getMasterPages($structure = false)
     {
-        $pages = Context::$pageRepository->findMasterPages();
+        $pages = Context::getRepository('page')->findMasterPages();
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }
 
     public function getChildPages($pageID, $structure = false)
     {
-        $pages = Context::$pageRepository->findChildPages($pageID);
+        $pages = Context::getRepository('page')->findChildPages($pageID);
 
         return ($structure) ? $this->getPageStructures($pages) : $pages;
     }

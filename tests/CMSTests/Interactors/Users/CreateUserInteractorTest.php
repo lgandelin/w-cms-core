@@ -47,7 +47,7 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateUser()
     {
-        $this->assertCount(0, Context::$userRepository->findAll());
+        $this->assertCount(0, Context::getRepository('user')->findAll());
 
         $userStructure = new UserStructure([
             'login' => 'jdoe',
@@ -57,6 +57,6 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($userStructure);
 
-        $this->assertCount(1, Context::$userRepository->findAll());
+        $this->assertCount(1, Context::getRepository('user')->findAll());
     }
 }

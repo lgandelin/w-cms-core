@@ -42,7 +42,7 @@ class GetMediaInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $media = new Media();
 
-        return Context::$mediaRepository->createMedia($media);
+        return Context::getRepository('media')->createMedia($media);
     }
 }
  

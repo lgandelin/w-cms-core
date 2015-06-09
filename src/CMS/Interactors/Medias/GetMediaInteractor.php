@@ -10,7 +10,7 @@ class GetMediaInteractor extends Interactor
 {
     public function getMediaByID($mediaID, $structure = false)
     {
-        if (!$media = Context::$mediaRepository->findByID($mediaID)) {
+        if (!$media = Context::getRepository('media')->findByID($mediaID)) {
             throw new \Exception('The media was not found');
         }
 

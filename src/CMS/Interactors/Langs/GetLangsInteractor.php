@@ -9,7 +9,7 @@ class GetLangsInteractor
 {
     public function getAll($structure = false)
     {
-        $langs = Context::$langRepository->findAll();
+        $langs = Context::getRepository('lang')->findAll();
 
         return ($structure) ? $this->getLangStructures($langs) : $langs;
     }

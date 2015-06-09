@@ -75,7 +75,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
             $this->interactor->run($menuItemStructure);
         }
 
-        $this->assertCount(3, Context::$menuItemRepository->findByMenuID(1));
+        $this->assertCount(3, Context::getRepository('menu_item')->findByMenuID(1));
     }
 
     private function createSampleMenu()
@@ -85,7 +85,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        Context::$menuRepository->createMenu($menu);
+        Context::getRepository('menu')->createMenu($menu);
 
         return $menu;
     }

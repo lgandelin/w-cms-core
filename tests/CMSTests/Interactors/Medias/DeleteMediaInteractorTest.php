@@ -28,11 +28,11 @@ class DeleteMediaInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $this->createSampleMedia();
 
-        $this->assertCount(1, Context::$mediaRepository->findAll());
+        $this->assertCount(1, Context::getRepository('media')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::$mediaRepository->findAll());
+        $this->assertCount(0, Context::getRepository('media')->findAll());
     }
 
     private function createSampleMedia()
@@ -40,6 +40,6 @@ class DeleteMediaInteractorTest extends \PHPUnit_Framework_TestCase {
         $media = new Media();
         $media->setID(1);
         $media->setName('Test media');
-        Context::$mediaRepository->createMedia($media);
+        Context::getRepository('media')->createMedia($media);
     }
 }

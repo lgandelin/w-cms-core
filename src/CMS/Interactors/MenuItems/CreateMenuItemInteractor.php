@@ -14,6 +14,6 @@ class CreateMenuItemInteractor
         $menuItem->setInfos($menuItemStructure);
         $menuItem->valid();
 
-        return Context::$menuItemRepository->createMenuItem($menuItem);
+        return Context::getRepository('menu_item')->createMenuItem($menuItem);
     }
 }

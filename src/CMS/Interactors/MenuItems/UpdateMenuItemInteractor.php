@@ -13,7 +13,7 @@ class UpdateMenuItemInteractor extends GetMenuItemInteractor
             $menuItem->setInfos($menuItemStructure);
             $menuItem->valid();
 
-            Context::$menuItemRepository->updateMenuItem($menuItem);
+            Context::getRepository('menu_item')->updateMenuItem($menuItem);
         }
     }
 }

@@ -37,7 +37,7 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($blockID, $articleStructureUpdated);
 
-        $article = Context::$articleRepository->findByID($blockID);
+        $article = Context::getRepository('article')->findByID($blockID);
 
         $this->assertEquals('Sample article updated', $article->getTitle());
     }
@@ -60,7 +60,7 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
     {
         $article = new Article();
         $article->setTitle('Sample article');
-        Context::$articleRepository->createArticle($article);
+        Context::getRepository('article')->createArticle($article);
 
         return $article->getID();
     }

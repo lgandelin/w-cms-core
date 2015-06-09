@@ -13,7 +13,7 @@ class UpdateArticleCategoryInteractor extends GetArticleCategoryInteractor
             $articleCategory->setInfos($articleCategoryStructure);
             $articleCategory->valid();
 
-            Context::$articleCategoryRepository->updateArticleCategory($articleCategory);
+            Context::getRepository('article_category')->updateArticleCategory($articleCategory);
         }
     }
 }

@@ -27,7 +27,7 @@ class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateArticle()
     {
-        $this->assertCount(0, Context::$articleRepository->findAll());
+        $this->assertCount(0, Context::getRepository('article')->findAll());
 
         $articleStructure = new ArticleStructure([
             'title' => 'Sample article',
@@ -35,6 +35,6 @@ class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($articleStructure);
 
-        $this->assertCount(1, Context::$articleRepository->findAll());
+        $this->assertCount(1, Context::getRepository('article')->findAll());
     }
 }

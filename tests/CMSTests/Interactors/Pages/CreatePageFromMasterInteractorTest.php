@@ -53,7 +53,7 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
         ]);
         $this->interactor->run($pageStructureChild);
 
-        $this->assertInstanceOf('\CMS\Entities\Area', Context::$areaRepository->findByID(1));
-        $this->assertInstanceOf('\CMS\Entities\Block', Context::$blockRepository->findByID(2));
+        $this->assertInstanceOf('\CMS\Entities\Area', Context::getRepository('area')->findByID(1));
+        $this->assertInstanceOf('\CMS\Entities\Block', Context::getRepository('block')->findByID(2));
     }
 }

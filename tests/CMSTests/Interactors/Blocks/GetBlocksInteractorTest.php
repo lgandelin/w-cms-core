@@ -43,7 +43,7 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setID(1);
         $area->setName('Test area');
-        Context::$areaRepository->createArea($area);
+        Context::getRepository('area')->createArea($area);
     }
 
     private function createSampleBlock()
@@ -51,6 +51,6 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $block = new HTMLBlock();
         $block->setName('Block');
         $block->setAreaID(1);
-        Context::$blockRepository->createBlock($block);
+        Context::getRepository('block')->createBlock($block);
     }
 }

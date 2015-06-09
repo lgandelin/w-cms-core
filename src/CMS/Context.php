@@ -4,15 +4,18 @@ namespace CMS;
 
 class Context
 {
-    public static $pageRepository;
-    public static $areaRepository;
-    public static $blockRepository;
-    public static $langRepository;
-    public static $menuRepository;
-    public static $menuItemRepository;
-    public static $mediaFormatRepository;
-    public static $mediaRepository;
-    public static $userRepository;
-    public static $articleRepository;
-    public static $articleCategoryRepository;
+    public static $repositories;
+
+    function __construct()
+    {
+        self::$repositories = [];
+    }
+
+    public static function addRepository($identifier, $repositoryObject) {
+        self::$repositories[$identifier] = $repositoryObject;
+    }
+
+    public static function getRepository($identifier) {
+        return self::$repositories[$identifier];
+    }
 }

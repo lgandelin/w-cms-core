@@ -17,13 +17,13 @@ class UpdateUserInteractor extends GetUserInteractor
                 throw new \Exception('There is already a user with the same login');
             }
 
-            Context::$userRepository->updateUser($user);
+            Context::getRepository('user')->updateUser($user);
         }
     }
 
     private function anotherUserExistsWithSameLogin($userID, $userLogin)
     {
-        $user = Context::$userRepository->findByLogin($userLogin);
+        $user = Context::getRepository('user')->findByLogin($userLogin);
 
         return ($user && $user->getID() != $userID);
     }
