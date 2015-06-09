@@ -10,11 +10,6 @@ class UpdateBlockInteractor extends GetBlockInteractor
     public function run($blockID, BlockStructure $blockStructure)
     {
         if ($block = $this->getBlockByID($blockID)) {
-            if ($blockStructure->type !== null && $blockStructure->type != $block->getType()) {
-                $block->setType($blockStructure->type);
-            }
-            Context::getRepository('block')->updateBlockType($block);
-
             $block->setInfos($blockStructure);
 
             if (!$block->getIsGhost()) {
