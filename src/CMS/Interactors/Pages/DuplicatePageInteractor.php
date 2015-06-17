@@ -6,9 +6,7 @@ use CMS\Interactors\Areas\DuplicateAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Structures\AreaStructure;
 use CMS\Structures\BlockStructure;
-use CMS\Structures\PageStructure;
 
 class DuplicatePageInteractor extends GetPageInteractor
 {
@@ -29,7 +27,7 @@ class DuplicatePageInteractor extends GetPageInteractor
         $pageDuplicated->setLangID($page->getLangID());
         $pageDuplicated->setIdentifier($page->getIdentifier() . '-copy');
 
-        return (new CreatePageInteractor())->run(PageStructure::toStructure($pageDuplicated));
+        return (new CreatePageInteractor())->run($pageDuplicated->toStructure());
     }
 
     private function duplicateAreas($pageID, $newPageID)
@@ -38,7 +36,7 @@ class DuplicatePageInteractor extends GetPageInteractor
 
         if (is_array($areas) && sizeof($areas) > 0) {
             foreach ($areas as $area) {
-                $newAreaID = (new DuplicateAreaInteractor())->run(AreaStructure::toStructure($area), $newPageID);
+                $newAreaID = (new DuplicateAreaInteractor())->run($area->toStructure(), $newPageID);
                 $this->duplicateBLocks($area->getID(), $newAreaID);
             }
         }

@@ -4,8 +4,6 @@ namespace CMS\Interactors\Menus;
 
 use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
 use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
-use CMS\Structures\MenuItemStructure;
-use CMS\Structures\MenuStructure;
 
 class DuplicateMenuInteractor extends GetMenuInteractor
 {
@@ -25,7 +23,7 @@ class DuplicateMenuInteractor extends GetMenuInteractor
         $menuDuplicated->setIdentifier($menu->getIdentifier() . '-copy');
         $menuDuplicated->setLangID($menu->getLangID());
 
-        return (new CreateMenuInteractor())->run(MenuStructure::toStructure($menuDuplicated));
+        return (new CreateMenuInteractor())->run($menuDuplicated->toStructure());
     }
 
     private function duplicateMenuItems($menuID, $newMenuID)
@@ -38,7 +36,7 @@ class DuplicateMenuInteractor extends GetMenuInteractor
 
     private function duplicateMenuItem($menuItem, $newMenuID)
     {
-        $menuItemStructure = MenuItemStructure::toStructure($menuItem);
+        $menuItemStructure = $menuItem->toStructure();
         $menuItemStructure->ID = null;
         $menuItemStructure->menu_id = $newMenuID;
 

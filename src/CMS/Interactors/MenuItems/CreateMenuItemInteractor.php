@@ -4,11 +4,11 @@ namespace CMS\Interactors\MenuItems;
 
 use CMS\Context;
 use CMS\Entities\MenuItem;
-use CMS\Structures\MenuItemStructure;
+use CMS\Structures\DataStructure;
 
 class CreateMenuItemInteractor
 {
-    public function run(MenuItemStructure $menuItemStructure)
+    public function run(DataStructure $menuItemStructure)
     {
         $menuItem = new MenuItem();
         $menuItem->setInfos($menuItemStructure);

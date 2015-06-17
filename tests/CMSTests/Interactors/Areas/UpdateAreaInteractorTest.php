@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMS\Structures\AreaStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -20,14 +20,14 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingArea()
     {
-        $this->interactor->run(1, new AreaStructure());
+        $this->interactor->run(1, new DataStructure());
     }
 
     public function testUpdateArea()
     {
         $areaID = $this->createSampleArea();
 
-        $this->interactor->run($areaID, new AreaStructure([
+        $this->interactor->run($areaID, new DataStructure([
             'name' => 'Test area updated'
         ]));
 
@@ -63,7 +63,7 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $childArea2->setName('Test area');
         Context::getRepository('area')->createArea($childArea2);
 
-        $areaStructure = new AreaStructure([
+        $areaStructure = new DataStructure([
             'name' => 'Test area updated'
         ]);
         $this->interactor->run($masterArea->getID(), $areaStructure);

@@ -4,11 +4,11 @@ namespace CMS\Interactors\Menus;
 
 use CMS\Context;
 use CMS\Entities\Menu;
-use CMS\Structures\MenuStructure;
+use CMS\Structures\DataStructure;
 
 class CreateMenuInteractor
 {
-    public function run(MenuStructure $menuStructure)
+    public function run(DataStructure $menuStructure)
     {
         $menu = new Menu();
         $menu->setInfos($menuStructure);

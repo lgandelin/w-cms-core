@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Context;
-use CMS\Structures\PageStructure;
+use CMS\Structures\DataStructure;
 
 class GetPagesInteractor
 {
@@ -11,29 +11,29 @@ class GetPagesInteractor
     {
         $pages = Context::getRepository('page')->findAll($langID);
 
-        return ($structure) ? $this->getPageStructures($pages) : $pages;
+        return ($structure) ? $this->getDataStructures($pages) : $pages;
     }
 
     public function getMasterPages($structure = false)
     {
         $pages = Context::getRepository('page')->findMasterPages();
 
-        return ($structure) ? $this->getPageStructures($pages) : $pages;
+        return ($structure) ? $this->getDataStructures($pages) : $pages;
     }
 
     public function getChildPages($pageID, $structure = false)
     {
         $pages = Context::getRepository('page')->findChildPages($pageID);
 
-        return ($structure) ? $this->getPageStructures($pages) : $pages;
+        return ($structure) ? $this->getDataStructures($pages) : $pages;
     }
 
-    private function getPageStructures($pages)
+    private function getDataStructures($pages)
     {
         $pageStructures = [];
         if (is_array($pages) && sizeof($pages) > 0) {
             foreach ($pages as $page) {
-                $pageStructures[] = PageStructure::toStructure($page);
+                $pageStructures[] = $page->toStructure();
             }
         }
 

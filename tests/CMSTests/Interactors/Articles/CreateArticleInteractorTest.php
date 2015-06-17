@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\Articles\CreateArticleInteractor;
-use CMS\Structures\ArticleStructure;
+use CMS\Structures\DataStructure;
 
 class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateArticleWithoutTitle()
     {
-        $article = new ArticleStructure([
+        $article = new DataStructure([
             'title' => ''
         ]);
 
@@ -29,7 +29,7 @@ class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->assertCount(0, Context::getRepository('article')->findAll());
 
-        $articleStructure = new ArticleStructure([
+        $articleStructure = new DataStructure([
             'title' => 'Sample article',
         ]);
 

@@ -3,11 +3,11 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Context;
-use CMS\Structures\UserStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateUserInteractor extends GetUserInteractor
 {
-    public function run($userID, UserStructure $userStructure)
+    public function run($userID, DataStructure $userStructure)
     {
         if ($user = $this->getUserByID($userID)) {
             $user->setInfos($userStructure);

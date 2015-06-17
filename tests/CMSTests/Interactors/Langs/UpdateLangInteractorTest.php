@@ -5,7 +5,7 @@ namespace CMSTests\Interactors\Langs;
 use CMS\Context;
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\Structures\LangStructure;
+use CMS\Structures\DataStructure;
 use CMSTestsSuite;
 
 class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
@@ -22,7 +22,7 @@ class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingLang()
     {
-        $langStructure = new LangStructure([
+        $langStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Test Lang',
             'prefix' => 'fr'
@@ -35,7 +35,7 @@ class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
     {
         $this->createSampleLang();
 
-        $langStructureUpdated = new LangStructure([
+        $langStructureUpdated = new DataStructure([
             'prefix' => '/fr/updated'
         ]);
 

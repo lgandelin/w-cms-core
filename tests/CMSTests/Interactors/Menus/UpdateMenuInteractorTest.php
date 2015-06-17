@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
-use CMS\Structures\MenuStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingMenu()
     {
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Menu',
             'identifier' => 'my-menu'
@@ -33,7 +33,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu(1);
 
-        $menuStructureUpdated = new MenuStructure([
+        $menuStructureUpdated = new DataStructure([
             'identifier' => ''
         ]);
         $this->interactor->run(1, $menuStructureUpdated);
@@ -47,7 +47,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleMenu(1);
         $this->createSampleMenu(2);
 
-        $menuStructure2Updated = new MenuStructure([
+        $menuStructure2Updated = new DataStructure([
             'identifier' => 'test-menu-1'
         ]);
 
@@ -58,7 +58,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu(1);
 
-        $menuStructureUpdated = new MenuStructure([
+        $menuStructureUpdated = new DataStructure([
             'name' => 'Main menu updated',
             'identifier' => 'main-menu'
         ]);

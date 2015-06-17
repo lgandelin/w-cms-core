@@ -5,8 +5,7 @@ use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
 use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\AreaStructure;
-use CMS\Structures\PageStructure;
+use CMS\Structures\DataStructure;
 
 class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
 
@@ -20,36 +19,36 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
     public function testCreatePageFromMasterPage()
     {
         //Create master page
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'ID' => 1,
             'uri' => '/master',
             'identifier' => 'master',
             'name' => 'Master page',
-            'is_master' => 1
+            'isMaster' => 1
         ]);
         $this->interactor->run($pageStructure);
 
-        $area = new AreaStructure([
+        $area = new DataStructure([
             'ID' => 1,
-            'page_id' => 1,
+            'pageID' => 1,
             'name' => 'Test area'
         ]);
         (new CreateAreaInteractor())->run($area);
 
         $block = new HTMLBlockStructure([
             'ID' => 1,
-            'area_id' => 1,
+            'areaID' => 1,
             'name' => 'Test block',
         ]);
         (new CreateBlockInteractor())->run($block);
 
         //Create child page
-        $pageStructureChild = new PageStructure([
+        $pageStructureChild = new DataStructure([
             'ID' => 2,
             'uri' => '/child',
             'identifier' => 'child',
             'name' => 'Child page',
-            'master_page_id' => 1
+            'masterPageID' => 1
         ]);
         $this->interactor->run($pageStructureChild);
 

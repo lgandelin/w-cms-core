@@ -7,12 +7,11 @@ use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Structures\AreaStructure;
-use CMS\Structures\PageStructure;
+use CMS\Structures\DataStructure;
 
 class UpdatePageInteractor extends GetPageInteractor
 {
-    public function run($pageID, PageStructure $pageStructure)
+    public function run($pageID, DataStructure $pageStructure)
     {
         $page = $this->getPageByID($pageID);
         $page->setInfos($pageStructure);
@@ -32,16 +31,16 @@ class UpdatePageInteractor extends GetPageInteractor
 
     private function anotherPageExistsWithSameURI($pageID, $pageURI)
     {
-        $existingPageStructure = Context::getRepository('page')->findByUri($pageURI);
+        $existingDataStructure = Context::getRepository('page')->findByUri($pageURI);
 
-        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
+        return ($existingDataStructure && $existingDataStructure->getID() != $pageID);
     }
 
     private function anotherPageExistsWithSameIdentifier($pageID, $pageIdentifier)
     {
-        $existingPageStructure = Context::getRepository('page')->findByIdentifier($pageIdentifier);
+        $existingDataStructure = Context::getRepository('page')->findByIdentifier($pageIdentifier);
 
-        return ($existingPageStructure && $existingPageStructure->getID() != $pageID);
+        return ($existingDataStructure && $existingDataStructure->getID() != $pageID);
     }
 
     private function updateIsMasterFields($page)
@@ -51,7 +50,7 @@ class UpdatePageInteractor extends GetPageInteractor
         if (is_array($areas) && sizeof($areas) > 0) {
             foreach ($areas as $area) {
 
-                $areaStructure = new AreaStructure([
+                $areaStructure = new DataStructure([
                     'is_master' => $page->getIsMaster()
                 ]);
                 (new UpdateAreaInteractor())->run($area->getID(), $areaStructure);

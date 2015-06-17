@@ -3,6 +3,7 @@
 namespace CMS\Entities;
 
 use CMS\Structures\DataStructure;
+use ReflectionClass;
 
 class Entity
 {
@@ -26,4 +27,19 @@ class Entity
 
         return $this;
     }
-} 
+
+    public function toStructure() {
+        $ref = new ReflectionClass(get_class($this));
+        $properties = $ref->getProperties();
+
+        $structure = new DataStructure();
+        foreach ($properties as $property) {
+            $property = $property->name;
+
+            $getter = 'get' . ucfirst(str_replace('_', '', $property));
+            $structure->$property = call_user_func(array($this, $getter));
+        }
+
+        return $structure;
+    }
+}

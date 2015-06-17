@@ -4,11 +4,11 @@ namespace CMS\Interactors\Articles;
 
 use CMS\Context;
 use CMS\Entities\Article;
-use CMS\Structures\ArticleStructure;
+use CMS\Structures\DataStructure;
 
 class CreateArticleInteractor
 {
-    public function run(ArticleStructure $articleStructure)
+    public function run(DataStructure $articleStructure)
     {
         $article = new Article();
         $article->setInfos($articleStructure);

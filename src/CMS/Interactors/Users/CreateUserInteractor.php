@@ -4,11 +4,11 @@ namespace CMS\Interactors\Users;
 
 use CMS\Context;
 use CMS\Entities\User;
-use CMS\Structures\UserStructure;
+use CMS\Structures\DataStructure;
 
 class CreateUserInteractor
 {
-    public function run(UserStructure $userStructure)
+    public function run(DataStructure $userStructure)
     {
         $user = new User();
         $user->setInfos($userStructure);

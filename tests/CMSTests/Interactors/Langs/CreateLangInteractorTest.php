@@ -4,7 +4,7 @@ namespace CMSTests\Interactors\Langs;
 
 use CMS\Context;
 use CMS\Interactors\Langs\CreateLangInteractor;
-use CMS\Structures\LangStructure;
+use CMS\Structures\DataStructure;
 use CMSTestsSuite;
 
 class CreateLangInteractorTest extends \PHPUnit_Framework_TestCase {
@@ -18,10 +18,9 @@ class CreateLangInteractorTest extends \PHPUnit_Framework_TestCase {
 
     public function testCreateLang()
     {
-        $lang = new LangStructure([
+        $lang = new DataStructure([
             'ID' => 1,
             'name' => 'Test lang',
-            'file_name' => '/path/to/lang'
         ]);
 
         $this->interactor->run($lang);

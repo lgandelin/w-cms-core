@@ -5,9 +5,8 @@ use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
-use CMS\Structures\AreaStructure;
+use CMS\Structures\DataStructure;
 use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\PageStructure;
 
 class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -23,7 +22,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingPage()
     {
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Page'
         ]);
@@ -36,7 +35,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdatePageWithInvalidURI()
     {
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Page',
             'uri' => ''
@@ -52,7 +51,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdatePageWithAlreadyExistingPageWithSameURI()
     {
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Page 1',
             'uri' => '/my-page',
@@ -61,7 +60,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         Context::getRepository('page')->createPage($pageStructure);
 
-        $pageStructure2 = new PageStructure([
+        $pageStructure2 = new DataStructure([
             'ID' => 2,
             'name' => 'Page 2',
             'uri' => '/page-2',
@@ -70,7 +69,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         Context::getRepository('page')->createPage($pageStructure2);
 
-        $pageStructure2Updated = new PageStructure([
+        $pageStructure2Updated = new DataStructure([
            'uri' => '/my-page'
         ]);
 
@@ -82,7 +81,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdatePageWithAlreadyExistingPageWithSameIdentifier()
     {
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Page 1',
             'uri' => '/my-page',
@@ -91,7 +90,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         Context::getRepository('page')->createPage($pageStructure);
 
-        $pageStructure2 = new PageStructure([
+        $pageStructure2 = new DataStructure([
             'ID' => 2,
             'name' => 'Page 2',
             'uri' => '/page-2',
@@ -100,7 +99,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         Context::getRepository('page')->createPage($pageStructure2);
 
-        $pageStructure2Updated = new PageStructure([
+        $pageStructure2Updated = new DataStructure([
             'identifier' => 'my-page'
         ]);
 
@@ -111,7 +110,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSamplePage();
 
-        $pageStructureUpdated = new PageStructure([
+        $pageStructureUpdated = new DataStructure([
             'name' => 'Test page updated',
             'uri' => '/test-page',
             'identifier' => 'test-page'
@@ -140,7 +139,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSamplePage();
 
-        $area = new AreaStructure([
+        $area = new DataStructure([
             'ID' => 1,
             'page_id' => 1,
             'name' => 'Test area'
@@ -156,7 +155,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         (new CreateBlockInteractor())->run($block);
 
-        $pageStructure = new PageStructure([
+        $pageStructure = new DataStructure([
             'is_master' => 1
         ]);
         $this->interactor->run(1, $pageStructure);

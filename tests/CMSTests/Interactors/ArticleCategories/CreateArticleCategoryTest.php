@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Structures\DataStructure;
 
 class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateArticleCategoryWithoutTitle()
     {
-        $article = new ArticleCategoryStructure([
+        $article = new DataStructure([
             'name' => ''
         ]);
 
@@ -29,7 +29,7 @@ class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->assertCount(0, Context::getRepository('article_category')->findAll());
 
-        $articleStructure = new ArticleCategoryStructure([
+        $articleStructure = new DataStructure([
             'name' => 'Sample article category',
         ]);
 

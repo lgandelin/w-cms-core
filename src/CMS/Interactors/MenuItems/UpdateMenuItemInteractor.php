@@ -3,11 +3,11 @@
 namespace CMS\Interactors\MenuItems;
 
 use CMS\Context;
-use CMS\Structures\MenuItemStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateMenuItemInteractor extends GetMenuItemInteractor
 {
-    public function run($menuItemID, MenuItemStructure $menuItemStructure)
+    public function run($menuItemID, DataStructure $menuItemStructure)
     {
         if ($menuItem = $this->getMenuItemByID($menuItemID)) {
             $menuItem->setInfos($menuItemStructure);

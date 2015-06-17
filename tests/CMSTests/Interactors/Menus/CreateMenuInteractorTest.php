@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\Menus\CreateMenuInteractor;
-use CMS\Structures\MenuStructure;
+use CMS\Structures\DataStructure;
 
 class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateMenuWithoutIdentifier()
     {
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'name' => 'Menu'
         ]);
 
@@ -30,14 +30,14 @@ class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateMenuWithAnotherExistingMenuWithSameIdentifier()
     {
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'name' => 'Menu 1',
             'identifier' => 'my-menu',
         ]);
 
         $this->interactor->run($menuStructure);
 
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'name' => 'Menu 2',
             'identifier' => 'my-menu',
         ]);
@@ -49,7 +49,7 @@ class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->assertCount(0, Context::getRepository('menu')->findAll());
 
-        $menuStructure = new MenuStructure([
+        $menuStructure = new DataStructure([
             'name' => 'Main menu',
             'identifier' => 'main-menu'
         ]);

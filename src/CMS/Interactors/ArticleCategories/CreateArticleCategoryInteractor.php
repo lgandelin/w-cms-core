@@ -4,11 +4,11 @@ namespace CMS\Interactors\ArticleCategories;
 
 use CMS\Context;
 use CMS\Entities\ArticleCategory;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Structures\DataStructure;
 
 class CreateArticleCategoryInteractor
 {
-    public function run(ArticleCategoryStructure $articleCategoryStructure)
+    public function run(DataStructure $articleCategoryStructure)
     {
         $articleCategory = new ArticleCategory();
         $articleCategory->setInfos($articleCategoryStructure);

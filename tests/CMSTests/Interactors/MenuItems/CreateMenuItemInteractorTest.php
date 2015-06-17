@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
-use CMS\Structures\MenuItemStructure;
+use CMS\Structures\DataStructure;
 
 class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
      */
     public function testCreateMenuItemToNonExistingMenu()
     {
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => 'Menu Item',
             'page' => null,
             'order' => 1
@@ -35,7 +35,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu();
 
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => 'Menu Item',
             'page' => null,
             'order' => 'x'
@@ -51,7 +51,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu();
 
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => '',
             'page_id' => null,
             'order' => 1
@@ -65,7 +65,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
         $this->createSampleMenu();
 
         for ($i = 1; $i <= 3; $i++) {
-            $menuItemStructure = new MenuItemStructure([
+            $menuItemStructure = new DataStructure([
                 'ID' => $i,
                 'label' => 'Menu item ' . $i,
                 'order' => $i,

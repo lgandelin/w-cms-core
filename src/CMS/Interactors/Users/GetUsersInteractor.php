@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Context;
-use CMS\Structures\UserStructure;
 
 class GetUsersInteractor
 {
@@ -19,7 +18,7 @@ class GetUsersInteractor
         $userStructures = [];
         if (is_array($users) && sizeof($users) > 0) {
             foreach ($users as $user) {
-                $userStructures[] = UserStructure::toStructure($user);
+                $userStructures[] = $user->toStructure();
             }
         }
 

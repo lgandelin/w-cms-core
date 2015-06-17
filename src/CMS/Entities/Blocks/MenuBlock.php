@@ -33,8 +33,8 @@ class MenuBlock extends Block
 
     public function updateContent(BlockStructure $blockStructure)
     {
-        if ($blockStructure->menu_id !== null && $blockStructure->menu_id != $this->getMenuID()) {
-            $this->setMenuID($blockStructure->menu_id);
+        if ($blockStructure->menuID !== null && $blockStructure->menuID != $this->getMenuID()) {
+            $this->setMenuID($blockStructure->menuID);
         }
     }
 
@@ -45,8 +45,8 @@ class MenuBlock extends Block
             $menuItems = (new GetMenuItemsInteractor())->getAll($this->getMenuID(), true);
 
             foreach ($menuItems as $menuItem)
-                if ($menuItem->page_id)
-                    $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->page_id, true);
+                if (isset($menuItem->pageID))
+                    $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->pageID, true);
 
             $content->items = $menuItems;
 

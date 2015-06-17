@@ -3,7 +3,6 @@
 namespace CMS\Interactors\ArticleCategories;
 
 use CMS\Context;
-use CMS\Structures\ArticleCategoryStructure;
 
 class GetArticleCategoryInteractor
 {
@@ -13,6 +12,6 @@ class GetArticleCategoryInteractor
             throw new \Exception('The article was not found');
         }
 
-        return  ($structure) ? ArticleCategoryStructure::toStructure($article) : $article;
+        return  ($structure) ? $article->toStructure() : $article;
     }
 }
