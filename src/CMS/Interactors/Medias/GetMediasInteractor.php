@@ -4,7 +4,6 @@ namespace CMS\Interactors\Medias;
 
 use CMS\Context;
 use CMS\Interactors\Interactor;
-use CMS\Structures\MediaStructure;
 
 class GetMediasInteractor extends Interactor
 {
@@ -12,15 +11,15 @@ class GetMediasInteractor extends Interactor
     {
         $medias = Context::getRepository('media')->findAll();
 
-        return ($structure) ? $this->getMediaStructures($medias) : $medias;
+        return ($structure) ? $this->getDataStructures($medias) : $medias;
     }
 
-    private function getMediaStructures($medias)
+    private function getDataStructures($medias)
     {
         $mediaStructures = [];
         if (is_array($medias) && sizeof($medias) > 0) {
             foreach ($medias as $media) {
-                $mediaStructures[] = MediaStructure::toStructure($media);
+                $mediaStructures[] = $media->toStructure();
             }
         }
 

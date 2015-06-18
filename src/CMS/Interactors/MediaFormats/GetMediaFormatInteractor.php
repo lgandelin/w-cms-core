@@ -4,7 +4,6 @@ namespace CMS\Interactors\MediaFormats;
 
 use CMS\Context;
 use CMS\Interactors\Interactor;
-use CMS\Structures\MediaFormatStructure;
 
 class GetMediaFormatInteractor extends Interactor
 {
@@ -14,6 +13,6 @@ class GetMediaFormatInteractor extends Interactor
             throw new \Exception('The media format was not found');
         }
 
-        return ($structure) ? MediaFormatStructure::toStructure($mediaFormat) : $mediaFormat;
+        return ($structure) ? $mediaFormat->toStructure() : $mediaFormat;
     }
 }

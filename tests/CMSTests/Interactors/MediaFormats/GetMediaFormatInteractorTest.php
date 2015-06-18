@@ -35,7 +35,7 @@ class GetMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $mediaFormatID = $this->createSampleMediaFormat();
 
-        $this->assertInstanceOf('\CMS\Structures\MediaFormatStructure', $this->interactor->getMediaFormatByID($mediaFormatID, true));
+        $this->assertInstanceOf('\CMS\Structures\DataStructure', $this->interactor->getMediaFormatByID($mediaFormatID, true));
     }
 
     private function createSampleMediaFormat()

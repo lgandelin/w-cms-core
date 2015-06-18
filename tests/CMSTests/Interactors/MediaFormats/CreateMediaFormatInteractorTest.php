@@ -4,7 +4,7 @@ namespace CMSTests\Interactors\MediaFormats;
 
 use CMS\Context;
 use CMS\Interactors\MediaFormats\CreateMediaFormatInteractor;
-use CMS\Structures\MediaFormatStructure;
+use CMS\Structures\DataStructure;
 use CMSTestsSuite;
 
 class CreateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {
@@ -18,7 +18,7 @@ class CreateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {
 
     public function testCreateMediaFormat()
     {
-        $mediaFormat = new MediaFormatStructure([
+        $mediaFormat = new DataStructure([
             'ID' => 1,
             'name' => 'Test media format',
         ]);

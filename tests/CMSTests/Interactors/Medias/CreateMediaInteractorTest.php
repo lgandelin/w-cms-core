@@ -4,7 +4,7 @@ namespace CMSTests\Interactors\Medias;
 
 use CMS\Context;
 use CMS\Interactors\Medias\CreateMediaInteractor;
-use CMS\Structures\MediaStructure;
+use CMS\Structures\DataStructure;
 use CMSTestsSuite;
 
 class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {
@@ -18,7 +18,7 @@ class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {
 
     public function testCreateMedia()
     {
-        $media = new MediaStructure([
+        $media = new DataStructure([
             'ID' => 1,
             'name' => 'Test media',
             'file_name' => '/path/to/media'

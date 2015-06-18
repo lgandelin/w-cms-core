@@ -4,7 +4,6 @@ namespace CMS\Interactors\Medias;
 
 use CMS\Context;
 use CMS\Interactors\Interactor;
-use CMS\Structures\MediaStructure;
 
 class GetMediaInteractor extends Interactor
 {
@@ -14,6 +13,6 @@ class GetMediaInteractor extends Interactor
             throw new \Exception('The media was not found');
         }
 
-        return ($structure) ? MediaStructure::toStructure($media) : $media;
+        return ($structure) ? $media->toStructure() : $media;
     }
 }

@@ -81,7 +81,7 @@ class MediaBlock extends Block
 
             if ($this->getMediaFormatID()) {
                 $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($this->getMediaFormatID(), true);
-                $content->media->file_name = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $content->media->file_name;
+                $content->media->fileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $content->media->fileName;
             }
 
             return $content;

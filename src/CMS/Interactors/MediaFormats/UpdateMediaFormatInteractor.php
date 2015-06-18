@@ -3,11 +3,11 @@
 namespace CMS\Interactors\MediaFormats;
 
 use CMS\Context;
-use CMS\Structures\MediaFormatStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateMediaFormatInteractor extends GetMediaFormatInteractor
 {
-    public function run($mediaFormatID, MediaFormatStructure $mediaFormatStructure)
+    public function run($mediaFormatID, DataStructure $mediaFormatStructure)
     {
         if ($mediaFormat = $this->getMediaFormatByID($mediaFormatID)) {
             $mediaFormat->setInfos($mediaFormatStructure);

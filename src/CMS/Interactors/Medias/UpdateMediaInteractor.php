@@ -3,11 +3,11 @@
 namespace CMS\Interactors\Medias;
 
 use CMS\Context;
-use CMS\Structures\MediaStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateMediaInteractor extends GetMediaInteractor
 {
-    public function run($mediaID, MediaStructure $mediaStructure)
+    public function run($mediaID, DataStructure $mediaStructure)
     {
         if ($media = $this->getMediaByID($mediaID)) {
             $media->setInfos($mediaStructure);
