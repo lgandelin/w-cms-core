@@ -3,7 +3,6 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\DataStructure;
 
 class ViewBlock extends Block
 {
@@ -17,13 +16,6 @@ class ViewBlock extends Block
     public function getViewPath()
     {
         return $this->viewPath;
-    }
-
-    public function updateContent(DataStructure $blockStructure)
-    {
-        if ($blockStructure->viewPath !== null && $blockStructure->viewPath != $this->getViewPath()) {
-            $this->setViewPath($blockStructure->viewPath);
-        }
     }
 
     public function getContentData()

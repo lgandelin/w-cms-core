@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Blocks;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
 
 class GetBlocksInteractor
 {
@@ -34,7 +33,7 @@ class GetBlocksInteractor
         if (is_array($blocks) && sizeof($blocks) > 0) {
             foreach ($blocks as $block) {
                 if ($block) {
-                    $blockStructure = $block->toStructure(1);
+                    $blockStructure = $block->toStructure();
                     $blockStructure->content = $block->getContentData();
                     $blockStructures[]= $blockStructure;
                 }

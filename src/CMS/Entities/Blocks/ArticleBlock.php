@@ -4,7 +4,6 @@ namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
 use CMS\Interactors\Articles\GetArticleInteractor;
-use CMS\Structures\DataStructure;
 
 class ArticleBlock extends Block
 {
@@ -18,13 +17,6 @@ class ArticleBlock extends Block
     public function getArticleID()
     {
         return $this->articleID;
-    }
-
-    public function updateContent(DataStructure $blockStructure)
-    {
-        if ($blockStructure->article_id != $this->getArticleID()) {
-            $this->setArticleID($blockStructure->article_id);
-        }
     }
 
     public function getContentData()

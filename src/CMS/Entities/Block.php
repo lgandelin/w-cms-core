@@ -167,8 +167,4 @@ class Block extends Entity
             throw new \InvalidArgumentException('You must provide a name for a block');
         }
     }
-
-    public function updateContent(DataStructure $blockStructure) {
-
-    }
 }

@@ -13,7 +13,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
             $block->setInfos($blockStructure);
 
             if (!$block->getIsGhost()) {
-                $block->updateContent($blockStructure);
+                $block->setInfos($blockStructure);
             }
 
             if ($block->getIsMaster()) {

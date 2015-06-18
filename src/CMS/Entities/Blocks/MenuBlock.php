@@ -6,7 +6,6 @@ use CMS\Entities\Block;
 use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
 use CMS\Interactors\Menus\GetMenuInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Structures\DataStructure;
 
 class MenuBlock extends Block
 {
@@ -20,13 +19,6 @@ class MenuBlock extends Block
     public function getMenuID()
     {
         return $this->menuID;
-    }
-
-    public function updateContent(DataStructure $blockStructure)
-    {
-        if ($blockStructure->menuID !== null && $blockStructure->menuID != $this->getMenuID()) {
-            $this->setMenuID($blockStructure->menuID);
-        }
     }
 
     public function getContentData()

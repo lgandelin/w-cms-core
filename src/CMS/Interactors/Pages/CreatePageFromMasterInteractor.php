@@ -39,7 +39,7 @@ class CreatePageFromMasterInteractor
                             (new UpdateBlockInteractor())->run($newBlockID, $customBlock);
                         }
                     } else {
-                        $blockStructure = $block->getStructure();
+                        $blockStructure = $block->toStructure();
                         $blockStructure->master_block_id = $block->getID();
                         (new UpdateBlockInteractor())->run($newBlockID, $blockStructure);
                     }

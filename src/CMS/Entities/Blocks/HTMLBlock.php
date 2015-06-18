@@ -3,7 +3,6 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\DataStructure;
 
 class HTMLBlock extends Block
 {
@@ -25,16 +24,5 @@ class HTMLBlock extends Block
         $content->html = $this->html;
 
         return $content;
-    }
-
-    public function updateContent(DataStructure $blockStructure)
-    {
-        if (
-            isset($blockStructure->html) &&
-            $blockStructure->html !== null &&
-            $blockStructure->html != $this->getHTML()
-        ) {
-            $this->setHTML($blockStructure->html);
-        }
     }
 }
