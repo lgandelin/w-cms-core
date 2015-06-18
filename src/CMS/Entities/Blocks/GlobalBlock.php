@@ -19,14 +19,6 @@ class GlobalBlock extends Block
         return $this->blockReferenceID;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->block_reference_id = $this->getBlockReferenceID();
-
-        return $blockStructure;
-    }
-
     public function updateContent(DataStructure $blockStructure)
     {
         if ($blockStructure->block_reference_id != $this->getBlockReferenceID()) {

@@ -19,14 +19,6 @@ class HTMLBlock extends Block
         return $this->html;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->html = $this->getHTML();
-
-        return $blockStructure;
-    }
-
     public function getContentData()
     {
         $content = new \StdClass();

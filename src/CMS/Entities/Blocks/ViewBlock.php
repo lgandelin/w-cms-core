@@ -19,18 +19,10 @@ class ViewBlock extends Block
         return $this->viewPath;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->view_path = $this->getViewPath();
-
-        return $blockStructure;
-    }
-
     public function updateContent(DataStructure $blockStructure)
     {
-        if ($blockStructure->view_path !== null && $blockStructure->view_path != $this->getViewPath()) {
-            $this->setViewPath($blockStructure->view_path);
+        if ($blockStructure->viewPath !== null && $blockStructure->viewPath != $this->getViewPath()) {
+            $this->setViewPath($blockStructure->viewPath);
         }
     }
 

@@ -20,14 +20,6 @@ class ArticleBlock extends Block
         return $this->articleID;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->article_id = $this->getArticleID();
-
-        return $blockStructure;
-    }
-
     public function updateContent(DataStructure $blockStructure)
     {
         if ($blockStructure->article_id != $this->getArticleID()) {

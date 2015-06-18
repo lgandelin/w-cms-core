@@ -44,16 +44,6 @@ class ArticleListBlock extends Block
         return $this->article_list_order;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->article_list_category_id = $this->getArticleListCategoryID();
-        $blockStructure->article_list_order = $this->getArticleListOrder();
-        $blockStructure->article_list_number = $this->getArticleListNumber();
-
-        return $blockStructure;
-    }
-
     public function updateContent(DataStructure $blockStructure)
     {
         if (

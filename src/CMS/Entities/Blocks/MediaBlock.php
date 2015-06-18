@@ -43,31 +43,21 @@ class MediaBlock extends Block
         return $this->mediaFormatID;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->media_id = $this->getMediaID();
-        $blockStructure->media_link = $this->getMediaLink();
-        $blockStructure->media_format_id = $this->getMediaFormatID();
-
-        return $blockStructure;
-    }
-
     public function updateContent(DataStructure $blockStructure)
     {
-        if ($blockStructure->media_id !== null && $blockStructure->media_id != $this->getMediaID()) {
-            $this->setMediaID($blockStructure->media_id);
+        if ($blockStructure->mediaID !== null && $blockStructure->mediaID != $this->getMediaID()) {
+            $this->setMediaID($blockStructure->mediaID);
         }
 
-        if ($blockStructure->media_link !== null && $blockStructure->media_link != $this->getMediaLink()) {
-            $this->setMediaLink($blockStructure->media_link);
+        if ($blockStructure->mediaLink !== null && $blockStructure->mediaLink != $this->getMediaLink()) {
+            $this->setMediaLink($blockStructure->mediaLink);
         }
 
         if (
-            $blockStructure->media_format_id !== null &&
-            $blockStructure->media_format_id != $this->getMediaFormatID()
+            $blockStructure->mediaFormatID !== null &&
+            $blockStructure->mediaFormatID != $this->getMediaFormatID()
         ) {
-            $this->setMediaFormatID($blockStructure->media_format_id);
+            $this->setMediaFormatID($blockStructure->mediaFormatID);
         }
     }
 
@@ -76,7 +66,7 @@ class MediaBlock extends Block
         if ($this->getMediaID()) {
             $content = new \StdClass();
             $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), true);
-            $content->media_link = $this->getMediaLink();
+            $content->mediaLink = $this->getMediaLink();
 
             if ($this->getMediaFormatID()) {
                 $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($this->getMediaFormatID(), true);

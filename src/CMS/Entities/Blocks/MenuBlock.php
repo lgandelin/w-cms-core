@@ -22,14 +22,6 @@ class MenuBlock extends Block
         return $this->menuID;
     }
 
-    public function getStructure()
-    {
-        $blockStructure = new DataStructure();
-        $blockStructure->menu_id = $this->getMenuID();
-
-        return $blockStructure;
-    }
-
     public function updateContent(DataStructure $blockStructure)
     {
         if ($blockStructure->menuID !== null && $blockStructure->menuID != $this->getMenuID()) {
