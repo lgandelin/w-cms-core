@@ -6,7 +6,6 @@ use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
 use CMS\Structures\DataStructure;
-use CMS\Structures\Blocks\HTMLBlockStructure;
 
 class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -147,7 +146,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         (new CreateAreaInteractor())->run($area);
 
-        $block = new HTMLBlockStructure([
+        $block = new DataStructure([
             'ID' => 1,
             'area_id' => 1,
             'name' => 'Test block'

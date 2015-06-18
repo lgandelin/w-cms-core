@@ -5,8 +5,7 @@ namespace CMS\Entities\Blocks;
 use CMS\Entities\Block;
 use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
 use CMS\Interactors\Medias\GetMediaInteractor;
-use CMS\Structures\Blocks\MediaBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class MediaBlock extends Block
 {
@@ -46,7 +45,7 @@ class MediaBlock extends Block
 
     public function getStructure()
     {
-        $blockStructure = new MediaBlockStructure();
+        $blockStructure = new DataStructure();
         $blockStructure->media_id = $this->getMediaID();
         $blockStructure->media_link = $this->getMediaLink();
         $blockStructure->media_format_id = $this->getMediaFormatID();
@@ -54,7 +53,7 @@ class MediaBlock extends Block
         return $blockStructure;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
+    public function updateContent(DataStructure $blockStructure)
     {
         if ($blockStructure->media_id !== null && $blockStructure->media_id != $this->getMediaID()) {
             $this->setMediaID($blockStructure->media_id);

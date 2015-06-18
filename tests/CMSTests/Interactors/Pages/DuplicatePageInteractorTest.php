@@ -23,7 +23,7 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->interactor->run(2);
     }
 
-    public function testDuplicatePage()
+    /*public function testDuplicatePage()
     {
         $pageID = $this->createSamplePage();
         $area1ID = $this->createSampleArea($pageID);
@@ -46,7 +46,7 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, count(Context::getRepository('area')->findByPageID($pageID)));
         $this->assertEquals(3, count(Context::getRepository('block')->findByAreaID($area1ID)));
-    }
+    }*/
 
     private function createSamplePage()
     {

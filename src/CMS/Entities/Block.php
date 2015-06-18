@@ -2,9 +2,10 @@
 
 namespace CMS\Entities;
 
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
+use ReflectionClass;
 
-abstract class Block extends Entity
+class Block extends Entity
 {
     private $ID;
     private $name;
@@ -168,9 +169,13 @@ abstract class Block extends Entity
         }
     }
 
-    abstract public function getStructure();
+    public function getStructure() {
+        return new DataStructure();
+    }
 
-    abstract public function getContentData();
+    //public function getContentData();
 
-    abstract public function updateContent(BlockStructure $blockStructure);
+    public function updateContent(DataStructure $blockStructure) {
+
+    }
 }

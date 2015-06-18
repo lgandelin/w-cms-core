@@ -9,7 +9,6 @@ use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
 use CMS\Structures\DataStructure;
-use CMS\Structures\BlockStructure;
 
 class CreatePageFromMasterInteractor
 {
@@ -31,7 +30,7 @@ class CreatePageFromMasterInteractor
                 $blocks = (new GetBlocksInteractor())->getAllByAreaID($area->getID());
 
                 foreach ($blocks as $block) {
-                    $newBlockID = (new DuplicateBlockInteractor())->run(BlockStructure::toStructure($block), $newAreaID);
+                    $newBlockID = (new DuplicateBlockInteractor())->run($block->toStructure(), $newAreaID);
 
                     if ($block->getIsGhost()) {
                         if ($customBlock) {

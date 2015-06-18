@@ -3,8 +3,7 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\GlobalBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class GlobalBlock extends Block
 {
@@ -22,13 +21,13 @@ class GlobalBlock extends Block
 
     public function getStructure()
     {
-        $blockStructure = new GlobalBlockStructure();
+        $blockStructure = new DataStructure();
         $blockStructure->block_reference_id = $this->getBlockReferenceID();
 
         return $blockStructure;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
+    public function updateContent(DataStructure $blockStructure)
     {
         if ($blockStructure->block_reference_id != $this->getBlockReferenceID()) {
             $this->setBlockReferenceID($blockStructure->block_reference_id);

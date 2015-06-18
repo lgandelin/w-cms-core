@@ -3,14 +3,15 @@
 namespace CMS\Interactors\Blocks;
 
 use CMS\Context;
+use CMS\Entities\Block;
 use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class CreateBlockInteractor
 {
-    public function run(BlockStructure $blockStructure)
+    public function run(DataStructure $blockStructure)
     {
-        $block = $blockStructure->getBlock();
+        $block = new Block();
         $block->setInfos($blockStructure);
         $block->valid();
 
@@ -29,11 +30,11 @@ class CreateBlockInteractor
 
         if (is_array($childAreas) && sizeof($childAreas) > 0) {
             foreach ($childAreas as $childArea) {
-                $childBlockStructure = clone $blockStructure;
-                $childBlockStructure->area_id = $childArea->getID();
-                $childBlockStructure->master_block_id = $blockID;
+                $childDataStructure = clone $blockStructure;
+                $childDataStructure->area_id = $childArea->getID();
+                $childDataStructure->master_block_id = $blockID;
 
-                $this->run($childBlockStructure);
+                $this->run($childDataStructure);
             }
         }
     }

@@ -3,9 +3,9 @@
 namespace CMS\Structures\Blocks;
 
 use CMS\Entities\Blocks\ViewBlock;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
-class ViewBlockStructure extends BlockStructure
+class ViewBlockStructure extends DataStructure
 {
     public $view_path;
 

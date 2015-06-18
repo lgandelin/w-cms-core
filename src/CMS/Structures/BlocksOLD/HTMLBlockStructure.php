@@ -3,9 +3,9 @@
 namespace CMS\Structures\Blocks;
 
 use CMS\Entities\Blocks\HTMLBlock;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
-class HTMLBlockStructure extends BlockStructure
+class HTMLBlockStructure extends DataStructure
 {
     public $html;
 

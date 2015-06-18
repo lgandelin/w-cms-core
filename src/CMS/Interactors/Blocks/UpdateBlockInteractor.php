@@ -3,11 +3,11 @@
 namespace CMS\Interactors\Blocks;
 
 use CMS\Context;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateBlockInteractor extends GetBlockInteractor
 {
-    public function run($blockID, BlockStructure $blockStructure)
+    public function run($blockID, DataStructure $blockStructure)
     {
         if ($block = $this->getBlockByID($blockID)) {
             $block->setInfos($blockStructure);
@@ -26,7 +26,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
         Context::getRepository('block')->updateBlock($block);
     }
 
-    private function updateChildBlocks(BlockStructure $blockStructure, $blockID)
+    private function updateChildBlocks(DataStructure $blockStructure, $blockID)
     {
         $childBlocks = (new GetBlocksInteractor())->getChildBlocks($blockID);
 

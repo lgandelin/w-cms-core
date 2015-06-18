@@ -3,9 +3,9 @@
 namespace CMS\Structures\Blocks;
 
 use CMS\Entities\Blocks\GlobalBlock;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
-class GlobalBlockStructure extends BlockStructure
+class GlobalBlockStructure extends DataStructure
 {
     public $block_reference_id;
 

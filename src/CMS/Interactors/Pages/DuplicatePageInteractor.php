@@ -6,7 +6,6 @@ use CMS\Interactors\Areas\DuplicateAreaInteractor;
 use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMS\Structures\BlockStructure;
 
 class DuplicatePageInteractor extends GetPageInteractor
 {
@@ -42,13 +41,13 @@ class DuplicatePageInteractor extends GetPageInteractor
         }
     }
 
-    private function duplicateBLocks($areaID, $newAreaID)
+    private function duplicateBlocks($areaID, $newAreaID)
     {
         $blocks = (new GetBlocksInteractor())->getAllByAreaID($areaID);
 
         if (is_array($blocks) && sizeof($blocks) > 0) {
             foreach ($blocks as $block) {
-                (new DuplicateBlockInteractor())->run(BlockStructure::toStructure($block), $newAreaID);
+                (new DuplicateBlockInteractor())->run($block->toStructure(), $newAreaID);
             }
         }
     }

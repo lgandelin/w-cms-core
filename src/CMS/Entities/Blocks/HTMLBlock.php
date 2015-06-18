@@ -3,8 +3,7 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\HTMLBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class HTMLBlock extends Block
 {
@@ -22,7 +21,7 @@ class HTMLBlock extends Block
 
     public function getStructure()
     {
-        $blockStructure = new HTMLBlockStructure();
+        $blockStructure = new DataStructure();
         $blockStructure->html = $this->getHTML();
 
         return $blockStructure;
@@ -36,7 +35,7 @@ class HTMLBlock extends Block
         return $content;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
+    public function updateContent(DataStructure $blockStructure)
     {
         if (
             isset($blockStructure->html) &&

@@ -3,9 +3,9 @@
 namespace CMS\Structures\Blocks;
 
 use CMS\Entities\Blocks\MenuBlock;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
-class MenuBlockStructure extends BlockStructure
+class MenuBlockStructure extends DataStructure
 {
     public $menu_id;
 

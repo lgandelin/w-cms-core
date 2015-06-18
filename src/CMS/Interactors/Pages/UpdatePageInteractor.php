@@ -59,7 +59,7 @@ class UpdatePageInteractor extends GetPageInteractor
 
                 if (is_array($blocks) && sizeof($blocks) > 0) {
                     foreach ($blocks as $block) {
-                        $blockStructure = $block->getStructure();
+                        $blockStructure = $block->toStructure();
                         $blockStructure->is_master = $page->getIsMaster();
                         (new UpdateBlockInteractor())->run($block->getID(), $blockStructure);
                     }

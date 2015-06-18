@@ -4,7 +4,6 @@ use CMS\Context;
 use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
-use CMS\Structures\Blocks\HTMLBlockStructure;
 use CMS\Structures\DataStructure;
 
 class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
@@ -35,7 +34,7 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
         ]);
         (new CreateAreaInteractor())->run($area);
 
-        $block = new HTMLBlockStructure([
+        $block = new DataStructure([
             'ID' => 1,
             'areaID' => 1,
             'name' => 'Test block',

@@ -3,8 +3,7 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\ViewBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class ViewBlock extends Block
 {
@@ -22,13 +21,13 @@ class ViewBlock extends Block
 
     public function getStructure()
     {
-        $blockStructure = new ViewBlockStructure();
+        $blockStructure = new DataStructure();
         $blockStructure->view_path = $this->getViewPath();
 
         return $blockStructure;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
+    public function updateContent(DataStructure $blockStructure)
     {
         if ($blockStructure->view_path !== null && $blockStructure->view_path != $this->getViewPath()) {
             $this->setViewPath($blockStructure->view_path);

@@ -6,8 +6,7 @@ use CMS\Entities\Block;
 use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Structures\Blocks\ArticleListBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Structures\DataStructure;
 
 class ArticleListBlock extends Block
 {
@@ -47,7 +46,7 @@ class ArticleListBlock extends Block
 
     public function getStructure()
     {
-        $blockStructure = new ArticleListBlockStructure();
+        $blockStructure = new DataStructure();
         $blockStructure->article_list_category_id = $this->getArticleListCategoryID();
         $blockStructure->article_list_order = $this->getArticleListOrder();
         $blockStructure->article_list_number = $this->getArticleListNumber();
@@ -55,7 +54,7 @@ class ArticleListBlock extends Block
         return $blockStructure;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
+    public function updateContent(DataStructure $blockStructure)
     {
         if (
             $blockStructure->article_list_category_id != $this->getArticleListCategoryID()
