@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\Articles\CreateArticleInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
 {

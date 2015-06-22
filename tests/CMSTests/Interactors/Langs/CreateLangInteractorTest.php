@@ -4,7 +4,7 @@ namespace CMSTests\Interactors\Langs;
 
 use CMS\Context;
 use CMS\Interactors\Langs\CreateLangInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use CMSTestsSuite;
 
 class CreateLangInteractorTest extends \PHPUnit_Framework_TestCase {

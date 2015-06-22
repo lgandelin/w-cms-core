@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\GetUsersInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
 {

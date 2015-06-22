@@ -34,7 +34,7 @@ class GetAreasInteractorTest extends PHPUnit_Framework_TestCase
 
         $areas = $this->interactor->getAll(1, true);
         $this->assertEquals(2, count($areas));
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', $areas[0]);
+        $this->assertInstanceOf('\CMS\DataStructure', $areas[0]);
     }
 
     private function createSamplePage()

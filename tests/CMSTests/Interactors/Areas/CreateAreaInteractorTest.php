@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
 {

@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\UpdateUserInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
 {

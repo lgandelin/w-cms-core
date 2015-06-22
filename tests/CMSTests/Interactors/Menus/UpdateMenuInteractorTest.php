@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\Menus\UpdateMenuInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
 {

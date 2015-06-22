@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 {

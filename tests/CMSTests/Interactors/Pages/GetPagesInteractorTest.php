@@ -37,7 +37,7 @@ class GetPagesInteractorTest extends PHPUnit_Framework_TestCase
         $pages = $this->interactor->getAll(null, true);
 
         $this->assertEquals(2, count($pages));
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', array_shift($pages));
+        $this->assertInstanceOf('\CMS\DataStructure', array_shift($pages));
     }
     private function createSamplePage()
     {

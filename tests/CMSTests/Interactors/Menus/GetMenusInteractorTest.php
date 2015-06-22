@@ -33,7 +33,7 @@ class GetAllMenusInteractorTest extends PHPUnit_Framework_TestCase
 
         $menus = $this->interactor->getAll(null, true);
         $this->assertCount(2, $menus);
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', array_shift($menus));
+        $this->assertInstanceOf('\CMS\DataStructure', array_shift($menus));
     }
 
     private function createSampleMenu($menuID)

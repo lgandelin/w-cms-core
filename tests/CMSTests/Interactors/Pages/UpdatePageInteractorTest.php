@@ -5,7 +5,7 @@ use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Pages\UpdatePageInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 {

@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
 {

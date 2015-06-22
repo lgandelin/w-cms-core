@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Article;
 use CMS\Interactors\Articles\UpdateArticleInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
 {

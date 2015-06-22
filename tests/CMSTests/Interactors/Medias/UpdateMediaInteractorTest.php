@@ -5,7 +5,7 @@ namespace CMSTests\Interactors\Medias;
 use CMS\Context;
 use CMS\Entities\Media;
 use CMS\Interactors\Medias\UpdateMediaInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use CMSTestsSuite;
 
 class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase

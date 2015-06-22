@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
 {

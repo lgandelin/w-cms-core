@@ -32,7 +32,7 @@ class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $blockID = $this->createSampleBlock();
 
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', $this->interactor->getBlockByID($blockID, true));
+        $this->assertInstanceOf('\CMS\DataStructure', $this->interactor->getBlockByID($blockID, true));
     }
 
     private function createSampleBlock()

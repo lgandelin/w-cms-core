@@ -35,7 +35,7 @@ class GetMenuItemsInteractorTest extends PHPUnit_Framework_TestCase
 
         $menus = $this->interactor->getAll(1, true);
         $this->assertCount(2, $menus);
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', $menus[0]);
+        $this->assertInstanceOf('\CMS\DataStructure', $menus[0]);
     }
 
     private function createSampleMenuItem($menuItemID)

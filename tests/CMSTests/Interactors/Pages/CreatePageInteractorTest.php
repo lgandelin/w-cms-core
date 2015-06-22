@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\Pages\CreatePageInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreatePageInteractorTest extends PHPUnit_Framework_TestCase
 {

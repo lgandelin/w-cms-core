@@ -35,7 +35,7 @@ class GetMediaInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $mediaID = $this->createSampleMedia();
 
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', $this->interactor->getMediaByID($mediaID, true));
+        $this->assertInstanceOf('\CMS\DataStructure', $this->interactor->getMediaByID($mediaID, true));
     }
 
     private function createSampleMedia()

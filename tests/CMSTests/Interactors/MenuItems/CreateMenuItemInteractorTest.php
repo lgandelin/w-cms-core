@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
 {

@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
 {

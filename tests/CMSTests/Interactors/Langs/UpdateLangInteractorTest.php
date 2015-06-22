@@ -5,7 +5,7 @@ namespace CMSTests\Interactors\Langs;
 use CMS\Context;
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use CMSTestsSuite;
 
 class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase

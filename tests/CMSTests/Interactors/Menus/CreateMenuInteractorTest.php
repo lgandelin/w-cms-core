@@ -2,7 +2,7 @@
 
 use CMS\Context;
 use CMS\Interactors\Menus\CreateMenuInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
 {

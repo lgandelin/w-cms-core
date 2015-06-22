@@ -38,7 +38,7 @@ class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase
         $articles = $this->interactor->getAll(null, null, null, null, true);
 
         $this->assertCount(2, $articles);
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', array_shift($articles));
+        $this->assertInstanceOf('\CMS\DataStructure', array_shift($articles));
     }
 
     private function createSampleArticle()

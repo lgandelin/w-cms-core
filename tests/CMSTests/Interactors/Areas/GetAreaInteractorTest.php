@@ -33,7 +33,7 @@ class GetAreaInteractorTest extends PHPUnit_Framework_TestCase
     {
         $areaID = $this->createSampleArea();
 
-        $this->assertInstanceOf('\CMS\Structures\DataStructure', $this->interactor->getAreaByID($areaID, true));
+        $this->assertInstanceOf('\CMS\DataStructure', $this->interactor->getAreaByID($areaID, true));
     }
 
     private function createSampleArea()

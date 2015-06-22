@@ -4,7 +4,7 @@ namespace CMSTests\Interactors\Medias;
 
 use CMS\Context;
 use CMS\Interactors\Medias\CreateMediaInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use CMSTestsSuite;
 
 class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {

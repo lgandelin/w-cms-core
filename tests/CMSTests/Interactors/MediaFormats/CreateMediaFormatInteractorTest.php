@@ -4,7 +4,7 @@ namespace CMSTests\Interactors\MediaFormats;
 
 use CMS\Context;
 use CMS\Interactors\MediaFormats\CreateMediaFormatInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use CMSTestsSuite;
 
 class CreateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase {

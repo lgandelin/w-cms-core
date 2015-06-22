@@ -4,7 +4,7 @@ use CMS\Context;
 use CMS\Interactors\Areas\CreateAreaInteractor;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
 use CMS\Interactors\Pages\CreatePageFromMasterInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
 
