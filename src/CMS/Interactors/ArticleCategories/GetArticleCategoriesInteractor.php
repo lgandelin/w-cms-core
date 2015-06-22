@@ -3,7 +3,6 @@
 namespace CMS\Interactors\ArticleCategories;
 
 use CMS\Context;
-use CMS\Structures\ArticleCategoryStructure;
 
 class GetArticleCategoriesInteractor
 {
@@ -19,7 +18,7 @@ class GetArticleCategoriesInteractor
         $articleStructures = [];
         if (is_array($articles) && sizeof($articles) > 0) {
             foreach ($articles as $article) {
-                $articleStructures[] = ArticleCategoryStructure::toStructure($article);
+                $articleStructures[] = $article->toStructure();
             }
         }
 

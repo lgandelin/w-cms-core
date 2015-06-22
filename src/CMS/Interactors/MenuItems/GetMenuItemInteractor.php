@@ -13,6 +13,6 @@ class GetMenuItemInteractor
             throw new \Exception('The menu item was not found');
         }
 
-        return ($structure) ? MenuItemStructure::toStructure($menu) : $menu;
+        return ($structure) ? $menu->toStructure() : $menu;
     }
 }

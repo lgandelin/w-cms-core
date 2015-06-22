@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Langs;
 
 use CMS\Context;
-use CMS\Structures\LangStructure;
 
 class GetLangInteractor
 {
@@ -13,7 +12,7 @@ class GetLangInteractor
             throw new \Exception('The lang was not found');
         }
 
-        return  ($structure) ? LangStructure::toStructure($lang) : $lang;
+        return  ($structure) ? $lang->toStructure() : $lang;
     }
 
     public function getDefaultLangID()

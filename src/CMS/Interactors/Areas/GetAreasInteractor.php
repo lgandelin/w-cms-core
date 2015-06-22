@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Areas;
 
 use CMS\Context;
-use CMS\Structures\AreaStructure;
 
 class GetAreasInteractor
 {
@@ -11,15 +10,15 @@ class GetAreasInteractor
     {
         $areas = Context::getRepository('area')->findByPageID($pageID);
 
-        return ($structure) ? $this->getAreaStructures($areas) : $areas;
+        return ($structure) ? $this->getDataStructures($areas) : $areas;
     }
 
-    private function getAreaStructures($areas)
+    private function getDataStructures($areas)
     {
         $areaStructures = [];
         if (is_array($areas) && sizeof($areas) > 0) {
             foreach ($areas as $area) {
-                $areaStructures[] = AreaStructure::toStructure($area);
+                $areaStructures[] = $area->toStructure();
             }
         }
 
@@ -30,6 +29,6 @@ class GetAreasInteractor
     {
         $areas = Context::getRepository('area')->findChildAreas($masterAreaID);
 
-        return ($structure) ? $this->getAreaStructures($areas) : $areas;
+        return ($structure) ? $this->getDataStructures($areas) : $areas;
     }
 }

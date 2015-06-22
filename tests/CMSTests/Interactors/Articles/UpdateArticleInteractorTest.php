@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Article;
 use CMS\Interactors\Articles\UpdateArticleInteractor;
-use CMS\Structures\ArticleStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingArticle()
     {
-        $articleStructure = new ArticleStructure([
+        $articleStructure = new DataStructure([
             'ID' => 1,
             'title' => 'Sample article',
         ]);
@@ -31,7 +31,7 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
     {
         $blockID = $this->createSampleArticle();
 
-        $articleStructureUpdated = new ArticleStructure([
+        $articleStructureUpdated = new DataStructure([
             'title' => 'Sample article updated'
         ]);
 
@@ -49,7 +49,7 @@ class UpdateArticleInteractorTest extends PHPUnit_Framework_TestCase
     {
         $articleID = $this->createSampleArticle();
 
-        $articleStructureUpdated = new ArticleStructure([
+        $articleStructureUpdated = new DataStructure([
             'title' => ''
         ]);
 

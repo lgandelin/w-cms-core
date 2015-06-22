@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Langs;
 
 use CMS\Context;
-use CMS\Structures\LangStructure;
 
 class GetLangsInteractor
 {
@@ -11,15 +10,15 @@ class GetLangsInteractor
     {
         $langs = Context::getRepository('lang')->findAll();
 
-        return ($structure) ? $this->getLangStructures($langs) : $langs;
+        return ($structure) ? $this->getDataStructures($langs) : $langs;
     }
 
-    private function getLangStructures($langs)
+    private function getDataStructures($langs)
     {
         $langStructures = [];
         if (is_array($langs) && sizeof($langs) > 0) {
             foreach ($langs as $lang) {
-                $langStructures[] = LangStructure::toStructure($lang);
+                $langStructures[] = $lang->toStructure();
             }
         }
 

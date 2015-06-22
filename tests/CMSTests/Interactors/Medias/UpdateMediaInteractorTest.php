@@ -5,7 +5,7 @@ namespace CMSTests\Interactors\Medias;
 use CMS\Context;
 use CMS\Entities\Media;
 use CMS\Interactors\Medias\UpdateMediaInteractor;
-use CMS\Structures\MediaStructure;
+use CMS\Structures\DataStructure;
 use CMSTestsSuite;
 
 class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
@@ -20,7 +20,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingMedia()
     {
-        $mediaStructure = new MediaStructure([
+        $mediaStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Test Media',
             'file_name' => '/file_name/to/image'
@@ -33,7 +33,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
     {
         $this->createSampleMedia(1);
 
-        $mediaStructureUpdated = new MediaStructure([
+        $mediaStructureUpdated = new DataStructure([
             'file_name' => '/new/file_name/to/image'
         ]);
 

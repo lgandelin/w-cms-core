@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Context;
-use CMS\Structures\PageStructure;
 
 class GetPageInteractor
 {
@@ -13,7 +12,7 @@ class GetPageInteractor
             throw new \Exception('The page was not found');
         }
 
-        return ($structure) ? PageStructure::toStructure($page) : $page;
+        return ($structure) ? $page->toStructure() : $page;
     }
 
     public function getPageByURI($pageURI, $langID = null, $structure = false)
@@ -24,6 +23,6 @@ class GetPageInteractor
             throw new \Exception('The page was not found');
         }
 
-        return ($structure) ? PageStructure::toStructure($page) : $page;
+        return ($structure) ? $page->toStructure() : $page;
     }
 }

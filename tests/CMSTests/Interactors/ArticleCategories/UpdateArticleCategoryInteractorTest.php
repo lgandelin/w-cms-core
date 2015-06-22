@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\ArticleCategory;
 use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingArticleCategory()
     {
-        $articleCategoryStructure = new ArticleCategoryStructure([
+        $articleCategoryStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Sample article category',
         ]);
@@ -31,7 +31,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleArticleCategory(1);
 
-        $articleCategoryStructureUpdated = new ArticleCategoryStructure([
+        $articleCategoryStructureUpdated = new DataStructure([
             'name' => 'Sample article category updated'
         ]);
 
@@ -49,7 +49,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleArticleCategory(1);
 
-        $articleCategoryStructureUpdated = new ArticleCategoryStructure([
+        $articleCategoryStructureUpdated = new DataStructure([
             'name' => ''
         ]);
 

@@ -3,11 +3,11 @@
 namespace CMS\Interactors\Areas;
 
 use CMS\Context;
-use CMS\Structures\AreaStructure;
+use CMS\DataStructure;
 
 class UpdateAreaInteractor extends GetAreaInteractor
 {
-    public function run($areaID, AreaStructure $areaStructure)
+    public function run($areaID, DataStructure $areaStructure)
     {
         $area = $this->getAreaByID($areaID);
         $area->setInfos($areaStructure);
@@ -20,7 +20,7 @@ class UpdateAreaInteractor extends GetAreaInteractor
         }
     }
 
-    private function updateChildAreas($areaID, AreaStructure $areaStructure)
+    private function updateChildAreas($areaID, DataStructure $areaStructure)
     {
         $areaStructure->is_master = 0;
         $childAreas = (new GetAreasInteractor())->getChildAreas($areaID);

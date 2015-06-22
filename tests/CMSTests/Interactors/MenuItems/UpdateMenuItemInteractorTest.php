@@ -4,7 +4,7 @@ use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Entities\MenuItem;
 use CMS\Interactors\MenuItems\UpdateMenuItemInteractor;
-use CMS\Structures\MenuItemStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingItem()
     {
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => 'Menu Item',
             'page' => null,
         ]);
@@ -35,7 +35,7 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleMenuItem();
         $this->assertCount(1, Context::getRepository('menu_item')->findByMenuID(1));
 
-        $menuItemStructureUpdated = new MenuItemStructure([
+        $menuItemStructureUpdated = new DataStructure([
             'label' => 'Test menu item updated',
         ]);
 

@@ -35,7 +35,7 @@ class GetLangInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $langID = $this->createSampleLang();
 
-        $this->assertInstanceOf('\CMS\Structures\LangStructure', $this->interactor->getLangByID($langID, true));
+        $this->assertInstanceOf('\CMS\Structures\DataStructure', $this->interactor->getLangByID($langID, true));
     }
 
     private function createSampleLang()

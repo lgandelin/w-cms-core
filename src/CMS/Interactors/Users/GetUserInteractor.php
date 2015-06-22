@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Context;
-use CMS\Structures\UserStructure;
 
 class GetUserInteractor
 {
@@ -13,6 +12,6 @@ class GetUserInteractor
             throw new \Exception('The user was not found');
         }
 
-        return  ($structure) ? UserStructure::toStructure($user) : $user;
+        return  ($structure) ? $user->toStructure() : $user;
     }
 }

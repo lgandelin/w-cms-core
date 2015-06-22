@@ -5,11 +5,11 @@ namespace CMS\Interactors\Areas;
 use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Structures\AreaStructure;
+use CMS\DataStructure;
 
 class CreateAreaInteractor
 {
-    public function run(AreaStructure $areaStructure)
+    public function run(DataStructure $areaStructure)
     {
         $area = new Area();
         $area->setInfos($areaStructure);
@@ -24,20 +24,20 @@ class CreateAreaInteractor
         return $areaID;
     }
 
-    private function createAreaInChildPages(AreaStructure $areaStructure, $areaID, $pageID)
+    private function createAreaInChildPages(DataStructure $areaStructure, $areaID, $pageID)
     {
         $childPages = (new GetPagesInteractor())->getChildPages($pageID);
 
         if (is_array($childPages) && sizeof($childPages) > 0) {
             foreach ($childPages as $childPage) {
-                $areaStructure = new AreaStructure([
+                $areaStructure = new DataStructure([
                     'name' => $areaStructure->name,
                     'page_id' => $childPage->getID(),
-                    'master_area_id' => $areaID,
-                    'width' => $areaStructure->width,
-                    'height' => $areaStructure->height,
-                    'order' => $areaStructure->order,
-                    'display' => $areaStructure->display
+                    'masterAreaID' => $areaID,
+                    'width' => isset($areaStructure->width) ? $areaStructure->width : 0,
+                    'height' => isset($areaStructure->order) ? $areaStructure->order : 0,
+                    'order' => isset($areaStructure->order) ? $areaStructure->order : 0,
+                    'display' => isset($areaStructure->display) ? $areaStructure->display : 0
                 ]);
                 $this->run($areaStructure);
             }

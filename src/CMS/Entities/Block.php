@@ -2,9 +2,7 @@
 
 namespace CMS\Entities;
 
-use CMS\Structures\BlockStructure;
-
-abstract class Block extends Entity
+class Block extends Entity
 {
     private $ID;
     private $name;
@@ -161,16 +159,14 @@ abstract class Block extends Entity
         return $this->isGhost;
     }
 
+    public function getContentData() {
+
+    }
+
     public function valid()
     {
         if (!$this->getName()) {
             throw new \InvalidArgumentException('You must provide a name for a block');
         }
     }
-
-    abstract public function getStructure();
-
-    abstract public function getContentData();
-
-    abstract public function updateContent(BlockStructure $blockStructure);
 }

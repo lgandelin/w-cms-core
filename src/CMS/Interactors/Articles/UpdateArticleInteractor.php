@@ -3,11 +3,11 @@
 namespace CMS\Interactors\Articles;
 
 use CMS\Context;
-use CMS\Structures\ArticleStructure;
+use CMS\DataStructure;
 
 class UpdateArticleInteractor extends GetArticleInteractor
 {
-    public function run($articleID, ArticleStructure $articleStructure)
+    public function run($articleID, DataStructure $articleStructure)
     {
         if ($article = $this->getArticleByID($articleID)) {
             $article->setInfos($articleStructure);

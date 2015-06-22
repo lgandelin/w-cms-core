@@ -5,7 +5,7 @@ namespace CMSTests\Interactors\MediaFormats;
 use CMS\Context;
 use CMS\Entities\MediaFormat;
 use CMS\Interactors\MediaFormats\UpdateMediaFormatInteractor;
-use CMS\Structures\MediaFormatStructure;
+use CMS\Structures\DataStructure;
 use CMSTestsSuite;
 
 class UpdateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase
@@ -20,7 +20,7 @@ class UpdateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingMediaFormat()
     {
-        $mediaFormatStructure = new MediaFormatStructure([
+        $mediaFormatStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Test MediaFormat',
         ]);
@@ -32,7 +32,7 @@ class UpdateMediaFormatInteractorTest extends \PHPUnit_Framework_TestCase
     {
         $this->createSampleMediaFormat(1);
 
-        $mediaFormatStructureUpdated = new MediaFormatStructure([
+        $mediaFormatStructureUpdated = new DataStructure([
             'name' => 'new Media Format'
         ]);
 

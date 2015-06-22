@@ -19,7 +19,7 @@ class GetMenuItemsInteractor
         $menuItemStructures = [];
         if (is_array($menuItems) && sizeof($menuItems) > 0) {
             foreach ($menuItems as $menuItem) {
-                $menuItemStructures[] = MenuItemStructure::toStructure($menuItem);
+                $menuItemStructures[] = $menuItem->toStructure();
             }
         }
 

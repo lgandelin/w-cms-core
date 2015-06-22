@@ -2,11 +2,11 @@
 
 namespace CMS\Interactors\Areas;
 
-use CMS\Structures\AreaStructure;
+use CMS\DataStructure;
 
 class DuplicateAreaInteractor
 {
-    public function run(AreaStructure $areaStructure, $newPageID)
+    public function run(DataStructure $areaStructure, $newPageID)
     {
         $areaStructure->ID = null;
         $areaStructure->page_id = $newPageID;

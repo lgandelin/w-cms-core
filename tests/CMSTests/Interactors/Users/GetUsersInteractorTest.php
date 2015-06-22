@@ -3,6 +3,7 @@
 use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\GetUsersInteractor;
+use CMS\Structures\DataStructure;
 
 class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -37,7 +38,14 @@ class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
         $users = $this->interactor->getAll(true);
 
         $this->assertCount(2, $users);
-        $this->assertInstanceOf('\CMS\Structures\UserStructure', array_shift($users));
+        $this->assertEquals(new DataStructure([
+            'ID' => 1,
+            'login' => null,
+            'password' => null,
+            'last_name' => 'User lastname',
+            'first_name' => null,
+            'email' => null,
+        ]), array_shift($users));
     }
 
     private function createSampleUser($userID)

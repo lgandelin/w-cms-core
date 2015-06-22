@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\UpdateUserInteractor;
-use CMS\Structures\UserStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingUser()
     {
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'ID' => 1,
             'login' => 'jdoe',
             'last_name' => 'Doe',
@@ -33,7 +33,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleUser(1);
 
-        $userStructureUpdated = new UserStructure([
+        $userStructureUpdated = new DataStructure([
             'first_name' => 'Jack'
         ]);
 
@@ -54,7 +54,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleUser(1);
 
-        $userStructureUpdated = new UserStructure([
+        $userStructureUpdated = new DataStructure([
             'login' => ''
         ]);
 
@@ -73,7 +73,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user->setLogin('jane.doe');
         Context::getRepository('user')->createUser($user);
 
-        $userStructureUpdated = new UserStructure([
+        $userStructureUpdated = new DataStructure([
             'login' => 'jdoe'
         ]);
 

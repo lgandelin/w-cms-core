@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Structures\Blocks\HTMLBlockStructure;
+use CMS\Structures\DataStructure;
 
 class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingBlock()
     {
-        $blockStructure = new HTMLBlockStructure([
+        $blockStructure = new DataStructure([
             'name' => 'Block'
         ]);
 
@@ -30,7 +30,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $blockID = $this->createSampleBlock();
 
-        $blockStructure = new HTMLBlockStructure([
+        $blockStructure = new DataStructure([
             'name' => 'Block test updated'
         ]);
 
@@ -70,7 +70,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $childBlock2->setAreaID(null);
         Context::getRepository('block')->createBlock($childBlock2);
 
-        $blockStructure = new HTMLBlockStructure([
+        $blockStructure = new DataStructure([
             'name' => 'Test block updated'
         ]);
         $this->interactor->run($masterBlock->getID(), $blockStructure);
@@ -88,7 +88,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $block->setHTML('<h1>Hello World</h1>');
         $blockID = Context::getRepository('block')->createBlock($block);
 
-        $blockStructure = new HTMLBlockStructure([
+        $blockStructure = new DataStructure([
            'html' => '<h1>Goodbye World</h1>'
         ]);
         $this->interactor->run($blockID, $blockStructure);

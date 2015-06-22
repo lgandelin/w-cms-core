@@ -4,11 +4,11 @@ namespace CMS\Interactors\Pages;
 
 use CMS\Context;
 use CMS\Entities\Page;
-use CMS\Structures\PageStructure;
+use CMS\DataStructure;
 
 class CreatePageInteractor
 {
-    public function run(PageStructure $pageStructure)
+    public function run(DataStructure $pageStructure)
     {
         $page = new Page();
         $page->setInfos($pageStructure);

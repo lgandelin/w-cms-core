@@ -2,11 +2,11 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Structures\BlockStructure;
+use CMS\DataStructure;
 
 class DuplicateBlockInteractor
 {
-    public function run(BlockStructure $blockStructure, $newAreaID)
+    public function run(DataStructure $blockStructure, $newAreaID)
     {
         $blockStructure->ID = null;
         $blockStructure->area_id = $newAreaID;

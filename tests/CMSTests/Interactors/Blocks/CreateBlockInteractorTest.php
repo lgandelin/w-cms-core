@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Blocks\CreateBlockInteractor;
-use CMS\Structures\Blocks\HTMLBlockStructure;
+use CMS\Structures\DataStructure;
 
 class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateInvalidBlock()
     {
-        $block = new HTMLBlockStructure([]);
+        $block = new DataStructure([]);
 
         $this->interactor->run($block);
     }
@@ -31,10 +31,10 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $area->setName('Area');
         Context::getRepository('area')->createArea($area);
 
-        $block = new HTMLBlockStructure([
+        $block = new DataStructure([
             'ID' => 1,
             'name' => 'Test block',
-            'area_id' => 1
+            'area_id' => 1,
         ]);
         $this->interactor->run($block);
 
@@ -56,7 +56,7 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $childArea->setMasterAreaID(1);
         Context::getRepository('area')->createArea($childArea);
 
-        $block = new HTMLBlockStructure([
+        $block = new DataStructure([
             'name' => 'Test block',
             'area_id' => 2,
             'is_master' => 1

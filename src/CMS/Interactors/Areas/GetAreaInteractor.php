@@ -4,7 +4,6 @@ namespace CMS\Interactors\Areas;
 
 use CMS\Context;
 use CMS\Interactors\Interactor;
-use CMS\Structures\AreaStructure;
 
 class GetAreaInteractor extends Interactor
 {
@@ -14,6 +13,6 @@ class GetAreaInteractor extends Interactor
             throw new \Exception('The area was not found');
         }
 
-        return ($structure) ? AreaStructure::toStructure($area) : $area;
+        return ($structure) ? $area->toStructure() : $area;
     }
 }

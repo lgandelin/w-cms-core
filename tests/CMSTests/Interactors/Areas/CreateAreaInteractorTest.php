@@ -3,7 +3,7 @@
 use CMS\Context;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\CreateAreaInteractor;
-use CMS\Structures\AreaStructure;
+use CMS\Structures\DataStructure;
 
 class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
 {
@@ -20,7 +20,7 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateInvalidArea()
     {
-        $area = new AreaStructure([
+        $area = new DataStructure([
 
         ]);
 
@@ -31,7 +31,7 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSamplePage();
 
-        $area = new AreaStructure([
+        $area = new DataStructure([
             'ID' => 1,
             'page_id' => 1,
             'name' => 'Test area'
@@ -64,7 +64,7 @@ class CreateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $childPage->setMasterPageID(1);
         Context::getRepository('page')->createPage($childPage);
         
-        $area = new AreaStructure([
+        $area = new DataStructure([
             'ID' => 1,
             'page_id' => 1,
             'name' => 'Test area',
