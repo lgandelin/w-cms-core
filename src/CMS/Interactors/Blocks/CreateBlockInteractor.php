@@ -5,7 +5,7 @@ namespace CMS\Interactors\Blocks;
 use CMS\Context;
 use CMS\Entities\Block;
 use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateBlockInteractor
 {

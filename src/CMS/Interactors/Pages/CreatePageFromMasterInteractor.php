@@ -8,7 +8,7 @@ use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Blocks\DuplicateBlockInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreatePageFromMasterInteractor
 {

@@ -7,7 +7,7 @@ use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
 use CMS\Interactors\Blocks\UpdateBlockInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdatePageInteractor extends GetPageInteractor
 {

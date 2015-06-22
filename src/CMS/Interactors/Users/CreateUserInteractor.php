@@ -4,7 +4,7 @@ namespace CMS\Interactors\Users;
 
 use CMS\Context;
 use CMS\Entities\User;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateUserInteractor
 {

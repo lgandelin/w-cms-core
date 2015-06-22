@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 use ReflectionClass;
 
 class Entity

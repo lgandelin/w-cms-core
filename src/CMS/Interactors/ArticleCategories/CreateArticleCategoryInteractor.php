@@ -4,7 +4,7 @@ namespace CMS\Interactors\ArticleCategories;
 
 use CMS\Context;
 use CMS\Entities\ArticleCategory;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateArticleCategoryInteractor
 {

@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Medias;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateMediaInteractor extends GetMediaInteractor
 {

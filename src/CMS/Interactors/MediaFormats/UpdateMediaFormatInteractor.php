@@ -3,7 +3,7 @@
 namespace CMS\Interactors\MediaFormats;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateMediaFormatInteractor extends GetMediaFormatInteractor
 {

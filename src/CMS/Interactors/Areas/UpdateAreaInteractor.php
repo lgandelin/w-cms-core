@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Areas;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateAreaInteractor extends GetAreaInteractor
 {

@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Blocks;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateBlockInteractor extends GetBlockInteractor
 {

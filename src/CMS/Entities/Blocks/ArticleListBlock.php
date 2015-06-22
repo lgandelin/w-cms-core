@@ -6,7 +6,7 @@ use CMS\Entities\Block;
 use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class ArticleListBlock extends Block
 {

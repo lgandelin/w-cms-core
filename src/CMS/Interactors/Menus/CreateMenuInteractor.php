@@ -4,7 +4,7 @@ namespace CMS\Interactors\Menus;
 
 use CMS\Context;
 use CMS\Entities\Menu;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateMenuInteractor
 {

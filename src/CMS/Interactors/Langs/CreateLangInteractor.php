@@ -4,7 +4,7 @@ namespace CMS\Interactors\Langs;
 
 use CMS\Context;
 use CMS\Entities\Lang;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateLangInteractor
 {

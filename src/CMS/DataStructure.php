@@ -1,6 +1,6 @@
 <?php
 
-namespace CMS\Structures;
+namespace CMS;
 
 class DataStructure
 {

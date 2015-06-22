@@ -3,7 +3,7 @@
 namespace CMS\Interactors\ArticleCategories;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateArticleCategoryInteractor extends GetArticleCategoryInteractor
 {

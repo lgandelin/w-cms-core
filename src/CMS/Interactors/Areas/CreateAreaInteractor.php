@@ -5,7 +5,7 @@ namespace CMS\Interactors\Areas;
 use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateAreaInteractor
 {

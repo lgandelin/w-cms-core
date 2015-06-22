@@ -5,7 +5,7 @@ namespace CMS\Interactors\Medias;
 use CMS\Context;
 use CMS\Entities\Media;
 use CMS\Interactors\Interactor;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreateMediaInteractor extends Interactor
 {

@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Articles;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateArticleInteractor extends GetArticleInteractor
 {

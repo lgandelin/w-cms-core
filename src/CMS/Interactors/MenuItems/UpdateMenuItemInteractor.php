@@ -3,7 +3,7 @@
 namespace CMS\Interactors\MenuItems;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateMenuItemInteractor extends GetMenuItemInteractor
 {

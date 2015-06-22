@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Langs;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateLangInteractor extends GetLangInteractor
 {

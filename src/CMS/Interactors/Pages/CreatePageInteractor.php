@@ -4,7 +4,7 @@ namespace CMS\Interactors\Pages;
 
 use CMS\Context;
 use CMS\Entities\Page;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class CreatePageInteractor
 {

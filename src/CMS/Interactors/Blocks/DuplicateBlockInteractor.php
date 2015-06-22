@@ -2,7 +2,7 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class DuplicateBlockInteractor
 {

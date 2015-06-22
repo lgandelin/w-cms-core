@@ -2,7 +2,7 @@
 
 namespace CMS\Interactors\Areas;
 
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class DuplicateAreaInteractor
 {

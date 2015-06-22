@@ -3,7 +3,7 @@
 namespace CMS\Interactors\Users;
 
 use CMS\Context;
-use CMS\Structures\DataStructure;
+use CMS\DataStructure;
 
 class UpdateUserInteractor extends GetUserInteractor
 {

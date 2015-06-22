@@ -2,8 +2,6 @@
 
 namespace CMS\Entities;
 
-use CMS\Structures\DataStructure;
-
 class Block extends Entity
 {
     private $ID;
@@ -159,6 +157,10 @@ class Block extends Entity
     public function getIsGhost()
     {
         return $this->isGhost;
+    }
+
+    public function getContentData() {
+
     }
 
     public function valid()
