@@ -1,18 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Article;
 use CMS\Interactors\Articles\GetArticleInteractor;
-use CMSTests\Repositories\InMemoryArticleRepository;
 
 class GetArticleInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
     public function setUp()
     {
-        $this->repository = new InMemoryArticleRepository();
-        $this->interactor = new GetArticleInteractor($this->repository);
+        CMSTestsSuite::clean();
+        $this->interactor = new GetArticleInteractor(Context::getRepository('article'));
     }
 
     /**
@@ -25,18 +24,17 @@ class GetArticleInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testGetArticle()
     {
-        $article = $this->createSampleArticle();
+        $articleID = $this->createSampleArticle();
 
-        $this->assertEquals($article, $this->interactor->getArticleByID(1));
+        $this->assertInstanceOf('CMS\Entities\Article', $this->interactor->getArticleByID($articleID));
     }
 
     private function createSampleArticle()
     {
         $article = new Article();
-        $article->setID(1);
         $article->setTitle('Sample article');
-        $this->repository->createArticle($article);
+        Context::getRepository('article')->createArticle($article);
 
-        return $article;
+        return $article->getID();
     }
 }

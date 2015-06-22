@@ -1,15 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Interactors\Articles\CreateArticleInteractor;
-use CMSTests\Repositories\InMemoryArticleRepository;
-use CMS\Structures\ArticleStructure;
+use CMS\DataStructure;
 
 class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->repository = new InMemoryArticleRepository();
-        $this->interactor = new CreateArticleInteractor($this->repository);
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreateArticleInteractor();
     }
 
     /**
@@ -17,7 +18,7 @@ class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateArticleWithoutTitle()
     {
-        $article = new ArticleStructure([
+        $article = new DataStructure([
             'title' => ''
         ]);
 
@@ -26,14 +27,14 @@ class CreateArticleInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateArticle()
     {
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::getRepository('article')->findAll());
 
-        $articleStructure = new ArticleStructure([
+        $articleStructure = new DataStructure([
             'title' => 'Sample article',
         ]);
 
         $this->interactor->run($articleStructure);
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::getRepository('article')->findAll());
     }
 }

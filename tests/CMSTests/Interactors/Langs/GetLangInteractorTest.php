@@ -2,16 +2,18 @@
 
 namespace CMSTests\Interactors\Langs;
 
+use CMS\Context;
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\GetLangInteractor;
-use CMSTests\Repositories\InMemoryLangRepository;
+use CMSTestsSuite;
 
 class GetLangInteractorTest extends \PHPUnit_Framework_TestCase {
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryLangRepository();
-        $this->interactor = new GetLangInteractor($this->repository);
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetLangInteractor();
     }
 
     /**
@@ -33,14 +35,14 @@ class GetLangInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $langID = $this->createSampleLang();
 
-        $this->assertInstanceOf('\CMS\Structures\LangStructure', $this->interactor->getLangByID($langID, true));
+        $this->assertInstanceOf('\CMS\DataStructure', $this->interactor->getLangByID($langID, true));
     }
 
     private function createSampleLang()
     {
         $lang = new Lang();
 
-        return $this->repository->createLang($lang);
+        return Context::getRepository('lang')->createLang($lang);
     }
 }
  

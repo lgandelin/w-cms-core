@@ -3,8 +3,7 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\ArticleBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Interactors\Articles\GetArticleInteractor;
 
 class ArticleBlock extends Block
 {
@@ -20,18 +19,14 @@ class ArticleBlock extends Block
         return $this->articleID;
     }
 
-    public function getStructure()
+    public function getContentData()
     {
-        $blockStructure = new ArticleBlockStructure();
-        $blockStructure->article_id = $this->getArticleID();
+        if ($this->getArticleID()) {
+            $content = (new GetArticleInteractor())->getArticleByID($this->getArticleID(), true);
 
-        return $blockStructure;
-    }
-
-    public function updateContent(BlockStructure $blockStructure)
-    {
-        if ($blockStructure->article_id != $this->getArticleID()) {
-            $this->setArticleID($blockStructure->article_id);
+            return $content;
         }
+
+        return null;
     }
 }

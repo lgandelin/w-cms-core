@@ -2,20 +2,19 @@
 
 namespace CMSTests\Interactors\Langs;
 
+use CMS\Context;
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\UpdateLangInteractor;
-use CMS\Structures\LangStructure;
-use CMSTests\Repositories\InMemoryLangRepository;
+use CMS\DataStructure;
+use CMSTestsSuite;
 
 class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryLangRepository();
-        $this->interactor = new UpdateLangInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdateLangInteractor();
     }
 
     /**
@@ -23,7 +22,7 @@ class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingLang()
     {
-        $langStructure = new LangStructure([
+        $langStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Test Lang',
             'prefix' => 'fr'
@@ -34,28 +33,27 @@ class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateLang()
     {
-        $this->createSampleLang(1);
+        $this->createSampleLang();
 
-        $langStructureUpdated = new LangStructure([
+        $langStructureUpdated = new DataStructure([
             'prefix' => '/fr/updated'
         ]);
 
         $this->interactor->run(1, $langStructureUpdated);
 
-        $lang = $this->repository->findByID(1);
+        $lang = Context::getRepository('lang')->findByID(1);
 
         $this->assertEquals('/fr/updated', $lang->getPrefix());
     }
 
-    private function createSampleLang($langID)
+    private function createSampleLang()
     {
         $lang = new Lang();
-        $lang->setID($langID);
         $lang->setName('Français');
         $lang->setPrefix('/fr');
-        $this->repository->createLang($lang);
+        Context::getRepository('lang')->createLang($lang);
 
-        return $lang;
+        return $lang->getID();
     }
 }
  

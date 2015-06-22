@@ -3,8 +3,9 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\MenuBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
+use CMS\Interactors\Menus\GetMenuInteractor;
+use CMS\Interactors\Pages\GetPageInteractor;
 
 class MenuBlock extends Block
 {
@@ -20,18 +21,21 @@ class MenuBlock extends Block
         return $this->menuID;
     }
 
-    public function getStructure()
+    public function getContentData()
     {
-        $blockStructure = new MenuBlockStructure();
-        $blockStructure->menu_id = $this->getMenuID();
+        if ($this->getMenuID()) {
+            $content = (new GetMenuInteractor())->getMenuByID($this->getMenuID(), true);
+            $menuItems = (new GetMenuItemsInteractor())->getAll($this->getMenuID(), true);
 
-        return $blockStructure;
-    }
+            foreach ($menuItems as $menuItem)
+                if (isset($menuItem->pageID))
+                    $menuItem->page = (new GetPageInteractor())->getPageByID($menuItem->pageID, true);
 
-    public function updateContent(BlockStructure $blockStructure)
-    {
-        if ($blockStructure->menu_id !== null && $blockStructure->menu_id != $this->getMenuID()) {
-            $this->setMenuID($blockStructure->menu_id);
+            $content->items = $menuItems;
+
+            return $content;
         }
+
+        return null;
     }
 }

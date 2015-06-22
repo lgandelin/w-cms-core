@@ -1,15 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Interactors\ArticleCategories\CreateArticleCategoryInteractor;
-use CMSTests\Repositories\InMemoryArticleCategoryRepository;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\DataStructure;
 
 class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 {
-    public function setUp()
-    {
-        $this->repository = new InMemoryArticleCategoryRepository();
-        $this->interactor = new CreateArticleCategoryInteractor($this->repository);
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreateArticleCategoryInteractor();
     }
 
     /**
@@ -17,7 +18,7 @@ class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateArticleCategoryWithoutTitle()
     {
-        $article = new ArticleCategoryStructure([
+        $article = new DataStructure([
             'name' => ''
         ]);
 
@@ -26,14 +27,14 @@ class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateArticleCategory()
     {
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::getRepository('article_category')->findAll());
 
-        $articleStructure = new ArticleCategoryStructure([
+        $articleStructure = new DataStructure([
             'name' => 'Sample article category',
         ]);
 
         $this->interactor->run($articleStructure);
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::getRepository('article_category')->findAll());
     }
 }

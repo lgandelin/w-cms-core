@@ -2,30 +2,18 @@
 
 namespace CMS\Interactors\ArticleCategories;
 
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Context;
+use CMS\DataStructure;
 
 class UpdateArticleCategoryInteractor extends GetArticleCategoryInteractor
 {
-    public function run($articleID, ArticleCategoryStructure $articleStructure)
+    public function run($articleCategoryID, DataStructure $articleCategoryStructure)
     {
-        if ($article = $this->getArticleCategoryByID($articleID)) {
-            if (
-                isset($articleStructure->name) &&
-                $articleStructure->name !== null &&
-                $article->getName() != $articleStructure->name
-            ) {
-                $article->setName($articleStructure->name);
-            }
-            if (isset($articleStructure->description) &&
-                $articleStructure->description !== null &&
-                $article->getDescription() != $articleStructure->description
-            ) {
-                $article->setDescription($articleStructure->description);
-            }
+        if ($articleCategory = $this->getArticleCategoryByID($articleCategoryID)) {
+            $articleCategory->setInfos($articleCategoryStructure);
+            $articleCategory->valid();
 
-            $article->valid();
-
-            $this->repository->updateArticleCategory($article);
+            Context::getRepository('article_category')->updateArticleCategory($articleCategory);
         }
     }
 }

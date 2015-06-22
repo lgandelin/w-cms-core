@@ -2,45 +2,38 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\Repositories\PageRepositoryInterface;
-use CMS\Structures\PageStructure;
+use CMS\Context;
+use CMS\DataStructure;
 
 class GetPagesInteractor
 {
-    private $repository;
-
-    public function __construct(PageRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($langID = null, $structure = false)
     {
-        $pages = $this->repository->findAll($langID);
+        $pages = Context::getRepository('page')->findAll($langID);
 
-        return ($structure) ? $this->getPageStructures($pages) : $pages;
+        return ($structure) ? $this->getDataStructures($pages) : $pages;
     }
 
     public function getMasterPages($structure = false)
     {
-        $pages = $this->repository->findMasterPages();
+        $pages = Context::getRepository('page')->findMasterPages();
 
-        return ($structure) ? $this->getPageStructures($pages) : $pages;
+        return ($structure) ? $this->getDataStructures($pages) : $pages;
     }
 
     public function getChildPages($pageID, $structure = false)
     {
-        $pages = $this->repository->findChildPages($pageID);
+        $pages = Context::getRepository('page')->findChildPages($pageID);
 
-        return ($structure) ? $this->getPageStructures($pages) : $pages;
+        return ($structure) ? $this->getDataStructures($pages) : $pages;
     }
 
-    private function getPageStructures($pages)
+    private function getDataStructures($pages)
     {
         $pageStructures = [];
         if (is_array($pages) && sizeof($pages) > 0) {
             foreach ($pages as $page) {
-                $pageStructures[] = PageStructure::toStructure($page);
+                $pageStructures[] = $page->toStructure();
             }
         }
 

@@ -36,14 +36,18 @@ class InMemoryMenuRepository implements MenuRepositoryInterface
         return false;
     }
 
-    public function findAll()
+    public function findAll($langID = null)
     {
         return $this->menus;
     }
 
     public function createMenu(Menu $menu)
     {
+        $menuID = sizeof($this->menus) + 1;
+        $menu->setID($menuID);
         $this->menus[]= $menu;
+
+        return $menuID;
     }
 
     public function updateMenu(Menu $menu)

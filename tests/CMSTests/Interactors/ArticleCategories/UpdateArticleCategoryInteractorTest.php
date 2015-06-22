@@ -1,19 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\ArticleCategory;
 use CMS\Interactors\ArticleCategories\UpdateArticleCategoryInteractor;
-use CMSTests\Repositories\InMemoryArticleCategoryRepository;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\DataStructure;
 
 class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryArticleCategoryRepository();
-        $this->interactor = new UpdateArticleCategoryInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdateArticleCategoryInteractor();
     }
 
     /**
@@ -21,7 +19,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingArticleCategory()
     {
-        $articleCategoryStructure = new ArticleCategoryStructure([
+        $articleCategoryStructure = new DataStructure([
             'ID' => 1,
             'name' => 'Sample article category',
         ]);
@@ -33,13 +31,13 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleArticleCategory(1);
 
-        $articleCategoryStructureUpdated = new ArticleCategoryStructure([
+        $articleCategoryStructureUpdated = new DataStructure([
             'name' => 'Sample article category updated'
         ]);
 
         $this->interactor->run(1, $articleCategoryStructureUpdated);
 
-        $articleCategory = $this->repository->findByID(1);
+        $articleCategory = Context::getRepository('article_category')->findByID(1);
 
         $this->assertEquals('Sample article category updated', $articleCategory->getName());
     }
@@ -51,7 +49,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleArticleCategory(1);
 
-        $articleCategoryStructureUpdated = new ArticleCategoryStructure([
+        $articleCategoryStructureUpdated = new DataStructure([
             'name' => ''
         ]);
 
@@ -63,7 +61,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
         $articleCategory = new ArticleCategory();
         $articleCategory->setID($articleCategoryID);
         $articleCategory->setName('Sample article category');
-        $this->repository->createArticleCategory($articleCategory);
+        Context::getRepository('article_category')->createArticleCategory($articleCategory);
 
         return $articleCategory;
     }

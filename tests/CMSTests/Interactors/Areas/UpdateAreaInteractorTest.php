@@ -1,23 +1,18 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Area;
-use CMS\Interactors\Areas\GetAreasInteractor;
 use CMS\Interactors\Areas\UpdateAreaInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMS\Structures\AreaStructure;
+use CMS\DataStructure;
 
 class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
     public function setUp()
     {
-        $this->repository = new InMemoryAreaRepository();
-        $this->interactor = new UpdateAreaInteractor(
-            $this->repository,
-            new GetAreasInteractor($this->repository)
-        );
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdateAreaInteractor();
     }
 
     /**
@@ -25,18 +20,18 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingArea()
     {
-        $this->interactor->run(1, new AreaStructure());
+        $this->interactor->run(1, new DataStructure());
     }
 
     public function testUpdateArea()
     {
         $areaID = $this->createSampleArea();
 
-        $this->interactor->run($areaID, new AreaStructure([
+        $this->interactor->run($areaID, new DataStructure([
             'name' => 'Test area updated'
         ]));
 
-        $areaUpdated = $this->repository->findByID($areaID);
+        $areaUpdated = Context::getRepository('area')->findByID($areaID);
         $this->assertEquals('Test area updated', $areaUpdated->getName());
     }
 
@@ -45,7 +40,7 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setName('Test area');
 
-        return $this->repository->createArea($area);
+        return Context::getRepository('area')->createArea($area);
     }
 
     public function testUpdateMasterArea()
@@ -54,27 +49,27 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $masterArea->setID(1);
         $masterArea->setIsMaster(true);
         $masterArea->setName('Test area');
-        $this->repository->createArea($masterArea);
+        Context::getRepository('area')->createArea($masterArea);
 
         $childArea1 = new Area();
         $childArea1->setID(2);
         $childArea1->setMasterAreaID($masterArea->getID());
         $childArea1->setName('Test area');
-        $this->repository->createArea($childArea1);
+        Context::getRepository('area')->createArea($childArea1);
 
         $childArea2 = new Area();
         $childArea2->setID(3);
         $childArea2->setMasterAreaID($masterArea->getID());
         $childArea2->setName('Test area');
-        $this->repository->createArea($childArea2);
+        Context::getRepository('area')->createArea($childArea2);
 
-        $areaStructure = new AreaStructure([
+        $areaStructure = new DataStructure([
             'name' => 'Test area updated'
         ]);
         $this->interactor->run($masterArea->getID(), $areaStructure);
 
-        $childArea1 = $this->repository->findByID($childArea1->getID());
-        $childArea2 = $this->repository->findByID($childArea2->getID());
+        $childArea1 = Context::getRepository('area')->findByID($childArea1->getID());
+        $childArea2 = Context::getRepository('area')->findByID($childArea2->getID());
 
         $this->assertEquals('Test area updated', $childArea1->getName());
         $this->assertEquals('Test area updated', $childArea2->getName());

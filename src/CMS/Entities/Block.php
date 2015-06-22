@@ -2,9 +2,7 @@
 
 namespace CMS\Entities;
 
-use CMS\Structures\BlockStructure;
-
-abstract class Block
+class Block extends Entity
 {
     private $ID;
     private $name;
@@ -161,36 +159,14 @@ abstract class Block
         return $this->isGhost;
     }
 
+    public function getContentData() {
+
+    }
+
     public function valid()
     {
         if (!$this->getName()) {
             throw new \InvalidArgumentException('You must provide a name for a block');
         }
     }
-
-    public function setInfos(BlockStructure $blockStructure)
-    {
-        $properties = get_object_vars($blockStructure);
-        foreach ($properties as $property => $value) {
-
-            $method = ucfirst(str_replace('_', '', $property));
-            $getter = 'get' . $method;
-            $setter = 'set' . $method;
-
-            if (
-                isset($blockStructure->$property) &&
-                property_exists(get_parent_class($blockStructure), $property) &&
-                $blockStructure->$property !== null &&
-                $blockStructure->$property != call_user_func_array(array($this, $getter), array())
-            ) {
-                call_user_func_array(array($this, $setter), array($value));
-            }
-        }
-
-        return $this;
-    }
-
-    abstract public function getStructure();
-
-    abstract public function updateContent(BlockStructure $blockStructure);
 }

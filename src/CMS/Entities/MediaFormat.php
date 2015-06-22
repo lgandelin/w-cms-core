@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class MediaFormat
+class MediaFormat extends Entity
 {
     private $ID;
     private $name;

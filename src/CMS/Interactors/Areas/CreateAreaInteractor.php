@@ -2,26 +2,20 @@
 
 namespace CMS\Interactors\Areas;
 
+use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Pages\GetPagesInteractor;
-use CMS\Repositories\AreaRepositoryInterface;
-use CMS\Structures\AreaStructure;
+use CMS\DataStructure;
 
 class CreateAreaInteractor
 {
-    public function __construct(AreaRepositoryInterface $repository, GetPagesInteractor $getPagesInteractor)
+    public function run(DataStructure $areaStructure)
     {
-        $this->repository = $repository;
-        $this->getPagesInteractor = $getPagesInteractor;
-    }
-
-    public function run(AreaStructure $areaStructure)
-    {
-        $area = $this->createAreaFromStructure($areaStructure);
-
+        $area = new Area();
+        $area->setInfos($areaStructure);
         $area->valid();
 
-        $areaID = $this->repository->createArea($area);
+        $areaID = Context::getRepository('area')->createArea($area);
 
         if ($area->getIsMaster()) {
             $this->createAreaInChildPages($areaStructure, $areaID, $area->getPageID());
@@ -30,37 +24,20 @@ class CreateAreaInteractor
         return $areaID;
     }
 
-    private function createAreaFromStructure(AreaStructure $areaStructure)
+    private function createAreaInChildPages(DataStructure $areaStructure, $areaID, $pageID)
     {
-        $area = new Area();
-
-        $properties = get_object_vars($areaStructure);
-        foreach ($properties as $property => $value) {
-            $method = ucfirst(str_replace('_', '', $property));
-            $setter = 'set' . $method;
-
-            if ($areaStructure->$property !== null) {
-                call_user_func_array(array($area, $setter), array($value));
-            }
-        }
-
-        return $area;
-    }
-
-    private function createAreaInChildPages(AreaStructure $areaStructure, $areaID, $pageID)
-    {
-        $childPages = $this->getPagesInteractor->getChildPages($pageID);
+        $childPages = (new GetPagesInteractor())->getChildPages($pageID);
 
         if (is_array($childPages) && sizeof($childPages) > 0) {
             foreach ($childPages as $childPage) {
-                $areaStructure = new AreaStructure([
+                $areaStructure = new DataStructure([
                     'name' => $areaStructure->name,
                     'page_id' => $childPage->getID(),
-                    'master_area_id' => $areaID,
-                    'width' => $areaStructure->width,
-                    'height' => $areaStructure->height,
-                    'order' => $areaStructure->order,
-                    'display' => $areaStructure->display
+                    'masterAreaID' => $areaID,
+                    'width' => isset($areaStructure->width) ? $areaStructure->width : 0,
+                    'height' => isset($areaStructure->order) ? $areaStructure->order : 0,
+                    'order' => isset($areaStructure->order) ? $areaStructure->order : 0,
+                    'display' => isset($areaStructure->display) ? $areaStructure->display : 0
                 ]);
                 $this->run($areaStructure);
             }

@@ -1,22 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
-use CMSTests\Repositories\InMemoryMenuItemRepository;
-use CMSTests\Repositories\InMemoryMenuRepository;
-use CMS\Structures\MenuItemStructure;
+use CMS\DataStructure;
 
 class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $menuRepository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryMenuItemRepository();
-        $this->menuRepository = new InMemoryMenuRepository();
-        $this->interactor = new CreateMenuItemInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreateMenuItemInteractor();
     }
 
     /**
@@ -24,7 +19,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
      */
     public function testCreateMenuItemToNonExistingMenu()
     {
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => 'Menu Item',
             'page' => null,
             'order' => 1
@@ -40,7 +35,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu();
 
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => 'Menu Item',
             'page' => null,
             'order' => 'x'
@@ -56,7 +51,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu();
 
-        $menuItemStructure = new MenuItemStructure([
+        $menuItemStructure = new DataStructure([
             'label' => '',
             'page_id' => null,
             'order' => 1
@@ -70,7 +65,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
         $this->createSampleMenu();
 
         for ($i = 1; $i <= 3; $i++) {
-            $menuItemStructure = new MenuItemStructure([
+            $menuItemStructure = new DataStructure([
                 'ID' => $i,
                 'label' => 'Menu item ' . $i,
                 'order' => $i,
@@ -80,7 +75,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
             $this->interactor->run($menuItemStructure);
         }
 
-        $this->assertCount(3, $this->repository->findByMenuID(1));
+        $this->assertCount(3, Context::getRepository('menu_item')->findByMenuID(1));
     }
 
     private function createSampleMenu()
@@ -90,7 +85,7 @@ class CreateMenuItemTestInteractor extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        $this->menuRepository->createMenu($menu);
+        Context::getRepository('menu')->createMenu($menu);
 
         return $menu;
     }

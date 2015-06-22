@@ -2,28 +2,20 @@
 
 namespace CMS\Interactors\Blocks;
 
+use CMS\Context;
+use CMS\Entities\Block;
 use CMS\Interactors\Areas\GetAreasInteractor;
-use CMS\Repositories\BlockRepositoryInterface;
-use CMS\Structures\BlockStructure;
+use CMS\DataStructure;
 
 class CreateBlockInteractor
 {
-    private $repository;
-    private $getAreasInteractor;
-
-    public function __construct(BlockRepositoryInterface $repository, GetAreasInteractor $getAreasInteractor)
+    public function run(DataStructure $blockStructure)
     {
-        $this->repository = $repository;
-        $this->getAreasInteractor = $getAreasInteractor;
-    }
-
-    public function run(BlockStructure $blockStructure)
-    {
-        $block = $blockStructure->getBlock();
+        $block = new Block();
         $block->setInfos($blockStructure);
         $block->valid();
 
-        $blockID = $this->repository->createBlock($block);
+        $blockID = Context::getRepository('block')->createBlock($block);
 
         if ($block->getIsMaster()) {
             $this->createBlockInChildAreas($blockStructure, $blockID, $block->getAreaID());
@@ -34,15 +26,15 @@ class CreateBlockInteractor
 
     private function createBlockInChildAreas($blockStructure, $blockID, $areaID)
     {
-        $childAreas = $this->getAreasInteractor->getChildAreas($areaID);
+        $childAreas = (new GetAreasInteractor())->getChildAreas($areaID);
 
         if (is_array($childAreas) && sizeof($childAreas) > 0) {
             foreach ($childAreas as $childArea) {
-                $childBlockStructure = clone $blockStructure;
-                $childBlockStructure->area_id = $childArea->getID();
-                $childBlockStructure->master_block_id = $blockID;
+                $childDataStructure = clone $blockStructure;
+                $childDataStructure->area_id = $childArea->getID();
+                $childDataStructure->master_block_id = $blockID;
 
-                $this->run($childBlockStructure);
+                $this->run($childDataStructure);
             }
         }
     }

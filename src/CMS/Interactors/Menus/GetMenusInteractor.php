@@ -2,21 +2,14 @@
 
 namespace CMS\Interactors\Menus;
 
-use CMS\Repositories\MenuRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\MenuStructure;
 
 class GetMenusInteractor
 {
-    private $repository;
-
-    public function __construct(MenuRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-    
     public function getAll($langID = null, $structure = false)
     {
-        $menus = $this->repository->findAll($langID);
+        $menus = Context::getRepository('menu')->findAll($langID);
 
         return ($structure) ? $this->getMenuStructures($menus) : $menus;
     }
@@ -26,7 +19,7 @@ class GetMenusInteractor
         $menuStructures = [];
         if (is_array($menus) && sizeof($menus) > 0) {
             foreach ($menus as $menu) {
-                $menuStructures[] = MenuStructure::toStructure($menu);
+                $menuStructures[] = $menu->toStructure();
             }
         }
 

@@ -3,8 +3,8 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\MediaBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Interactors\MediaFormats\GetMediaFormatInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
 
 class MediaBlock extends Block
 {
@@ -42,31 +42,23 @@ class MediaBlock extends Block
         return $this->mediaFormatID;
     }
 
-    public function getStructure()
+    public function getContentData()
     {
-        $blockStructure = new MediaBlockStructure();
-        $blockStructure->media_id = $this->getMediaID();
-        $blockStructure->media_link = $this->getMediaLink();
-        $blockStructure->media_format_id = $this->getMediaFormatID();
+        if ($this->getMediaID()) {
+            $content = new \StdClass();
+            $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), true);
+            $content->mediaLink = $this->getMediaLink();
 
-        return $blockStructure;
+            if ($this->getMediaFormatID()) {
+                $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($this->getMediaFormatID(), true);
+                $content->media->fileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $content->media->fileName;
+            }
+
+            return $content;
+        }
+
+        return null;
     }
 
-    public function updateContent(BlockStructure $blockStructure)
-    {
-        if ($blockStructure->media_id !== null && $blockStructure->media_id != $this->getMediaID()) {
-            $this->setMediaID($blockStructure->media_id);
-        }
 
-        if ($blockStructure->media_link !== null && $blockStructure->media_link != $this->getMediaLink()) {
-            $this->setMediaLink($blockStructure->media_link);
-        }
-
-        if (
-            $blockStructure->media_format_id !== null &&
-            $blockStructure->media_format_id != $this->getMediaFormatID()
-        ) {
-            $this->setMediaFormatID($blockStructure->media_format_id);
-        }
-    }
 }

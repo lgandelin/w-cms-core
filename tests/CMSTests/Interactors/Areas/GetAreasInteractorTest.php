@@ -1,26 +1,18 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Entities\Page;
 use CMS\Interactors\Areas\GetAreasInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMSTests\Repositories\InMemoryPageRepository;
-use CMS\Structures\AreaStructure;
 
 class GetAreasInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $pageRepository;
     private $interactor;
 
     public function setUp()
     {
-        $this->repository = new InMemoryAreaRepository();
-        $this->pageRepository = new InMemoryPageRepository();
-        $this->interactor = new GetAreasInteractor(
-            $this->repository,
-            $this->pageRepository
-        );
+        CMSTestsSuite::clean();
+        $this->interactor = new GetAreasInteractor();
     }
 
     public function testGetAllAreas()
@@ -42,7 +34,7 @@ class GetAreasInteractorTest extends PHPUnit_Framework_TestCase
 
         $areas = $this->interactor->getAll(1, true);
         $this->assertEquals(2, count($areas));
-        $this->assertInstanceOf('\CMS\Structures\AreaStructure', $areas[0]);
+        $this->assertInstanceOf('\CMS\DataStructure', $areas[0]);
     }
 
     private function createSamplePage()
@@ -50,13 +42,13 @@ class GetAreasInteractorTest extends PHPUnit_Framework_TestCase
         $page = new Page();
         $page->setID(1);
         $page->setName('Test page');
-        $this->pageRepository->createPage($page);
+        Context::getRepository('page')->createPage($page);
     }
 
     private function createSampleArea()
     {
         $area = new Area();
         $area->setPageID(1);
-        $this->repository->createArea($area);
+        Context::getRepository('area')->createArea($area);
     }
 }

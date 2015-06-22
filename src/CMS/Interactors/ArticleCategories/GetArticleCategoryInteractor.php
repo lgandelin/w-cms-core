@@ -2,24 +2,16 @@
 
 namespace CMS\Interactors\ArticleCategories;
 
-use CMS\Repositories\ArticleCategoryRepositoryInterface;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Context;
 
 class GetArticleCategoryInteractor
 {
-    protected $repository;
-
-    public function __construct(ArticleCategoryRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getArticleCategoryByID($articleID, $structure = false)
     {
-        if (!$article = $this->repository->findByID($articleID)) {
+        if (!$article = Context::getRepository('article_category')->findByID($articleID)) {
             throw new \Exception('The article was not found');
         }
 
-        return  ($structure) ? ArticleCategoryStructure::toStructure($article) : $article;
+        return  ($structure) ? $article->toStructure() : $article;
     }
 }

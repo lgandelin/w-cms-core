@@ -1,18 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Interactors\Users\CreateUserInteractor;
-use CMSTests\Repositories\InMemoryUserRepository;
-use CMS\Structures\UserStructure;
+use CMS\DataStructure;
 
 class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryUserRepository();
-        $this->interactor = new CreateUserInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreateUserInteractor();
     }
 
     /**
@@ -20,7 +18,7 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateUserWithoutLogin()
     {
-        $userStructure = new UserStructure();
+        $userStructure = new DataStructure();
 
         $this->interactor->run($userStructure);
     }
@@ -30,7 +28,7 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateUserWithAnotherUserExistingWithSameLogin()
     {
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => 'jdoe',
             'last_name' => 'Doe',
             'first_name' => 'John'
@@ -38,7 +36,7 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($userStructure);
 
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => 'jdoe',
             'last_name' => 'Doe',
             'first_name' => 'Jane'
@@ -49,9 +47,9 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateUser()
     {
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::getRepository('user')->findAll());
 
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'login' => 'jdoe',
             'last_name' => 'Doe',
             'first_name' => 'John'
@@ -59,6 +57,6 @@ class CreateUserInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($userStructure);
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::getRepository('user')->findAll());
     }
 }

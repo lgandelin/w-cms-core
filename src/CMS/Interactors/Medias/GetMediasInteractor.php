@@ -2,32 +2,24 @@
 
 namespace CMS\Interactors\Medias;
 
+use CMS\Context;
 use CMS\Interactors\Interactor;
-use CMS\Repositories\MediaRepositoryInterface;
-use CMS\Structures\MediaStructure;
 
 class GetMediasInteractor extends Interactor
 {
-    private $repository;
-
-    public function __construct(MediaRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($structure = false)
     {
-        $medias = $this->repository->findAll();
+        $medias = Context::getRepository('media')->findAll();
 
-        return ($structure) ? $this->getMediaStructures($medias) : $medias;
+        return ($structure) ? $this->getDataStructures($medias) : $medias;
     }
 
-    private function getMediaStructures($medias)
+    private function getDataStructures($medias)
     {
         $mediaStructures = [];
         if (is_array($medias) && sizeof($medias) > 0) {
             foreach ($medias as $media) {
-                $mediaStructures[] = MediaStructure::toStructure($media);
+                $mediaStructures[] = $media->toStructure();
             }
         }
 

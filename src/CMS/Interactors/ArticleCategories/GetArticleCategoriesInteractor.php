@@ -2,21 +2,13 @@
 
 namespace CMS\Interactors\ArticleCategories;
 
-use CMS\Repositories\ArticleCategoryRepositoryInterface;
-use CMS\Structures\ArticleCategoryStructure;
+use CMS\Context;
 
 class GetArticleCategoriesInteractor
 {
-    private $repository;
-
-    public function __construct(ArticleCategoryRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($langID = null, $structure = false)
     {
-        $articles = $this->repository->findAll($langID);
+        $articles = Context::getRepository('article_category')->findAll($langID);
 
         return ($structure) ? $this->getArticleCategoryStructures($articles) : $articles;
     }
@@ -26,7 +18,7 @@ class GetArticleCategoriesInteractor
         $articleStructures = [];
         if (is_array($articles) && sizeof($articles) > 0) {
             foreach ($articles as $article) {
-                $articleStructures[] = ArticleCategoryStructure::toStructure($article);
+                $articleStructures[] = $article->toStructure();
             }
         }
 

@@ -2,25 +2,29 @@
 
 namespace CMSTests\Interactors\Langs;
 
+use CMS\Context;
 use CMS\Interactors\Langs\CreateLangInteractor;
-use CMS\Structures\LangStructure;
-use CMSTests\Repositories\InMemoryLangRepository;
+use CMS\DataStructure;
+use CMSTestsSuite;
 
 class CreateLangInteractorTest extends \PHPUnit_Framework_TestCase {
 
+    private $interactor;
+
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new CreateLangInteractor();
+    }
+
     public function testCreateLang()
     {
-        $lang = new LangStructure([
+        $lang = new DataStructure([
             'ID' => 1,
             'name' => 'Test lang',
-            'file_name' => '/path/to/lang'
         ]);
 
-        $repository = new InMemoryLangRepository();
-        $interactor = new CreateLangInteractor($repository);
+        $this->interactor->run($lang);
 
-        $interactor->run($lang);
-
-        $this->assertEquals(1, count($repository->findByID(1)));
+        $this->assertEquals(1, count(Context::getRepository('lang')->findByID(1)));
     }
 }

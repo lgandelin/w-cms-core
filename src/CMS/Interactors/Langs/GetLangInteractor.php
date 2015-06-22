@@ -2,45 +2,40 @@
 
 namespace CMS\Interactors\Langs;
 
-use CMS\Repositories\LangRepositoryInterface;
-use CMS\Structures\LangStructure;
+use CMS\Context;
 
 class GetLangInteractor
 {
-    protected $repository;
-    private $getLangsInteractor;
-
-    public function __construct(LangRepositoryInterface $repository, GetLangsInteractor $getLangsInteractor)
-    {
-        $this->repository = $repository;
-        $this->getLangsInteractor = $getLangsInteractor;
-    }
-
     public function getLangByID($langID, $structure = false)
     {
-        if (!$lang = $this->repository->findByID($langID)) {
+        if (!$lang = Context::getRepository('lang')->findByID($langID)) {
             throw new \Exception('The lang was not found');
         }
 
-        return  ($structure) ? LangStructure::toStructure($lang) : $lang;
+        return  ($structure) ? $lang->toStructure() : $lang;
     }
 
     public function getDefaultLangID()
     {
-        return $this->repository->findDefautLangID();
+        return Context::getRepository('lang')->findDefautLangID();
     }
 
-    public function getLangFromURI($uri)
+    public function getLangFromURI($uri, $structure = false)
     {
         $langID = $this->getDefaultLangID();
-        foreach ($this->getLangsInteractor->getAll(true) as $lang) {
-            if (preg_match('#' . $lang->prefix . '#', $uri, $matches)) {
-                if (count($matches) > 0) {
-                    $langID = $lang->ID;
-                }
+        foreach ((new GetLangsInteractor())->getAll($structure) as $lang) {
+            if ($this->langPrefixMatchesURI($uri, $lang, $structure)) {
+                $langID = ($structure ? $lang->ID : $lang->getID());
             }
         }
 
-        return LangStructure::toStructure($this->getLangByID($langID));
+        return $this->getLangByID($langID, $structure);
+    }
+
+    private function langPrefixMatchesURI($uri, $lang, $structure = false)
+    {
+        preg_match('#' . ($structure ? $lang->prefix : $lang->getPrefix()). '#', $uri, $matches);
+
+        return count($matches) > 0;
     }
 }

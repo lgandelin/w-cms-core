@@ -25,14 +25,18 @@ class InMemoryArticleCategoryRepository implements ArticleCategoryRepositoryInte
         return false;
     }
 
-    public function findAll()
+    public function findAll($lang = null)
     {
         return $this->articleCategories;
     }
 
     public function createArticleCategory(ArticleCategory $articleCategory)
     {
+        $articleCategoryID = sizeof($this->articleCategories) + 1;
+        $articleCategory->setID($articleCategoryID);
         $this->articleCategories[]= $articleCategory;
+
+        return $articleCategoryID;
     }
 
     public function updateArticleCategory(ArticleCategory $articleCategory)

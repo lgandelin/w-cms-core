@@ -2,38 +2,28 @@
 
 namespace CMS\Interactors\Users;
 
-use CMS\Structures\UserStructure;
+use CMS\Context;
+use CMS\DataStructure;
 
 class UpdateUserInteractor extends GetUserInteractor
 {
-    public function run($userID, UserStructure $userStructure)
+    public function run($userID, DataStructure $userStructure)
     {
         if ($user = $this->getUserByID($userID)) {
-
-            $properties = get_object_vars($userStructure);
-            unset ($properties['ID']);
-            foreach ($properties as $property => $value) {
-                $method = ucfirst(str_replace('_', '', $property));
-                $setter = 'set' . $method;
-
-                if ($userStructure->$property !== null) {
-                    call_user_func_array(array($user, $setter), array($value));
-                }
-            }
-
+            $user->setInfos($userStructure);
             $user->valid();
 
             if ($this->anotherUserExistsWithSameLogin($userID, $user->getLogin())) {
                 throw new \Exception('There is already a user with the same login');
             }
 
-            $this->repository->updateUser($user);
+            Context::getRepository('user')->updateUser($user);
         }
     }
 
     private function anotherUserExistsWithSameLogin($userID, $userLogin)
     {
-        $user = $this->repository->findByLogin($userLogin);
+        $user = Context::getRepository('user')->findByLogin($userLogin);
 
         return ($user && $user->getID() != $userID);
     }

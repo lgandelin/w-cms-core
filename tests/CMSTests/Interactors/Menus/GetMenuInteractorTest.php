@@ -1,19 +1,14 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Interactors\Menus\GetMenuInteractor;
-use CMSTests\Repositories\InMemoryMenuRepository;
-use CMS\Structures\MenuStructure;
 
 class GetMenuInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $interactor;
-
-    public function setUp()
-    {
-        $this->repository = new InMemoryMenuRepository();
-        $this->interactor = new GetMenuInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetMenuInteractor();
     }
 
     /**
@@ -38,7 +33,7 @@ class GetMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        $this->repository->createMenu($menu);
+        Context::getRepository('menu')->createMenu($menu);
 
         return $menu;
     }

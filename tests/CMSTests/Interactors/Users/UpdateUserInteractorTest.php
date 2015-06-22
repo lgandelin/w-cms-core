@@ -1,19 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\UpdateUserInteractor;
-use CMS\Structures\UserStructure;
-use CMSTests\Repositories\InMemoryUserRepository;
+use CMS\DataStructure;
 
 class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryUserRepository();
-        $this->interactor = new UpdateUserInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new UpdateUserInteractor();
     }
 
     /**
@@ -21,7 +19,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateNonExistingUser()
     {
-        $userStructure = new UserStructure([
+        $userStructure = new DataStructure([
             'ID' => 1,
             'login' => 'jdoe',
             'last_name' => 'Doe',
@@ -35,13 +33,13 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleUser(1);
 
-        $userStructureUpdated = new UserStructure([
+        $userStructureUpdated = new DataStructure([
             'first_name' => 'Jack'
         ]);
 
         $this->interactor->run(1, $userStructureUpdated);
 
-        $user = $this->repository->findByID(1);
+        $user = Context::getRepository('user')->findByID(1);
 
         $this->assertEquals('jdoe', $user->getLogin());
         $this->assertEquals('Doe', $user->getLastName());
@@ -56,7 +54,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleUser(1);
 
-        $userStructureUpdated = new UserStructure([
+        $userStructureUpdated = new DataStructure([
             'login' => ''
         ]);
 
@@ -73,9 +71,9 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID(2);
         $user->setLogin('jane.doe');
-        $this->repository->createUser($user);
+        Context::getRepository('user')->createUser($user);
 
-        $userStructureUpdated = new UserStructure([
+        $userStructureUpdated = new DataStructure([
             'login' => 'jdoe'
         ]);
 
@@ -90,7 +88,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user->setLastName('Doe');
         $user->setLogin('jdoe');
         $user->setEmail('john.doe@gmail.com');
-        $this->repository->createUser($user);
+        Context::getRepository('user')->createUser($user);
 
         return $user;
     }

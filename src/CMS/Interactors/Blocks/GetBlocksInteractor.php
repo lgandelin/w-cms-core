@@ -2,43 +2,41 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Repositories\BlockRepositoryInterface;
-use CMS\Structures\BlockStructure;
+use CMS\Context;
 
 class GetBlocksInteractor
 {
-    public function __construct(BlockRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAllByAreaID($areaID, $structure = false)
     {
-        $blocks = $this->repository->findByAreaID($areaID);
+        $blocks = Context::getRepository('block')->findByAreaID($areaID);
 
-        return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
+        return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
 
     public function getGlobalBlocks($structure = false)
     {
-        $blocks = $this->repository->findGlobalBlocks();
+        $blocks = Context::getRepository('block')->findGlobalBlocks();
 
-        return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
+        return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
 
     public function getChildBlocks($masterblockID, $structure = false)
     {
-        $blocks = $this->repository->findChildBlocks($masterblockID);
+        $blocks = Context::getRepository('block')->findChildBlocks($masterblockID);
 
-        return ($structure) ? $this->getBlockStructures($blocks) : $blocks;
+        return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
 
-    private function getBlockStructures($blocks)
+    private function getDataStructures($blocks)
     {
         $blockStructures = [];
         if (is_array($blocks) && sizeof($blocks) > 0) {
             foreach ($blocks as $block) {
-                $blockStructures[]= BlockStructure::toStructure($block);
+                if ($block) {
+                    $blockStructure = $block->toStructure();
+                    $blockStructure->content = $block->getContentData();
+                    $blockStructures[]= $blockStructure;
+                }
             }
         }
 

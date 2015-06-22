@@ -1,25 +1,15 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Menu;
 use CMS\Entities\MenuItem;
-use CMS\Interactors\MenuItems\CreateMenuItemInteractor;
-use CMS\Interactors\MenuItems\GetMenuItemsInteractor;
-use CMS\Interactors\Menus\CreateMenuInteractor;
 use CMS\Interactors\Menus\DuplicateMenuInteractor;
-use CMSTests\Repositories\InMemoryMenuItemRepository;
-use CMSTests\Repositories\InMemoryMenuRepository;
 
 class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $menuItemRepository;
-    private $interactor;
-
-    public function setUp()
-    {
-        $this->repository = new InMemoryMenuRepository();
-        $this->menuItemRepository = new InMemoryMenuItemRepository();
-        $this->interactor = new DuplicateMenuInteractor($this->repository, new CreateMenuInteractor($this->repository), new GetMenuItemsInteractor($this->menuItemRepository), new CreateMenuItemInteractor($this->menuItemRepository));
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new DuplicateMenuInteractor();
     }
 
     /**
@@ -33,12 +23,12 @@ class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase
     public function testDuplicateMenu()
     {
         $this->createSampleMenu();
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::getRepository('menu')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(2, $this->repository->findAll());
-        $menuDuplicated = $this->repository->findByIdentifier('test-menu-copy');
+        $this->assertCount(2, Context::getRepository('menu')->findAll());
+        $menuDuplicated = Context::getRepository('menu')->findByIdentifier('test-menu-copy');
         $this->assertInstanceOf('\CMS\Entities\Menu', $menuDuplicated);
 
         $this->assertEquals($menuDuplicated->getName(), 'Test menu - COPY');
@@ -51,14 +41,14 @@ class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleMenuItem(1);
         $this->createSampleMenuItem(2);
         $this->createSampleMenuItem(3);
-        $this->assertCount(1, $this->repository->findAll());
-        $this->assertCount(3, $this->menuItemRepository->findByMenuID(1));
+        $this->assertCount(1, Context::getRepository('menu')->findAll());
+        $this->assertCount(3, Context::getRepository('menu_item')->findByMenuID(1));
 
         $this->interactor->run(1);
 
-        $this->assertCount(2, $this->repository->findAll());
-        $menuDuplicated = $this->repository->findByIdentifier('test-menu-copy');
-        $this->assertCount(3, $this->menuItemRepository->findByMenuID($menuDuplicated->getID()));
+        $this->assertCount(2, Context::getRepository('menu')->findAll());
+        $menuDuplicated = Context::getRepository('menu')->findByIdentifier('test-menu-copy');
+        $this->assertCount(3, Context::getRepository('menu_item')->findByMenuID($menuDuplicated->getID()));
     }
     
     private function createSampleMenu()
@@ -68,7 +58,7 @@ class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        $this->repository->createMenu($menu);
+        Context::getRepository('menu')->createMenu($menu);
 
         return $menu;
     }
@@ -81,6 +71,6 @@ class DuplicateMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menuItem->setLabel('Test menu item');
         $menuItem->setOrder(999);
 
-        $this->menuItemRepository->createMenuItem($menuItem);
+        Context::getRepository('menu_item')->createMenuItem($menuItem);
     }
 }

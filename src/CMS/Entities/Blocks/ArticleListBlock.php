@@ -3,8 +3,10 @@
 namespace CMS\Entities\Blocks;
 
 use CMS\Entities\Block;
-use CMS\Structures\Blocks\ArticleListBlockStructure;
-use CMS\Structures\BlockStructure;
+use CMS\Interactors\Articles\GetArticlesInteractor;
+use CMS\Interactors\Medias\GetMediaInteractor;
+use CMS\Interactors\Pages\GetPageInteractor;
+use CMS\DataStructure;
 
 class ArticleListBlock extends Block
 {
@@ -42,26 +44,19 @@ class ArticleListBlock extends Block
         return $this->article_list_order;
     }
 
-    public function getStructure()
+    public function getContentData()
     {
-        $blockStructure = new ArticleListBlockStructure();
-        $blockStructure->article_list_category_id = $this->getArticleListCategoryID();
-        $blockStructure->article_list_order = $this->getArticleListOrder();
-        $blockStructure->article_list_number = $this->getArticleListNumber();
+        $content = new \StdClass();
+        $content->articles = (new GetArticlesInteractor())->getAll($this->article_list_category_id, $this->article_list_number, $this->article_list_order, null, true);
 
-        return $blockStructure;
-    }
+        foreach ($content->articles as $article) {
+            if ($article->page_id)
+                $article->page = (new GetPageInteractor())->getPageByID($article->page_id, true);
 
-    public function updateContent(BlockStructure $blockStructure)
-    {
-        if (
-            $blockStructure->article_list_category_id != $this->getArticleListCategoryID()
-            || $blockStructure->article_list_order != $this->getArticleListOrder()
-            || $blockStructure->article_list_number != $this->getArticleListNumber()
-        ) {
-            $this->setArticleListCategoryID($blockStructure->article_list_category_id);
-            $this->setArticleListOrder($blockStructure->article_list_order);
-            $this->setArticleListNumber($blockStructure->article_list_number);
+            if ($article->media_id)
+                $article->media = (new GetMediaInteractor())->getMediaByID($article->media_id, true);
         }
+
+        return $content;
     }
 }

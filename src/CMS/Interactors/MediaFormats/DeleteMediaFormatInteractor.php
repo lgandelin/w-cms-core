@@ -2,12 +2,14 @@
 
 namespace CMS\Interactors\MediaFormats;
 
+use CMS\Context;
+
 class DeleteMediaFormatInteractor extends GetMediaFormatInteractor
 {
     public function run($mediaFormatID)
     {
         if ($this->getMediaFormatByID($mediaFormatID)) {
-            $this->repository->deleteMediaFormat($mediaFormatID);
+            Context::getRepository('media_format')->deleteMediaFormat($mediaFormatID);
         }
     }
 }

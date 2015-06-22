@@ -2,33 +2,27 @@
 
 namespace CMS\Interactors\Pages;
 
-use CMS\Repositories\PageRepositoryInterface;
-use CMS\Structures\PageStructure;
+use CMS\Context;
 
 class GetPageInteractor
 {
-    protected $repository;
-
-    public function __construct(PageRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getPageByID($pageID, $structure = false)
     {
-        if (!$page = $this->repository->findByID($pageID)) {
+        if (!$page = Context::getRepository('page')->findByID($pageID)) {
             throw new \Exception('The page was not found');
         }
 
-        return ($structure) ? PageStructure::toStructure($page) : $page;
+        return ($structure) ? $page->toStructure() : $page;
     }
 
-    public function getPageByURI($pageURI, $langID, $structure = false)
+    public function getPageByURI($pageURI, $langID = null, $structure = false)
     {
-        if (!$page = $this->repository->findByUriAndLangID($pageURI, $langID)) {
+        $page = ($langID) ? Context::getRepository('page')->findByUriAndLangID($pageURI, $langID) : Context::getRepository('page')->findByUri($pageURI);
+
+        if (!$page) {
             throw new \Exception('The page was not found');
         }
 
-        return ($structure) ? PageStructure::toStructure($page) : $page;
+        return ($structure) ? $page->toStructure() : $page;
     }
 }

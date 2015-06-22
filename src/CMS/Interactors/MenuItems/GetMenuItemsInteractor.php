@@ -2,21 +2,14 @@
 
 namespace CMS\Interactors\MenuItems;
 
-use CMS\Repositories\MenuItemRepositoryInterface;
+use CMS\Context;
 use CMS\Structures\MenuItemStructure;
 
 class GetMenuItemsInteractor
 {
-    private $repository;
-
-    public function __construct(MenuItemRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($menuID, $structure = false)
     {
-        $menuItems = $this->repository->findByMenuID($menuID);
+        $menuItems = Context::getRepository('menu_item')->findByMenuID($menuID);
 
         return ($structure) ? $this->getMenuItemStructures($menuItems) : $menuItems;
     }
@@ -26,7 +19,7 @@ class GetMenuItemsInteractor
         $menuItemStructures = [];
         if (is_array($menuItems) && sizeof($menuItems) > 0) {
             foreach ($menuItems as $menuItem) {
-                $menuItemStructures[] = MenuItemStructure::toStructure($menuItem);
+                $menuItemStructures[] = $menuItem->toStructure();
             }
         }
 

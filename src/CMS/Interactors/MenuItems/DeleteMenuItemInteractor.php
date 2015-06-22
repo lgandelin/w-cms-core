@@ -2,12 +2,14 @@
 
 namespace CMS\Interactors\MenuItems;
 
+use CMS\Context;
+
 class DeleteMenuItemInteractor extends GetMenuItemInteractor
 {
     public function run($menuItemID)
     {
         if ($this->getMenuItemByID($menuItemID)) {
-            $this->repository->deleteMenuItem($menuItemID);
+            Context::getRepository('menu_item')->deleteMenuItem($menuItemID);
         }
     }
 }

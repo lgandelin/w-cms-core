@@ -2,16 +2,19 @@
 
 namespace CMSTests\Interactors\Langs;
 
+use CMS\Context;
 use CMS\Entities\Lang;
 use CMS\Interactors\Langs\DeleteLangInteractor;
-use CMSTests\Repositories\InMemoryLangRepository;
+use CMSTestsSuite;
 
 class DeleteLangInteractorTest extends \PHPUnit_Framework_TestCase {
 
+    private $interactor;
+    
     public function setUp()
     {
-        $this->repository = new InMemoryLangRepository();
-        $this->interactor = new DeleteLangInteractor($this->repository);
+        CMSTestsSuite::clean();
+        $this->interactor = new DeleteLangInteractor();
     }
 
     /**
@@ -26,18 +29,19 @@ class DeleteLangInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $this->createSampleLang();
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::getRepository('lang')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::getRepository('lang')->findAll());
     }
 
     private function createSampleLang()
     {
         $lang = new Lang();
-        $lang->setID(1);
         $lang->setName('Test lang');
-        $this->repository->createLang($lang);
+        Context::getRepository('lang')->createLang($lang);
+
+        return $lang->getID();
     }
 }

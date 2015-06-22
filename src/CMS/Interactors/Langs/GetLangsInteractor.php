@@ -2,31 +2,23 @@
 
 namespace CMS\Interactors\Langs;
 
-use CMS\Repositories\LangRepositoryInterface;
-use CMS\Structures\LangStructure;
+use CMS\Context;
 
 class GetLangsInteractor
 {
-    private $repository;
-
-    public function __construct(LangRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getAll($structure = false)
     {
-        $langs = $this->repository->findAll();
+        $langs = Context::getRepository('lang')->findAll();
 
-        return ($structure) ? $this->getLangStructures($langs) : $langs;
+        return ($structure) ? $this->getDataStructures($langs) : $langs;
     }
 
-    private function getLangStructures($langs)
+    private function getDataStructures($langs)
     {
         $langStructures = [];
         if (is_array($langs) && sizeof($langs) > 0) {
             foreach ($langs as $lang) {
-                $langStructures[] = LangStructure::toStructure($lang);
+                $langStructures[] = $lang->toStructure();
             }
         }
 

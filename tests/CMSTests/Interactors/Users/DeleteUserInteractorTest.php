@@ -1,18 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\DeleteUserInteractor;
-use CMSTests\Repositories\InMemoryUserRepository;
 
 class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryUserRepository();
-        $this->interactor = new DeleteUserInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new DeleteUserInteractor();
     }
 
     /**
@@ -27,11 +25,11 @@ class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleUser();
 
-        $this->assertCount(1, $this->repository->findAll());
+        $this->assertCount(1, Context::getRepository('user')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, $this->repository->findAll());
+        $this->assertCount(0, Context::getRepository('user')->findAll());
     }
 
     private function createSampleUser()
@@ -39,6 +37,6 @@ class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID(1);
         $user->setLastName('User lastname');
-        $this->repository->createUser($user);
+        Context::getRepository('user')->createUser($user);
     }
 }

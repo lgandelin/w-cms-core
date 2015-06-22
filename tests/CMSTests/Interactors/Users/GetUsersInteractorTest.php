@@ -1,18 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\GetUsersInteractor;
-use CMSTests\Repositories\InMemoryUserRepository;
+use CMS\DataStructure;
 
 class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryUserRepository();
-        $this->interactor = new GetUsersInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetUsersInteractor();
     }
 
     public function testGetAllWithoutUsers()
@@ -28,7 +27,7 @@ class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
         $users = $this->interactor->getAll();
 
         $this->assertCount(2, $users);
-        $this->assertInstanceOf('\CMS\Entities\User', $users[0]);
+        $this->assertInstanceOf('\CMS\Entities\User', array_shift($users));
     }
 
     public function testGetByStructures()
@@ -39,7 +38,14 @@ class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
         $users = $this->interactor->getAll(true);
 
         $this->assertCount(2, $users);
-        $this->assertInstanceOf('\CMS\Structures\UserStructure', $users[0]);
+        $this->assertEquals(new DataStructure([
+            'ID' => 1,
+            'login' => null,
+            'password' => null,
+            'last_name' => 'User lastname',
+            'first_name' => null,
+            'email' => null,
+        ]), array_shift($users));
     }
 
     private function createSampleUser($userID)
@@ -47,6 +53,8 @@ class GetUsersInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID($userID);
         $user->setLastName('User lastname');
-        $this->repository->createUser($user);
+        Context::getRepository('user')->createUser($user);
+
+        return $user;
     }
 }

@@ -1,22 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Entities\Blocks\HTMLBlock;
 use CMS\Interactors\Blocks\GetBlocksInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMSTests\Repositories\InMemoryBlockRepository;
 
 class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
-    private $areaRepository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryBlockRepository();
-        $this->areaRepository = new InMemoryAreaRepository();
-        $this->interactor = new GetBlocksInteractor($this->repository, $this->areaRepository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetBlocksInteractor();
     }
 
     public function testGetBlocks()
@@ -40,7 +35,7 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $blocks = $this->interactor->getAllByAreaID(1, true);
         $this->assertEquals(2, count($blocks));
 
-        $this->assertInstanceOf('\CMS\Structures\BlockStructure', $blocks[0]);
+        $this->assertInstanceOf('\CMS\DataStructure', $blocks[0]);
     }
 
     private function createSampleArea()
@@ -48,7 +43,7 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setID(1);
         $area->setName('Test area');
-        $this->areaRepository->createArea($area);
+        Context::getRepository('area')->createArea($area);
     }
 
     private function createSampleBlock()
@@ -56,6 +51,6 @@ class GetBlocksInteractorTest extends PHPUnit_Framework_TestCase
         $block = new HTMLBlock();
         $block->setName('Block');
         $block->setAreaID(1);
-        $this->repository->createBlock($block);
+        Context::getRepository('block')->createBlock($block);
     }
 }

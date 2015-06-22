@@ -2,34 +2,18 @@
 
 namespace CMS\Interactors\Blocks;
 
-use CMS\Repositories\BlockRepositoryInterface;
-use CMS\Structures\BlockStructure;
+use CMS\Context;
+use CMS\DataStructure;
 
 class UpdateBlockInteractor extends GetBlockInteractor
 {
-    protected $repository;
-    private $getBlocksInteractor;
-
-    public function __construct(BlockRepositoryInterface $repository, GetBlocksInteractor $getBlocksInteractor)
+    public function run($blockID, DataStructure $blockStructure)
     {
-        $this->repository = $repository;
-        $this->getBlocksInteractor = $getBlocksInteractor;
-    }
-
-    public function run($blockID, BlockStructure $blockStructure)
-    {
-        if ($block = $this->getBlockByID($blockID)) {
-            if ($blockStructure->type !== null && $blockStructure->type != $block->getType()) {
-                $block->setType($blockStructure->type);
-            }
-            $this->repository->updateBlockType($block);
-        }
-
         if ($block = $this->getBlockByID($blockID)) {
             $block->setInfos($blockStructure);
 
             if (!$block->getIsGhost()) {
-                $block->updateContent($blockStructure);
+                $block->setInfos($blockStructure);
             }
 
             if ($block->getIsMaster()) {
@@ -39,12 +23,12 @@ class UpdateBlockInteractor extends GetBlockInteractor
             }
         }
 
-        $this->repository->updateBlock($block);
+        Context::getRepository('block')->updateBlock($block);
     }
 
-    private function updateChildBlocks(BlockStructure $blockStructure, $blockID)
+    private function updateChildBlocks(DataStructure $blockStructure, $blockID)
     {
-        $childBlocks = $this->getBlocksInteractor->getChildBlocks($blockID);
+        $childBlocks = (new GetBlocksInteractor())->getChildBlocks($blockID);
 
         if (is_array($childBlocks) && sizeof($childBlocks) > 0) {
             foreach ($childBlocks as $child) {

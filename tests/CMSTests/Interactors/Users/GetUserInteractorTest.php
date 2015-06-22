@@ -1,18 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\User;
 use CMS\Interactors\Users\GetUserInteractor;
-use CMSTests\Repositories\InMemoryUserRepository;
 
 class GetUserInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryUserRepository();
-        $this->interactor = new GetUserInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetUserInteractor();
     }
 
     /**
@@ -33,9 +31,9 @@ class GetUserInteractorTest extends PHPUnit_Framework_TestCase
     private function createSampleUser()
     {
         $user = new User();
-        $user->setID(1);
         $user->setLastName('User lastname');
-        $this->repository->createUser($user);
+        $user->setLogin('User login');
+        Context::getRepository('user')->createUser($user);
 
         return $user;
     }

@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class Menu
+class Menu extends Entity
 {
     private $ID;
     private $identifier;

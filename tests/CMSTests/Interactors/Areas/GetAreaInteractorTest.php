@@ -1,19 +1,17 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\Area;
 use CMS\Interactors\Areas\GetAreaInteractor;
-use CMSTests\Repositories\InMemoryAreaRepository;
-use CMS\Structures\AreaStructure;
 
 class GetAreaInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
     public function setUp()
     {
-        $this->repository = new InMemoryAreaRepository();
-        $this->interactor = new GetAreaInteractor($this->repository);
+        CMSTestsSuite::clean();
+        $this->interactor = new GetAreaInteractor();
     }
 
     /**
@@ -35,13 +33,13 @@ class GetAreaInteractorTest extends PHPUnit_Framework_TestCase
     {
         $areaID = $this->createSampleArea();
 
-        $this->assertInstanceOf('\CMS\Structures\AreaStructure', $this->interactor->getAreaByID($areaID, true));
+        $this->assertInstanceOf('\CMS\DataStructure', $this->interactor->getAreaByID($areaID, true));
     }
 
     private function createSampleArea()
     {
         $area = new Area();
 
-        return $this->repository->createArea($area);
+        return Context::getRepository('area')->createArea($area);
     }
 }

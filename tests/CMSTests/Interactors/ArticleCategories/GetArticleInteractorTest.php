@@ -1,18 +1,16 @@
 <?php
 
+use CMS\Context;
 use CMS\Entities\ArticleCategory;
 use CMS\Interactors\ArticleCategories\GetArticleCategoryInteractor;
-use CMSTests\Repositories\InMemoryArticleCategoryRepository;
 
 class GetArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 {
-    private $repository;
     private $interactor;
 
-    public function setUp()
-    {
-        $this->repository = new InMemoryArticleCategoryRepository();
-        $this->interactor = new GetArticleCategoryInteractor($this->repository);
+    public function setUp() {
+        CMSTestsSuite::clean();
+        $this->interactor = new GetArticleCategoryInteractor();
     }
 
     /**
@@ -33,9 +31,8 @@ class GetArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     private function createSampleArticleCategory()
     {
         $article = new ArticleCategory();
-        $article->setID(1);
         $article->setName('Sample category article');
-        $this->repository->createArticleCategory($article);
+        Context::getRepository('article_category')->createArticleCategory($article);
 
         return $article;
     }
