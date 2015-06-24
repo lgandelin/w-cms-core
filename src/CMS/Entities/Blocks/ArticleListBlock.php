@@ -6,7 +6,6 @@ use CMS\Entities\Block;
 use CMS\Interactors\Articles\GetArticlesInteractor;
 use CMS\Interactors\Medias\GetMediaInteractor;
 use CMS\Interactors\Pages\GetPageInteractor;
-use CMS\DataStructure;
 
 class ArticleListBlock extends Block
 {
@@ -50,11 +49,11 @@ class ArticleListBlock extends Block
         $content->articles = (new GetArticlesInteractor())->getAll($this->article_list_category_id, $this->article_list_number, $this->article_list_order, null, true);
 
         foreach ($content->articles as $article) {
-            if ($article->page_id)
-                $article->page = (new GetPageInteractor())->getPageByID($article->page_id, true);
+            if ($article->pageID)
+                $article->page = (new GetPageInteractor())->getPageByID($article->pageID, true);
 
-            if ($article->media_id)
-                $article->media = (new GetMediaInteractor())->getMediaByID($article->media_id, true);
+            if ($article->mediaID)
+                $article->media = (new GetMediaInteractor())->getMediaByID($article->mediaID, true);
         }
 
         return $content;
