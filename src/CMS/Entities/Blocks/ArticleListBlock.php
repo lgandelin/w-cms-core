@@ -53,7 +53,7 @@ class ArticleListBlock extends Block
                 $article->page = (new GetPageInteractor())->getPageByID($article->pageID, true);
 
             if ($article->mediaID)
-                $article->media = (new GetMediaInteractor())->getMediaByID($article->mediaID, true);
+                $article->media = (new GetMediaInteractor())->getMediaByID($article->mediaID, null, true);
         }
 
         return $content;
