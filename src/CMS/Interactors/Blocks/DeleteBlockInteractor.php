@@ -14,7 +14,7 @@ class DeleteBlockInteractor extends GetBlockInteractor
                 $this->deleteChildBlocks($blockID);
             }
 
-            Context::getRepository('block')->deleteBlock($blockID);
+            Context::get('block')->deleteBlock($blockID);
         }
     }
 
@@ -24,7 +24,7 @@ class DeleteBlockInteractor extends GetBlockInteractor
 
         if (is_array($childBlocks) && sizeof($childBlocks) > 0) {
             foreach ($childBlocks as $childBlock) {
-                Context::getRepository('block')->deleteBlock($childBlock->getID());
+                Context::get('block')->deleteBlock($childBlock->getID());
             }
         }
     }

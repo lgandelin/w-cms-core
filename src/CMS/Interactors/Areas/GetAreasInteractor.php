@@ -8,7 +8,7 @@ class GetAreasInteractor
 {
     public function getAll($pageID, $structure = false)
     {
-        $areas = Context::getRepository('area')->findByPageID($pageID);
+        $areas = Context::get('area')->findByPageID($pageID);
 
         return ($structure) ? $this->getDataStructures($areas) : $areas;
     }
@@ -27,7 +27,7 @@ class GetAreasInteractor
 
     public function getChildAreas($masterAreaID, $structure = false)
     {
-        $areas = Context::getRepository('area')->findChildAreas($masterAreaID);
+        $areas = Context::get('area')->findChildAreas($masterAreaID);
 
         return ($structure) ? $this->getDataStructures($areas) : $areas;
     }

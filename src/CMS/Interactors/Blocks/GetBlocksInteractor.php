@@ -8,21 +8,21 @@ class GetBlocksInteractor
 {
     public function getAllByAreaID($areaID, $structure = false)
     {
-        $blocks = Context::getRepository('block')->findByAreaID($areaID);
+        $blocks = Context::get('block')->findByAreaID($areaID);
 
         return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
 
     public function getGlobalBlocks($structure = false)
     {
-        $blocks = Context::getRepository('block')->findGlobalBlocks();
+        $blocks = Context::get('block')->findGlobalBlocks();
 
         return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
 
     public function getChildBlocks($masterblockID, $structure = false)
     {
-        $blocks = Context::getRepository('block')->findChildBlocks($masterblockID);
+        $blocks = Context::get('block')->findChildBlocks($masterblockID);
 
         return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
@@ -35,7 +35,7 @@ class GetBlocksInteractor
                 if ($block) {
                     $blockStructure = $block->toStructure();
                     $blockStructure->content = $block->getContentData();
-                    $blockStructure->type = Context::getRepository('block_type')->getBlockTypeByCode($block->getType());
+                    $blockStructure->type = Context::get('block_type')->getBlockTypeByCode($block->getType());
                     $blockStructures[]= $blockStructure;
                 }
             }

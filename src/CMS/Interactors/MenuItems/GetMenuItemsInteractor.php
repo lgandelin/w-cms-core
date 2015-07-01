@@ -9,7 +9,7 @@ class GetMenuItemsInteractor
 {
     public function getAll($menuID, $structure = false)
     {
-        $menuItems = Context::getRepository('menu_item')->findByMenuID($menuID);
+        $menuItems = Context::get('menu_item')->findByMenuID($menuID);
 
         return ($structure) ? $this->getMenuItemStructures($menuItems) : $menuItems;
     }

@@ -12,7 +12,7 @@ class DeleteMenuInteractor extends GetMenuInteractor
     {
         if ($this->getMenuByID($menuID)) {
             $this->deleteMenuItems($menuID);
-            Context::getRepository('menu')->deleteMenu($menuID);
+            Context::get('menu')->deleteMenu($menuID);
         }
     }
 

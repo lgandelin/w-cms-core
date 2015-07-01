@@ -15,7 +15,7 @@ class CreateBlockInteractor
         $block->setInfos($blockStructure);
         $block->valid();
 
-        $blockID = Context::getRepository('block')->createBlock($block);
+        $blockID = Context::get('block')->createBlock($block);
 
         if ($block->getIsMaster()) {
             $this->createBlockInChildAreas($blockStructure, $blockID, $block->getAreaID());

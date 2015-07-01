@@ -17,13 +17,13 @@ class UpdateArticleInteractor extends GetArticleInteractor
                 throw new \Exception('There is already a article with the same title');
             }
 
-            Context::getRepository('article')->updateArticle($article);
+            Context::get('article')->updateArticle($article);
         }
     }
 
     private function anotherArticleExistsWithSameTitle($articleID, $articleTitle)
     {
-        $article = Context::getRepository('article')->findByTitle($articleTitle);
+        $article = Context::get('article')->findByTitle($articleTitle);
 
         return ($article && $article->getID() != $articleID);
     }

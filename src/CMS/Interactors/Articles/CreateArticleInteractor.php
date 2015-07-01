@@ -14,6 +14,6 @@ class CreateArticleInteractor
         $article->setInfos($articleStructure);
         $article->valid();
 
-        return Context::getRepository('article')->createArticle($article);
+        return Context::get('article')->createArticle($article);
     }
 }

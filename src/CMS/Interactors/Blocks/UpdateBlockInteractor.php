@@ -23,7 +23,7 @@ class UpdateBlockInteractor extends GetBlockInteractor
             }
         }
 
-        Context::getRepository('block')->updateBlock($block);
+        Context::get('block')->updateBlock($block);
     }
 
     private function updateChildBlocks(DataStructure $blockStructure, $blockID)

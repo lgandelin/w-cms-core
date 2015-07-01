@@ -13,7 +13,7 @@ class UpdateAreaInteractor extends GetAreaInteractor
         $area->setInfos($areaStructure);
         $area->valid();
 
-        Context::getRepository('area')->updateArea($area);
+        Context::get('area')->updateArea($area);
 
         if ($area->getIsMaster()) {
             $this->updateChildAreas($areaID, $areaStructure);

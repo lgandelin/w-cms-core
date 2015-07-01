@@ -9,7 +9,7 @@ class GetAreaInteractor extends Interactor
 {
     public function getAreaByID($areaID, $structure = false)
     {
-        if (!$area = Context::getRepository('area')->findByID($areaID)) {
+        if (!$area = Context::get('area')->findByID($areaID)) {
             throw new \Exception('The area was not found');
         }
 

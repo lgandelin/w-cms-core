@@ -13,7 +13,7 @@ class UpdateLangInteractor extends GetLangInteractor
             $lang->setInfos($langStructure);
             $lang->valid();
 
-            Context::getRepository('lang')->updateLang($lang);
+            Context::get('lang')->updateLang($lang);
         }
     }
 }

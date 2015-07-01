@@ -4,18 +4,25 @@ namespace CMS;
 
 class Context
 {
-    public static $repositories;
+    public static $objects;
 
     function __construct()
     {
-        self::$repositories = [];
+        self::$objects = [];
     }
 
-    public static function addRepository($identifier, $repositoryObject) {
-        self::$repositories[$identifier] = $repositoryObject;
+    public static function add($identifier, $object) {
+        self::$objects[$identifier] = $object;
     }
 
-    public static function getRepository($identifier) {
-        return self::$repositories[$identifier];
+    public static function addTo($identifier, $identifier2, $object) {
+        if (!isset(self::$objects[$identifier])) {
+            self::$objects[$identifier] = [];
+        }
+        self::$objects[$identifier][$identifier2] = $object;
+    }
+
+    public static function get($identifier) {
+        return (isset(self::$objects[$identifier])) ? self::$objects[$identifier] : false;
     }
 }
