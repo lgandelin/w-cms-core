@@ -46,13 +46,8 @@ class MediaBlock extends Block
     {
         if ($this->getMediaID()) {
             $content = new \StdClass();
-            $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), true);
+            $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), $this->getMediaFormatID(), true);
             $content->mediaLink = $this->getMediaLink();
-
-            if ($this->getMediaFormatID()) {
-                $mediaFormat = (new GetMediaFormatInteractor())->getMediaFormatByID($this->getMediaFormatID(), true);
-                $content->media->fileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $content->media->fileName;
-            }
 
             return $content;
         }
