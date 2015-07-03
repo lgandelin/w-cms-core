@@ -41,7 +41,7 @@ class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $langStructureUpdated);
 
-        $lang = Context::getRepository('lang')->findByID(1);
+        $lang = Context::get('lang')->findByID(1);
 
         $this->assertEquals('/fr/updated', $lang->getPrefix());
     }
@@ -51,7 +51,7 @@ class UpdateLangInteractorTest extends \PHPUnit_Framework_TestCase
         $lang = new Lang();
         $lang->setName('Français');
         $lang->setPrefix('/fr');
-        Context::getRepository('lang')->createLang($lang);
+        Context::get('lang')->createLang($lang);
 
         return $lang->getID();
     }

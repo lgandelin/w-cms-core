@@ -33,7 +33,7 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu();
         $this->createSampleMenuItem();
-        $this->assertCount(1, Context::getRepository('menu_item')->findByMenuID(1));
+        $this->assertCount(1, Context::get('menu_item')->findByMenuID(1));
 
         $menuItemStructureUpdated = new DataStructure([
             'label' => 'Test menu item updated',
@@ -41,7 +41,7 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $menuItemStructureUpdated);
 
-        $menuItem = Context::getRepository('menu_item')->findByID(1);
+        $menuItem = Context::get('menu_item')->findByID(1);
 
         $this->assertEquals('Test menu item updated', $menuItem->getLabel());
     }
@@ -53,7 +53,7 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        Context::getRepository('menu')->createMenu($menu);
+        Context::get('menu')->createMenu($menu);
 
         return $menu;
     }
@@ -66,6 +66,6 @@ class UpdateMenuItemInteractorTest extends PHPUnit_Framework_TestCase
         $menuItem->setLabel('Test menu item');
         $menuItem->setOrder(1);
 
-        Context::getRepository('menu_item')->createMenuItem($menuItem);
+        Context::get('menu_item')->createMenuItem($menuItem);
     }
 }

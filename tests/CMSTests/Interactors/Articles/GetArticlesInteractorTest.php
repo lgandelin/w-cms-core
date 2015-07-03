@@ -45,6 +45,6 @@ class GetArticlesInteractorTest extends PHPUnit_Framework_TestCase
     {
         $article = new Article();
         $article->setTitle('Sample article');
-        Context::getRepository('article')->createArticle($article);
+        Context::get('article')->createArticle($article);
     }
 }

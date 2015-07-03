@@ -31,7 +31,7 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
             'name' => 'Test area updated'
         ]));
 
-        $areaUpdated = Context::getRepository('area')->findByID($areaID);
+        $areaUpdated = Context::get('area')->findByID($areaID);
         $this->assertEquals('Test area updated', $areaUpdated->getName());
     }
 
@@ -40,7 +40,7 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setName('Test area');
 
-        return Context::getRepository('area')->createArea($area);
+        return Context::get('area')->createArea($area);
     }
 
     public function testUpdateMasterArea()
@@ -49,27 +49,27 @@ class UpdateAreaInteractorTest extends PHPUnit_Framework_TestCase
         $masterArea->setID(1);
         $masterArea->setIsMaster(true);
         $masterArea->setName('Test area');
-        Context::getRepository('area')->createArea($masterArea);
+        Context::get('area')->createArea($masterArea);
 
         $childArea1 = new Area();
         $childArea1->setID(2);
         $childArea1->setMasterAreaID($masterArea->getID());
         $childArea1->setName('Test area');
-        Context::getRepository('area')->createArea($childArea1);
+        Context::get('area')->createArea($childArea1);
 
         $childArea2 = new Area();
         $childArea2->setID(3);
         $childArea2->setMasterAreaID($masterArea->getID());
         $childArea2->setName('Test area');
-        Context::getRepository('area')->createArea($childArea2);
+        Context::get('area')->createArea($childArea2);
 
         $areaStructure = new DataStructure([
             'name' => 'Test area updated'
         ]);
         $this->interactor->run($masterArea->getID(), $areaStructure);
 
-        $childArea1 = Context::getRepository('area')->findByID($childArea1->getID());
-        $childArea2 = Context::getRepository('area')->findByID($childArea2->getID());
+        $childArea1 = Context::get('area')->findByID($childArea1->getID());
+        $childArea2 = Context::get('area')->findByID($childArea2->getID());
 
         $this->assertEquals('Test area updated', $childArea1->getName());
         $this->assertEquals('Test area updated', $childArea2->getName());

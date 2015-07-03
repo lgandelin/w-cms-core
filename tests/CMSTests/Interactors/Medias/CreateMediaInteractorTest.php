@@ -26,6 +26,6 @@ class CreateMediaInteractorTest extends \PHPUnit_Framework_TestCase {
 
         $this->interactor->run($media);
 
-        $this->assertEquals(1, count(Context::getRepository('media')->findByID(1)));
+        $this->assertEquals(1, count(Context::get('media')->findByID(1)));
     }
 }

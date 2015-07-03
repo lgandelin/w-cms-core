@@ -27,7 +27,7 @@ class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateArticleCategory()
     {
-        $this->assertCount(0, Context::getRepository('article_category')->findAll());
+        $this->assertCount(0, Context::get('article_category')->findAll());
 
         $articleStructure = new DataStructure([
             'name' => 'Sample article category',
@@ -35,6 +35,6 @@ class CreateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($articleStructure);
 
-        $this->assertCount(1, Context::getRepository('article_category')->findAll());
+        $this->assertCount(1, Context::get('article_category')->findAll());
     }
 }

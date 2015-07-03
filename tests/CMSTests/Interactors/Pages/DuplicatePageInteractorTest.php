@@ -33,19 +33,19 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleBlock($area1ID);
         $this->createSampleBlock($area2ID);
 
-        $this->assertCount(1, Context::getRepository('page')->findAll());
+        $this->assertCount(1, Context::get('page')->findAll());
 
         $this->interactor->run($pageID);
 
-        $this->assertCount(2, Context::getRepository('page')->findAll());
-        $pageDuplicated = Context::getRepository('page')->findByIdentifier('test-page-copy');
+        $this->assertCount(2, Context::get('page')->findAll());
+        $pageDuplicated = Context::get('page')->findByIdentifier('test-page-copy');
 
         $this->assertEquals($pageDuplicated->getName(), 'Test page - COPY');
         $this->assertEquals($pageDuplicated->getURI(), '/test-page-copy');
         $this->assertEquals($pageDuplicated->getIdentifier(), 'test-page-copy');
 
-        $this->assertEquals(2, count(Context::getRepository('area')->findByPageID($pageID)));
-        $this->assertEquals(3, count(Context::getRepository('block')->findByAreaID($area1ID)));
+        $this->assertEquals(2, count(Context::get('area')->findByPageID($pageID)));
+        $this->assertEquals(3, count(Context::get('block')->findByAreaID($area1ID)));
     }*/
 
     private function createSamplePage()
@@ -55,7 +55,7 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
 
-        return Context::getRepository('page')->createPage($page);
+        return Context::get('page')->createPage($page);
     }
 
     private function createSampleArea($pageID)
@@ -64,7 +64,7 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $area->setPageID($pageID);
         $area->setName('Test area');
 
-        return Context::getRepository('area')->createArea($area);
+        return Context::get('area')->createArea($area);
     }
 
     private function createSampleBlock($areaID)
@@ -74,6 +74,6 @@ class DuplicatePageInteractorTest extends PHPUnit_Framework_TestCase
         $block->setAreaID($areaID);
         $block->setType('html');
 
-        return Context::getRepository('block')->createBlock($block);
+        return Context::get('block')->createBlock($block);
     }
 }

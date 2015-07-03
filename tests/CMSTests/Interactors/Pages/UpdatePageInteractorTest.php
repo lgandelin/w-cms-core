@@ -40,7 +40,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'uri' => ''
         ]);
 
-        Context::getRepository('page')->createPage($pageStructure);
+        Context::get('page')->createPage($pageStructure);
 
         $this->interactor->run(1, $pageStructure);
     }
@@ -57,7 +57,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'page-1'
         ]);
 
-        Context::getRepository('page')->createPage($pageStructure);
+        Context::get('page')->createPage($pageStructure);
 
         $pageStructure2 = new DataStructure([
             'ID' => 2,
@@ -66,7 +66,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'page-2'
         ]);
 
-        Context::getRepository('page')->createPage($pageStructure2);
+        Context::get('page')->createPage($pageStructure2);
 
         $pageStructure2Updated = new DataStructure([
            'uri' => '/my-page'
@@ -87,7 +87,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'my-page'
         ]);
 
-        Context::getRepository('page')->createPage($pageStructure);
+        Context::get('page')->createPage($pageStructure);
 
         $pageStructure2 = new DataStructure([
             'ID' => 2,
@@ -96,7 +96,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
             'identifier' => 'my-page-2'
         ]);
 
-        Context::getRepository('page')->createPage($pageStructure2);
+        Context::get('page')->createPage($pageStructure2);
 
         $pageStructure2Updated = new DataStructure([
             'identifier' => 'my-page'
@@ -117,7 +117,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $pageStructureUpdated);
 
-        $page = Context::getRepository('page')->findByID(1);
+        $page = Context::get('page')->findByID(1);
 
         $this->assertEquals('Test page updated', $page->getName());
         $this->assertEquals('/test-page', $page->getURI());
@@ -131,7 +131,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
         $page->setName('Test page');
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
-        Context::getRepository('page')->createPage($page);
+        Context::get('page')->createPage($page);
     }
 
     public function testUpdatePageToMaster()
@@ -159,10 +159,10 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
         ]);
         $this->interactor->run(1, $pageStructure);
 
-        $area = Context::getRepository('area')->findByID(1);
+        $area = Context::get('area')->findByID(1);
         $this->assertEquals(1, $area->getIsMaster());
 
-        $block = Context::getRepository('block')->findByID(1);
+        $block = Context::get('block')->findByID(1);
         $this->assertEquals(1, $block->getIsMaster());
     }
 }

@@ -65,7 +65,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $menuStructureUpdated);
 
-        $menu = Context::getRepository('menu')->findByID(1);
+        $menu = Context::get('menu')->findByID(1);
 
         $this->assertEquals('Main menu updated', $menu->getName());
         $this->assertEquals('main-menu', $menu->getIdentifier());
@@ -78,7 +78,7 @@ class UpdateMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu ' . $menuID);
         $menu->setIdentifier('test-menu-' . $menuID);
 
-        Context::getRepository('menu')->createMenu($menu);
+        Context::get('menu')->createMenu($menu);
 
         return $menu;
     }

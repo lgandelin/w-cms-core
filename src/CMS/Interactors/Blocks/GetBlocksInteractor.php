@@ -35,7 +35,9 @@ class GetBlocksInteractor
                 if ($block) {
                     $blockStructure = $block->toStructure();
                     $blockStructure->content = $block->getContentData();
-                    $blockStructure->type = Context::get('block_type')->getBlockTypeByCode($block->getType());
+                    if (Context::get('block_type')) {
+                        $blockStructure->type = Context::get('block_type')->getBlockTypeByCode($block->getType());
+                    }
                     $blockStructures[]= $blockStructure;
                 }
             }

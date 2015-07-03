@@ -28,7 +28,7 @@ class DeleteAreaEventTest extends \PHPUnit_Framework_TestCase {
         $area->setID(2);
         $area->setName('Area');
         $area->setIsMaster(1);
-        Context::getRepository('area')->createArea($area);
+        Context::get('area')->createArea($area);
 
         $this->listener->expects($this->once())->method('onDeleteArea');
 

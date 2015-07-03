@@ -21,10 +21,6 @@ class GetMediaInteractor extends Interactor
             $media->fileName = $mediaFormat->width . '_' . $mediaFormat->height . '_' . $media->fileName;
             $media->width = $mediaFormat->width;
             $media->height = $mediaFormat->height;
-        } else {
-            $dimensions = getimagesize(public_path() . '/uploads/' . $media->ID . '/' . $media->fileName);
-            $media->width = $dimensions[0];
-            $media->height = $dimensions[1];
         }
 
         return $media;

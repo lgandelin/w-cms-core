@@ -25,11 +25,11 @@ class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleUser();
 
-        $this->assertCount(1, Context::getRepository('user')->findAll());
+        $this->assertCount(1, Context::get('user')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::getRepository('user')->findAll());
+        $this->assertCount(0, Context::get('user')->findAll());
     }
 
     private function createSampleUser()
@@ -37,6 +37,6 @@ class DeleteUserInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID(1);
         $user->setLastName('User lastname');
-        Context::getRepository('user')->createUser($user);
+        Context::get('user')->createUser($user);
     }
 }

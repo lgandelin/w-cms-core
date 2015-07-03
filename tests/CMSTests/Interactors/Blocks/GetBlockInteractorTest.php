@@ -39,6 +39,6 @@ class GetBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $block = new HTMLBlock();
 
-        return Context::getRepository('block')->createBlock($block);
+        return Context::get('block')->createBlock($block);
     }
 }

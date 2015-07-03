@@ -24,11 +24,11 @@ class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleMenu();
 
-        $this->assertCount(1, Context::getRepository('menu')->findAll());
+        $this->assertCount(1, Context::get('menu')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::getRepository('menu')->findAll());
+        $this->assertCount(0, Context::get('menu')->findAll());
     }
 
     public function testDeleteAlongWithMenuItems()
@@ -37,13 +37,13 @@ class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleMenuItem(1);
         $this->createSampleMenuItem(2);
 
-        $this->assertCount(1, Context::getRepository('menu')->findAll());
-        $this->assertCount(2, Context::getRepository('menu_item')->findByMenuID(1));
+        $this->assertCount(1, Context::get('menu')->findAll());
+        $this->assertCount(2, Context::get('menu_item')->findByMenuID(1));
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::getRepository('menu')->findAll());
-        $this->assertCount(0, Context::getRepository('menu_item')->findByMenuID(1));
+        $this->assertCount(0, Context::get('menu')->findAll());
+        $this->assertCount(0, Context::get('menu_item')->findByMenuID(1));
     }
 
     private function createSampleMenu()
@@ -53,7 +53,7 @@ class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        Context::getRepository('menu')->createMenu($menu);
+        Context::get('menu')->createMenu($menu);
 
         return $menu;
     }
@@ -65,6 +65,6 @@ class DeleteMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menuItem->setMenuID(1);
         $menuItem->setLabel('Test menu item');
 
-        Context::getRepository('menu_item')->createMenuItem($menuItem);
+        Context::get('menu_item')->createMenuItem($menuItem);
     }
 }

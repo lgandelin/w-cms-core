@@ -47,7 +47,7 @@ class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testCreateMenu()
     {
-        $this->assertCount(0, Context::getRepository('menu')->findAll());
+        $this->assertCount(0, Context::get('menu')->findAll());
 
         $menuStructure = new DataStructure([
             'name' => 'Main menu',
@@ -56,6 +56,6 @@ class CreateMenuInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($menuStructure);
 
-        $this->assertCount(1, Context::getRepository('menu')->findAll());
+        $this->assertCount(1, Context::get('menu')->findAll());
     }
 }

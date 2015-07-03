@@ -26,11 +26,11 @@ class DeleteArticlecategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleArticlecategory();
 
-        $this->assertCount(1, Context::getRepository('article_category')->findAll());
+        $this->assertCount(1, Context::get('article_category')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::getRepository('article_category')->findAll());
+        $this->assertCount(0, Context::get('article_category')->findAll());
     }
 
     private function createSampleArticlecategory()
@@ -38,6 +38,6 @@ class DeleteArticlecategoryInteractorTest extends PHPUnit_Framework_TestCase
         $articleCategory = new Articlecategory();
         $articleCategory->setID(1);
         $articleCategory->setName('Sample article category');
-        Context::getRepository('article_category')->createArticlecategory($articleCategory);
+        Context::get('article_category')->createArticlecategory($articleCategory);
     }
 }
