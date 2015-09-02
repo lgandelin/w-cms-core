@@ -12,8 +12,8 @@
         >
     <testsuites>
         <testsuite name="CMS Test Suite">
-            <directory>./tests/CMSTests/</directory>
-            <file>./tests/CMSTests/CMSTestsSuite.php</file>
+            <directory>./tests/Webaccess/WCMSCoreTests/</directory>
+            <file>./tests/Webaccess/WCMSCoreTests/CMSTestsSuite.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

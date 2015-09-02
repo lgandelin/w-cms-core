@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-0": {
-            "CMS": "src/"
+            "Webaccess\\WCMSCore\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "CMSTests": "tests/" }
+            "Webaccess\\WCMSCoreTests": "tests/" }
     },
     "minimum-stability": "dev"
 }
