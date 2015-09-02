@@ -4,7 +4,8 @@ namespace CMS\Fixtures;
 
 use CMS\Context;
 use CMS\Entities\Area;
-use CMS\Entities\Block;
+use CMS\Entities\Blocks\HTMLBlock;
+use CMS\Entities\Blocks\MenuBlock;
 use CMS\Entities\Menu;
 use CMS\Entities\MenuItem;
 use CMS\Entities\Page;
@@ -13,18 +14,18 @@ class PagesFixtures {
 
     public static function run()
     {
-        $pageID = self::createSamplePage('Home page', 'home', '/', 1);
-        $area1ID = self::createSampleArea('Header Area', 12, 1, 1, $pageID);
-        $area2ID = self::createSampleArea('Content Area', 12, 1, 1, $pageID);
-        self::createSampleMenu('Header Menu', 'header-menu', 1);
+        $pageID = self::createPage('Home page', 'home', '/', 1);
+        $area1ID = self::createArea('Header Area', 12, 1, 1, $pageID);
+        $area2ID = self::createArea('Content Area', 12, 1, 1, $pageID);
+        $menuID = self::createMenu('Header Menu', 'header-menu', 1);
 
-        self::createSampleBlock('Menu Block', 'menu', 12, 1, 1, $area1ID);
-        self::createSampleBlock('HTML Block', 'html', 12, 1, 2, $area2ID);
-        self::createSampleBlock('HTML Block 2', 'html', 6, 1, 3, $area2ID);
-        self::createSampleBlock('HTML Block 3', 'html', 6, 1, 4, $area2ID);
+        self::createMenuBlock('Menu Block', 'menu', 12, 1, 1, $area1ID, $menuID);
+        self::createHTMLBlock('HTML Block', 'html', 12, 1, 2, $area2ID, '<p>Lorem ipssum</p>');
+        self::createHTMLBlock('HTML Block 2', 'html', 6, 1, 3, $area2ID, '<p>Lorem ipsum</p>');
+        self::createHTMLBlock('HTML Block 3', 'html', 6, 1, 4, $area2ID, '<p>Lorem ispsum</p>');
     }
 
-    private static function createSamplePage($name, $identifier, $uri, $langID)
+    private static function createPage($name, $identifier, $uri, $langID)
     {
         $page = new Page();
         $page->setName($name);
@@ -35,7 +36,7 @@ class PagesFixtures {
         return Context::get('page')->createPage($page);
     }
 
-    private static function createSampleArea($name, $width, $height, $order, $pageID)
+    private static function createArea($name, $width, $height, $order, $pageID)
     {
         $area = new Area();
         $area->setName($name);
@@ -48,9 +49,9 @@ class PagesFixtures {
         return Context::get('area')->createArea($area);
     }
 
-    private static function createSampleBlock($name, $type, $width, $height, $order, $areaID)
+    private static function createMenuBlock($name, $type, $width, $height, $order, $areaID, $menuID)
     {
-        $block = new Block();
+        $block = new MenuBlock();
         $block->setName($name);
         $block->setType($type);
         $block->setWidth($width);
@@ -58,11 +59,27 @@ class PagesFixtures {
         $block->setOrder($order);
         $block->setAreaID($areaID);
         $block->setDisplay(1);
+        $block->setMenuID($menuID);
 
         return Context::get('block')->createBlock($block);
     }
 
-    private static function createSampleMenu($name, $identifier, $langID)
+    private static function createHTMLBlock($name, $type, $width, $height, $order, $areaID, $html)
+    {
+        $block = new HTMLBlock();
+        $block->setName($name);
+        $block->setType($type);
+        $block->setWidth($width);
+        $block->setHeight($height);
+        $block->setOrder($order);
+        $block->setAreaID($areaID);
+        $block->setDisplay(1);
+        $block->setHTML($html);
+
+        return Context::get('block')->createBlock($block);
+    }
+
+    private static function createMenu($name, $identifier, $langID)
     {
         $menu = new Menu();
         $menu->setName($name);
