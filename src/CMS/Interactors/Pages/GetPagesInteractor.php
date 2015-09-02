@@ -3,7 +3,6 @@
 namespace CMS\Interactors\Pages;
 
 use CMS\Context;
-use CMS\DataStructure;
 
 class GetPagesInteractor
 {

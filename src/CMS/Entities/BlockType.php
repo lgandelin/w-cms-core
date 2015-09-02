@@ -2,7 +2,7 @@
 
 namespace CMS\Entities;
 
-class BlockType
+class BlockType extends Entity
 {
     private $ID;
     private $code;

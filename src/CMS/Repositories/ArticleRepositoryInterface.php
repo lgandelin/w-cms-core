@@ -10,6 +10,8 @@ interface ArticleRepositoryInterface
 
     public function findByTitle($articleTitle);
 
+    public function findByPageID($pageID);
+
     public function findAll($lang = null);
 
     public function createArticle(Article $article);

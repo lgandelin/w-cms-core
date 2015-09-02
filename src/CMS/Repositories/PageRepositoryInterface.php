@@ -16,6 +16,8 @@ interface PageRepositoryInterface
 
     public function findAll($langID = null);
 
+    public function findMasterPages();
+
     public function createPage(Page $page);
 
     public function updatePage(Page $page);
