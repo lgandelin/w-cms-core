@@ -16,13 +16,13 @@
         
     },
     "autoload": {
-        "psr-0": {
-            "Webaccess\\WCMSCore\\": "src/"
+        "psr-4": {
+            "Webaccess\\WCMSCore\\": "src/Webaccess/WCMSCore"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "Webaccess\\WCMSCoreTests": "tests/" }
+            "Webaccess\\WCMSCoreTests": "tests" }
     },
     "minimum-stability": "dev"
 }
