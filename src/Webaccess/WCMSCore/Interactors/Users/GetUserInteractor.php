@@ -14,4 +14,13 @@ class GetUserInteractor
 
         return  ($structure) ? $user->toStructure() : $user;
     }
+
+    public function getUserByLogin($userLogin, $structure = false)
+    {
+        if (!$user = Context::get('user')->findByLogin($userLogin)) {
+            throw new \Exception('The user was not found');
+        }
+
+        return  ($structure) ? $user->toStructure() : $user;
+    }
 }
