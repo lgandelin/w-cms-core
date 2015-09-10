@@ -8,7 +8,7 @@ class GetUserInteractor
 {
     public function getUserByID($userID, $structure = false)
     {
-        if (!$user = Context::get('user')->findByID($userID)) {
+        if (!$user = Context::get('user_repository')->findByID($userID)) {
             throw new \Exception('The user was not found');
         }
 
@@ -17,7 +17,7 @@ class GetUserInteractor
 
     public function getUserByLogin($userLogin, $structure = false)
     {
-        if (!$user = Context::get('user')->findByLogin($userLogin)) {
+        if (!$user = Context::get('user_repository')->findByLogin($userLogin)) {
             throw new \Exception('The user was not found');
         }
 

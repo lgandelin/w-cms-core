@@ -38,7 +38,7 @@ class PagesFixtures {
         $page->setUri($uri);
         $page->setLangID($langID);
 
-        return Context::get('page')->createPage($page);
+        return Context::get('page_repository')->createPage($page);
     }
 
     private static function createArea($name, $width, $height, $class, $order, $pageID)
@@ -52,7 +52,7 @@ class PagesFixtures {
         $area->setDisplay(1);
         $area->setPageID($pageID);
 
-        return Context::get('area')->createArea($area);
+        return Context::get('area_repository')->createArea($area);
     }
     private static function createHTMLBlock($name, $width, $height, $class, $alignment, $order, $type, $areaID, $html)
     {
@@ -68,7 +68,7 @@ class PagesFixtures {
         $block->setDisplay(1);
         $block->setHTML($html);
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 
     private static function createViewBlock($name, $width, $height, $class, $alignment, $order, $type, $areaID, $viewPath)
@@ -85,7 +85,7 @@ class PagesFixtures {
         $block->setDisplay(1);
         $block->setViewPath($viewPath);
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 
     private static function createMenu($name, $identifier, $langID, $pageID)
@@ -94,7 +94,7 @@ class PagesFixtures {
         $menu->setName($name);
         $menu->setIdentifier($identifier);
         $menu->setLangID($langID);
-        $menuID = Context::get('menu')->createMenu($menu);
+        $menuID = Context::get('menu_repository')->createMenu($menu);
 
         for ($i = 0; $i < 3; $i++) {
             $menuItem = new MenuItem();
@@ -104,7 +104,7 @@ class PagesFixtures {
             $menuItem->setMenuID($menuID);
             $menuItem->setDisplay(1);
 
-            Context::get('menu_item')->createMenuItem($menuItem);
+            Context::get('menu_item_repository')->createMenuItem($menuItem);
         }
 
         return $menuID;
@@ -124,6 +124,6 @@ class PagesFixtures {
         $block->setDisplay(1);
         $block->setMenuID($menuID);
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 }

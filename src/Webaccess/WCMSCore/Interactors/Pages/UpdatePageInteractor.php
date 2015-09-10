@@ -25,20 +25,20 @@ class UpdatePageInteractor extends GetPageInteractor
             throw new \Exception('There is already a page with the same identifier');
         }
 
-        Context::get('page')->updatePage($page);
+        Context::get('page_repository')->updatePage($page);
         $this->updateIsMasterFields($page);
     }
 
     private function anotherPageExistsWithSameURI($pageID, $pageURI)
     {
-        $existingDataStructure = Context::get('page')->findByUri($pageURI);
+        $existingDataStructure = Context::get('page_repository')->findByUri($pageURI);
 
         return ($existingDataStructure && $existingDataStructure->getID() != $pageID);
     }
 
     private function anotherPageExistsWithSameIdentifier($pageID, $pageIdentifier)
     {
-        $existingDataStructure = Context::get('page')->findByIdentifier($pageIdentifier);
+        $existingDataStructure = Context::get('page_repository')->findByIdentifier($pageIdentifier);
 
         return ($existingDataStructure && $existingDataStructure->getID() != $pageID);
     }

@@ -29,18 +29,18 @@ class DeleteLangInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $this->createSampleLang();
 
-        $this->assertCount(1, Context::get('lang')->findAll());
+        $this->assertCount(1, Context::get('lang_repository')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::get('lang')->findAll());
+        $this->assertCount(0, Context::get('lang_repository')->findAll());
     }
 
     private function createSampleLang()
     {
         $lang = new Lang();
         $lang->setName('Test lang');
-        Context::get('lang')->createLang($lang);
+        Context::get('lang_repository')->createLang($lang);
 
         return $lang->getID();
     }

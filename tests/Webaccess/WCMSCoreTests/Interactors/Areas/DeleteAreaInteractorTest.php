@@ -17,11 +17,11 @@ class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase
     public function testDelete()
     {
         $areaID = $this->createSampleArea();
-        $this->assertEquals(1, sizeof(Context::get('area')->findAll()));
+        $this->assertEquals(1, sizeof(Context::get('area_repository')->findAll()));
 
         $this->interactor->run($areaID);
 
-        $this->assertEquals(0, sizeof(Context::get('area')->findAll()));
+        $this->assertEquals(0, sizeof(Context::get('area_repository')->findAll()));
     }
 
     private function createSampleArea()
@@ -29,7 +29,7 @@ class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setName('Test area');
 
-        return Context::get('area')->createArea($area);
+        return Context::get('area_repository')->createArea($area);
     }
 
     public function testDeleteMasterArea()
@@ -38,16 +38,16 @@ class DeleteAreaInteractorTest extends PHPUnit_Framework_TestCase
         $area->setID(2);
         $area->setName('Area');
         $area->setIsMaster(1);
-        Context::get('area')->createArea($area);
+        Context::get('area_repository')->createArea($area);
 
         $childArea = new Area();
         $childArea->setID(2);
         $childArea->setName('Child area');
         $childArea->setMasterAreaID(1);
-        Context::get('area')->createArea($childArea);
+        Context::get('area_repository')->createArea($childArea);
 
         $this->interactor->run(1);
 
-        $this->assertFalse(Context::get('area')->findByID(2));
+        $this->assertFalse(Context::get('area_repository')->findByID(2));
     }
 }

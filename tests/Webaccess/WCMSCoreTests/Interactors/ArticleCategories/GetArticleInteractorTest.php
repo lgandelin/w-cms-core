@@ -32,7 +32,7 @@ class GetArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
     {
         $article = new ArticleCategory();
         $article->setName('Sample category article');
-        Context::get('article_category')->createArticleCategory($article);
+        Context::get('article_category_repository')->createArticleCategory($article);
 
         return $article;
     }

@@ -26,10 +26,10 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
     public function testDelete()
     {
         $pageID = $this->createSamplePage();
-        $this->assertCount(1, Context::get('page')->findAll());
+        $this->assertCount(1, Context::get('page_repository')->findAll());
 
         $this->interactor->run($pageID);
-        $this->assertCount(0, Context::get('page')->findAll());
+        $this->assertCount(0, Context::get('page_repository')->findAll());
     }
 
     public function testDeleteAlongWithAreasAndBlocks()
@@ -40,15 +40,15 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->createSampleBlock($areaID);
         $this->createSampleBlock($areaID);
 
-        $this->assertCount(1, Context::get('page')->findAll());
-        $this->assertCount(1, Context::get('area')->findAll($pageID));
-        $this->assertCount(3, Context::get('block')->findAll($areaID));
+        $this->assertCount(1, Context::get('page_repository')->findAll());
+        $this->assertCount(1, Context::get('area_repository')->findAll($pageID));
+        $this->assertCount(3, Context::get('block_repository')->findAll($areaID));
 
         $this->interactor->run($pageID);
 
-        $this->assertCount(0, Context::get('page')->findAll());
-        $this->assertCount(0, Context::get('area')->findAll());
-        $this->assertCount(0, Context::get('block')->findAll());
+        $this->assertCount(0, Context::get('page_repository')->findAll());
+        $this->assertCount(0, Context::get('area_repository')->findAll());
+        $this->assertCount(0, Context::get('block_repository')->findAll());
     }
 
     private function createSamplePage()
@@ -58,7 +58,7 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $page->setIdentifier('test-page');
         $page->setURI('/test-page');
 
-        return Context::get('page')->createPage($page);
+        return Context::get('page_repository')->createPage($page);
     }
 
     private function createSampleArea($pageID)
@@ -67,7 +67,7 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $area->setPageID($pageID);
         $area->setName('Test area');
 
-        return Context::get('area')->createArea($area);
+        return Context::get('area_repository')->createArea($area);
     }
 
     private function createSampleBlock($areaID)
@@ -77,6 +77,6 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $block->setAreaID($areaID);
         $block->setType('html');
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 }

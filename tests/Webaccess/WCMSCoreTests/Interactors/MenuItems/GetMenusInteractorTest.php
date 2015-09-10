@@ -10,7 +10,7 @@ class GetMenuItemsInteractorTest extends PHPUnit_Framework_TestCase
 
     public function setUp() {
         CMSTestsSuite::clean();
-        $this->interactor = new GetMenuItemsInteractor(Context::get('menu_item'));
+        $this->interactor = new GetMenuItemsInteractor(Context::get('menu_item_repository'));
     }
 
     public function testGetAllWithoutMenuItems()
@@ -46,7 +46,7 @@ class GetMenuItemsInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setLabel('Test menu item');
         $menu->setOrder(999);
 
-        Context::get('menu_item')->createMenuItem($menu);
+        Context::get('menu_item_repository')->createMenuItem($menu);
 
         return $menu;
     }

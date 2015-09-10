@@ -39,7 +39,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $userStructureUpdated);
 
-        $user = Context::get('user')->findByID(1);
+        $user = Context::get('user_repository')->findByID(1);
 
         $this->assertEquals('jdoe', $user->getLogin());
         $this->assertEquals('Doe', $user->getLastName());
@@ -71,7 +71,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user = new User();
         $user->setID(2);
         $user->setLogin('jane.doe');
-        Context::get('user')->createUser($user);
+        Context::get('user_repository')->createUser($user);
 
         $userStructureUpdated = new DataStructure([
             'login' => 'jdoe'
@@ -88,7 +88,7 @@ class UpdateUserInteractorTest extends PHPUnit_Framework_TestCase
         $user->setLastName('Doe');
         $user->setLogin('jdoe');
         $user->setEmail('john.doe@gmail.com');
-        Context::get('user')->createUser($user);
+        Context::get('user_repository')->createUser($user);
 
         return $user;
     }

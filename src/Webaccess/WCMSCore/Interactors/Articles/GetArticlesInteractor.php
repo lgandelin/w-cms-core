@@ -8,7 +8,7 @@ class GetArticlesInteractor
 {
     public function getAll($categoryID = null, $limit = 0, $order = 'ASC', $langID = null, $structure = false)
     {
-        $articles = Context::get('article')->findAll($langID, $categoryID, $limit, $order);
+        $articles = Context::get('article_repository')->findAll($langID, $categoryID, $limit, $order);
 
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }
@@ -27,7 +27,7 @@ class GetArticlesInteractor
 
     public function getByAssociatedPageID($pageID, $structure = false)
     {
-        $articles = Context::get('article')->findByPageID($pageID);
+        $articles = Context::get('article_repository')->findByPageID($pageID);
 
         return ($structure) ? $this->getArticleStructures($articles) : $articles;
     }

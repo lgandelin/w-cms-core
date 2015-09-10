@@ -45,7 +45,7 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $lang->setCode($code);
         $lang->setIsDefault($isDefault);
 
-        return Context::get('lang')->createLang($lang);
+        return Context::get('lang_repository')->createLang($lang);
     }
 
     private function createPageFixture($name, $uri, $langID)
@@ -55,7 +55,7 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $page->setUri($uri);
         $page->setLangID($langID);
 
-        return Context::get('page')->createPage($page);
+        return Context::get('page_repository')->createPage($page);
     }
 
     private function createMenuFixture($name, $identifier, $langID)
@@ -65,7 +65,7 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $menu->setIdentifier($identifier);
         $menu->setLangID($langID);
 
-        return Context::get('menu')->createMenu($menu);
+        return Context::get('menu_repository')->createMenu($menu);
     }
 
     private function createMenuItemFixture($label, $order, $menuID)
@@ -75,7 +75,7 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $menuItem->setOrder($order);
         $menuItem->setMenuID($menuID);
 
-        return Context::get('menu_item')->createMenuItem($menuItem);
+        return Context::get('menu_item_repository')->createMenuItem($menuItem);
     }
 
     private function createAreaFixture($name, $width, $display, $order, $pageID)
@@ -87,7 +87,7 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $area->setOrder($order);
         $area->setPageID($pageID);
 
-        return Context::get('area')->createArea($area);
+        return Context::get('area_repository')->createArea($area);
     }
 
     private function createHMTLBlockFixture($name, $width, $display, $order, $areaID, $html)
@@ -101,7 +101,7 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $block->setAreaID($areaID);
         $block->setType('html');
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 
     private function createMenuBlockFixture($name, $width, $display, $order, $areaID, $menuID)
@@ -115,6 +115,6 @@ class FixturesTest extends PHPUnit_Framework_TestCase
         $block->setAreaID($areaID);
         $block->setType('menu');
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 } 

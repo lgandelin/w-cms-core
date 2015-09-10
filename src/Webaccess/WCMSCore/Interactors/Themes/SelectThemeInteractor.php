@@ -8,7 +8,7 @@ class SelectThemeInteractor
 {
     public function run($themeIdentifier)
     {
-        $themes = Context::get('theme')->findAll();
+        $themes = Context::get('theme_repository')->findAll();
 
         foreach ($themes as $theme) {
             if ($theme->getIdentifier() == $themeIdentifier) {

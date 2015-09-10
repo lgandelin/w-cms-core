@@ -51,7 +51,7 @@ class CreatePageFromMasterInteractorTest extends PHPUnit_Framework_TestCase {
         ]);
         $this->interactor->run($pageStructureChild);
 
-        //$this->assertInstanceOf('\Webaccess\WCMSCore\Entities\Area', Context::get('area')->findByID(1));
-        //$this->assertInstanceOf('\Webaccess\WCMSCore\Entities\Block', Context::get('block')->findByID(2));
+        //$this->assertInstanceOf('\Webaccess\WCMSCore\Entities\Area', Context::get('area_repository')->findByID(1));
+        //$this->assertInstanceOf('\Webaccess\WCMSCore\Entities\Block', Context::get('block_repository')->findByID(2));
     }
 }

@@ -19,14 +19,19 @@ class BlockTypesFixtures {
         ];
 
         foreach ($blockTypes as $type) {
-            $blockType = new BlockType();
-            $blockType->setCode($type['code']);
-            $blockType->setName($type['name']);
-            $blockType->setContentView($type['content_view']);
-            $blockType->setFrontView($type['front_view']);
-            $blockType->setOrder($type['order']);
-
-            Context::get('block_type')->createBlockType($blockType);
+            self::addBlockType($type['code'], $type['name'], $type['content_view'], $type['front_view'], $type['order']);
         }
+    }
+    
+    public static function addBlockType($code, $name, $content_view, $front_view, $order)
+    {
+        $blockType = new BlockType();
+        $blockType->setCode($code);
+        $blockType->setName($name);
+        $blockType->setContentView($content_view);
+        $blockType->setFrontView($front_view);
+        $blockType->setOrder($order);
+        
+        Context::get('block_type_repository')->createBlockType($blockType);
     }
 }

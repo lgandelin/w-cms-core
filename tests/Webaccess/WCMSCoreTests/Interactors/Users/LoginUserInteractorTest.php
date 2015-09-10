@@ -40,7 +40,7 @@ class LoginUserInteractorTest extends PHPUnit_Framework_TestCase
         $user->setLogin('jdoe');
         $user->setEmail('john.doe@gmail.com');
         $user->setPassword(sha1('111aaa'));
-        Context::get('user')->createUser($user);
+        Context::get('user_repository')->createUser($user);
 
         return $user;
     }

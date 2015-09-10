@@ -9,7 +9,7 @@ class DeleteLangInteractor extends GetLangInteractor
     public function run($langID)
     {
         if ($this->getLangByID($langID)) {
-            Context::get('lang')->deleteLang($langID);
+            Context::get('lang_repository')->deleteLang($langID);
         }
     }
 }

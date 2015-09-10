@@ -37,7 +37,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $articleCategoryStructureUpdated);
 
-        $articleCategory = Context::get('article_category')->findByID(1);
+        $articleCategory = Context::get('article_category_repository')->findByID(1);
 
         $this->assertEquals('Sample article category updated', $articleCategory->getName());
     }
@@ -61,7 +61,7 @@ class UpdateArticleCategoryInteractorTest extends PHPUnit_Framework_TestCase
         $articleCategory = new ArticleCategory();
         $articleCategory->setID($articleCategoryID);
         $articleCategory->setName('Sample article category');
-        Context::get('article_category')->createArticleCategory($articleCategory);
+        Context::get('article_category_repository')->createArticleCategory($articleCategory);
 
         return $articleCategory;
     }

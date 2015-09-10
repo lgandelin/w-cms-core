@@ -15,6 +15,6 @@ class CreateMediaInteractor extends Interactor
         $media->setInfos($mediaStructure);
         $media->valid();
 
-        return Context::get('media')->createMedia($media);
+        return Context::get('media_repository')->createMedia($media);
     }
 }

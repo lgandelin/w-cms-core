@@ -15,6 +15,6 @@ class CreateMediaFormatInteractor extends Interactor
         $mediaFormat->setInfos($mediaFormatStructure);
         $mediaFormat->valid();
 
-        return Context::get('media_format')->createMediaFormat($mediaFormat);
+        return Context::get('media_format_repository')->createMediaFormat($mediaFormat);
     }
 }

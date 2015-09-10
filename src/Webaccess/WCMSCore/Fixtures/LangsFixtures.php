@@ -21,7 +21,7 @@ class LangsFixtures {
             $lang->setPrefix($l['prefix']);
             $lang->setIsDefault($l['is_default']);
 
-            Context::get('lang')->createLang($lang);
+            Context::get('lang_repository')->createLang($lang);
         }
     }
 }
