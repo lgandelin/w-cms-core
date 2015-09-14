@@ -7,7 +7,8 @@ class BlockType extends Entity
     private $ID;
     private $code;
     private $name;
-    private $content_view;
+    private $back_controller;
+    private $back_view;
     private $front_view;
     private $order;
 
@@ -31,14 +32,24 @@ class BlockType extends Entity
         return $this->code;
     }
 
-    public function setContentView($content_view)
+    public function setBackController($back_controller)
     {
-        $this->content_view = $content_view;
+        $this->back_controller = $back_controller;
     }
 
-    public function getContentView()
+    public function getBackController()
     {
-        return $this->content_view;
+        return $this->back_controller;
+    }
+
+    public function setBackView($back_view)
+    {
+        $this->back_view = $back_view;
+    }
+
+    public function getBackView()
+    {
+        return $this->back_view;
     }
 
     public function setFrontView($front_view)
