@@ -14,6 +14,6 @@ class CreateArticleCategoryInteractor
         $articleCategory->setInfos($articleCategoryStructure);
         $articleCategory->valid();
 
-        return Context::get('article_category')->createArticleCategory($articleCategory);
+        return Context::get('article_category_repository')->createArticleCategory($articleCategory);
     }
 }

@@ -14,6 +14,6 @@ class CreateLangInteractor
         $lang->setInfos($langStructure);
         $lang->valid();
 
-        return Context::get('lang')->createLang($lang);
+        return Context::get('lang_repository')->createLang($lang);
     }
 }

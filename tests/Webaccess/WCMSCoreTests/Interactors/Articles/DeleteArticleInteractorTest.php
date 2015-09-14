@@ -11,7 +11,7 @@ class DeleteArticleInteractorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         CMSTestsSuite::clean();
-        $this->interactor = new DeleteArticleInteractor(Context::get('article'));
+        $this->interactor = new DeleteArticleInteractor(Context::get('article_repository'));
     }
 
     /**
@@ -26,11 +26,11 @@ class DeleteArticleInteractorTest extends PHPUnit_Framework_TestCase
     {
         $this->createSampleArticle();
 
-        $this->assertCount(1, Context::get('article')->findAll());
+        $this->assertCount(1, Context::get('article_repository')->findAll());
 
         $this->interactor->run(1);
 
-        $this->assertCount(0, Context::get('article')->findAll());
+        $this->assertCount(0, Context::get('article_repository')->findAll());
     }
 
     private function createSampleArticle()
@@ -38,6 +38,6 @@ class DeleteArticleInteractorTest extends PHPUnit_Framework_TestCase
         $article = new Article();
         $article->setID(1);
         $article->setTitle('Sample article');
-        Context::get('article')->createArticle($article);
+        Context::get('article_repository')->createArticle($article);
     }
 }

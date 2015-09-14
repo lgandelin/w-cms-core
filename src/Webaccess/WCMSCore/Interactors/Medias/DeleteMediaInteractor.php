@@ -9,7 +9,7 @@ class DeleteMediaInteractor extends GetMediaInteractor
     public function run($mediaID)
     {
         if ($this->getMediaByID($mediaID)) {
-            Context::get('media')->deleteMedia($mediaID);
+            Context::get('media_repository')->deleteMedia($mediaID);
         }
     }
 }

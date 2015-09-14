@@ -7,7 +7,6 @@ use Webaccess\WCMSCore\Interactors\Areas\DeleteAreaInteractor;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Articles\GetArticlesInteractor;
 use Webaccess\WCMSCore\Interactors\Articles\UpdateArticleInteractor;
-use Webaccess\WCMSCore\Structures\ArticleStructure;
 
 class DeletePageInteractor extends GetPageInteractor
 {
@@ -16,7 +15,7 @@ class DeletePageInteractor extends GetPageInteractor
         if ($this->getPageByID($pageID)) {
             $this->deleteAssociatedArticlesToPage($pageID);
             $this->deleteAreasInPage($pageID);
-            Context::get('page')->deletePage($pageID);
+            Context::get('page_repository')->deletePage($pageID);
         }
     }
 

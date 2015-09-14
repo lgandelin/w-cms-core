@@ -22,16 +22,16 @@ class CreatePageInteractor
             throw new \Exception('There is already a page with the same identifier');
         }
 
-        return Context::get('page')->createPage($page);
+        return Context::get('page_repository')->createPage($page);
     }
 
     private function anotherExistingPageWithSameIdentifier($identifier)
     {
-        return Context::get('page')->findByIdentifier($identifier);
+        return Context::get('page_repository')->findByIdentifier($identifier);
     }
 
     private function anotherExistingPageWithSameUri($uri)
     {
-        return Context::get('page')->findByUri($uri);
+        return Context::get('page_repository')->findByUri($uri);
     }
 }

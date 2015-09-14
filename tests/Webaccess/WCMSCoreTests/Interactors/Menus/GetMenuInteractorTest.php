@@ -33,7 +33,7 @@ class GetMenuInteractorTest extends PHPUnit_Framework_TestCase
         $menu->setName('Test menu');
         $menu->setIdentifier('test-menu');
 
-        Context::get('menu')->createMenu($menu);
+        Context::get('menu_repository')->createMenu($menu);
 
         return $menu;
     }

@@ -8,7 +8,7 @@ class GetUsersInteractor
 {
     public function getAll($structure = false)
     {
-        $users = Context::get('user')->findAll();
+        $users = Context::get('user_repository')->findAll();
 
         return ($structure) ? $this->getUserStructures($users) : $users;
     }

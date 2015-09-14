@@ -25,7 +25,7 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
 
         $articleCategories = $this->interactor->getAll();
         $this->assertCount(2, $articleCategories);
-        $this->assertInstanceOf('\Webaccess\WCMSCore\Entities\ArticleCategory', Context::get('article_category')->findByID(1));
+        $this->assertInstanceOf('\Webaccess\WCMSCore\Entities\ArticleCategory', Context::get('article_category_repository')->findByID(1));
     }
 
     public function testGetByStructures()
@@ -43,6 +43,6 @@ class GetArticleCategoriesInteractorTest extends PHPUnit_Framework_TestCase
         $articleCategory = new ArticleCategory();
         $articleCategory->setID($articleCategoryID);
         $articleCategory->setName('Sample category article');
-        Context::get('article_category')->createArticleCategory($articleCategory);
+        Context::get('article_category_repository')->createArticleCategory($articleCategory);
     }
 }

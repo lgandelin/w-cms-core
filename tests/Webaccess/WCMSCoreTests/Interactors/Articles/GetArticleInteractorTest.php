@@ -11,7 +11,7 @@ class GetArticleInteractorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         CMSTestsSuite::clean();
-        $this->interactor = new GetArticleInteractor(Context::get('article'));
+        $this->interactor = new GetArticleInteractor(Context::get('article_repository'));
     }
 
     /**
@@ -33,7 +33,7 @@ class GetArticleInteractorTest extends PHPUnit_Framework_TestCase
     {
         $article = new Article();
         $article->setTitle('Sample article');
-        Context::get('article')->createArticle($article);
+        Context::get('article_repository')->createArticle($article);
 
         return $article->getID();
     }

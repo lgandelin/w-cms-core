@@ -17,17 +17,17 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 {
     public function __construct()
     {
-        Context::add('page', new InMemoryPageRepository());
-        Context::add('area', new InMemoryAreaRepository());
-        Context::add('lang', new InMemoryLangRepository());
-        Context::add('block', new InMemoryBlockRepository());
-        Context::add('menu', new InMemoryMenuRepository());
-        Context::add('menu_item', new InMemoryMenuItemRepository());
-        Context::add('article', new InMemoryArticleRepository());
-        Context::add('article_category', new InMemoryArticleCategoryRepository());
-        Context::add('media', new InMemoryMediaRepository());
-        Context::add('media_format', new InMemoryMediaFormatRepository());
-        Context::add('user', new InMemoryUserRepository());
+        Context::add('page_repository', new InMemoryPageRepository());
+        Context::add('area_repository', new InMemoryAreaRepository());
+        Context::add('lang_repository', new InMemoryLangRepository());
+        Context::add('block_repository', new InMemoryBlockRepository());
+        Context::add('menu_repository', new InMemoryMenuRepository());
+        Context::add('menu_item_repository', new InMemoryMenuItemRepository());
+        Context::add('article_repository', new InMemoryArticleRepository());
+        Context::add('article_category_repository', new InMemoryArticleCategoryRepository());
+        Context::add('media_repository', new InMemoryMediaRepository());
+        Context::add('media_format_repository', new InMemoryMediaFormatRepository());
+        Context::add('user_repository', new InMemoryUserRepository());
     }
 
     public static function suite()
@@ -39,37 +39,37 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
     public static function clean()
     {
-        foreach (Context::get('block')->findAll() as $block)
-            Context::get('block')->deleteBlock($block->getID());
+        foreach (Context::get('block_repository')->findAll() as $block)
+            Context::get('block_repository')->deleteBlock($block->getID());
 
-        foreach (Context::get('area')->findAll() as $area)
-            Context::get('area')->deleteArea($area->getID());
+        foreach (Context::get('area_repository')->findAll() as $area)
+            Context::get('area_repository')->deleteArea($area->getID());
 
-        foreach (Context::get('page')->findAll() as $page)
-            Context::get('page')->deletePage($page->getID());
+        foreach (Context::get('page_repository')->findAll() as $page)
+            Context::get('page_repository')->deletePage($page->getID());
 
-        foreach (Context::get('article')->findAll() as $article)
-            Context::get('article')->deleteArticle($article->getID());
+        foreach (Context::get('article_repository')->findAll() as $article)
+            Context::get('article_repository')->deleteArticle($article->getID());
 
-        foreach (Context::get('article_category')->findAll() as $articleCategory)
-            Context::get('article_category')->deleteArticleCategory($articleCategory->getID());
+        foreach (Context::get('article_category_repository')->findAll() as $articleCategory)
+            Context::get('article_category_repository')->deleteArticleCategory($articleCategory->getID());
 
-        foreach (Context::get('lang')->findAll() as $lang)
-            Context::get('lang')->deleteLang($lang->getID());
+        foreach (Context::get('lang_repository')->findAll() as $lang)
+            Context::get('lang_repository')->deleteLang($lang->getID());
 
-        foreach (Context::get('user')->findAll() as $user)
-            Context::get('user')->deleteUser($user->getID());
+        foreach (Context::get('user_repository')->findAll() as $user)
+            Context::get('user_repository')->deleteUser($user->getID());
 
-        foreach (Context::get('menu_item')->findAll() as $menuItem)
-            Context::get('menu_item')->deleteMenuItem($menuItem->getID());
+        foreach (Context::get('menu_item_repository')->findAll() as $menuItem)
+            Context::get('menu_item_repository')->deleteMenuItem($menuItem->getID());
 
-        foreach (Context::get('menu')->findAll() as $menu)
-            Context::get('menu')->deleteMenu($menu->getID());
+        foreach (Context::get('menu_repository')->findAll() as $menu)
+            Context::get('menu_repository')->deleteMenu($menu->getID());
 
-        foreach (Context::get('media')->findAll() as $media)
-            Context::get('media')->deleteMedia($media->getID());
+        foreach (Context::get('media_repository')->findAll() as $media)
+            Context::get('media_repository')->deleteMedia($media->getID());
 
-        foreach (Context::get('media_format')->findAll() as $mediaFormat)
-            Context::get('media_format')->deleteMediaFormat($mediaFormat->getID());
+        foreach (Context::get('media_format_repository')->findAll() as $mediaFormat)
+            Context::get('media_format_repository')->deleteMediaFormat($mediaFormat->getID());
     }
 }

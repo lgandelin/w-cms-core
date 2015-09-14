@@ -9,9 +9,9 @@ class UpdateThemeInteractor
 {
     public function updateTheme($themeID, DataStructure $themeStructure)
     {
-        $theme = Context::get('theme')->findByID($themeID);
+        $theme = Context::get('theme_repository')->findByID($themeID);
         $theme->setInfos($themeStructure);
 
-        Context::get('theme')->updateTheme($theme);
+        Context::get('theme_repository')->updateTheme($theme);
     }
 } 

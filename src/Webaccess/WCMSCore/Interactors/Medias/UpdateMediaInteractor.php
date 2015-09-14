@@ -13,7 +13,7 @@ class UpdateMediaInteractor extends GetMediaInteractor
             $media->setInfos($mediaStructure);
             $media->valid();
 
-            Context::get('media')->updateMedia($media);
+            Context::get('media_repository')->updateMedia($media);
         }
     }
 }

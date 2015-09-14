@@ -8,7 +8,7 @@ class GetArticleInteractor
 {
     public function getArticleByID($articleID, $structure = false)
     {
-        if (!$article = Context::get('article')->findByID($articleID)) {
+        if (!$article = Context::get('article_repository')->findByID($articleID)) {
             throw new \Exception('The article was not found');
         }
 

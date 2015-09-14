@@ -36,7 +36,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
 
         $this->interactor->run($blockID, $blockStructure);
 
-        $block = Context::get('block')->findByID($blockID);
+        $block = Context::get('block_repository')->findByID($blockID);
         $this->assertEquals('Block test updated', $block->getName());
     }
 
@@ -47,7 +47,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $block->setType('html');
         $block->setAreaID(null);
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 
     public function testUpdateMasterBlock()
@@ -56,27 +56,27 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $masterBlock->setIsMaster(true);
         $masterBlock->setName('Test block');
         $masterBlock->setAreaID(null);
-        Context::get('block')->createBlock($masterBlock);
+        Context::get('block_repository')->createBlock($masterBlock);
 
         $childBlock1 = new HTMLBlock();
         $childBlock1->setMasterBlockID($masterBlock->getID());
         $childBlock1->setName('Test block');
         $childBlock1->setAreaID(null);
-        Context::get('block')->createBlock($childBlock1);
+        Context::get('block_repository')->createBlock($childBlock1);
 
         $childBlock2 = new HTMLBlock();
         $childBlock2->setMasterBlockID($masterBlock->getID());
         $childBlock2->setName('Test block');
         $childBlock2->setAreaID(null);
-        Context::get('block')->createBlock($childBlock2);
+        Context::get('block_repository')->createBlock($childBlock2);
 
         $blockStructure = new DataStructure([
             'name' => 'Test block updated'
         ]);
         $this->interactor->run($masterBlock->getID(), $blockStructure);
 
-        $childBlock1 = Context::get('block')->findByID($childBlock1->getID());
-        $childBlock2 = Context::get('block')->findByID($childBlock2->getID());
+        $childBlock1 = Context::get('block_repository')->findByID($childBlock1->getID());
+        $childBlock2 = Context::get('block_repository')->findByID($childBlock2->getID());
 
         $this->assertEquals('Test block updated', $childBlock1->getName());
         $this->assertEquals('Test block updated', $childBlock2->getName());
@@ -86,14 +86,14 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
     {
         $block = new HTMLBlock();
         $block->setHTML('<h1>Hello World</h1>');
-        $blockID = Context::get('block')->createBlock($block);
+        $blockID = Context::get('block_repository')->createBlock($block);
 
         $blockStructure = new DataStructure([
            'html' => '<h1>Goodbye World</h1>'
         ]);
         $this->interactor->run($blockID, $blockStructure);
 
-        $blockUpdated = Context::get('block')->findByID($blockID);
+        $blockUpdated = Context::get('block_repository')->findByID($blockID);
         $this->assertEquals('<h1>Goodbye World</h1>', $blockUpdated->getHTML());
     }
 }

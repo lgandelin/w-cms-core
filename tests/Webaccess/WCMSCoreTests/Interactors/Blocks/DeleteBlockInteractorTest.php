@@ -24,11 +24,11 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
     public function testDelete()
     {
         $blockID = $this->createSampleBlock();
-        $this->assertEquals(1, sizeof(Context::get('block')->findAll()));
+        $this->assertEquals(1, sizeof(Context::get('block_repository')->findAll()));
 
         $this->interactor->run($blockID);
 
-        $this->assertEquals(0, sizeof(Context::get('block')->findAll()));
+        $this->assertEquals(0, sizeof(Context::get('block_repository')->findAll()));
     }
 
     private function createSampleBlock()
@@ -36,7 +36,7 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
         $block = new HTMLBlock();
         $block->setName('Block');
 
-        return Context::get('block')->createBlock($block);
+        return Context::get('block_repository')->createBlock($block);
     }
 
     public function testDeleteMasterBlock()
@@ -44,15 +44,15 @@ class DeleteBlockInteractorTest extends PHPUnit_Framework_TestCase
         $block = new HTMLBlock();
         $block->setName('Block');
         $block->setIsMaster(1);
-        Context::get('block')->createBlock($block);
+        Context::get('block_repository')->createBlock($block);
 
         $childBlock = new HTMLBlock();
         $childBlock->setName('Child block');
         $childBlock->setMasterBlockID(1);
-        Context::get('block')->createBlock($childBlock);
+        Context::get('block_repository')->createBlock($childBlock);
 
         $this->interactor->run(1);
 
-        $this->assertFalse(Context::get('block')->findByID(2));
+        $this->assertFalse(Context::get('block_repository')->findByID(2));
     }
 }

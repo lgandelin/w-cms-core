@@ -39,7 +39,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
 
         $this->interactor->run(1, $mediaStructureUpdated);
 
-        $media = Context::get('media')->findByID(1);
+        $media = Context::get('media_repository')->findByID(1);
 
         $this->assertEquals('/new/file_name/to/image', $media->getFileName());
     }
@@ -50,7 +50,7 @@ class UpdateMediaInteractorTest extends \PHPUnit_Framework_TestCase
         $media->setID($mediaID);
         $media->setName('Test media');
         $media->setFileName('/file_name/to/image');
-        Context::get('media')->createMedia($media);
+        Context::get('media_repository')->createMedia($media);
 
         return $media;
     }

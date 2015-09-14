@@ -16,13 +16,13 @@ class UpdateMenuInteractor extends GetMenuInteractor
                 throw new \Exception('There is already a menu with the same identifier');
             }
 
-            Context::get('menu')->updateMenu($menu);
+            Context::get('menu_repository')->updateMenu($menu);
         }
     }
 
     private function anotherMenuExistsWithSameIdentifier($menuID, $menuIdentifier)
     {
-        $existingMenu = Context::get('menu')->findByIdentifier($menuIdentifier);
+        $existingMenu = Context::get('menu_repository')->findByIdentifier($menuIdentifier);
 
         return ($existingMenu && $existingMenu->getID() != $menuID);
     }

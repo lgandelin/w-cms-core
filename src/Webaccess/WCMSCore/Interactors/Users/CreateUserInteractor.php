@@ -18,11 +18,11 @@ class CreateUserInteractor
             throw new \Exception('There is already a user with the same login');
         }
 
-        return Context::get('user')->createUser($user);
+        return Context::get('user_repository')->createUser($user);
     }
 
     private function anotherUserExistsWithSameLogin($userLogin)
     {
-        return Context::get('user')->findByLogin($userLogin);
+        return Context::get('user_repository')->findByLogin($userLogin);
     }
 }
