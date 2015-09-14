@@ -16,6 +16,7 @@ class BlockTypesFixtures {
             ['code' => 'article_list', 'name' => 'Block Article list', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.article_list', 'front_view' => 'blocks.standard.article_list', 'order' => 4],
             ['code' => 'media', 'name' => 'Block Media', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.media', 'front_view' => 'blocks.standard.media', 'order' => 5],
             ['code' => 'view', 'name' => 'Block View', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.view', 'front_view' => 'blocks.standard.view', 'order' => 6],
+            ['code' => 'controller', 'name' => 'Block Controller', 'content_view' => 'w-cms-laravel::back.editorial.pages.blocks.controller', 'front_view' => 'blocks.standard.controller', 'order' => 7],
         ];
 
         foreach ($blockTypes as $type) {
