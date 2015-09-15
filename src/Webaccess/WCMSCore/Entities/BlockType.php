@@ -7,6 +7,7 @@ class BlockType extends Entity
     private $ID;
     private $code;
     private $name;
+    private $entity;
     private $back_controller;
     private $back_view;
     private $front_view;
@@ -70,6 +71,16 @@ class BlockType extends Entity
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setEntity($entity)
+    {
+        $this->entity = $entity;
+    }
+
+    public function getEntity()
+    {
+        return $this->entity;
     }
 
     public function setOrder($order)
