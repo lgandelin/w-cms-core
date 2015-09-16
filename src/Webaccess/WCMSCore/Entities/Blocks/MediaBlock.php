@@ -40,19 +40,4 @@ class MediaBlock extends Block
     {
         return $this->mediaFormatID;
     }
-
-    public function getContentData()
-    {
-        if ($this->getMediaID()) {
-            $content = new \StdClass();
-            $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), $this->getMediaFormatID(), true);
-            $content->mediaLink = $this->getMediaLink();
-
-            return $content;
-        }
-
-        return null;
-    }
-
-
 }

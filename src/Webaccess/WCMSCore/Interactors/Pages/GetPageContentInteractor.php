@@ -17,12 +17,20 @@ class GetPageContentInteractor
 
             if ($areas) {
                 foreach ($areas as $area) {
-                    $area->blocks = (new GetBlocksInteractor())->getAllByAreaID(($structure ? $area->ID : $area->getID()), $structure);
+                    $blocks = (new GetBlocksInteractor())->getAllByAreaID(($structure ? $area->ID : $area->getID()), $structure);
+                    foreach ($blocks as $block) {
+                        if (isset($block->type->front_controller) && $block->type->front_controller) {
+                            $block->front_content = (new $block->type->front_controller)->index($block);
+                        }
+                    }
+                    $area->blocks = $blocks;
+
                     $page->areas[]= $area;
                 }
             }
         } catch(\Exception $e) {
-            $page = (new GetPageInteractor())->getPageByUri('/404', $structure);
+            dd($e->getMessage());
+            //$page = (new GetPageInteractor())->getPageByUri('/404', $structure);
         }
 
         return $page;

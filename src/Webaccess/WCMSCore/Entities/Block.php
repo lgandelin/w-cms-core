@@ -159,10 +159,6 @@ class Block extends Entity
         return $this->isGhost;
     }
 
-    public function getContentData() {
-
-    }
-
     public function valid()
     {
         if (!$this->getName()) {

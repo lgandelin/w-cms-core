@@ -42,20 +42,4 @@ class ArticleListBlock extends Block
     {
         return $this->article_list_order;
     }
-
-    public function getContentData()
-    {
-        $content = new \StdClass();
-        $content->articles = (new GetArticlesInteractor())->getAll($this->article_list_category_id, $this->article_list_number, $this->article_list_order, null, true);
-
-        foreach ($content->articles as $article) {
-            if ($article->pageID)
-                $article->page = (new GetPageInteractor())->getPageByID($article->pageID, true);
-
-            if ($article->mediaID)
-                $article->media = (new GetMediaInteractor())->getMediaByID($article->mediaID, null, true);
-        }
-
-        return $content;
-    }
 }

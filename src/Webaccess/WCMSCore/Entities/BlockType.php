@@ -10,6 +10,7 @@ class BlockType extends Entity
     private $entity;
     private $back_controller;
     private $back_view;
+    private $front_controller;
     private $front_view;
     private $order;
 
@@ -51,6 +52,16 @@ class BlockType extends Entity
     public function getBackView()
     {
         return $this->back_view;
+    }
+
+    public function setFrontController($front_controller)
+    {
+        $this->front_controller = $front_controller;
+    }
+
+    public function getFrontController()
+    {
+        return $this->front_controller;
     }
 
     public function setFrontView($front_view)

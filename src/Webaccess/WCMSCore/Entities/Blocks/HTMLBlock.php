@@ -17,12 +17,4 @@ class HTMLBlock extends Block
     {
         return $this->html;
     }
-
-    public function getContentData()
-    {
-        $content = new \StdClass();
-        $content->html = $this->html;
-
-        return $content;
-    }
 }
