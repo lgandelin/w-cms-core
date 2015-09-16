@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSCore\Entities\Blocks;
 
 use Webaccess\WCMSCore\Entities\Block;
-use Webaccess\WCMSCore\Interactors\Medias\GetMediaInteractor;
 
 class MediaBlock extends Block
 {
