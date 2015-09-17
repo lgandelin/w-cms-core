@@ -28,17 +28,4 @@ class ControllerBlock extends Block
     {
         return $this->method;
     }
-
-    public function getContentData()
-    {
-        if ($this->getClassPath() && $this->getMethod()) {
-            $class = $this->getClassPath();
-            $method = $this->getMethod();
-            $controller = new $class();
-
-            return $controller->$method();;
-        }
-
-        return null;
-    }
 }

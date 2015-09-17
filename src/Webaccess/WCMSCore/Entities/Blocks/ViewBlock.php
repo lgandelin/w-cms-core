@@ -17,16 +17,4 @@ class ViewBlock extends Block
     {
         return $this->viewPath;
     }
-
-    public function getContentData()
-    {
-        if ($this->getViewPath()) {
-            $content = new \StdClass();
-            $content->view_path = $this->getViewPath();
-
-            return $content;
-        }
-
-        return null;
-    }
 }

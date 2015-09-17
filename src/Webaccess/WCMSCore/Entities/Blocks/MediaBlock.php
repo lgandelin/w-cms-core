@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSCore\Entities\Blocks;
 
 use Webaccess\WCMSCore\Entities\Block;
-use Webaccess\WCMSCore\Interactors\Medias\GetMediaInteractor;
 
 class MediaBlock extends Block
 {
@@ -40,19 +39,4 @@ class MediaBlock extends Block
     {
         return $this->mediaFormatID;
     }
-
-    public function getContentData()
-    {
-        if ($this->getMediaID()) {
-            $content = new \StdClass();
-            $content->media = (new GetMediaInteractor())->getMediaByID($this->getMediaID(), $this->getMediaFormatID(), true);
-            $content->mediaLink = $this->getMediaLink();
-
-            return $content;
-        }
-
-        return null;
-    }
-
-
 }

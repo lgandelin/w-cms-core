@@ -34,7 +34,6 @@ class GetBlocksInteractor
             foreach ($blocks as $block) {
                 if ($block) {
                     $blockStructure = $block->toStructure();
-                    $blockStructure->content = $block->getContentData();
                     if (Context::get('block_type_repository')) {
                         $blockStructure->type = Context::get('block_type_repository')->getBlockTypeByCode($block->getType(), true);
                     }
