@@ -5,13 +5,15 @@ use Webaccess\WCMSCore\Entities\Theme;
 
 interface ThemeRepositoryInterface
 {
-    public function findSelectedThemeIdentifier();
+    public function findByID($themeID);
 
-    public function updateTheme(Theme $theme);
+    public function findByIdentifier($themeIdentifier);
+
+    public function findSelectedTheme();
+
+    public function findAll();
 
     public function createTheme(Theme $theme);
 
-    public function findByID($themeID);
-
-    public function findAll();
+    public function updateTheme(Theme $theme);
 }
