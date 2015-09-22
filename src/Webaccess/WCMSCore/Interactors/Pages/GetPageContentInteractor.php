@@ -29,8 +29,7 @@ class GetPageContentInteractor
                 }
             }
         } catch(\Exception $e) {
-            dd($e->getMessage());
-            //$page = (new GetPageInteractor())->getPageByUri('/404', $structure);
+            $page =  $this->run('/404', $structure);
         }
 
         return $page;

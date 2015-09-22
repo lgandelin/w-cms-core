@@ -11,4 +11,6 @@ interface BlockTypeRepositoryInterface
     public function findByCode($code);
 
     public function createBlockType(BlockType $blockType);
-} 
+
+    public function deleteBlockType($blockTypeID);
+}

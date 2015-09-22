@@ -20,7 +20,7 @@ class GetPageInteractor
         $page = ($langID) ? Context::get('page_repository')->findByUriAndLangID($pageURI, $langID) : Context::get('page_repository')->findByUri($pageURI);
 
         if (!$page) {
-            throw new \Exception('The page was not found');
+            throw new \Exception('The page was not found : ' . $pageURI);
         }
 
         return ($structure) ? $page->toStructure() : $page;
