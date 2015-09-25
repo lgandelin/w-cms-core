@@ -22,6 +22,7 @@ class CreateBlockTypeInteractor
 
     private function anotherBlockTypeExistsWithSameCode($code)
     {
-        return Context::get('block_type_repository')->findByCode($code);
+
+        return (new GetBlockTypeInteractor())->getBlockTypeByCode($code);
     }
 } 
