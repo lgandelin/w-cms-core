@@ -10,8 +10,7 @@ class CreateMenuInteractor
 {
     public function run(DataStructure $menuStructure)
     {
-        $menu = new Menu();
-        $menu->setInfos($menuStructure);
+        $menu = (new Menu())->setInfos($menuStructure);
         $menu->valid();
 
         if ($this->anotherExistingMenuWithSameIdentifier($menu->getIdentifier())) {

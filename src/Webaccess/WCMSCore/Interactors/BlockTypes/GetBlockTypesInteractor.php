@@ -15,13 +15,8 @@ class GetBlockTypesInteractor
 
     private function getBlockTypeStructures($blockTypes)
     {
-        $blockTypeStructures = [];
-        if (is_array($blockTypes) && sizeof($blockTypes) > 0) {
-            foreach ($blockTypes as $blockType) {
-                $blockTypeStructures[] = $blockType->toStructure();
-            }
-        }
-
-        return $blockTypeStructures;
+        return array_map(function($blockType) {
+            return $blockType->toStructure();
+        }, $blockTypes);
     }
 } 

@@ -29,13 +29,8 @@ class GetPagesInteractor
 
     private function getDataStructures($pages)
     {
-        $pageStructures = [];
-        if (is_array($pages) && sizeof($pages) > 0) {
-            foreach ($pages as $page) {
-                $pageStructures[] = $page->toStructure();
-            }
-        }
-
-        return $pageStructures;
+        return array_map(function($page) {
+            return $page->toStructure();
+        }, $pages);
     }
 }

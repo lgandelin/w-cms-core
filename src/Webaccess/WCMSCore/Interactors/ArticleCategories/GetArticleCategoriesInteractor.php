@@ -15,13 +15,8 @@ class GetArticleCategoriesInteractor
 
     private function getArticleCategoryStructures($articles)
     {
-        $articleStructures = [];
-        if (is_array($articles) && sizeof($articles) > 0) {
-            foreach ($articles as $article) {
-                $articleStructures[] = $article->toStructure();
-            }
-        }
-
-        return $articleStructures;
+        return array_map(function($article) {
+            return $article->toStructure();
+        }, $articles);
     }
 }

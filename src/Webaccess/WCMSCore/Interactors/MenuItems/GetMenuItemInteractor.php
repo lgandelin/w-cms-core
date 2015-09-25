@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSCore\Interactors\MenuItems;
 
 use Webaccess\WCMSCore\Context;
-use Webaccess\WCMSCore\Structures\MenuItemStructure;
 
 class GetMenuItemInteractor
 {

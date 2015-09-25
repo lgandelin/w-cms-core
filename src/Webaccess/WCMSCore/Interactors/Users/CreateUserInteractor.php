@@ -10,8 +10,7 @@ class CreateUserInteractor
 {
     public function run(DataStructure $userStructure)
     {
-        $user = new User();
-        $user->setInfos($userStructure);
+        $user = (new User())->setInfos($userStructure);
         $user->valid();
 
         if ($this->anotherUserExistsWithSameLogin($user->getLogin())) {

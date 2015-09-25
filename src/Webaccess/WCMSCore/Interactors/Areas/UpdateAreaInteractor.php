@@ -23,12 +23,8 @@ class UpdateAreaInteractor extends GetAreaInteractor
     private function updateChildAreas($areaID, DataStructure $areaStructure)
     {
         $areaStructure->is_master = 0;
-        $childAreas = (new GetAreasInteractor())->getChildAreas($areaID);
-
-        if (is_array($childAreas) && sizeof($childAreas) > 0) {
-            foreach ($childAreas as $child) {
-                $this->run($child->getID(), $areaStructure);
-            }
-        }
+        array_map(function($childArea) use ($areaStructure) {
+            $this->run($childArea->getID(), $areaStructure);
+        }, (new GetAreasInteractor())->getChildAreas($areaID));
     }
 }

@@ -11,8 +11,7 @@ class CreateMediaFormatInteractor extends Interactor
 {
     public function run(DataStructure $mediaFormatStructure)
     {
-        $mediaFormat = new MediaFormat();
-        $mediaFormat->setInfos($mediaFormatStructure);
+        $mediaFormat = (new MediaFormat())->setInfos($mediaFormatStructure);
         $mediaFormat->valid();
 
         return Context::get('media_format_repository')->createMediaFormat($mediaFormat);

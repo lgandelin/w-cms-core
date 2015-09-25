@@ -16,13 +16,8 @@ class GetMediasInteractor extends Interactor
 
     private function getDataStructures($medias)
     {
-        $mediaStructures = [];
-        if (is_array($medias) && sizeof($medias) > 0) {
-            foreach ($medias as $media) {
-                $mediaStructures[] = $media->toStructure();
-            }
-        }
-
-        return $mediaStructures;
+        return array_map(function($media) {
+            return $media->toStructure();
+        }, $medias);
     }
 }

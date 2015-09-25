@@ -10,8 +10,7 @@ class CreateThemeInteractor
 {
     public function run(DataStructure $themeStructure)
     {
-        $theme = new Theme();
-        $theme->setInfos($themeStructure);
+        $theme = (new Theme())->setInfos($themeStructure);
         $theme->valid();
 
         if ($this->anotherThemeExistsWithSameIdentifier($theme->getIdentifier())) {

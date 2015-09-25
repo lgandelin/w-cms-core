@@ -28,12 +28,8 @@ class UpdateBlockInteractor extends GetBlockInteractor
 
     private function updateChildBlocks(DataStructure $blockStructure, $blockID)
     {
-        $childBlocks = (new GetBlocksInteractor())->getChildBlocks($blockID);
-
-        if (is_array($childBlocks) && sizeof($childBlocks) > 0) {
-            foreach ($childBlocks as $child) {
-                $this->run($child->getID(), $blockStructure);
-            }
-        }
+        array_map(function($childBlock) use ($blockStructure) {
+            $this->run($childBlock->getID(), $blockStructure);
+        }, (new GetBlocksInteractor())->getChildBlocks($blockID));
     }
 }

@@ -10,8 +10,7 @@ class CreateBlockTypeInteractor
 {
     public function run(DataStructure $blockTypeStructure)
     {
-        $blockType = new BlockType();
-        $blockType->setInfos($blockTypeStructure);
+        $blockType = (new BlockType())->setInfos($blockTypeStructure);
 
         if ($this->anotherBlockTypeExistsWithSameCode($blockType->getCode())) {
             throw new \Exception('There is already a block type with the same code');

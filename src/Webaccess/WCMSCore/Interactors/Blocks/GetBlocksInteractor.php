@@ -30,17 +30,10 @@ class GetBlocksInteractor
 
     private function getDataStructures($blocks)
     {
-        $blockStructures = [];
-        if (is_array($blocks) && sizeof($blocks) > 0) {
-            foreach ($blocks as $block) {
-                if ($block) {
-                    $blockStructure = $block->toStructure();
-                    $blockStructure->type = (new GetBlockTypeInteractor())->getBlockTypeByCode($block->getType(), true);
-                    $blockStructures[]= $blockStructure;
-                }
-            }
-        }
-
-        return $blockStructures;
+        return array_map(function($block) {
+            $blockStructure = $block->toStructure();
+            $blockStructure->type = (new GetBlockTypeInteractor())->getBlockTypeByCode($block->getType(), true);
+            return $blockStructure;
+        }, $blocks);
     }
 }
