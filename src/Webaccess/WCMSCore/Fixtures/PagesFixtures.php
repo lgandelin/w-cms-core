@@ -18,7 +18,7 @@ class PagesFixtures {
     public static function run()
     {
         //Home page
-        $pageID = self::createPage('Home page', 'home', '/', 1);
+        $pageID = self::createPage('Home page', 'home', '/', 1, true, true);
         $area1ID = self::createArea('Header Area', 12, 1, 'header', 1, $pageID);
         $area2ID = self::createArea('Content Area', 12, 1, 'content', 1, $pageID);
         $menuID = self::createMenu('Main Menu', 'main-menu', 1, $pageID);
@@ -34,19 +34,21 @@ class PagesFixtures {
         self::createHTMLBlock('Logo', 3, 1, 'logo', 'left', 1, 'html', $area1ID, '<img src="http://web-access.fr/w-cms-logo.png" alt="logo" title="logo">');
 
         //404
-        $pageID = self::createPage('Page not found', '404', '/404', 1);
+        $pageID = self::createPage('Page not found', '404', '/404', 1, true, false);
         $area1ID = self::createArea('Content Area', 12, 1, 'content', 1, $pageID);
         self::createHTMLBlock('Page not found', 12, 1, '', 'left', 1, 'html', $area1ID, '<h1>Page not found</h1><p>Sorry but your page was not found. Please contact us if necessary.</p>');
         self::createHTMLBlock('Go back to home', 12, 1, '', 'left', 2, 'html', $area1ID, '<p style="text-align: center;"><a href="#">Go back to home page</a></p>');
     }
 
-    private static function createPage($name, $identifier, $uri, $langID)
+    private static function createPage($name, $identifier, $uri, $langID, $isVisible = true, $isIndexed = true)
     {
         $page = new Page();
         $page->setName($name);
         $page->setIdentifier($identifier);
         $page->setUri($uri);
         $page->setLangID($langID);
+        $page->setIsVisible($isVisible);
+        $page->setIsIndex($isIndexed);
 
         return Context::get('page_repository')->createPage($page);
     }
