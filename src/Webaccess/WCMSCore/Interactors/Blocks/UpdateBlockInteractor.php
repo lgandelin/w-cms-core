@@ -4,6 +4,7 @@ namespace Webaccess\WCMSCore\Interactors\Blocks;
 
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\Versions\UpdatePageVersionInteractor;
 
 class UpdateBlockInteractor extends GetBlockInteractor
 {
@@ -15,6 +16,8 @@ class UpdateBlockInteractor extends GetBlockInteractor
             if (!$block->getIsGhost()) {
                 $block->setInfos($blockStructure);
             }
+
+            $this->updatePageVersion($block->getID());
 
             if ($block->getIsMaster()) {
                 unset($blockStructure->area_id);
@@ -31,5 +34,10 @@ class UpdateBlockInteractor extends GetBlockInteractor
         array_map(function($childBlock) use ($blockStructure) {
             $this->run($childBlock->getID(), $blockStructure);
         }, (new GetBlocksInteractor())->getChildBlocks($blockID));
+    }
+
+    private function updatePageVersion($blockID)
+    {
+        (new UpdatePageVersionInteractor())->runAfterBlockModification($blockID);
     }
 }

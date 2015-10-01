@@ -6,6 +6,7 @@ use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Entities\Area;
 use Webaccess\WCMSCore\Interactors\Pages\GetPagesInteractor;
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\Versions\UpdatePageVersionInteractor;
 
 class CreateAreaInteractor
 {
@@ -15,6 +16,8 @@ class CreateAreaInteractor
         $area->valid();
 
         $areaID = Context::get('area_repository')->createArea($area);
+
+        $this->updatePageVersion($area->getID());
 
         if ($area->getIsMaster()) {
             $this->createAreaInChildPages($areaStructure, $areaID, $area->getPageID());
@@ -37,5 +40,10 @@ class CreateAreaInteractor
             ]);
             $this->run($areaStructure);
         }, (new GetPagesInteractor())->getChildPages($pageID));
+    }
+
+    private function updatePageVersion($areaID)
+    {
+        (new UpdatePageVersionInteractor())->runAfterAreaModification($areaID);
     }
 }

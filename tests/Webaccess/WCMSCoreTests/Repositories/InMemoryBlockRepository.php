@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSCoreTests\Repositories;
 
 use Webaccess\WCMSCore\Entities\Block;
-use Webaccess\WCMSCore\Entities\Blocks\ArticleBlock;
 use Webaccess\WCMSCore\Repositories\BlockRepositoryInterface;
 
 class InMemoryBlockRepository implements BlockRepositoryInterface
@@ -64,10 +63,6 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
                 $blockModel->setDisplay($block->getDisplay());
                 $blockModel->setType($block->getType());
                 $blockModel->setIsMaster($block->getIsMaster());
-
-                if ($block instanceof ArticleBlock) {
-                    $blockModel->setArticleID($block->getArticleID());
-                }
             }
         }
     }
