@@ -11,7 +11,7 @@ class GetPageContentInteractor
     public function run($uri, $structure = false)
     {
         $lang = (new GetLangInteractor())->getLangFromURI($uri, $structure);
-        //try {
+        try {
             $page = (new GetPageInteractor())->getPageByUri($uri, ($structure ? $lang->ID : $lang->getID()), $structure);
 
             if ($page->is_visible !== false) {
@@ -33,9 +33,9 @@ class GetPageContentInteractor
             } else {
                 $page =  $this->run('/404', $structure);
             }
-        /*} catch(\Exception $e) {
+        } catch(\Exception $e) {
             $page =  $this->run('/404', $structure);
-        }*/
+        }
 
         return $page;
     }
