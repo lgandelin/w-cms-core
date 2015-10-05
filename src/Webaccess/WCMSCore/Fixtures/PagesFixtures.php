@@ -48,7 +48,7 @@ class PagesFixtures {
         $page->setUri($uri);
         $page->setLangID($langID);
         $page->setIsVisible($isVisible);
-        $page->setIsIndex($isIndexed);
+        $page->setIsIndexed($isIndexed);
 
         return Context::get('page_repository')->createPage($page);
     }
