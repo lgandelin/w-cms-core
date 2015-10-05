@@ -25,8 +25,8 @@ class CreateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
             'area_id' => $areaID
         ]);
         $this->interactor->run($blockStructure);
-        $page = Context::get('page_repository')->findByID($pageID);
 
+        $page = Context::get('page_repository')->findByID($pageID);
         $this->assertEquals(2, $page->getDraftVersionNumber());
     }
 

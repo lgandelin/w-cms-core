@@ -179,4 +179,9 @@ class Page extends Entity
 
         return true;
     }
+
+    public function isNewVersionNeeded()
+    {
+        return $this->getVersionNumber() == $this->getDraftVersionNumber();
+    }
 }

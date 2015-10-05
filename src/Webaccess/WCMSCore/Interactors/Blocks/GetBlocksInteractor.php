@@ -14,6 +14,13 @@ class GetBlocksInteractor
         return ($structure) ? $this->getDataStructures($blocks) : $blocks;
     }
 
+    public function getAllByAreaIDAndVersionNumber($areaID, $versionNumber, $structure = false)
+    {
+        $blocks = Context::get('block_repository')->findByAreaIDAndVersionNumber($areaID, $versionNumber);
+
+        return ($structure) ? $this->getDataStructures($blocks) : $blocks;
+    }
+
     public function getGlobalBlocks($structure = false)
     {
         $blocks = Context::get('block_repository')->findGlobalBlocks();

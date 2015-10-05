@@ -10,6 +10,8 @@ interface BlockRepositoryInterface
 
     public function findByAreaID($areaID);
 
+    public function findByAreaIDAndVersionNumber($areaID, $versionNumber);
+
     public function findGlobalBlocks();
 
     public function findChildBlocks($blockID);

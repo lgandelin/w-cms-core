@@ -3,6 +3,8 @@
 namespace Webaccess\WCMSCore\Interactors\Pages;
 
 use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreaInteractor;
+use Webaccess\WCMSCore\Interactors\Blocks\GetBlockInteractor;
 
 class GetPageInteractor
 {
@@ -24,5 +26,29 @@ class GetPageInteractor
         }
 
         return ($structure) ? $page->toStructure() : $page;
+    }
+
+    public function getPageFromAreaID($areaID)
+    {
+        if ($area = (new GetAreaInteractor())->getAreaByID($areaID)) {
+            if ($area->getPageID() != null && $page = (new GetPageInteractor())->getPageByID($area->getPageID())) {
+                return $page;
+            }
+        }
+
+        return false;
+    }
+
+    public function getPageFromBlockID($blockID)
+    {
+        if ($block = (new GetBlockInteractor())->getBlockByID($blockID)) {
+            if ($block->getAreaID() != null && $area = (new GetAreaInteractor())->getAreaByID($block->getAreaID())) {
+                if ($area->getPageID() != null && $page = (new GetPageInteractor())->getPageByID($area->getPageID())) {
+                    return $page;
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -42,6 +42,18 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
         return $blocks;
     }
 
+    public function findByAreaIDAndVersionNumber($areaID, $versionNumber)
+    {
+        $blocks = array();
+        foreach ($this->blocks as $block) {
+            if ($block->getAreaID() == $areaID && $block->getVersionNumber() == $versionNumber) {
+                $blocks[]= $block;
+            }
+        }
+
+        return $blocks;
+    }
+
     public function createBlock(Block $block)
     {
         $blockID = sizeof($this->blocks) + 1;
@@ -63,6 +75,7 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
                 $blockModel->setDisplay($block->getDisplay());
                 $blockModel->setType($block->getType());
                 $blockModel->setIsMaster($block->getIsMaster());
+                $blockModel->setVersionNumber($block->getVersionNumber());
             }
         }
     }
