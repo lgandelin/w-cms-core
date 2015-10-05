@@ -20,12 +20,8 @@ class DeleteBlockInteractor extends GetBlockInteractor
 
     private function deleteChildBlocks($blockID)
     {
-        $childBlocks = (new GetBlocksInteractor())->getChildBlocks($blockID);
-
-        if (is_array($childBlocks) && sizeof($childBlocks) > 0) {
-            foreach ($childBlocks as $childBlock) {
-                Context::get('block_repository')->deleteBlock($childBlock->getID());
-            }
-        }
+        array_map(function($childBlock) {
+            Context::get('block_repository')->deleteBlock($childBlock->getID());
+        }, (new GetBlocksInteractor())->getChildBlocks($blockID));
     }
 }

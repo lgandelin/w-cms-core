@@ -10,8 +10,7 @@ class CreateArticleCategoryInteractor
 {
     public function run(DataStructure $articleCategoryStructure)
     {
-        $articleCategory = new ArticleCategory();
-        $articleCategory->setInfos($articleCategoryStructure);
+        $articleCategory = (new ArticleCategory())->setInfos($articleCategoryStructure);
         $articleCategory->valid();
 
         return Context::get('article_category_repository')->createArticleCategory($articleCategory);

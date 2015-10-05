@@ -15,14 +15,9 @@ class GetAreasInteractor
 
     private function getDataStructures($areas)
     {
-        $areaStructures = [];
-        if (is_array($areas) && sizeof($areas) > 0) {
-            foreach ($areas as $area) {
-                $areaStructures[] = $area->toStructure();
-            }
-        }
-
-        return $areaStructures;
+        return array_map(function($area) {
+            return $area->toStructure();
+        }, $areas);
     }
 
     public function getChildAreas($masterAreaID, $structure = false)

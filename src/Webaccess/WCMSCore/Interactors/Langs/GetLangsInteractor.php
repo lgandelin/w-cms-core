@@ -15,13 +15,8 @@ class GetLangsInteractor
 
     private function getDataStructures($langs)
     {
-        $langStructures = [];
-        if (is_array($langs) && sizeof($langs) > 0) {
-            foreach ($langs as $lang) {
-                $langStructures[] = $lang->toStructure();
-            }
-        }
-
-        return $langStructures;
+        return array_map(function($lang) {
+            return $lang->toStructure();
+        }, $langs);
     }
 }

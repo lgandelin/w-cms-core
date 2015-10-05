@@ -121,6 +121,10 @@ class Area extends Entity
             throw new \InvalidArgumentException('You must provide a name for an area');
         }
 
+        if (!$this->getWidth()) {
+            $this->setWidth(12);
+        }
+
         return true;
     }
 }

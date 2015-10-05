@@ -8,6 +8,7 @@ class MediaFormat extends Entity
     private $name;
     private $width;
     private $height;
+    private $preserveRatio;
 
     public function setID($ID)
     {
@@ -47,6 +48,16 @@ class MediaFormat extends Entity
     public function getWidth()
     {
         return $this->width;
+    }
+
+    public function setPreserveRatio($preserveRatio)
+    {
+        $this->preserveRatio = $preserveRatio;
+    }
+
+    public function getPreserveRatio()
+    {
+        return $this->preserveRatio;
     }
 
     public function valid()

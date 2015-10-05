@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSCore\Interactors\MenuItems;
 
 use Webaccess\WCMSCore\Context;
-use Webaccess\WCMSCore\Structures\MenuItemStructure;
 
 class GetMenuItemsInteractor
 {
@@ -16,13 +15,8 @@ class GetMenuItemsInteractor
 
     private function getMenuItemStructures($menuItems)
     {
-        $menuItemStructures = [];
-        if (is_array($menuItems) && sizeof($menuItems) > 0) {
-            foreach ($menuItems as $menuItem) {
-                $menuItemStructures[] = $menuItem->toStructure();
-            }
-        }
-
-        return $menuItemStructures;
+        return array_map(function($menuItem) {
+            return $menuItem->toStructure();
+        }, $menuItems);
     }
 }

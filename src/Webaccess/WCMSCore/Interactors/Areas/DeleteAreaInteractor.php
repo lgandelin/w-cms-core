@@ -27,23 +27,15 @@ class DeleteAreaInteractor extends GetAreaInteractor
 
     private function deleteBlocks($areaID)
     {
-        $blocks = (new GetBlocksInteractor())->getAllByAreaID($areaID);
-
-        if (is_array($blocks) && sizeof($blocks) > 0) {
-            foreach ($blocks as $block) {
-                (new DeleteBlockInteractor())->run($block->getID());
-            }
-        }
+        array_map(function($block) {
+            (new DeleteBlockInteractor())->run($block->getID());
+        }, (new GetBlocksInteractor())->getAllByAreaID($areaID));
     }
 
     private function deleteChildAreas($areaID)
     {
-        $childAreas = (new GetAreasInteractor())->getChildAreas($areaID);
-
-        if (is_array($childAreas) && sizeof($childAreas) > 0) {
-            foreach ($childAreas as $childArea) {
-                $this->run($childArea->getID());
-            }
-        }
+        array_map(function($childArea) {
+            $this->run($childArea->getID());
+        }, (new GetAreasInteractor())->getChildAreas($areaID));
     }
 }

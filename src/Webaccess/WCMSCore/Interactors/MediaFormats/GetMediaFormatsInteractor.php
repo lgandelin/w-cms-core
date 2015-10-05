@@ -16,13 +16,8 @@ class GetMediaFormatsInteractor extends Interactor
 
     private function getDataStructures($mediaFormats)
     {
-        $mediaFormatStructures = [];
-        if (is_array($mediaFormats) && sizeof($mediaFormats) > 0) {
-            foreach ($mediaFormats as $mediaFormat) {
-                $mediaFormatStructures[] = $mediaFormat->toStructure();
-            }
-        }
-
-        return $mediaFormatStructures;
+        return array_map(function($mediaFormat) {
+            return $mediaFormat->toStructure();
+        }, $mediaFormats);
     }
 }

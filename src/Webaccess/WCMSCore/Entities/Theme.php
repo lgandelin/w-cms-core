@@ -37,4 +37,9 @@ class Theme extends Entity
     {
         return $this->identifier;
     }
+
+    public function valid()
+    {
+        return true;
+    }
 }

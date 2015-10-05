@@ -11,8 +11,7 @@ class CreateBlockInteractor
 {
     public function run(DataStructure $blockStructure)
     {
-        $block = new Block();
-        $block->setInfos($blockStructure);
+        $block = (new Block())->setInfos($blockStructure);
         $block->valid();
 
         $blockID = Context::get('block_repository')->createBlock($block);
@@ -26,16 +25,12 @@ class CreateBlockInteractor
 
     private function createBlockInChildAreas($blockStructure, $blockID, $areaID)
     {
-        $childAreas = (new GetAreasInteractor())->getChildAreas($areaID);
+        array_map(function($childArea) use ($blockStructure, $blockID) {
+            $childDataStructure = clone $blockStructure;
+            $childDataStructure->area_id = $childArea->getID();
+            $childDataStructure->master_block_id = $blockID;
 
-        if (is_array($childAreas) && sizeof($childAreas) > 0) {
-            foreach ($childAreas as $childArea) {
-                $childDataStructure = clone $blockStructure;
-                $childDataStructure->area_id = $childArea->getID();
-                $childDataStructure->master_block_id = $blockID;
-
-                $this->run($childDataStructure);
-            }
-        }
+            $this->run($childDataStructure);
+        }, (new GetAreasInteractor())->getChildAreas($areaID));
     }
 }

@@ -15,14 +15,9 @@ class GetArticlesInteractor
 
     private function getArticleStructures($articles)
     {
-        $articleStructures = [];
-        if (is_array($articles) && sizeof($articles) > 0) {
-            foreach ($articles as $article) {
-                $articleStructures[] = $article->toStructure();
-            }
-        }
-
-        return $articleStructures;
+        return array_map(function($article) {
+            return $article->toStructure();
+        }, $articles);
     }
 
     public function getByAssociatedPageID($pageID, $structure = false)

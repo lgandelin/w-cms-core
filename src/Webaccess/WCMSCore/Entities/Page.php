@@ -12,6 +12,8 @@ class Page extends Entity
     private $meta_title;
     private $meta_description;
     private $meta_keywords;
+    private $is_visible;
+    private $is_indexed;
     private $is_master;
     private $master_page_id;
 
@@ -93,6 +95,26 @@ class Page extends Entity
     public function getMetaKeywords()
     {
         return $this->meta_keywords;
+    }
+
+    public function setIsIndexed($is_indexed)
+    {
+        $this->is_indexed = $is_indexed;
+    }
+
+    public function setIsVisible($is_visible)
+    {
+        $this->is_visible = $is_visible;
+    }
+
+    public function getIsVisible()
+    {
+        return $this->is_visible;
+    }
+
+    public function getIsIndexed()
+    {
+        return $this->is_indexed;
     }
 
     public function setIsMaster($is_master)

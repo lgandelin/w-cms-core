@@ -164,5 +164,9 @@ class Block extends Entity
         if (!$this->getName()) {
             throw new \InvalidArgumentException('You must provide a name for a block');
         }
+
+        if (!$this->getWidth()) {
+            $this->setWidth(12);
+        }
     }
 }

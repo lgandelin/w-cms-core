@@ -15,13 +15,8 @@ class GetMenusInteractor
 
     private function getMenuStructures($menus)
     {
-        $menuStructures = [];
-        if (is_array($menus) && sizeof($menus) > 0) {
-            foreach ($menus as $menu) {
-                $menuStructures[] = $menu->toStructure();
-            }
-        }
-
-        return $menuStructures;
+        return array_map(function($menu) {
+            return $menu->toStructure();
+        }, $menus);
     }
 }

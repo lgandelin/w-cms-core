@@ -10,8 +10,7 @@ class CreateMenuItemInteractor
 {
     public function run(DataStructure $menuItemStructure)
     {
-        $menuItem = new MenuItem();
-        $menuItem->setInfos($menuItemStructure);
+        $menuItem = (new MenuItem())->setInfos($menuItemStructure);
         $menuItem->valid();
 
         return Context::get('menu_item_repository')->createMenuItem($menuItem);

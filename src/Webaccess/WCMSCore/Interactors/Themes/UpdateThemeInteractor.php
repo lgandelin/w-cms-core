@@ -7,7 +7,7 @@ use Webaccess\WCMSCore\DataStructure;
 
 class UpdateThemeInteractor
 {
-    public function updateTheme($themeID, DataStructure $themeStructure)
+    public function run($themeID, DataStructure $themeStructure)
     {
         $theme = Context::get('theme_repository')->findByID($themeID);
         $theme->setInfos($themeStructure);

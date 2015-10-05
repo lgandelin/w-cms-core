@@ -13,24 +13,28 @@ class GetPageContentInteractor
         $lang = (new GetLangInteractor())->getLangFromURI($uri, $structure);
         try {
             $page = (new GetPageInteractor())->getPageByUri($uri, ($structure ? $lang->ID : $lang->getID()), $structure);
-            $areas = (new GetAreasInteractor())->getAll(($structure ? $page->ID : $page->getID()), $structure);
 
-            if ($areas) {
-                foreach ($areas as $area) {
-                    $blocks = (new GetBlocksInteractor())->getAllByAreaID(($structure ? $area->ID : $area->getID()), $structure);
-                    foreach ($blocks as $block) {
-                        if (isset($block->type->front_controller) && $block->type->front_controller) {
-                            $block->front_content = (new $block->type->front_controller)->index($block);
+            if ($page->is_visible !== false) {
+                $areas = (new GetAreasInteractor())->getAll(($structure ? $page->ID : $page->getID()), $structure);
+
+                if ($areas) {
+                    foreach ($areas as $area) {
+                        $blocks = (new GetBlocksInteractor())->getAllByAreaID(($structure ? $area->ID : $area->getID()), $structure);
+                        foreach ($blocks as $block) {
+                            if (isset($block->type->front_controller) && $block->type->front_controller) {
+                                $block->front_content = (new $block->type->front_controller)->index($block);
+                            }
                         }
-                    }
-                    $area->blocks = $blocks;
+                        $area->blocks = $blocks;
 
-                    $page->areas[]= $area;
+                        $page->areas[]= $area;
+                    }
                 }
+            } else {
+                $page =  $this->run('/404', $structure);
             }
         } catch(\Exception $e) {
-            dd($e->getMessage());
-            //$page = (new GetPageInteractor())->getPageByUri('/404', $structure);
+            $page =  $this->run('/404', $structure);
         }
 
         return $page;

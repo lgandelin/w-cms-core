@@ -10,8 +10,7 @@ class CreateLangInteractor
 {
     public function run(DataStructure $langStructure)
     {
-        $lang = new Lang();
-        $lang->setInfos($langStructure);
+        $lang = (new Lang())->setInfos($langStructure);
         $lang->valid();
 
         return Context::get('lang_repository')->createLang($lang);

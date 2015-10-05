@@ -2,21 +2,15 @@
 
 namespace Webaccess\WCMSCore\Interactors\Themes;
 
-use Webaccess\WCMSCore\Context;
-
-class SelectThemeInteractor
+class SelectThemeInteractor extends GetThemeInteractor
 {
     public function run($themeIdentifier)
     {
-        $themes = Context::get('theme_repository')->findAll();
-
-        foreach ($themes as $theme) {
-            if ($theme->getIdentifier() == $themeIdentifier) {
-                $theme->setIsSelected(true);
-            } else {
-                $theme->setIsSelected(false);
-            }
-            (new UpdateThemeInteractor())->updateTheme($theme->getID(), $theme->toStructure());
+        if ($theme = $this->getThemeByIdentifier($themeIdentifier)) {
+            $theme->setIsSelected(true);
+            (new UpdateThemeInteractor())->run($theme->getID(), $theme->toStructure());
+        } else {
+            throw new \Exception('Theme not found : ' . $themeIdentifier);
         }
     }
 } 

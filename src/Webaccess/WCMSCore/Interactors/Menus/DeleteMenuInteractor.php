@@ -18,10 +18,8 @@ class DeleteMenuInteractor extends GetMenuInteractor
 
     private function deleteMenuItems($menuID)
     {
-        $menuItems = (new GetMenuItemsInteractor())->getAll($menuID);
-
-        foreach ($menuItems as $menuItem) {
+        array_map(function($menuItem) {
             (new DeleteMenuItemInteractor())->run($menuItem->getID());
-        }
+        }, (new GetMenuItemsInteractor())->getAll($menuID));
     }
 }

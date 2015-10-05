@@ -10,8 +10,7 @@ class CreatePageInteractor
 {
     public function run(DataStructure $pageStructure)
     {
-        $page = new Page();
-        $page->setInfos($pageStructure);
+        $page = (new Page())->setInfos($pageStructure);
         $page->valid();
 
         if ($this->anotherExistingPageWithSameUri($page->getUri())) {
