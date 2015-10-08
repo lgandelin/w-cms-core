@@ -13,6 +13,13 @@ class GetAreasInteractor
         return ($structure) ? $this->getDataStructures($areas) : $areas;
     }
 
+    public function getByPageIDAndVersionNumber($pageID, $versionNumber, $structure = false)
+    {
+        $areas = Context::get('area_repository')->findByPageIDAndVersionNumber($pageID, $versionNumber);
+
+        return ($structure) ? $this->getDataStructures($areas) : $areas;
+    }
+
     private function getDataStructures($areas)
     {
         return array_map(function($area) {

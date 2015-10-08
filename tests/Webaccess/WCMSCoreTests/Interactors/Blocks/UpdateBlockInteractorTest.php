@@ -26,7 +26,7 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
         $this->interactor->run(1, $blockStructure);
     }
 
-    public function testUpdate()
+    /*public function testUpdate()
     {
         $blockID = $this->createSampleBlock();
 
@@ -95,5 +95,5 @@ class UpdateBlockInteractorTest extends PHPUnit_Framework_TestCase
 
         $blockUpdated = Context::get('block_repository')->findByID($blockID);
         $this->assertEquals('<h1>Goodbye World</h1>', $blockUpdated->getHTML());
-    }
+    }*/
 }

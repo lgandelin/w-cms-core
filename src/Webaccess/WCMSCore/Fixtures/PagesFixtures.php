@@ -49,6 +49,8 @@ class PagesFixtures {
         $page->setLangID($langID);
         $page->setIsVisible($isVisible);
         $page->setIsIndexed($isIndexed);
+        $page->setVersionNumber(1);
+        $page->setDraftVersionNumber(1);
 
         return Context::get('page_repository')->createPage($page);
     }
@@ -63,6 +65,7 @@ class PagesFixtures {
         $area->setOrder($order);
         $area->setDisplay(1);
         $area->setPageID($pageID);
+        $area->setVersionNumber(1);
 
         return Context::get('area_repository')->createArea($area);
     }
@@ -79,6 +82,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setHTML($html);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }
@@ -96,6 +100,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setViewPath($viewPath);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }
@@ -135,6 +140,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setMenuID($menuID);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }
@@ -164,6 +170,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setArticleID($articleID);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }

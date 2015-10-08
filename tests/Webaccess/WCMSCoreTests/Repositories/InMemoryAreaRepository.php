@@ -53,6 +53,18 @@ class InMemoryAreaRepository implements AreaRepositoryInterface
         return $areas;
     }
 
+    public function findByPageIDAndVersionNumber($pageID, $versionNumber)
+    {
+        $areas = array();
+        foreach ($this->areas as $area) {
+            if ($area->getPageID() == $pageID && $area->getVersionNumber() == $versionNumber) {
+                $areas[]= $area;
+            }
+        }
+
+        return $areas;
+    }
+
     public function createArea(Area $area)
     {
         $areaID = sizeof($this->areas) + 1;

@@ -34,7 +34,6 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $page->getDraftVersionNumber());
 
         //Check that the blocks have been duplicated
-
         $blocksPreviousVersion = (new GetBlocksInteractor())->getAllByAreaIDAndVersionNumber(1, 1);
         $blocksNewVersion = (new GetBlocksInteractor())->getAllByAreaIDAndVersionNumber(1, 2);
 
