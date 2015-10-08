@@ -15,7 +15,7 @@ class GetPageContentInteractor
             $page = (new GetPageInteractor())->getPageByUri($uri, ($structure ? $lang->ID : $lang->getID()), $structure);
 
             if ($page->is_visible !== false) {
-                $areas = (new GetAreasInteractor())->getAll(($structure ? $page->ID : $page->getID()), $structure);
+                $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber(($structure ? $page->ID : $page->getID()), $page->draft_version_number, $structure);
 
                 if ($areas) {
                     foreach ($areas as $area) {
