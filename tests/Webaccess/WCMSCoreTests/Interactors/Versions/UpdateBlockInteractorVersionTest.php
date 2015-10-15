@@ -5,6 +5,7 @@ use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSCore\Entities\Area;
 use Webaccess\WCMSCore\Entities\Blocks\HTMLBlock;
 use Webaccess\WCMSCore\Entities\Page;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockInteractor;
 
@@ -23,7 +24,8 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         list($pageID, $areaID, $blockID) = $this->createSamplePage();
 
         $blockStructure = new DataStructure([
-            'name' => 'Block updated'
+            'name' => 'Block updated',
+            'html' => '<p>Hello World updated</p>'
         ]);
         $this->interactor->run($blockID, $blockStructure);
 
@@ -33,12 +35,16 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $page->getVersionNumber());
         $this->assertEquals(2, $page->getDraftVersionNumber());
 
-        //Check that the blocks have been duplicated
-        $blocksPreviousVersion = (new GetBlocksInteractor())->getAllByAreaIDAndVersionNumber(1, 1);
-        $blocksNewVersion = (new GetBlocksInteractor())->getAllByAreaIDAndVersionNumber(1, 2);
+        //Check that the areas have been duplicated
+        $areasNewVersion = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, 2);
+        $this->assertEquals($areasNewVersion[0]->getVersionNumber(), 2);
+        $this->assertEquals($areasNewVersion[0]->getID(), 2);
+        $blocksNewVersion = (new GetBlocksInteractor())->getAllByAreaIDAndVersionNumber(2, 2);
 
-        $this->assertEquals('Block', $blocksPreviousVersion[0]->getName());
+        //Check that the blocks have been duplicated
+        $this->assertEquals($blocksNewVersion[0]->getVersionNumber(), 2);
         $this->assertEquals('Block updated', $blocksNewVersion[0]->getName());
+        $this->assertEquals('<p>Hello World updated</p>', $blocksNewVersion[0]->getHTML());
     }
 
     public function testMultipleBlockUpdates()
@@ -79,10 +85,16 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         $block = new HTMLBlock();
         $block->setName('Block');
         $block->setType('html');
+        $block->setHTML('<p>Hello World</p>');
         $block->setAreaID($areaID);
         $block->setVersionNumber(1);
         $blockID = Context::get('block_repository')->createBlock($block);
 
         return array($pageID, $areaID, $blockID);
+    }
+
+    public function testNothing()
+    {
+        $this->assertEquals(true, true);
     }
 } 

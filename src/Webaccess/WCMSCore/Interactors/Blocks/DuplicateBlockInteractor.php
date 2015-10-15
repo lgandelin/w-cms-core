@@ -2,17 +2,17 @@
 
 namespace Webaccess\WCMSCore\Interactors\Blocks;
 
-use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Context;
+use Webaccess\WCMSCore\Entities\Block;
 
 class DuplicateBlockInteractor
 {
-    public function run(DataStructure $blockStructure, $newAreaID)
+    public function run(Block $block, $newAreaID)
     {
-        $blockStructure->ID = null;
-        $blockStructure->area_id = $newAreaID;
+        $block->setID(null);
+        $block->setAreaID($newAreaID);
 
-        $blockID = (new CreateBlockInteractor())->run($blockStructure);
-        (new UpdateBlockInteractor())->run($blockID, $blockStructure);
+        $blockID = Context::get('block_repository')->duplicateBlock($block);
 
         return $blockID;
     }

@@ -20,17 +20,29 @@ class UpdateBlockInteractor extends GetBlockInteractor
                     $newPageVersion = $page->getDraftVersionNumber() + 1;
                     $this->updatePageVersion($page, $newPageVersion);
 
-                    array_map(function($area) use ($newPageVersion, $pageID) {
+                    array_map(function($area) use ($newPageVersion, $pageID, $blockStructure, $blockID) {
                         $newAreaStructure = $area->toStructure();
                         $newAreaStructure->version_number = $newPageVersion;
-                        $areaID = (new DuplicateAreaInteractor())->run($newAreaStructure, $pageID);
+                        $newAreaID = (new DuplicateAreaInteractor())->run($newAreaStructure, $pageID);
 
-                        array_map(function($block2) use ($newPageVersion, $areaID) {
-                            $newBlockStructure = $block2->toStructure();
-                            $newBlockStructure->version_number = $newPageVersion;
-                            $newBlockStructure->area_id = $areaID;
-                            (new DuplicateBlockInteractor())->run($newBlockStructure, $areaID);
-                        }, (new GetBlocksInteractor())->getAllByAreaID($area->getID()));
+                        $blocks =  (new GetBlocksInteractor())->getAllByAreaID($area->getID());
+
+                        foreach ($blocks as $block) {
+                            $block->setVersionNumber($newPageVersion);
+                            $newBlockID = (new DuplicateBlockInteractor())->run(clone $block, $newAreaID);
+
+                            //Update block
+                            if ($block->getID() == $blockID) {
+                                $newBlock = (new GetBlockInteractor())->getBlockByID($newBlockID);
+                                $newBlock->setInfos($blockStructure);
+                                $newBlock->setID($newBlockID);
+                                $newBlock->setVersionNumber($newPageVersion);
+                                $newBlock->setAreaID($newAreaID);
+
+                                Context::get('block_repository')->updateBlock($newBlock);
+                            }
+                        }
+
                     }, (new GetAreasInteractor())->getByPageIDAndVersionNumber($page->getID(), $page->getVersionNumber()));
                 } else {
                     $this->updateExistingBlockVersion($blockStructure, $block);

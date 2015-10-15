@@ -22,5 +22,7 @@ interface BlockRepositoryInterface
 
     public function updateBlock(Block $block);
 
+    public function duplicateBlock(Block $block);
+
     public function deleteBlock($blockID);
 }

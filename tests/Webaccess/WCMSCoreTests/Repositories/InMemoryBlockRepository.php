@@ -80,6 +80,15 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
         }
     }
 
+    public function duplicateBlock(Block $block)
+    {
+        $blockID = sizeof($this->blocks) + 1;
+        $block->setID($blockID);
+        $this->blocks[]= $block;
+
+        return $blockID;
+    }
+
     public function updateBlockType(Block $block)
     {
         foreach ($this->blocks as $blockModel) {
