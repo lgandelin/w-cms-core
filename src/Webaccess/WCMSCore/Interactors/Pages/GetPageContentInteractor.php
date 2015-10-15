@@ -8,14 +8,13 @@ use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
 
 class GetPageContentInteractor
 {
-    public function run($uri, $structure = false)
+    public function run($uri, $version_number = false, $structure = false)
     {
         $lang = (new GetLangInteractor())->getLangFromURI($uri, $structure);
         try {
             $page = (new GetPageInteractor())->getPageByUri($uri, ($structure ? $lang->ID : $lang->getID()), $structure);
-
             if ($page->is_visible !== false) {
-                $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber(($structure ? $page->ID : $page->getID()), $page->version_number, $structure);
+                $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber(($structure ? $page->ID : $page->getID()), ($version_number ? $version_number : $page->version_number), $structure);
 
                 if ($areas) {
                     foreach ($areas as $area) {
@@ -31,10 +30,10 @@ class GetPageContentInteractor
                     }
                 }
             } else {
-                $page =  $this->run('/404', $structure);
+                $page =  $this->run('/404', false, $structure);
             }
         } catch(\Exception $e) {
-            $page =  $this->run('/404', $structure);
+            $page =  $this->run('/404', false, $structure);
         }
 
         return $page;
