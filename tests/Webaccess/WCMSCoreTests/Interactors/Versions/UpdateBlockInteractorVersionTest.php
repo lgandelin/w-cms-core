@@ -20,7 +20,6 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateBlock()
     {
-        $this->assertTrue(true);
         list($pageID, $areaID, $blockID) = $this->createSamplePage();
 
         $blockStructure = new DataStructure([
@@ -49,7 +48,6 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
 
     public function testMultipleBlockUpdates()
     {
-        $this->assertTrue(true);
         list($pageID, $areaID, $blockID) = $this->createSamplePage();
 
         $blockStructure = new DataStructure([
@@ -92,9 +90,4 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
 
         return array($pageID, $areaID, $blockID);
     }
-
-    public function testNothing()
-    {
-        $this->assertEquals(true, true);
-    }
-} 
+}

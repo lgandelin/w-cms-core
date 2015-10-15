@@ -3,7 +3,6 @@
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSCore\Entities\Area;
-use Webaccess\WCMSCore\Entities\Blocks\HTMLBlock;
 use Webaccess\WCMSCore\Entities\Page;
 use Webaccess\WCMSCore\Interactors\Areas\UpdateAreaInteractor;
 
@@ -18,7 +17,6 @@ class UpdateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateArea()
     {
-        $this->assertTrue(true);
         list($pageID, $areaID) = $this->createSamplePage();
 
         $areaStructure = new DataStructure([
@@ -32,9 +30,8 @@ class UpdateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $page->getDraftVersionNumber());
     }
 
-    public function testMultipleBlockUpdates()
+    public function testMultipleAreaUpdates()
     {
-        $this->assertTrue(true);
         list($pageID, $areaID) = $this->createSamplePage();
 
         $areaStructure = new DataStructure([

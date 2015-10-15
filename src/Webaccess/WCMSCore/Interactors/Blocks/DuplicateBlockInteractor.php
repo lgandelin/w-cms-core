@@ -7,10 +7,12 @@ use Webaccess\WCMSCore\Entities\Block;
 
 class DuplicateBlockInteractor
 {
-    public function run(Block $block, $newAreaID)
+    public function run(Block $blockToDuplicate, $newAreaID, $newPageVersion = 0)
     {
+        $block = clone $blockToDuplicate;
         $block->setID(null);
         $block->setAreaID($newAreaID);
+        $block->setVersionNumber($newPageVersion);
 
         $blockID = Context::get('block_repository')->duplicateBlock($block);
 
