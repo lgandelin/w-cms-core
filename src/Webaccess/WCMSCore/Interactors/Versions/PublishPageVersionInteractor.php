@@ -7,10 +7,10 @@ use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
 
 class PublishPageVersionInteractor
 {
-    public function run($pageID, $versionNumber)
+    public function run($pageID, $versionID)
     {
         if ($page = (new GetPageInteractor())->getPageByID($pageID)) {
-            $page->setVersionNumber($versionNumber);
+            $page->setVersionID($versionID);
             Context::get('page_repository')->updatePage($page);
         }
     }

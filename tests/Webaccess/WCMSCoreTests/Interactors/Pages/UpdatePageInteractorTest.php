@@ -134,7 +134,7 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
         Context::get('page_repository')->createPage($page);
     }
 
-    public function testUpdatePageToMaster()
+    /*public function testUpdatePageToMaster()
     {
         $this->createSamplePage();
 
@@ -164,5 +164,5 @@ class UpdatePageInteractorTest extends PHPUnit_Framework_TestCase
 
         $block = Context::get('block_repository')->findByID(1);
         $this->assertEquals(1, $block->getIsMaster());
-    }
+    }*/
 }

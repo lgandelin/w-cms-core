@@ -2,19 +2,23 @@
 
 namespace Webaccess\WCMSCore\Interactors\Pages;
 
+use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
 
 class GetPageContentInteractor
 {
-    public function run($uri, $version_number = false, $structure = false)
+    public function run($uri, $versionID = false, $structure = false)
     {
         $lang = (new GetLangInteractor())->getLangFromURI($uri, $structure);
         try {
             $page = (new GetPageInteractor())->getPageByUri($uri, ($structure ? $lang->ID : $lang->getID()), $structure);
-            if ($page->is_visible !== false) {
-                $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber(($structure ? $page->ID : $page->getID()), ($version_number ? $version_number : $page->version_number), $structure);
+            $versionID = ($versionID) ? $versionID : $page->versionID;
+            $version = Context::get('version_repository')->findByID($versionID);
+
+            if ($version && $page->is_visible !== false) {
+                $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber(($structure ? $page->ID : $page->getID()), $version->getNumber(), $structure);
 
                 if ($areas) {
                     foreach ($areas as $area) {

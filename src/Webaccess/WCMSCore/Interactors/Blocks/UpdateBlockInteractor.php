@@ -4,7 +4,7 @@ namespace Webaccess\WCMSCore\Interactors\Blocks;
 
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\DataStructure;
-use Webaccess\WCMSCore\Entities\Page;
+use Webaccess\WCMSCore\Entities\Version;
 use Webaccess\WCMSCore\Interactors\Areas\DuplicateAreaInteractor;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
@@ -14,11 +14,9 @@ class UpdateBlockInteractor extends GetBlockInteractor
     public function run($blockID, DataStructure $blockStructure)
     {
         if ($block = $this->getBlockByID($blockID)) {
-
             if ($page = (new GetPageInteractor)->getPageFromBlockID($block->getID())) {
                 if ($page->isNewVersionNeeded()) {
                     $this->createNewPageVersion($blockID, $blockStructure, $page);
-
                 } else {
                     $this->updateExistingBlockVersion($blockStructure, $block);
                 }
@@ -38,39 +36,41 @@ class UpdateBlockInteractor extends GetBlockInteractor
         }
     }
 
-    private function bumpPageVersion(Page $page)
-    {
-        $newPageVersion = $page->getDraftVersionNumber() + 1;
-        $page->setDraftVersionNumber($newPageVersion);
-        Context::get('page_repository')->updatePage($page);
-
-        return $newPageVersion;
-    }
-
     private function createNewPageVersion($blockID, DataStructure $blockStructure, $page)
     {
-        $newPageVersion = $this->bumpPageVersion($page);
+        $version = false;
+        $currentVersion = Context::get('version_repository')->findByID($page->getVersionID());
+        if ($currentVersion) {
+            $version = new Version();
+            $version->setPageID($page->getID());
+            $version->setNumber($currentVersion->getNumber() + 1);
+            $versionID = Context::get('version_repository')->createVersion($version);
 
-        array_map(function ($area) use ($newPageVersion, $page, $blockStructure, $blockID) {
-            $newAreaStructure = $area->toStructure();
-            $newAreaStructure->version_number = $newPageVersion;
-            $newAreaID = (new DuplicateAreaInteractor())->run($newAreaStructure, $page->getID());
+            $page->setDraftVersionID($versionID);
+            Context::get('page_repository')->updatePage($page);
+        }
 
-            array_map(function ($block) use ($newPageVersion, $newAreaID, $blockStructure, $blockID) {
-                $newBlockID = (new DuplicateBlockInteractor())->run($block, $newAreaID, $newPageVersion);
+        if ($currentVersion && $version) {
+            array_map(function ($area) use ($version, $page, $blockStructure, $blockID) {
+                $newAreaStructure = $area->toStructure();
+                $newAreaStructure->version_number = $version->getNumber();
+                $newAreaID = (new DuplicateAreaInteractor())->run($newAreaStructure, $page->getID());
+                array_map(function ($block) use ($version, $newAreaID, $blockStructure, $blockID) {
+                    $newBlockID = (new DuplicateBlockInteractor())->run($block, $newAreaID, $version->getNumber());
 
-                //Update block with last modifications
-                if ($block->getID() == $blockID) {
-                    $newBlock = (new GetBlockInteractor())->getBlockByID($newBlockID);
-                    $newBlock->setInfos($blockStructure);
-                    $newBlock->setID($newBlockID);
-                    $newBlock->setVersionNumber($newPageVersion);
-                    $newBlock->setAreaID($newAreaID);
+                    //Update block with last modifications
+                    if ($block->getID() == $blockID) {
+                        $newBlock = (new GetBlockInteractor())->getBlockByID($newBlockID);
+                        $newBlock->setInfos($blockStructure);
+                        $newBlock->setID($newBlockID);
+                        $newBlock->setVersionNumber($version->getNumber());
+                        $newBlock->setAreaID($newAreaID);
 
-                    Context::get('block_repository')->updateBlock($newBlock);
-                }
-            }, (new GetBlocksInteractor())->getAllByAreaID($area->getID()));
-        }, (new GetAreasInteractor())->getByPageIDAndVersionNumber($page->getID(), $page->getVersionNumber()));
+                        Context::get('block_repository')->updateBlock($newBlock);
+                    }
+                }, (new GetBlocksInteractor())->getAllByAreaID($area->getID()));
+            }, (new GetAreasInteractor())->getByPageIDAndVersionNumber($page->getID(), $currentVersion->getNumber()));
+        }
     }
 
     /*private function updateChildBlocks(DataStructure $blockStructure, $blockID)

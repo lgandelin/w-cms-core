@@ -99,8 +99,10 @@ class InMemoryPageRepository implements PageRepositoryInterface
                 $pageModel->setMetaTitle($page->getMetaTitle());
                 $pageModel->setMetaDescription($page->getMetaDescription());
                 $pageModel->setMetaKeywords($page->getMetaKeywords());
-                $pageModel->setVersionNumber($page->getVersionNumber());
-                $pageModel->setDraftVersionNumber($page->getDraftVersionNumber());
+                //$pageModel->setVersionNumber($page->getVersionNumber());
+                //$pageModel->setDraftVersionNumber($page->getDraftVersionNumber());
+                $pageModel->setVersionID($page->getVersionID());
+                $pageModel->setDraftVersionID($page->getDraftVersionID());
             }
         }
     }

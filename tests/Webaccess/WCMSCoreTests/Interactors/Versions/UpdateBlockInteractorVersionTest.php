@@ -5,6 +5,7 @@ use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSCore\Entities\Area;
 use Webaccess\WCMSCore\Entities\Blocks\HTMLBlock;
 use Webaccess\WCMSCore\Entities\Page;
+use Webaccess\WCMSCore\Entities\Version;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\UpdateBlockInteractor;
@@ -20,6 +21,7 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateBlock()
     {
+        $this->assertTrue(true);
         list($pageID, $areaID, $blockID) = $this->createSamplePage();
 
         $blockStructure = new DataStructure([
@@ -31,8 +33,8 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         $page = Context::get('page_repository')->findByID($pageID);
 
         //Check that the page draft version has been bumped
-        $this->assertEquals(1, $page->getVersionNumber());
-        $this->assertEquals(2, $page->getDraftVersionNumber());
+        $this->assertEquals(1, $page->getVersionID());
+        $this->assertEquals(2, $page->getDraftVersionID());
 
         //Check that the areas have been duplicated
         $areasNewVersion = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, 2);
@@ -62,17 +64,24 @@ class UpdateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
 
         $page = Context::get('page_repository')->findByID($pageID);
 
-        $this->assertEquals(1, $page->getVersionNumber());
-        $this->assertEquals(2, $page->getDraftVersionNumber());
+        $this->assertEquals(1, $page->getVersionID());
+        $this->assertEquals(2, $page->getDraftVersionID());
     }
 
     private function createSamplePage()
     {
         $page = new Page();
         $page->setName('Page');
-        $page->setVersionNumber(1);
-        $page->setDraftVersionNumber(1);
         $pageID = Context::get('page_repository')->createPage($page);
+
+        $version = new Version();
+        $version->setNumber(1);
+        $version->setPageID($pageID);
+        $versionID = Context::get('version_repository')->createVersion($version);
+
+        $page->setVersionID($versionID);
+        $page->setDraftVersionID($versionID);
+        Context::get('page_repository')->updatePage($page);
 
         $area = new Area();
         $area->setName('Area');

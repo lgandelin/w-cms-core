@@ -4,6 +4,7 @@ use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\DataStructure;
 use Webaccess\WCMSCore\Entities\Area;
 use Webaccess\WCMSCore\Entities\Page;
+use Webaccess\WCMSCore\Entities\Version;
 use Webaccess\WCMSCore\Interactors\Areas\UpdateAreaInteractor;
 
 class UpdateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
@@ -26,8 +27,8 @@ class UpdateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
 
         $page = Context::get('page_repository')->findByID($pageID);
 
-        $this->assertEquals(1, $page->getVersionNumber());
-        $this->assertEquals(2, $page->getDraftVersionNumber());
+        $this->assertEquals(1, $page->getVersionID());
+        $this->assertEquals(2, $page->getDraftVersionID());
     }
 
     public function testMultipleAreaUpdates()
@@ -46,21 +47,29 @@ class UpdateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
 
         $page = Context::get('page_repository')->findByID($pageID);
 
-        $this->assertEquals(1, $page->getVersionNumber());
-        $this->assertEquals(2, $page->getDraftVersionNumber());
+        $this->assertEquals(1, $page->getVersionID());
+        $this->assertEquals(2, $page->getDraftVersionID());
     }
 
     private function createSamplePage()
     {
         $page = new Page();
         $page->setName('Page');
-        $page->setVersionNumber(1);
-        $page->setDraftVersionNumber(1);
         $pageID = Context::get('page_repository')->createPage($page);
+
+        $version = new Version();
+        $version->setNumber(1);
+        $version->setPageID($pageID);
+        $versionID = Context::get('version_repository')->createVersion($version);
+
+        $page->setVersionID($versionID);
+        $page->setDraftVersionID($versionID);
+        Context::get('page_repository')->updatePage($page);
 
         $area = new Area();
         $area->setName('Area');
         $area->setPageID($pageID);
+        $area->setVersionNumber(1);
         $areaID = Context::get('area_repository')->createArea($area);
 
         return array($pageID, $areaID);

@@ -12,6 +12,7 @@ use Webaccess\WCMSCore\Entities\Blocks\ViewBlock;
 use Webaccess\WCMSCore\Entities\Menu;
 use Webaccess\WCMSCore\Entities\MenuItem;
 use Webaccess\WCMSCore\Entities\Page;
+use Webaccess\WCMSCore\Entities\Version;
 
 class PagesFixtures {
 
@@ -49,10 +50,19 @@ class PagesFixtures {
         $page->setLangID($langID);
         $page->setIsVisible($isVisible);
         $page->setIsIndexed($isIndexed);
-        $page->setVersionNumber(1);
-        $page->setDraftVersionNumber(1);
 
-        return Context::get('page_repository')->createPage($page);
+        $pageID = Context::get('page_repository')->createPage($page);
+
+        $version = new Version();
+        $version->setPageID($pageID);
+        $version->setNumber(1);
+        $versionID = Context::get('version_repository')->createVersion($version);
+
+        $page->setVersionID($versionID);
+        $page->setDraftVersionID($versionID);
+        Context::get('page_repository')->updatePage($page);
+
+        return $pageID;
     }
 
     private static function createArea($name, $width, $height, $class, $order, $pageID)
