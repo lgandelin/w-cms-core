@@ -18,6 +18,7 @@ class Block extends Entity
     private $masterBlockID;
     private $isMaster;
     private $isGhost;
+    private $versionNumber;
 
     public function setID($ID)
     {
@@ -159,6 +160,16 @@ class Block extends Entity
         return $this->isGhost;
     }
 
+    public function setVersionNumber($versionNumber)
+    {
+        $this->versionNumber = $versionNumber;
+    }
+
+    public function getVersionNumber()
+    {
+        return $this->versionNumber;
+    }
+
     public function valid()
     {
         if (!$this->getName()) {
@@ -167,6 +178,10 @@ class Block extends Entity
 
         if (!$this->getWidth()) {
             $this->setWidth(12);
+        }
+
+        if (!$this->getVersionNumber()) {
+            $this->setVersionNumber(1);
         }
     }
 }

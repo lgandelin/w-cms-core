@@ -12,6 +12,7 @@ use Webaccess\WCMSCore\Entities\Blocks\ViewBlock;
 use Webaccess\WCMSCore\Entities\Menu;
 use Webaccess\WCMSCore\Entities\MenuItem;
 use Webaccess\WCMSCore\Entities\Page;
+use Webaccess\WCMSCore\Entities\Version;
 
 class PagesFixtures {
 
@@ -50,7 +51,18 @@ class PagesFixtures {
         $page->setIsVisible($isVisible);
         $page->setIsIndexed($isIndexed);
 
-        return Context::get('page_repository')->createPage($page);
+        $pageID = Context::get('page_repository')->createPage($page);
+
+        $version = new Version();
+        $version->setPageID($pageID);
+        $version->setNumber(1);
+        $versionID = Context::get('version_repository')->createVersion($version);
+
+        $page->setVersionID($versionID);
+        $page->setDraftVersionID($versionID);
+        Context::get('page_repository')->updatePage($page);
+
+        return $pageID;
     }
 
     private static function createArea($name, $width, $height, $class, $order, $pageID)
@@ -63,6 +75,7 @@ class PagesFixtures {
         $area->setOrder($order);
         $area->setDisplay(1);
         $area->setPageID($pageID);
+        $area->setVersionNumber(1);
 
         return Context::get('area_repository')->createArea($area);
     }
@@ -79,6 +92,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setHTML($html);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }
@@ -96,6 +110,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setViewPath($viewPath);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }
@@ -135,6 +150,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setMenuID($menuID);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }
@@ -164,6 +180,7 @@ class PagesFixtures {
         $block->setAreaID($areaID);
         $block->setDisplay(1);
         $block->setArticleID($articleID);
+        $block->setVersionNumber(1);
 
         return Context::get('block_repository')->createBlock($block);
     }

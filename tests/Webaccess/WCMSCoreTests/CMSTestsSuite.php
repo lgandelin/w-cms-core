@@ -12,6 +12,7 @@ use Webaccess\WCMSCoreTests\Repositories\InMemoryMenuItemRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryMenuRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryPageRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryUserRepository;
+use Webaccess\WCMSCoreTests\Repositories\InMemoryVersionRepository;
 
 class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 {
@@ -28,6 +29,7 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
         Context::add('media_repository', new InMemoryMediaRepository());
         Context::add('media_format_repository', new InMemoryMediaFormatRepository());
         Context::add('user_repository', new InMemoryUserRepository());
+        Context::add('version_repository', new InMemoryVersionRepository());
     }
 
     public static function suite()
@@ -71,5 +73,8 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::get('media_format_repository')->findAll() as $mediaFormat)
             Context::get('media_format_repository')->deleteMediaFormat($mediaFormat->getID());
+
+        foreach (Context::get('version_repository')->findAll() as $version)
+            Context::get('version_repository')->deleteVersion($version->getID());
     }
 }

@@ -6,6 +6,7 @@ use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Entities\Block;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\Versions\UpdatePageVersionInteractor;
 
 class CreateBlockInteractor
 {
@@ -15,6 +16,8 @@ class CreateBlockInteractor
         $block->valid();
 
         $blockID = Context::get('block_repository')->createBlock($block);
+
+        $this->updatePageVersion($block->getID());
 
         if ($block->getIsMaster()) {
             $this->createBlockInChildAreas($blockStructure, $blockID, $block->getAreaID());
@@ -32,5 +35,10 @@ class CreateBlockInteractor
 
             $this->run($childDataStructure);
         }, (new GetAreasInteractor())->getChildAreas($areaID));
+    }
+
+    private function updatePageVersion($blockID)
+    {
+        (new UpdatePageVersionInteractor())->runAfterBlockModification($blockID);
     }
 }

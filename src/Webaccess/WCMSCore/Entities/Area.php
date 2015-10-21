@@ -14,6 +14,7 @@ class Area extends Entity
     private $display;
     private $isMaster;
     private $masterAreaID;
+    private $versionNumber;
 
     public function setID($ID)
     {
@@ -113,6 +114,16 @@ class Area extends Entity
     public function getMasterAreaID()
     {
         return $this->masterAreaID;
+    }
+
+    public function setVersionNumber($versionNumber)
+    {
+        $this->versionNumber = $versionNumber;
+    }
+
+    public function getVersionNumber()
+    {
+        return $this->versionNumber;
     }
 
     public function valid()

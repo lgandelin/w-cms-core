@@ -3,7 +3,6 @@
 namespace Webaccess\WCMSCoreTests\Repositories;
 
 use Webaccess\WCMSCore\Entities\Block;
-use Webaccess\WCMSCore\Entities\Blocks\ArticleBlock;
 use Webaccess\WCMSCore\Repositories\BlockRepositoryInterface;
 
 class InMemoryBlockRepository implements BlockRepositoryInterface
@@ -43,6 +42,18 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
         return $blocks;
     }
 
+    public function findByAreaIDAndVersionNumber($areaID, $versionNumber)
+    {
+        $blocks = array();
+        foreach ($this->blocks as $block) {
+            if ($block->getAreaID() == $areaID && $block->getVersionNumber() == $versionNumber) {
+                $blocks[]= $block;
+            }
+        }
+
+        return $blocks;
+    }
+
     public function createBlock(Block $block)
     {
         $blockID = sizeof($this->blocks) + 1;
@@ -64,12 +75,18 @@ class InMemoryBlockRepository implements BlockRepositoryInterface
                 $blockModel->setDisplay($block->getDisplay());
                 $blockModel->setType($block->getType());
                 $blockModel->setIsMaster($block->getIsMaster());
-
-                if ($block instanceof ArticleBlock) {
-                    $blockModel->setArticleID($block->getArticleID());
-                }
+                $blockModel->setVersionNumber($block->getVersionNumber());
             }
         }
+    }
+
+    public function duplicateBlock(Block $block)
+    {
+        $blockID = sizeof($this->blocks) + 1;
+        $block->setID($blockID);
+        $this->blocks[]= $block;
+
+        return $blockID;
     }
 
     public function updateBlockType(Block $block)
