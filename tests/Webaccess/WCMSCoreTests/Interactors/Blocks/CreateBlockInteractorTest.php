@@ -19,24 +19,24 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateInvalidBlock()
     {
-        $block = new DataStructure([]);
+        $block = new DataStructure([
+            'areaID' => 1,
+        ]);
 
-        $this->interactor->run($block);
+        $this->interactor->run($block, false);
     }
 
     public function testCreate()
     {
         $area = new Area();
-        $area->setID(1);
-        $area->setName('Area');
-        Context::get('area_repository')->createArea($area);
+        $area->setName('Test area');
+        $areaID = Context::get('area_repository')->createArea($area);
 
         $block = new DataStructure([
-            'ID' => 1,
             'name' => 'Test block',
-            'area_id' => 1,
+            'areaID' => $areaID,
         ]);
-        $this->interactor->run($block);
+        $blockID = $this->interactor->run($block, false);
 
         $this->assertEquals(1, count(Context::get('block_repository')->findAll()));
         $this->assertEquals(1, count(Context::get('block_repository')->findByAreaID(1)));
@@ -58,10 +58,10 @@ class CreateBlockInteractorTest extends PHPUnit_Framework_TestCase
 
         $block = new DataStructure([
             'name' => 'Test block',
-            'area_id' => 2,
-            'is_master' => 1
+            'areaID' => 2,
+            'isMaster' => 1
         ]);
-        $this->interactor->run($block);
+        $this->interactor->run($block, false);
 
         $this->assertEquals(1, count(Context::get('block_repository')->findByAreaID(2)));
     }

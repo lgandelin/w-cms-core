@@ -5,7 +5,7 @@ use Webaccess\WCMSCore\Entities\Area;
 use Webaccess\WCMSCore\Entities\Blocks\HTMLBlock;
 use Webaccess\WCMSCore\Entities\Page;
 use Webaccess\WCMSCore\Entities\Version;
-use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
+use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Versions\DeletePageVersionInteractor;
 
 class DeletePageVersionInteractorTest extends PHPUnit_Framework_TestCase
@@ -19,13 +19,13 @@ class DeletePageVersionInteractorTest extends PHPUnit_Framework_TestCase
 
     public function testDeletePageVersion()
     {
-        list($pageID, $areaID, $blockID) = $this->createSamplePage();
-        $blocks = (new GetBlocksInteractor())->getAllByAreaID(1, 1);
+        list($pageID, $versionID, $areaID, $blockID) = $this->createSamplePage();
+        $blocks = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, 1);
         $this->assertEquals(1, count($blocks));
 
-        $this->interactor->run(1, 1);
+        $this->interactor->run($pageID, 1);
 
-        $blocks = (new GetBlocksInteractor())->getAllByAreaID(1, 1);
+        $blocks = (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, 1);
         $this->assertEquals(0, count($blocks));
     }
 
@@ -58,6 +58,6 @@ class DeletePageVersionInteractorTest extends PHPUnit_Framework_TestCase
         $block->setVersionNumber(1);
         $blockID = Context::get('block_repository')->createBlock($block);
 
-        return array($pageID, $areaID, $blockID);
+        return array($pageID, $versionID, $areaID, $blockID);
     }
 }

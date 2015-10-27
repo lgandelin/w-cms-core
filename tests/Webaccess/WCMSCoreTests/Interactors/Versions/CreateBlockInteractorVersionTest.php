@@ -23,7 +23,8 @@ class CreateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
 
         $blockStructure = new DataStructure([
             'name' => 'Block',
-            'area_id' => $areaID
+            'areaID' => $areaID,
+            'versionNumber' => 1,
         ]);
         $this->interactor->run($blockStructure);
 
@@ -38,8 +39,8 @@ class CreateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         $pageID = Context::get('page_repository')->createPage($page);
 
         $version = new Version();
-        $version->setNumber(1);
         $version->setPageID($pageID);
+        $version->setNumber(1);
         $versionID = Context::get('version_repository')->createVersion($version);
 
         $page->setVersionID($versionID);
@@ -49,6 +50,7 @@ class CreateBlockInteractorVersionTest extends PHPUnit_Framework_TestCase
         $area = new Area();
         $area->setName('Area');
         $area->setPageID($pageID);
+        $area->setVersionNumber(1);
         $areaID = Context::get('area_repository')->createArea($area);
 
         return array($pageID, $areaID);

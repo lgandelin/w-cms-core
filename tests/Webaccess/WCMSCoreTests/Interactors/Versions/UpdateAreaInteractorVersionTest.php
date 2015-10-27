@@ -16,7 +16,7 @@ class UpdateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
         $this->interactor = new UpdateAreaInteractor();
     }
 
-    public function testUpdateArea()
+    public function testUpdateAreaVersion()
     {
         list($pageID, $areaID) = $this->createSamplePage();
 

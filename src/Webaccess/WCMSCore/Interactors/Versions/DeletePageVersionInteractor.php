@@ -15,11 +15,12 @@ class DeletePageVersionInteractor
         $page->setDraftVersionID($page->getVersionID());
         Context::get('page_repository')->updatePage($page);
 
-        $version = Context::get('version_repository')->findByID($versionID);
-        array_map(function($area) {
-            (new DeleteAreaInteractor())->run($area->getID());
-        }, (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $version->getNumber()));
+        if ($version = Context::get('version_repository')->findByID($versionID)) {
+            array_map(function($area) {
+                (new DeleteAreaInteractor())->run($area->getID(), false);
+            }, (new GetAreasInteractor())->getByPageIDAndVersionNumber($pageID, $version->getNumber()));
 
-        Context::get('version_repository')->deleteVersion($versionID);
+            Context::get('version_repository')->deleteVersion($versionID);
+        }
     }
 } 

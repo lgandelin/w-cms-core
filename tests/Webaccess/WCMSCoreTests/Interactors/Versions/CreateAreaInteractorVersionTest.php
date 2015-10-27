@@ -22,7 +22,7 @@ class CreateAreaInteractorVersionTest extends PHPUnit_Framework_TestCase
 
         $areaStructure = new DataStructure([
             'name' => 'Area',
-            'page_id' => $pageID
+            'pageID' => $pageID
         ]);
         $this->interactor->run($areaStructure);
         $page = Context::get('page_repository')->findByID($pageID);
