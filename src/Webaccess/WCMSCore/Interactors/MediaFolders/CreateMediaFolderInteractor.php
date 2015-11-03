@@ -13,18 +13,18 @@ class CreateMediaFolderInteractor extends Interactor
     public function run(DataStructure $mediaFolderStructure)
     {
         $mediaFolder = (new MediaFolder())->setInfos($mediaFolderStructure);
+        $mediaFolder->setPath((new GetMediaFolderInteractor())->getParentMediaFolderPath($mediaFolder) . '/' . String::getSlug($mediaFolder->getName()));
         $mediaFolder->valid();
-        $mediaFolder->setPath(self::getParentMediaFolderPath($mediaFolder) . '/' . String::getSlug($mediaFolder->getName()));
+
+        if ($this->anotherExistingMediaFolderWithSamePath($mediaFolder->getPath())) {
+            throw new \Exception('There is already a media folder with the same path');
+        }
 
         return Context::get('media_folder_repository')->createMediaFolder($mediaFolder);
     }
 
-    private static function getParentMediaFolderPath($mediaFolder)
+    private function anotherExistingMediaFolderWithSamePath($path)
     {
-        if ($parentMediaFolder = Context::get('media_folder_repository')->findByID($mediaFolder->getParentID())) {
-            return $parentMediaFolder->getPath();
-        }
-
-        return '';
+        return Context::get('media_folder_repository')->findByPath($path);
     }
 }

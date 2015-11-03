@@ -25,6 +25,17 @@ class InMemoryMediaFolderRepository implements MediaFolderRepositoryInterface
         return false;
     }
 
+    public function findByPath($mediaFolderPath)
+    {
+        foreach ($this->mediaFolders as $mediaFolder) {
+            if ($mediaFolder->getPath() == $mediaFolderPath) {
+                return $mediaFolder;
+            }
+        }
+
+        return false;
+    }
+
     public function findAll()
     {
         return $this->mediaFolders;
@@ -45,6 +56,7 @@ class InMemoryMediaFolderRepository implements MediaFolderRepositoryInterface
             if ($mediaFolderModel->getID() == $mediaFolder->getID()) {
                 $mediaFolderModel->setName($mediaFolder->getName());
                 $mediaFolderModel->setParentID($mediaFolder->getParentID());
+                $mediaFolderModel->setPath($mediaFolder->getPath());
             }
         }
     }
