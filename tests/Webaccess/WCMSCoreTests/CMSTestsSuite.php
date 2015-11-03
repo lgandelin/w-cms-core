@@ -6,6 +6,7 @@ use Webaccess\WCMSCoreTests\Repositories\InMemoryArticleCategoryRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryArticleRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryBlockRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryLangRepository;
+use Webaccess\WCMSCoreTests\Repositories\InMemoryMediaFolderRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryMediaFormatRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryMediaRepository;
 use Webaccess\WCMSCoreTests\Repositories\InMemoryMenuItemRepository;
@@ -28,6 +29,7 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
         Context::add('article_category_repository', new InMemoryArticleCategoryRepository());
         Context::add('media_repository', new InMemoryMediaRepository());
         Context::add('media_format_repository', new InMemoryMediaFormatRepository());
+        Context::add('media_folder_repository', new InMemoryMediaFolderRepository());
         Context::add('user_repository', new InMemoryUserRepository());
         Context::add('version_repository', new InMemoryVersionRepository());
     }
@@ -73,6 +75,9 @@ class CMSTestsSuite extends PHPUnit_Framework_TestSuite
 
         foreach (Context::get('media_format_repository')->findAll() as $mediaFormat)
             Context::get('media_format_repository')->deleteMediaFormat($mediaFormat->getID());
+
+        foreach (Context::get('media_format_repository')->findAll() as $mediaFolder)
+            Context::get('media_folder_repository')->deleteMediaFolder($mediaFolder->getID());
 
         foreach (Context::get('version_repository')->findAll() as $version)
             Context::get('version_repository')->deleteVersion($version->getID());
