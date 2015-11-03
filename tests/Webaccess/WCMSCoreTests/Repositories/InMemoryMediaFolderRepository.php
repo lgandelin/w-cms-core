@@ -32,7 +32,11 @@ class InMemoryMediaFolderRepository implements MediaFolderRepositoryInterface
 
     public function createMediaFolder(MediaFolder $mediaFolder)
     {
+        $mediaFolderID = sizeof($this->mediaFolders) + 1;
+        $mediaFolder->setID($mediaFolderID);
         $this->mediaFolders[]= $mediaFolder;
+
+        return $mediaFolderID;
     }
 
     public function updateMediaFolder(MediaFolder $mediaFolder)

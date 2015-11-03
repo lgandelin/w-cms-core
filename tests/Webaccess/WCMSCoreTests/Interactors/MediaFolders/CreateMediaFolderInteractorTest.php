@@ -20,7 +20,7 @@ class CreateMediaFolderInteractorTest extends \PHPUnit_Framework_TestCase {
     {
         $media = new DataStructure([
             'name' => 'My media folder',
-            'parent_id' => null,
+            'parentID' => null,
         ]);
 
         $mediaFolderID = $this->interactor->run($media);
@@ -29,5 +29,52 @@ class CreateMediaFolderInteractorTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, count($mediaFolder));
         $this->assertEquals(1, count(Context::get('media_folder_repository')->findAll()));
         $this->assertEquals('/my-media-folder', $mediaFolder->getPath());
+    }
+
+    public function testCreateMediaFolderInParent()
+    {
+        $parentMediaFolder = new DataStructure([
+            'name' => 'Parent media folder',
+            'parentID' => null,
+        ]);
+
+        $parentMediaFolderID = $this->interactor->run($parentMediaFolder);
+
+        $childMediaFolder = new DataStructure([
+            'name' => 'Child media folder',
+            'parentID' => $parentMediaFolderID,
+        ]);
+
+        $childMediaFolderID = $this->interactor->run($childMediaFolder);
+        $childMediaFolder = Context::get('media_folder_repository')->findByID($childMediaFolderID);
+
+        $this->assertEquals('/parent-media-folder/child-media-folder', $childMediaFolder->getPath());
+    }
+
+    public function testCreateMediaFolderInParent2()
+    {
+        $parentMediaFolder = new DataStructure([
+            'name' => 'Grand parent media folder',
+            'parentID' => null,
+        ]);
+
+        $grandParentMediaFolderID = $this->interactor->run($parentMediaFolder);
+
+        $parentMediaFolder = new DataStructure([
+            'name' => 'Parent media folder',
+            'parentID' => $grandParentMediaFolderID,
+        ]);
+
+        $parentMediaFolderID = $this->interactor->run($parentMediaFolder);
+
+        $childMediaFolder = new DataStructure([
+            'name' => 'Child media folder',
+            'parentID' => $parentMediaFolderID,
+        ]);
+
+        $childMediaFolderID = $this->interactor->run($childMediaFolder);
+        $childMediaFolder = Context::get('media_folder_repository')->findByID($childMediaFolderID);
+
+        $this->assertEquals('/grand-parent-media-folder/parent-media-folder/child-media-folder', $childMediaFolder->getPath());
     }
 }

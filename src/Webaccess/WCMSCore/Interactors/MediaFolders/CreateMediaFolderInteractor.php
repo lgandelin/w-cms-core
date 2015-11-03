@@ -14,8 +14,17 @@ class CreateMediaFolderInteractor extends Interactor
     {
         $mediaFolder = (new MediaFolder())->setInfos($mediaFolderStructure);
         $mediaFolder->valid();
-        $mediaFolder->setPath('/' . String::getSlug($mediaFolder->getName()));
+        $mediaFolder->setPath(self::getParentMediaFolderPath($mediaFolder) . '/' . String::getSlug($mediaFolder->getName()));
 
         return Context::get('media_folder_repository')->createMediaFolder($mediaFolder);
     }
-} 
+
+    private static function getParentMediaFolderPath($mediaFolder)
+    {
+        if ($parentMediaFolder = Context::get('media_folder_repository')->findByID($mediaFolder->getParentID())) {
+            return $parentMediaFolder->getPath();
+        }
+
+        return '';
+    }
+}
