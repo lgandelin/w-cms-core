@@ -34,6 +34,30 @@ class GetMediasInteractorTest extends \PHPUnit_Framework_TestCase {
         Context::get('media_repository')->createMedia($media);
     }
 
+    public function testGetAllByMediaFolder()
+    {
+        $mediaFolderID = 1;
 
+        $media = new Media();
+        $media->setID(1);
+        $media->setName('Media ' . 1);
+        $media->setMediaFolderID($mediaFolderID);
+        Context::get('media_repository')->createMedia($media);
+
+        $media = new Media();
+        $media->setID(2);
+        $media->setName('Media ' . 2);
+        $media->setMediaFolderID($mediaFolderID);
+        Context::get('media_repository')->createMedia($media);
+
+        $media = new Media();
+        $media->setID(3);
+        $media->setName('Media ' . 3);
+        $media->setMediaFolderID(null);
+        Context::get('media_repository')->createMedia($media);
+
+        $medias = $this->interactor->getAllByMediaFolder($mediaFolderID);
+
+        $this->assertEquals(2, count($medias));
+    }
 }
- 

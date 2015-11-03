@@ -14,6 +14,13 @@ class GetMediasInteractor extends Interactor
         return ($structure) ? $this->getDataStructures($medias) : $medias;
     }
 
+    public function getAllByMediaFolder($mediaFolderID, $structure = false)
+    {
+        $medias = Context::get('media_repository')->findAllByMediaFolderID($mediaFolderID);
+
+        return ($structure) ? $this->getDataStructures($medias) : $medias;
+    }
+
     private function getDataStructures($medias)
     {
         return array_map(function($media) {
