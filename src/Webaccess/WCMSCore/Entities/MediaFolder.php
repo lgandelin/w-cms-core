@@ -55,6 +55,10 @@ class MediaFolder extends Entity
             throw new \InvalidArgumentException('You must provide a name for a media folder');
         }
 
+        if (!$this->getParentID()) {
+            $this->setParentID(0);
+        }
+
         return true;
     }
 }

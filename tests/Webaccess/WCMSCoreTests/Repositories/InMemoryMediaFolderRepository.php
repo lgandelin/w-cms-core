@@ -36,6 +36,18 @@ class InMemoryMediaFolderRepository implements MediaFolderRepositoryInterface
         return false;
     }
 
+    public function findAllByMediaFolder($mediaFolderID)
+    {
+        $mediaFolders = [];
+        foreach ($this->mediaFolders as $mediaFolder) {
+            if ($mediaFolder->getParentID() === $mediaFolderID) {
+                $mediaFolders[]= $mediaFolder;
+            }
+        }
+
+        return $mediaFolders;
+    }
+
     public function findAll()
     {
         return $this->mediaFolders;
