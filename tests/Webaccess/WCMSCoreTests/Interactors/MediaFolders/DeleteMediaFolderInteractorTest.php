@@ -1,13 +1,10 @@
 <?php
 
-namespace Webaccess\WCMSCoreTests\Interactors\MediaFolders;
-
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Entities\MediaFolder;
 use Webaccess\WCMSCore\Interactors\MediaFolders\DeleteMediaFolderInteractor;
-use CMSTestsSuite;
 
-class DeleteMediaFolderInteractorTest extends \PHPUnit_Framework_TestCase {
+class DeleteMediaFolderInteractorTest extends PHPUnit_Framework_TestCase {
 
     private $interactor;
 

@@ -1,14 +1,11 @@
 <?php
 
-namespace Webaccess\WCMSCoreTests\Interactors\MediaFolders;
-
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\DataStructure;
-use CMSTestsSuite;
 use Webaccess\WCMSCore\Entities\MediaFolder;
 use Webaccess\WCMSCore\Interactors\MediaFolders\CreateMediaFolderInteractor;
 
-class CreateMediaFolderInteractorTest extends \PHPUnit_Framework_TestCase {
+class CreateMediaFolderInteractorTest extends PHPUnit_Framework_TestCase {
 
     private $interactor;
 

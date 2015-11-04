@@ -54,4 +54,3 @@ class UpdateMediaFolderInteractorTest extends PHPUnit_Framework_TestCase {
         $this->interactor->run(2, $mediaFolder);
     }
 }
- 
