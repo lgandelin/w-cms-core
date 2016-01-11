@@ -4,7 +4,6 @@ namespace Webaccess\WCMSCoreTests\Repositories;
 
 use Webaccess\WCMSCore\Entities\User;
 use Webaccess\WCMSCore\Repositories\UserRepositoryInterface;
-use Webaccess\WCMSCore\Structures\UserStructure;
 
 class InMemoryUserRepository implements UserRepositoryInterface
 {

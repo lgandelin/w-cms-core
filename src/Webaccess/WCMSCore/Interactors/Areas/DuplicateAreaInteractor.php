@@ -9,8 +9,8 @@ class DuplicateAreaInteractor
     public function run(DataStructure $areaStructure, $newPageID)
     {
         $areaStructure->ID = null;
-        $areaStructure->page_id = $newPageID;
+        $areaStructure->pageID = $newPageID;
 
-        return (new CreateAreaInteractor())->run($areaStructure);
+        return (new CreateAreaInteractor())->run($areaStructure, false);
     }
 }

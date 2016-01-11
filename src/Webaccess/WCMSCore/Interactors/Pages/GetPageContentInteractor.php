@@ -2,20 +2,23 @@
 
 namespace Webaccess\WCMSCore\Interactors\Pages;
 
+use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Interactors\Areas\GetAreasInteractor;
 use Webaccess\WCMSCore\Interactors\Blocks\GetBlocksInteractor;
 use Webaccess\WCMSCore\Interactors\Langs\GetLangInteractor;
 
 class GetPageContentInteractor
 {
-    public function run($uri, $structure = false)
+    public function run($uri, $versionID = false, $structure = false)
     {
         $lang = (new GetLangInteractor())->getLangFromURI($uri, $structure);
         try {
             $page = (new GetPageInteractor())->getPageByUri($uri, ($structure ? $lang->ID : $lang->getID()), $structure);
+            $versionID = ($versionID) ? $versionID : $page->versionID;
+            $version = Context::get('version_repository')->findByID($versionID);
 
-            if ($page->is_visible !== false) {
-                $areas = (new GetAreasInteractor())->getAll(($structure ? $page->ID : $page->getID()), $structure);
+            if ($version && $page->is_visible !== false) {
+                $areas = (new GetAreasInteractor())->getByPageIDAndVersionNumber(($structure ? $page->ID : $page->getID()), $version->getNumber(), $structure);
 
                 if ($areas) {
                     foreach ($areas as $area) {
@@ -31,10 +34,10 @@ class GetPageContentInteractor
                     }
                 }
             } else {
-                $page =  $this->run('/404', $structure);
+                $page =  $this->run('/404', false, $structure);
             }
         } catch(\Exception $e) {
-            $page =  $this->run('/404', $structure);
+            $page =  $this->run('/404', false, $structure);
         }
 
         return $page;

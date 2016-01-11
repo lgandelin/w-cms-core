@@ -16,6 +16,8 @@ class Page extends Entity
     private $is_indexed;
     private $is_master;
     private $master_page_id;
+    private $versionID;
+    private $draftVersionID;
 
     public function setID($ID)
     {
@@ -137,6 +139,26 @@ class Page extends Entity
         return $this->master_page_id;
     }
 
+    /*public function getVersionNumber()
+    {
+        return $this->version_number;
+    }
+
+    public function setVersionNumber($versionNumber)
+    {
+        $this->version_number = $versionNumber;
+    }
+
+    public function setDraftVersionNumber($draft_version_number)
+    {
+        $this->draft_version_number = $draft_version_number;
+    }
+
+    public function getDraftVersionNumber()
+    {
+        return $this->draft_version_number;
+    }*/
+
     public function valid()
     {
         if (!$this->getUri()) {
@@ -147,6 +169,41 @@ class Page extends Entity
             throw new \InvalidArgumentException('You must provide an identifier for a page');
         }
 
+        /*if (!$this->getVersionNumber()) {
+            $this->setVersionNumber(1);
+        }
+
+        if (!$this->getDraftVersionNumber()) {
+            $this->setDraftVersionNumber(1);
+        }*/
+
         return true;
     }
+
+    public function isNewVersionNeeded()
+    {
+        return $this->getVersionID() == $this->getDraftVersionID();
+    }
+
+    public function setVersionID($versionID)
+    {
+        $this->versionID = $versionID;
+    }
+
+    public function getVersionID()
+    {
+        return $this->versionID;
+    }
+
+    public function setDraftVersionID($draftVersionID)
+    {
+        $this->draftVersionID = $draftVersionID;
+    }
+
+    public function getDraftVersionID()
+    {
+        return $this->draftVersionID;
+    }
+
+
 }

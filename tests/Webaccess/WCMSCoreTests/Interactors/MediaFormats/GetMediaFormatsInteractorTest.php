@@ -33,7 +33,4 @@ class GetMediaFormatsInteractorTest extends \PHPUnit_Framework_TestCase {
         $mediaFormat->setName('MediaFormat' . $mediaFormatID);
         Context::get('media_format_repository')->createMediaFormat($mediaFormat);
     }
-
-
 }
- 

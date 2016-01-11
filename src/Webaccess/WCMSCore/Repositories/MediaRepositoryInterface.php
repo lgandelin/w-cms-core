@@ -8,6 +8,8 @@ interface MediaRepositoryInterface
 {
     public function findByID($mediaID);
 
+    public function findAllByMediaFolderID($mediaFolderID);
+
     public function findAll();
 
     public function createMedia(Media $media);

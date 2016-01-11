@@ -9,6 +9,7 @@ class Media extends Entity
     private $fileName;
     private $alt;
     private $title;
+    private $mediaFolderID;
 
     public function setID($ID)
     {
@@ -60,10 +61,24 @@ class Media extends Entity
         return $this->fileName;
     }
 
+    public function setMediaFolderID($mediaFolderID)
+    {
+        $this->mediaFolderID = $mediaFolderID;
+    }
+
+    public function getMediaFolderID()
+    {
+        return $this->mediaFolderID;
+    }
+
     public function valid()
     {
         if (!$this->getName()) {
             throw new \InvalidArgumentException('You must provide a name for a media');
+        }
+
+        if (!$this->getMediaFolderID()) {
+            $this->setMediaFolderID(0);
         }
 
         return true;

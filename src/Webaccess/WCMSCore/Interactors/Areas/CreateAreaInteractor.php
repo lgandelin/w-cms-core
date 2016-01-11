@@ -4,26 +4,34 @@ namespace Webaccess\WCMSCore\Interactors\Areas;
 
 use Webaccess\WCMSCore\Context;
 use Webaccess\WCMSCore\Entities\Area;
-use Webaccess\WCMSCore\Interactors\Pages\GetPagesInteractor;
+use Webaccess\WCMSCore\Interactors\Pages\GetPageInteractor;
 use Webaccess\WCMSCore\DataStructure;
+use Webaccess\WCMSCore\Interactors\Versions\CreatePageVersionInteractor;
 
 class CreateAreaInteractor
 {
-    public function run(DataStructure $areaStructure)
+    public function run(DataStructure $areaStructure, $newVersion = true)
     {
-        $area = (new Area())->setInfos($areaStructure);
-        $area->valid();
+        $newPageVersion = false;
+        $areaID = null;
 
-        $areaID = Context::get('area_repository')->createArea($area);
+        if ($page = (new GetPageInteractor())->getPageByID($areaStructure->pageID)) {
+            if ($page->isNewVersionNeeded() && $newVersion) {
 
-        if ($area->getIsMaster()) {
-            $this->createAreaInChildPages($areaStructure, $areaID, $area->getPageID());
+                $newPageVersion = true;
+                list($newAreaID, $newBlockID, $versionNumber) = (new CreatePageVersionInteractor())->run($page);
+                $areaStructure->versionNumber = $versionNumber;
+            } else {
+                $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
+                $areaStructure->versionNumber = $version->getNumber();
+            }
         }
+        $areaID = $this->createArea($areaStructure);
 
-        return $areaID;
+        return array($areaID, $newPageVersion);
     }
 
-    private function createAreaInChildPages(DataStructure $areaStructure, $areaID, $pageID)
+    /*private function createAreaInChildPages(DataStructure $areaStructure, $areaID, $pageID)
     {
         array_map(function($childPage) use ($areaStructure, $areaID) {
             $areaStructure = new DataStructure([
@@ -37,5 +45,19 @@ class CreateAreaInteractor
             ]);
             $this->run($areaStructure);
         }, (new GetPagesInteractor())->getChildPages($pageID));
+    }*/
+
+    private function createArea(DataStructure $areaStructure)
+    {
+        $area = (new Area())->setInfos($areaStructure);
+        $area->valid();
+
+        $areaID = Context::get('area_repository')->createArea($area);
+
+        /*if ($area->getIsMaster()) {
+            $this->createAreaInChildPages($areaStructure, $areaID, $area->getPageID());
+        }*/
+
+        return $areaID;
     }
 }

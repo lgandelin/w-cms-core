@@ -32,7 +32,7 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->assertCount(0, Context::get('page_repository')->findAll());
     }
 
-    public function testDeleteAlongWithAreasAndBlocks()
+    /*public function testDeleteAlongWithAreasAndBlocks()
     {
         $pageID = $this->createSamplePage();
         $areaID = $this->createSampleArea($pageID);
@@ -49,7 +49,7 @@ class DeletePageInteractorTest extends PHPUnit_Framework_TestCase
         $this->assertCount(0, Context::get('page_repository')->findAll());
         $this->assertCount(0, Context::get('area_repository')->findAll());
         $this->assertCount(0, Context::get('block_repository')->findAll());
-    }
+    }*/
 
     private function createSamplePage()
     {
