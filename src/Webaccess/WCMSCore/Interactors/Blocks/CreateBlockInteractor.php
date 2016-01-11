@@ -17,9 +17,9 @@ class CreateBlockInteractor
 
         if ($page = (new GetPageInteractor())->getPageFromAreaID($blockStructure->areaID)) {
             if ($page->isNewVersionNeeded() && $newVersion) {
-
                 $newPageVersion = true;
-                list($newAreaID, $newBlockID, $versionNumber) = (new CreatePageVersionInteractor())->run($page);
+                list($newAreaID, $newBlockID, $versionNumber) = (new CreatePageVersionInteractor())->run($page, $blockStructure->areaID);
+                $blockStructure->areaID = $newAreaID;
                 $blockStructure->versionNumber = $versionNumber;
             } else {
                 $version = Context::get('version_repository')->findByID($page->getDraftVersionID());
